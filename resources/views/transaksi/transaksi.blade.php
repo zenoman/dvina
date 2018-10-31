@@ -1,4 +1,7 @@
 @extends('layout.master')
+@section('css')
+<link rel="stylesheet" href="{{asset('css/jquery-ui.min.css')}}">
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="row">

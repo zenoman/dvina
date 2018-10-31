@@ -1,10 +1,12 @@
 <?php
 use Illuminate\Support\Facades\Input;
 
-Route::get('/',function()
-{
-	return view('welcome');
-});
+//Route::get('/',function()
+//{
+//	return view('welcome');
+//});
+
+Route::resource('/','frontend\userUtama');
 Route::get('/logout','Logincontroller@logout');
 Route::get('/validatelogin','Logincontroller@validatelogin');
 
