@@ -82,7 +82,7 @@
                                             <input type="text" class="form-control" name="kode_barang" value="{{$row->kode}}" readonly required>
                                         </div>
 
-
+                                        <!--halo-->
                                         <div class="form-group">
                                             <label>Nama Barang</label>
                                             <input type="text" class="form-control" name="nama_barang" value="{{$row->barang}}" required readonly>
