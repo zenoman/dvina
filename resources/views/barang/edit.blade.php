@@ -89,7 +89,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Kategori</label>
-                                            <input type="text" class="form-control" name="kategori_barang" value="{{$row->kategori}}" readonly>
+                                            <input type="text" class="form-control" name="kategori_barang" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Harga Barang</label>

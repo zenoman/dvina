@@ -54,7 +54,6 @@ class BarangImport implements ToCollection, WithHeadingRow
                 'diskon' => $row['diskon_barang'],
                 'stok' => $row['stok'],
                 'warna' => $row['warna'],
-                'kategori'=>$row['nama_kategori']
             ]);
         }
     }

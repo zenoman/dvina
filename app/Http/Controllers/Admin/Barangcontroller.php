@@ -137,8 +137,7 @@ class Barangcontroller extends Controller
                 'harga' => $request->harga_barang,
                 'diskon' => $request->diskon_barang,
                 'stok' => $request->stok[$i],
-                'warna' => $warna,
-                'kategori'=>$kategori[1]
+                'warna' => $warna
             ]);
          $i++;
     }
