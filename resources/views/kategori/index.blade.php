@@ -54,7 +54,7 @@
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            List Data User
+                            List Data Kategori
                         </div>
             
                         <div class="panel-body table-responsive">
