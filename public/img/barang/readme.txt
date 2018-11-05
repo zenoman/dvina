@@ -1,0 +1,1 @@
+folder ini untuk nyimpen gambar barang ya 
