@@ -21,8 +21,7 @@ class Barangs extends Migration
             $table->string('harga');
             $table->string('diskon');            
             $table->string('stok');
-            $table->string('warna');            
-            $table->string('kategori');                        
+            $table->string('warna');                        
         });
     }
 

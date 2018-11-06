@@ -30,7 +30,7 @@
                                                    Buka file <b>"template.xlsx"</b> kemudian isi data sesuai aturan di bawah ini
                                                </li>
                                                <li>
-                                                   isi <b>id_kategori</b> sesuai dengan <b>id kategori</b> di file <b>"kategori.xlsx"</b>, jangan isikan id lain selain id yang tercantum pada file <b>"kategori.xlsx"</b>, kemudian isi <b>nama_kategori</b> sesuai dengan sesuai dengan nama kategori yang anda pilih id nya. untuk lebih jelas lihat gambar di bawah ini
+                                                   isi <b>id_kategori</b> sesuai dengan <b>id kategori</b> di file <b>"kategori.xlsx"</b>, jangan isikan id lain selain id yang tercantum pada file <b>"kategori.xlsx"</b>. untuk lebih jelas lihat gambar di bawah ini
                                                </li><br>
                                                <img src="{{url('img/web/dvina.PNG')}}">
                                                <br><br>
