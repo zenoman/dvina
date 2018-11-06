@@ -77,6 +77,7 @@
                                         <th>No</th>
                                         <th>Kode</th>
                                         <th>Nama Barang</th>
+                                        <th>Kategori</th>
                                         <th>Harga</th>
                                         <th>Diskon</th>
                                         <th>Warna</th>
@@ -92,7 +93,8 @@
                                     <tr>
                                    		<td>{{$i}}</td>
                                    		<td>{{$row->kode}}</td>
-                                   		<td>{{$row->barang}}</td>
+                                        <td>{{$row->barang}}</td>
+                                        <td>{{$row->kategori}}</td>
                                         <td>{{$row->harga}}</td>
                                         <td>{{$row->diskon}}</td>
                                         <td><b>{{$row->warna}}</b></td>

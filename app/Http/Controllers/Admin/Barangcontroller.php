@@ -14,7 +14,9 @@ class Barangcontroller extends Controller
 {
     public function index()
     {
-        $barang = DB::table('tb_barangs')->orderBy('idbarang','desc')->paginate(50);
+        $barang = DB::table('tb_barangs')
+                ->join('tb_kategoris', 'tb_barangs.idkategori','=','tb_kategoris.id')
+                ->orderBy('idbarang','desc')->paginate(50);
         return view('barang/index',['barang'=>$barang]);
     }
 
