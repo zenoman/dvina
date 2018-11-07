@@ -74,3 +74,10 @@ Route::get('autB',function(){
 Route::get('/showt','Admin\transaksiController@showData');
 //======delete Transaksi=======================================
 Route::post('/hapus','Admin\transaksiController@hapus');
+//==========================slider=============================
+Route::get('/slider','Admin\Slidercontroller@index');
+Route::get('/slider/create','Admin\Slidercontroller@create');
+Route::post('/slider','Admin\Slidercontroller@store');
+Route::get('/slider/{id}/delete','Admin\Slidercontroller@destroy');
+Route::get('/slider/{id}','Admin\Slidercontroller@edit');
+Route::put('/slider/{id}','Admin\Slidercontroller@update');

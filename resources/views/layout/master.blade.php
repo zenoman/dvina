@@ -153,6 +153,9 @@
                             <a href="{{url('/barang')}}"><i class="fa fa-cube fa-fw"></i> Barang</a>
                         </li>
                         <li>
+                            <a href="{{url('/slider')}}"><i class="fa fa-image fa-fw"></i> Slider</a>
+                        </li>
+                        <li>
                             <a href="{{url('/setting')}}"><i class="fa fa-gear fa-fw"></i> Setting</a>
                         </li>
                         </ul>
