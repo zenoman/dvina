@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class userUtama extends Controller
 {
@@ -14,8 +15,8 @@ class userUtama extends Controller
      */
     public function index()
     {
-        //
-        return view("frontend/home");
+        $slider = DB::table('sliders')->get();
+        return view("frontend/home",['sliders'=>$slider]);
     }
 
     /**
@@ -23,6 +24,10 @@ class userUtama extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function semuaproduk(){
+        return view('frontend/semuaproduk');
+    }
     public function create()
     {
         //

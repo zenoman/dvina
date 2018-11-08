@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Input;
 //});
 
 Route::resource('/','frontend\userUtama');
+Route::get('/semuaproduk','frontend\userUtama@semuaproduk');
 Route::get('/logout','Logincontroller@logout');
 Route::get('/validatelogin','Logincontroller@validatelogin');
 

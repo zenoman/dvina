@@ -37,11 +37,9 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
-                            <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
-                            <li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>
-                            <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
                             <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i>Keranjang Saya</a></li>
+                            <!--li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li-->
                             <li><a href="{{url('/login')}}"><i class="fa fa-users"></i>Login Admin</a></li>
                         </ul>
                     </div>
@@ -51,22 +49,13 @@
                     <div class="header-right">
                         <ul class="list-unstyled list-inline">
                             <li class="dropdown dropdown-small">
-                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">currency :</span><span class="value">USD </span><b class="caret"></b></a>
+                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">Jhon Doe</span><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">USD</a></li>
-                                    <li><a href="#">INR</a></li>
-                                    <li><a href="#">GBP</a></li>
+                                    <li><a href="#">Edit Profile</a></li>
+                                    <li><a href="#">Logout</a></li>
                                 </ul>
                             </li>
 
-                            <li class="dropdown dropdown-small">
-                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">language :</span><span class="value">English </span><b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">English</a></li>
-                                    <li><a href="#">French</a></li>
-                                    <li><a href="#">German</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -106,13 +95,13 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="index.html">Home</a></li>
-                        <li><a href="shop.html">Shop page</a></li>
-                        <li><a href="single-product.html">Single product</a></li>
-                        <li><a href="cart.html">Cart</a></li>
+                        <li><a href="shop.html">Semua Produk</a></li>
+                        <li><a href="single-product.html">Hubungi Kami</a></li>
+                        <!--li><a href="cart.html">Cart</a></li>
                         <li><a href="checkout.html">Checkout</a></li>
                         <li><a href="#">Category</a></li>
                         <li><a href="#">Others</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Contact</a></li-->
                     </ul>
                 </div>  
             </div>
@@ -123,8 +112,9 @@
         	<!-- Slider -->
 			<div class="block-slider block-slider4">
 				<ul class="" id="bxslider-home4">
-					<li>
-						<img src="img/h4-slide.png" alt="Slide">
+					@foreach($sliders as $slider)
+                    <li>
+						<img src="{{asset('img/slider/'.$slider->foto)}}" alt="Slide">
 						<div class="caption-group">
 							<h2 class="caption title">
 								iPhone <span class="primary">6 <strong>Plus</strong></span>
@@ -133,33 +123,7 @@
 							<a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
 						</div>
 					</li>
-					<li><img src="img/h4-slide2.png" alt="Slide">
-						<div class="caption-group">
-							<h2 class="caption title">
-								by one, get one <span class="primary">50% <strong>off</strong></span>
-							</h2>
-							<h4 class="caption subtitle">school supplies & backpacks.*</h4>
-							<a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
-						</div>
-					</li>
-					<li><img src="img/h4-slide3.png" alt="Slide">
-						<div class="caption-group">
-							<h2 class="caption title">
-								Apple <span class="primary">Store <strong>Ipod</strong></span>
-							</h2>
-							<h4 class="caption subtitle">Select Item</h4>
-							<a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
-						</div>
-					</li>
-					<li><img src="img/h4-slide4.png" alt="Slide">
-						<div class="caption-group">
-						  <h2 class="caption title">
-								Apple <span class="primary">Store <strong>Ipod</strong></span>
-							</h2>
-							<h4 class="caption subtitle">& Phone</h4>
-							<a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
-						</div>
-					</li>
+					@endforeach
 				</ul>
 			</div>
 			<!-- ./Slider -->
@@ -203,7 +167,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="latest-product">
-                        <h2 class="section-title">Latest Products</h2>
+                        <h2 class="section-title">Produk Terbaru</h2>
                         <div class="product-carousel">
                             <div class="single-product">
                                 <div class="product-f-image">
@@ -301,27 +265,6 @@
         </div>
     </div> <!-- End main content area -->
     
-    <div class="brands-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="brand-wrapper">
-                        <div class="brand-list">
-                            <img src="img/brand1.png" alt="">
-                            <img src="img/brand2.png" alt="">
-                            <img src="img/brand3.png" alt="">
-                            <img src="img/brand4.png" alt="">
-                            <img src="img/brand5.png" alt="">
-                            <img src="img/brand6.png" alt="">
-                            <img src="img/brand1.png" alt="">
-                            <img src="img/brand2.png" alt="">                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End brands area -->
     
     <div class="product-widget-area">
         <div class="zigzag-bottom"></div>
@@ -537,20 +480,13 @@
     <div class="footer-bottom-area">
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12 text-center">
                     <div class="copyright">
                         <p>&copy; 2015 uCommerce. All Rights Reserved. <a href="http://www.freshdesignweb.com" target="_blank">freshDesignweb.com</a></p>
                     </div>
                 </div>
                 
-                <div class="col-md-4">
-                    <div class="footer-card-icon">
-                        <i class="fa fa-cc-discover"></i>
-                        <i class="fa fa-cc-mastercard"></i>
-                        <i class="fa fa-cc-paypal"></i>
-                        <i class="fa fa-cc-visa"></i>
-                    </div>
-                </div>
+               
             </div>
         </div>
     </div> <!-- End footer bottom area -->
