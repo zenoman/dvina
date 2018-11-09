@@ -52,7 +52,6 @@
                                         <div class="form-group">
                                             <label>Nama Barang</label>
                                             <input type="text" class="form-control" name="nama_barang" value="{{ old('nama_barang') }}" required>
-                                              <p class="help-block">*Nama Barang Tidak Dapat Diubah</p>
                                         </div>
                                         @if($errors->has('nama_barang'))
                                         <div class="alert alert-danger">
@@ -66,10 +65,13 @@
                                                 <option value="{{$kat->id}}-{{$kat->kategori}}">{{$kat->kategori}}</option>
                                                 @endforeach
                                             </select>
-                                            <p class="help-block">*Kategori Barang Tidak Dapat Diubah</p>    
+                                               
                                         </div>
                                         
-
+                                        <div class="form-group">
+                                            <label>Deskripsi Barang</label>
+                                            <textarea class="form-control" name="deskripsi" rows="5  "></textarea>
+                                        </div>
                                         <div class="form-group">
                                             <label>Foto</label>
                                             <input type="file" class="form-control" name="photo[]" multiple required>

@@ -139,22 +139,23 @@ class Kategoricontroller extends Controller
         
         $kategori = Kategorimodel::find($id);
         $idkategori = $kategori->id;
-        $barang = DB::table('tb_barangs')->where('idkategori',$id)->get();
-        $hitungbarang = DB::table('tb_barangs')->where('idkategori',$id)->count();
+        $barang = DB::table('tb_kodes')->where('id_kategori',$id)->get();
+        $hitungbarang = DB::table('tb_kodes')->where('id_kategori',$id)->count();
+        
         if($hitungbarang >0){
+
             foreach ($barang as $row) {
-          $kode = $row->kode;
-        }
+          $kode = $row->kode_barang;
+        
+
         $gambar = DB::table('gambar')->where('kode_barang',$kode)->get();
         foreach ($gambar as $gmbr) {
             File::delete('img/barang/'.$gmbr->nama);
         }
         DB::table('gambar')->where('kode_barang',$kode)->delete();
-        DB::table('tb_kodes')->where('kode_barang',$kode)->delete();
         DB::table('tb_barangs')->where('kode',$kode)->delete();
-
-            
-        }
+        DB::table('tb_kodes')->where('kode_barang',$kode)->delete();
+        }}
         
         if($kategori->gambar != ''){
             File::delete('img/kategori/'.$kategori->gambar);

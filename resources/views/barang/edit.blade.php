@@ -89,6 +89,7 @@
                                         <div class="form-group">
                                             <label>Nama Barang</label>
                                             <input type="text" class="form-control" name="nama_barang" value="{{$row->barang}}" required>
+                                            <input type="hidden" name="oldnama" value="{{$row->barang}}">
                                         </div>
                                         
                                         <div class="form-group">

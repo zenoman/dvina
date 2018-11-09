@@ -160,6 +160,7 @@ class Barangcontroller extends Controller
     foreach ($request->warna as $warna) {
 
          DB::table('tb_barangs')->insert([
+                'barang_jenis'=>$request->nama_barang." ".$warna,
                 'kode' => $request->kode_barang,
                 'stok' => $request->stok[$i],
                 'warna' => $warna
@@ -171,7 +172,8 @@ class Barangcontroller extends Controller
             'barang'=>$request->nama_barang,
             'harga_barang'=>$request->harga_barang,
             'diskon'=>$request->diskon_barang,
-            'id_kategori'=>$kategori[0]
+            'id_kategori'=>$kategori[0],
+            'deskripsi'=>$request->deskripsi
         ]);
 
         return redirect('barang')->with('status','data berhasil di simpan');
@@ -215,9 +217,16 @@ class Barangcontroller extends Controller
    
     public function cari(Request $request)
     {
-        $databarang = DB::table('tb_barangs')->where('barang','like','%'.$request->cari.'%')->get();
-        return view('barang/pencarian',['databarang'=>$databarang, 'cari'=>$request->cari]);
+         $barang = DB::table('tb_kodes')
+            ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')
+            ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
+            ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total'))
+            ->where('tb_kodes.barang','like','%'.$request->cari.'%')
+            ->groupBy('tb_kodes.kode_barang')->get();
+//dd($databarang);
+        return view('barang/pencarian',['barang'=>$barang, 'cari'=>$request->cari]);
     }
+
     public function hapusgambar($id){
         $newkode = explode("-",$id);
         $foto = DB::table('gambar')->where('id',$newkode[0])->get();
@@ -257,6 +266,17 @@ class Barangcontroller extends Controller
      */
     public function update(Request $request, $id)
     {
+        if($request->nama_barang != $request->oldnama){
+            $warnas = DB::table('tb_barangs')->where('kode',$request->kode_barang)->get();
+            foreach ($warnas as $warna) {
+                DB::table('tb_barangs')
+                ->where('idbarang',$warna->idbarang)
+                ->update([
+                    'barang_jenis'=>$request->nama_barang." ".$warna->warna
+                ]);
+            }
+        }
+
         $kode = $request->idbarang;
         DB::table('tb_kodes')
         ->where('id',$kode)
@@ -333,19 +353,11 @@ class Barangcontroller extends Controller
              $fotos = DB::table('gambar')->where('kode_barang',$kodenya)->get();
         foreach ($fotos as $foto) {
             File::delete('img/barang/'.$foto->nama);
-        }
-        DB::table('tb_stokawals')->where('idbarang',$id)->delete();
+        }}
         DB::table('gambar')->where('kode_barang',$kodenya)->delete();
         DB::table('tb_stokawals')->where('kode_barang',$kodenya)->delete();
-        DB::table('tb_kodes')->where('kode_barang', $kodenya)->delete();
         DB::table('tb_barangs')->where('kode', $kodenya)->delete();
-            
-    }else{
-       DB::table('tb_stokawals')->where('idbarang',$id)->delete();
-        DB::table('tb_barangs')->where('idbarang', $id)->delete();
-        
-    }
-    
+        DB::table('tb_kodes')->where('kode_barang', $kodenya)->delete();
         }
         return redirect('barang')->with('status','Hapus data berhasil');  
         }
