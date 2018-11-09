@@ -42,7 +42,7 @@ class BarangImport implements ToCollection, WithHeadingRow
                     'deskripsi'=> $row['deskripsi'],
                     'diskon' => $row['diskon_barang']
                     ]);
-                }else{
+                }else if($row['varian']=="n"){
                     $newkode = $this->olderkode();
                     DB::table('tb_barangs')->insert([
                 'kode'=> $newkode,
@@ -50,7 +50,7 @@ class BarangImport implements ToCollection, WithHeadingRow
                 'warna' => $row['warna'],
                 'barang_jenis'=>$row['nama_barang']
             ]);
-                }
+                }else{}
             
         }
     }

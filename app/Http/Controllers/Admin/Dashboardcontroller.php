@@ -15,18 +15,19 @@ class DashboardController extends Controller
 
     	$tgl = date('d-m-Y');
     	$check = DB::table('tb_stokawals')->where('tgl',$tgl)->count();
-    	if($check > 0 ){
-    		
-    	}else{
-    		$databarang = DB::table('tb_barangs')->get();
-
+        if($check <= 0 ){
+            $databarang = DB::table('tb_kodes')
+            ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
+            ->select('tb_kodes.*','tb_barangs.warna','tb_barangs.stok')
+            ->get();
+            //dd($barang);
     		foreach ($databarang as $row) {
     			DB::table('tb_stokawals')
     				->insert([
-    					'idbarang'=>$row->idbarang,
-    					'kode_barang'=>$row->kode,
+    					'idbarang'=>$row->id,
+    					'kode_barang'=>$row->kode_barang,
     					'barang'=>$row->barang,
-    					'jumlah'=>$row->stok,
+                        'jumlah'=>$row->stok,
     					'tgl'=>$tgl
     				]);
     		}
