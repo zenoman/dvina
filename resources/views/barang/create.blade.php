@@ -72,7 +72,7 @@
 
                                         <div class="form-group">
                                             <label>Foto</label>
-                                            <input type="file" class="form-control" name="photo[]" multiple>
+                                            <input type="file" class="form-control" name="photo[]" multiple required>
                                             <p class="help-block">*Foto Tidak Lebih Dari 4 File</p> 
                                         </div>
                                          @if (session('errorfoto'))

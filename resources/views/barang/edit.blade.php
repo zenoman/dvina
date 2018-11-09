@@ -27,7 +27,7 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Edit Gambar
+                            <h4>Edit Gambar</h4>
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -36,14 +36,14 @@
                              $kodebaru = $foto->id."-".$idnya;
                              ?>
                                 <div class="col-md-3">
-                                <img src="../../img/barang/{{$foto->nama}}" style="width:100%;height: 100%">
-                                <a href="../../barang/{{$kodebaru}}/hapusgambar" onclick="return confirm('Apakah anda yakin menghapus gambar ini ?')" class="btn btn-block btn-danger">Hapus Foto</a>
+                                <img src="{{asset('img/barang/'.$foto->nama)}}" style="width:100%;height: 100%">
+                                <a href="{{url('barang/'.$kodebaru.'/hapusgambar')}}" onclick="return confirm('Apakah anda yakin menghapus gambar ini ?')" class="btn btn-block btn-danger">Hapus Foto</a>
                                 <br>
                                 </div>
                                 @endforeach
                             </div>
                             @if($jumlah_foto<4)
-                            <form method="post" action="../../barang/{{$idnya}}/editgambar" enctype="multipart/form-data">
+                            <form method="post" action="/barang/{{$idnya}}/editgambar" enctype="multipart/form-data">
                             <div class="form-group">
                                 <input type="hidden" name="kode_barang" value="{{$kode}}">
                                 <input type="hidden" name="jumlah_file" value="{{4-$jumlah_foto}}">
@@ -59,7 +59,10 @@
                     @endif
                             {{csrf_field()}}
                              <input class="btn btn-primary" type="submit" name="submit" value="simpan">    
+                            <a href="{{url('/barang')}}" class="btn btn-danger">Kembali</a>
                             </form>
+                            @else
+                             <a href="{{url('/barang')}}" class="btn btn-danger">Kembali</a>
                             @endif
                         </div>
                     </div>
@@ -68,32 +71,37 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Isi Data Dibawah Ini Sesuai Perintah !
+                            <h4>Edit Data Barang</h4>
                         </div>
                         <div class="panel-body">
                             <div class="row">
                              
                                 <div class="col-lg-12">
                              @foreach($barang as $row)
-                                    <form action="/barang/{{$row->idbarang}}" role="form" method="POST" enctype="multipart/form-data">
-                                        <input type="hidden" name="idbarang" value="{{$row->idbarang}}">
+                                    <form action="/barang/{{$row->id}}" role="form" method="POST" enctype="multipart/form-data">
+                                        <input type="hidden" name="idbarang" value="{{$row->id}}">
                                         <div class="form-group">
                                             <label>Kode Barang</label>
-                                            <input type="text" class="form-control" name="kode_barang" value="{{$row->kode}}" readonly required>
+                                            <input type="text" class="form-control" name="kode_barang" value="{{$row->kode_barang}}" readonly required>
                                         </div>
 
                                         <!--halo hhhh-->
                                         <div class="form-group">
                                             <label>Nama Barang</label>
-                                            <input type="text" class="form-control" name="nama_barang" value="{{$row->barang}}" required readonly>
+                                            <input type="text" class="form-control" name="nama_barang" value="{{$row->barang}}" required>
                                         </div>
+                                        
                                         <div class="form-group">
                                             <label>Kategori</label>
-                                            <input type="text" class="form-control" name="kategori_barang" readonly>
+                                            <select class="form-control" name="kategori_barang">
+                                                @foreach($kategori as $kat)
+                                                <option value="{{$kat->id}}" @if($kat->id==$row->id_kategori)selected @endif >{{$kat->kategori}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Harga Barang</label>
-                                            <input type="text" onkeypress="return isNumberKey(event)" class="form-control" name="harga_barang" value="{{$row->harga}}" required>
+                                            <input type="text" onkeypress="return isNumberKey(event)" class="form-control" name="harga_barang" value="{{$row->harga_barang}}">
                                         </div>
 
                                         <div class="form-group">
@@ -101,15 +109,11 @@
                                             <input type="text" onkeypress="return isNumberKey(event)" class="form-control" name="diskon_barang" value="{{$row->diskon}}" required>
                                         </div>
                                         
-                                        <div class="form-group">
-                                        <label>Warna</label>
-                                        <input type="text" name="warna" value="{{$row->warna}}" class="form-control" required>
-                                        </div>
                                         {{csrf_field()}}
                                         <input type="hidden" name="_method" value="PUT">
                                         <input class="btn btn-primary" type="submit" name="submit" value="simpan">
                                         
-                                         <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>
+                                         <a href="{{url('/barang')}}" class="btn btn-danger">Kembali</a>
                                     </form>
                                     @endforeach
                                 </div>
@@ -120,6 +124,98 @@
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                           <h4>Edit Variasi Warna & Stok</h4>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div>
+                              <form class="form-inline" action="{{url('/barang/warna')}}" method="post">
+                                <div class="form-group">
+                                  <label for="email">Warna:</label>
+                                  <input type="text" class="form-control" placeholder="Masukan Warna" name="warna">
+                                </div>
+                                <div class="form-group">
+                                  <label for="pwd">Stok:</label>
+                                  <input type="text" onkeypress="return isNumberKey(event)" class="form-control" placeholder="Masukan Stok" name="stok">
+                                  <input type="hidden" name="kode" value="{{$kode}}">
+                                </div>
+                                {{@csrf_field()}}
+                                <button type="submit" class="btn btn-success">Simpan</button>
+                              </form>
+                            </div>
+                            <hr>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Warna</th>
+                                            <th>Stok</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                        $i = 0;
+                                        ?>
+                                        @foreach($warna as $war)
+                                        <?php $i++; ?>
+                                        <tr>
+                                            <td>{{$i}}</td>
+                                            <td>{{$war->warna}}</td>
+                                            <td>{{$war->stok}} Pcs</td>
+                                            <td>
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal{{$war->idbarang}}">Edit</button>
+
+                                <div class="modal fade" id="myModal{{$war->idbarang}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">Edit Data</h4>
+                                        </div>
+                                        <form role="form" method="POST" action="{{url('/barang/'.$war->idbarang.'/updatewarna')}}" enctype="multipart/form-data">
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>warna</label>
+                                            <input class="form-control" name="warna" type="text" required value="{{$war->warna}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Stok</label>
+                                            <input class="form-control" onkeypress="return isNumberKey(event)" name="stok" type="text" value="{{$war->stok}}" required>
+
+                                        </div>
+                                        {{ csrf_field() }}
+                                       <input type="hidden" name="_method" value="PUT">
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                                                <a onclick="return confirm('Hapus Data ?')" href="{{url('/barang/'.$war->idbarang.'/hapuswarna')}}" class="btn btn-danger">hapus</a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                <a href="{{url('/barang')}}" class="btn btn-danger">Kembali</a>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
                 </div>
                 <!-- /.col-lg-12 -->
                 

@@ -80,7 +80,6 @@
                                         <th>Kategori</th>
                                         <th>Harga</th>
                                         <th>Diskon</th>
-                                        <th>Warna</th>
                                         <th>Stok</th>
                                         <th class="text-center">Aksi</th>
                                         <th>#</th>
@@ -92,19 +91,18 @@
                                     <?php $i++; ?>
                                     <tr>
                                    		<td>{{$i}}</td>
-                                   		<td>{{$row->kode}}</td>
+                                   		<td>{{$row->kode_barang}}</td>
                                         <td>{{$row->barang}}</td>
                                         <td>{{$row->kategori}}</td>
-                                        <td>{{$row->harga}}</td>
+                                        <td>{{$row->harga_barang}}</td>
                                         <td>{{$row->diskon}}</td>
-                                        <td><b>{{$row->warna}}</b></td>
-                                        <td>{{$row->stok}}</td>
+                                        <td>{{$row->total}}</td>
                                         <td class="text-center">
-                                            <a href="{{url('barang/'.$row->idbarang.'/tambahstok')}}" class="btn btn-warning"><i class="fa fa-plus"></i></a>
-                                            <a href="{{url('barang/'.$row->idbarang.'/edi')}}t" class="btn btn-success"><i class="fa fa-wrench"></i></a>
-                                            <a onclick="return confirm('Hapus Data ?')" href="{{url('barang/'.$row->idbarang.'/hapus')}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                            <!--a href="{{url('barang/'.$row->id.'/tambahstok')}}" class="btn btn-warning"><i class="fa fa-plus"></i></a-->
+                                            <a href="{{url('barang/'.$row->id.'/edit')}}" class="btn btn-success"><i class="fa fa-wrench"></i></a>
+                                            <a onclick="return confirm('Hapus Data ?')" href="{{url('barang/'.$row->id.'/hapus')}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                         </td>
-                                        <td align="center" bgcolor="#FFFFFF"><input name="kodebarang[]" type="checkbox" id="checkbox[]" value="{{$row->idbarang}}"></td>
+                                        <td align="center" bgcolor="#FFFFFF"><input name="kodebarang[]" type="checkbox" id="checkbox[]" value="{{$row->id}}"></td>
                                    	</tr>
                                     @endforeach
                                     

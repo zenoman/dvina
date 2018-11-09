@@ -15,7 +15,6 @@ class Barangs extends Migration
     {
         Schema::create('tb_barangs', function (Blueprint $table) {
             $table->increments('idbarangs');            
-            $table->string('idkategori');            
             $table->string('kode');
             $table->string('barang');                        
             $table->string('harga');

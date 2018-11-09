@@ -15,8 +15,9 @@ class userUtama extends Controller
      */
     public function index()
     {
+        $barangbaru = DB::table('tb_barangs')->orderby('idbarang','desc')->limit(8)->get();
         $slider = DB::table('sliders')->get();
-        return view("frontend/home",['sliders'=>$slider]);
+        return view("frontend/home",['sliders'=>$slider, 'barangbaru'=>$barangbaru]);
     }
 
     /**
@@ -26,6 +27,7 @@ class userUtama extends Controller
      */
 
     public function semuaproduk(){
+
         return view('frontend/semuaproduk');
     }
     public function create()
