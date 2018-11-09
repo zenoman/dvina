@@ -35,6 +35,9 @@ Route::post('/kategori','Admin\Kategoricontroller@store');
 Route::put('/kategori/{id}/update','Admin\Kategoricontroller@update');
 Route::get('/kategori/{id}/delete','Admin\Kategoricontroller@destroy');
 //============================================================
+Route::put('/barang/{id}/updatewarna','Admin\Barangcontroller@updatewarna');
+Route::get('/barang/{id}/hapuswarna','Admin\Barangcontroller@hapuswarna');
+Route::post('/barang/warna','Admin\Barangcontroller@tambahwarna');
 Route::post('/barang/cari','Admin\Barangcontroller@cari');
 Route::get('/barang','Admin\Barangcontroller@index');
 Route::get('/barang/create','Admin\Barangcontroller@create');

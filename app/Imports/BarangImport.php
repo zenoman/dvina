@@ -27,34 +27,31 @@ class BarangImport implements ToCollection, WithHeadingRow
 
         return $newkode;
     }
-
-    function insertkode($nama_barang){
-        $kode = $this->kode();
-        DB::table('tb_kodes')->insert([
-            'kode_barang'=>$kode,
-            'barang'=>$nama_barang
-        ]);
-    }
   
       public function collection(Collection $rows)
     {
         foreach ($rows as $row) 
         {
             if($row['varian']=="y"){
-                    $this->insertkode($row['nama_barang']);
-                    $newkode = $this->olderkode();
+                     $kode = $this->kode();
+                    DB::table('tb_kodes')->insert([
+                    'kode_barang'=>$kode,
+                    'barang'=>$row['nama_barang'],
+                    'id_kategori'=>$row['id_kategori'],
+                    'harga_barang' => $row['harga_barang'],
+                    'deskripsi'=> $row['deskripsi'],
+                    'diskon' => $row['diskon_barang']
+                    ]);
                 }else{
                     $newkode = $this->olderkode();
-                }
-            DB::table('tb_barangs')->insert([
-                'idkategori'=>$row['id_kategori'],
+                    DB::table('tb_barangs')->insert([
                 'kode'=> $newkode,
-                'barang' => $row['nama_barang'],
-                'harga' => $row['harga_barang'],
-                'diskon' => $row['diskon_barang'],
                 'stok' => $row['stok'],
-                'warna' => $row['warna']
+                'warna' => $row['warna'],
+                'barang_jenis'=>$row['nama_barang']
             ]);
+                }
+            
         }
     }
 }
