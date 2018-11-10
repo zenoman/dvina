@@ -36,15 +36,15 @@
                                                <br><br>
                                                <img src="{{url('img/web/dvina2.PNG')}}"><br><br>
                                                <li>
-                                                   isi nama_barang dan warna dengan format text, kemudian untuk harga_barang, diskon_barang dan stok isi dengan format angka. Untuk lebih jelas lihat gambar di bawah
+                                                   isi nama_barang dan deskripsi dengan format text, kemudian untuk harga_barang, diskon_barang isi dengan format angka. Kosongkan stok dan warna pada barang utama. Untuk lebih jelas lihat gambar di bawah
                                                </li><br>
                                                <img src="{{url('img/web/dvina3.PNG')}}"><br><br>
                                                <li>
-                                                   Selanjutnya varian, varian hanya dapat di isi dengan huruf <b>y</b> atau <b>n</b> dan pastikan huruf kecil, huruf <b>y</b> digunakan untuk barang utama sedangkan <b>n</b> digunakan untuk variasi warna barang utama, pastikan variasi barang memiliki data <b>id_kategori</b>,<b>nama_barang</b>, <b>nama_kategori</b> yang sama dengan barang utamanya. untuk lebih jelas lihat contoh berikut
+                                                   Selanjutnya varian, varian hanya dapat di isi dengan huruf <b>y</b> atau <b>n</b> dan pastikan huruf kecil, huruf <b>y</b> digunakan untuk barang utama sedangkan <b>n</b> digunakan untuk variasi warna barang utama, pastikan variasi barang memiliki data <b>nama_barang</b>, <b>stok</b>, <b>warna</b> dan <b>varian(n)</b> kosongkan data lain selain data tersebut. <b>nama_barang</b> pada varian adalah nama barang di tambah warna, ini bersifat wajib. untuk lebih jelas lihat contoh berikut
                                                </li><br>
                                                <img src="{{url('img/web/dvina4.PNG')}}"><br><br>
                                                <div class="alert alert-warning">
-                                                dari gambar di atas menunjukan bahwa barang <b>kerudung kediri</b> memiliki variasi warna : merah, abu-abu & putih kemudian <b>kerudung malang</b> tidak memiliki warna lain kecuali merah maroon lalu <b>kerudung nganjuk</b> memiliki varian warna : biru laut & biru tua
+                                                dari gambar di atas menunjukan bahwa barang <b>kerudung kediri</b> memiliki variasi warna : merah & biru kemudian <b>kerudung malang</b> tidak memiliki warna lain kecuali putih.
                                                </div><br>
                                                <li>Kemudian save <b>template.xlsx</b> dan upload di tab paling bawah yaitu <b>upload file</b>, jangan lupa setelah proses upload selesai tambahkan gambar pada barang-barang tersebut </li><br>
                                                <div class="alert alert-danger">
