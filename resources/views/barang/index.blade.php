@@ -109,7 +109,7 @@
                                 </tbody>
                             </table>
                             <div class="pull-right">
-                            <input type="submit" name="submit" class="btn btn-block btn-danger" value="hapus data terpilih">    
+                            <input onclick="return confirm('Hapus Data Terpilih ?')" type="submit" name="submit" class="btn btn-block btn-danger" value="hapus data terpilih">    
                             </div>
                             {{csrf_field()}}
                         </form>

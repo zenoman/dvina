@@ -9,6 +9,7 @@ use App\Imports\BarangImport;
 use App\Exports\KategoriExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
 
 class Barangcontroller extends Controller
 {
@@ -36,14 +37,43 @@ class Barangcontroller extends Controller
 
     }
     public function updatewarna(Request $request, $id){
+        if ($request->oldstok < $request->stok) {
+            $stok = $request->stok - $request->oldstok;
+            DB::table('tb_tambahstoks')
+            ->insert([
+                'idwarna'=>$id,
+                'idadmin'=>Session::get('iduser'),
+                'kode_barang'=>$request->kode,
+                'jumlah'=>$stok,
+                'tgl'=>date("d-m-Y"),
+                'total'=>$request->harga_barang*$stok,
+                'keterangan'=>$request->deskripsi,
+                'aksi'=>'tambah'
+
+            ]);
+        }elseif($request->oldstok > $request->stok){
+            $stok = $request->oldstok - $request->stok;
+            DB::table('tb_tambahstoks')
+            ->insert([
+                'idwarna'=>$id,
+                'idadmin'=>Session::get('iduser'),
+                'kode_barang'=>$request->kode,
+                'jumlah'=>$stok,
+                'tgl'=>date("d-m-Y"),
+                'total'=>$request->harga_barang*$stok,
+                'keterangan'=>$request->deskripsi,
+                'aksi'=>'kurangi'
+
+            ]);
+        }
+
         DB::table('tb_barangs')
         ->where('idbarang',$id)
         ->update([
             'stok' => $request->stok,
             'warna' =>$request->warna
         ]);
-
-        return back();
+                return back();
     }
     public function hapuswarna($id){
         DB::table('tb_barangs')->where('idbarang',$id)->delete();
@@ -175,6 +205,26 @@ class Barangcontroller extends Controller
             'id_kategori'=>$kategori[0],
             'deskripsi'=>$request->deskripsi
         ]);
+        //==================================================
+          $kode = DB::table('tb_kodes')->max('kode_barang');
+        if($kode != NULL){
+            $databarang = DB::table('tb_kodes')
+            ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
+            ->select('tb_kodes.*','tb_barangs.warna','tb_barangs.stok','tb_barangs.idbarang')
+            ->where('tb_kodes.kode_barang',$kode)
+            ->get();
+            foreach ($databarang as $row) {
+                DB::table('tb_stokawals')
+                    ->insert([
+                        'idbarang'=>$row->id,
+                        'idwarna'=>$row->idbarang,
+                        'kode_barang'=>$row->kode_barang,
+                        'barang'=>$row->barang,
+                        'jumlah'=>$row->stok,
+                        'tgl'=>date('d-m-Y')
+                    ]);
+            }
+        }
 
         return redirect('barang')->with('status','data berhasil di simpan');
     }
@@ -257,13 +307,6 @@ class Barangcontroller extends Controller
         return view('barang/edit',['kategori'=>$kategori,'barang'=>$barang,'warna'=>$warna,'fotos'=>$fotos,'idnya'=>$id,'kode'=>$kode,'jumlah_foto'=>$jumlah_foto,'warna'=>$barangwarna]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         if($request->nama_barang != $request->oldnama){
@@ -275,6 +318,15 @@ class Barangcontroller extends Controller
                     'barang_jenis'=>$request->nama_barang." ".$warna->warna
                 ]);
             }
+
+            $stawals = DB::table('tb_stokawals')->where('kode_barang',$request->kode_barang)->get();
+            foreach ($stawals as $stawal) {
+                 DB::table('tb_stokawals')
+                ->where('id',$stawal->id)
+                ->update([
+                    'barang'=>$request->nama_barang
+                ]);
+            }
         }
 
         $kode = $request->idbarang;
@@ -284,19 +336,13 @@ class Barangcontroller extends Controller
             'id_kategori'=>$request->kategori_barang,
             'barang'=>$request->nama_barang,
             'harga_barang'=>$request->harga_barang,
+            'deskripsi'=>$request->deskripsi,
             'diskon'=>$request->diskon_barang
 
         ]);
-
         return back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $barang = DB::table('tb_kodes')
@@ -316,16 +362,16 @@ class Barangcontroller extends Controller
         foreach ($fotos as $foto) {
             File::delete('img/barang/'.$foto->nama);
         }
-        DB::table('tb_stokawals')->where('idbarang',$id)->delete();
         DB::table('gambar')->where('kode_barang',$kodenya)->delete();
-        DB::table('tb_stokawals')->where('kode_barang',$kodenya)->delete();
-        DB::table('tb_kodes')->where('kode_barang', $kodenya)->delete();
+        DB::table('tb_tambahstoks')->where('kode_barang', $kodenya)->delete();
+        DB::table('tb_stokawals')->where('idbarang',$id)->delete();
         DB::table('tb_barangs')->where('kode', $kodenya)->delete();
-            
+        DB::table('tb_kodes')->where('kode_barang', $kodenya)->delete();    
     }else{
-       DB::table('tb_stokawals')->where('idbarang',$id)->delete();
-        DB::table('tb_barangs')->where('idbarang', $id)->delete();
-        
+        DB::table('tb_tambahstoks')->where('kode_barang', $kodenya)->delete();
+        DB::table('tb_stokawals')->where('idbarang',$id)->delete();
+        DB::table('tb_barangs')->where('kode', $kodenya)->delete();
+        DB::table('tb_kodes')->where('kode_barang', $kodenya)->delete();
     }
     return redirect('barang')->with('status','Hapus data berhasil');
         
@@ -354,6 +400,7 @@ class Barangcontroller extends Controller
         foreach ($fotos as $foto) {
             File::delete('img/barang/'.$foto->nama);
         }}
+        DB::table('tb_tambahstoks')->where('kode_barang', $kodenya)->delete();
         DB::table('gambar')->where('kode_barang',$kodenya)->delete();
         DB::table('tb_stokawals')->where('kode_barang',$kodenya)->delete();
         DB::table('tb_barangs')->where('kode', $kodenya)->delete();

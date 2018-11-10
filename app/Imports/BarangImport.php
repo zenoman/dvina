@@ -32,7 +32,7 @@ class BarangImport implements ToCollection, WithHeadingRow
     {
         foreach ($rows as $row) 
         {
-            if($row['varian']=="y"){
+            if($row['varian']=='y'){
                      $kode = $this->kode();
                     DB::table('tb_kodes')->insert([
                     'kode_barang'=>$kode,
@@ -42,7 +42,7 @@ class BarangImport implements ToCollection, WithHeadingRow
                     'deskripsi'=> $row['deskripsi'],
                     'diskon' => $row['diskon_barang']
                     ]);
-                }else if($row['varian']=="n"){
+                }else if($row['varian']=='n'){
                     $newkode = $this->olderkode();
                     DB::table('tb_barangs')->insert([
                 'kode'=> $newkode,
@@ -50,7 +50,32 @@ class BarangImport implements ToCollection, WithHeadingRow
                 'warna' => $row['warna'],
                 'barang_jenis'=>$row['nama_barang']
             ]);
-                }else{}
+
+        $kode = DB::table('tb_kodes')->max('kode_barang');
+        if($kode != NULL){
+            $databarang = DB::table('tb_kodes')
+            ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
+            ->select('tb_kodes.*','tb_barangs.warna','tb_barangs.stok','tb_barangs.idbarang')
+            ->where('tb_kodes.kode_barang',$kode)
+            ->orderby('tb_barangs.idbarang','desc')
+            ->limit(1)
+            ->get();
+            foreach ($databarang as $rw) {
+                DB::table('tb_stokawals')
+                    ->insert([
+                        'idbarang'=>$rw->id,
+                        'idwarna'=>$rw->idbarang,
+                        'kode_barang'=>$rw->kode_barang,
+                        'barang'=>$rw->barang,
+                        'jumlah'=>$rw->stok,
+                        'tgl'=>date('d-m-Y')
+                    ]);
+            }
+                }
+                    }
+
+
+            
             
         }
     }
