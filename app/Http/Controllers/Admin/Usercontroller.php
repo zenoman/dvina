@@ -155,8 +155,10 @@ class Usercontroller extends Controller
     $newpass =md5($request->password_lama);
         if($request->password==$newpass){
             if($request->konfirmasi_password_baru==$request->password_baru){
+                 
                  Usermodel::find($id)->update([
-        'password' => $request->konfirmasi_password_baru]);
+        'password' => md5($request->konfirmasi_password_baru)
+    ]);
         return redirect('user')->with('status','Edit Password Berhasil');
             }else{
              return redirect('user/'.$id.'/changepass')->with('errorpass2','Maaf, Konfimasi Password Baru Anda Salah');

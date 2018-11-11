@@ -22,8 +22,13 @@ class Logincontroller extends Controller
         $password = md5($request->password);
 
         $data = DB::table('admins')->where([['username',$username],['password',$password]])->count();
+        $datausers = DB::table('admins')->where([['username',$username],['password',$password]])->get();
+        foreach ($datausers as $datauser) {
+            $id = $datauser->id;
+        }
         if($data>0){
                 Session::put('username',$request->username);
+                Session::put('iduser',$id);
                 Session::put('login',TRUE);
                 return redirect('dashboard');
         }else{
@@ -33,6 +38,10 @@ class Logincontroller extends Controller
     public function logout(){
         Session::flush();
         return redirect('login');
+    }
+    public function logoutuser(){
+        Session::flush();
+        return back();   
     }
     public function validatelogin(){
         Session::flush();
@@ -44,11 +53,29 @@ class Logincontroller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function loginuser()
     {
-        //
+        return view('login/loginuser');
     }
+    public function masukuser(Request $request){
+        $username = $request->username;
+        $password = md5($request->password);
 
+        $data = DB::table('tb_users')->where([['username',$username],['password',$password]])->count();
+        // $datausers = DB::table('admins')->where([['username',$username],['password',$password]])->get();
+        // foreach ($datausers as $datauser) {
+        //     $id = $datauser->id;
+        // }
+        if($data>0){
+                Session::put('user_name',$request->username);
+                //Session::put('user_id',$id);
+                Session::put('login',TRUE);
+                return redirect('/');
+        }else{
+            dd('username atau password salah');
+            //return redirect('/loginUser')->with('errorlogin','username atau password salah');
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *

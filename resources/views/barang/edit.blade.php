@@ -101,6 +101,10 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
+                                            <label>Deskripsi Barang</label>
+                                            <textarea class="form-control" name="deskripsi" rows="5">{{$row->deskripsi}}</textarea>
+                                        </div>
+                                        <div class="form-group">
                                             <label>Harga Barang</label>
                                             <input type="text" onkeypress="return isNumberKey(event)" class="form-control" name="harga_barang" value="{{$row->harga_barang}}">
                                         </div>
@@ -185,10 +189,17 @@
                                             <label>warna</label>
                                             <input class="form-control" name="warna" type="text" required value="{{$war->warna}}">
                                         </div>
+                                        <input type="hidden" name="kode" value="{{$kode}}">
+                                         <input type="hidden" name="harga_barang" value="{{$row->harga_barang}}">
                                         <div class="form-group">
                                             <label>Stok</label>
                                             <input class="form-control" onkeypress="return isNumberKey(event)" name="stok" type="text" value="{{$war->stok}}" required>
-
+                                            <input name="oldstok" type="hidden" value="{{$war->stok}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Keterangan</label>
+                                            <textarea class="form-control" name="deskripsi" rows="3"></textarea>
+                                            <p class="help-block">Masukan Keterangan kenapa anda mengedit variasi warna ini.</p>
                                         </div>
                                         {{ csrf_field() }}
                                        <input type="hidden" name="_method" value="PUT">

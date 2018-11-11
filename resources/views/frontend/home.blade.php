@@ -37,8 +37,11 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                            @if(!Session::get('user_name'))
+                            <li><a href="{{url('/loginUser')}}"><i class="fa fa-user"></i> Login</a></li>
+                            @else
                             <li><a href="cart.html"><i class="fa fa-shopping-cart"></i>Keranjang Saya</a></li>
+                            @endif
                             <!--li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li-->
                             <li><a href="{{url('/login')}}"><i class="fa fa-users"></i>Login Admin</a></li>
                         </ul>
@@ -46,18 +49,20 @@
                 </div>
                 
                 <div class="col-md-4">
+                    @if(Session::get('user_name'))
                     <div class="header-right">
                         <ul class="list-unstyled list-inline">
                             <li class="dropdown dropdown-small">
-                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">Jhon Doe</span><b class="caret"></b></a>
+                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">{{Session::get('user_name')}}</span><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Edit Profile</a></li>
-                                    <li><a href="#">Logout</a></li>
+                                    <li><a href="{{url('/login/logoutuser')}}">Logout</a></li>
                                 </ul>
                             </li>
 
                         </ul>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -73,9 +78,11 @@
                 </div>
                 
                 <div class="col-sm-6">
+                    @if(Session::get('user_name'))
                     <div class="shopping-item">
-                        <a href="cart.html">Cart - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="cart.html">Keranjang - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -94,8 +101,8 @@
                 </div> 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">Home</a></li>
-                        <li><a href="shop.html">Semua Produk</a></li>
+                        <li class="active"><a href="{{url('/')}}">Home</a></li>
+                        <li><a href="{{url('/semuaproduk')}}">Semua Produk</a></li>
                         <li><a href="single-product.html">Hubungi Kami</a></li>
                         <!--li><a href="cart.html">Cart</a></li>
                         <li><a href="checkout.html">Checkout</a></li>
@@ -114,6 +121,7 @@
 				<ul class="" id="bxslider-home4">
 					@foreach($sliders as $slider)
                     <li>
+                        
 						<img src="{{asset('img/slider/'.$slider->foto)}}" alt="Slide">
 						<div class="caption-group">
 							<h2 class="caption title">
@@ -135,26 +143,26 @@
             <div class="row">
                 <div class="col-md-3 col-sm-6">
                     <div class="single-promo promo1">
-                        <i class="fa fa-refresh"></i>
-                        <p>30 Days return</p>
+                        <i class="fa fa-child"></i>
+                        <p>Harga Murah</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="single-promo promo2">
                         <i class="fa fa-truck"></i>
-                        <p>Free shipping</p>
+                        <p>Pengiriman Rapi</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="single-promo promo3">
-                        <i class="fa fa-lock"></i>
-                        <p>Secure payments</p>
+                        <i class="fa fa-rocket"></i>
+                        <p>Respon Cepat</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="single-promo promo4">
                         <i class="fa fa-gift"></i>
-                        <p>New products</p>
+                        <p>Produk Berkuwalitas</p>
                     </div>
                 </div>
             </div>
@@ -172,17 +180,36 @@
                             @foreach($barangbaru as $barangterbaru)
                             <div class="single-product">
                                 <div class="product-f-image">
-                                    <img src="img/product-6.jpg" alt="">
+                                    @php
+                                    $kode_barang = $barangterbaru->kode_barang;
+                                    $foto = DB::table('gambar')
+                                    ->where('kode_barang', $kode_barang)
+                                    ->limit(1)
+                                    ->get();
+                                    @endphp
+                                    @foreach($foto as $ft)
+                                    <img src="{{asset('img/barang/'.$ft->nama)}}" style="height:80%;" alt="">
+                                    @endforeach
                                     <div class="product-hover">
                                         <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                                         <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> See details</a>
                                     </div>
                                 </div>
                                 
-                                <h2><a href="single-product.html"></a></h2>
+                                <h2><a href="single-product.html">{{$barangterbaru->barang}}</a></h2>
 
                                 <div class="product-carousel-price">
-                                    <ins>$400.00</ins>
+                                    @if($barangterbaru->diskon > 0)
+                                    @php
+                                    $hargadiskon = $barangterbaru->harga_barang - $barangterbaru->diskon; 
+                                    @endphp
+                                    <ins>{{"Rp ". number_format($hargadiskon,0,',','.')}}</ins>
+                                    <del>{{"Rp ". number_format($barangterbaru->harga_barang,0,',','.')}}</del>
+                                    <p>{{"Stok : ".$barangterbaru->total}}</p>
+                                    @else
+                                    <ins>{{"Rp ". number_format($barangterbaru->harga_barang,0,',','.')}}</ins>
+                                    <p>{{"Stok : ".$barangterbaru->total}}</p>
+                                    @endif
                                 </div>                            
                             </div>
                             @endforeach
@@ -192,160 +219,79 @@
             </div>
         </div>
     </div> <!-- End main content area -->
-    
-    
-    <div class="product-widget-area">
+        
+    <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
+            <h2 class="section-title">Anda Mungkin Suka</h2>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="single-product-widget">
-                        <h2 class="product-wid-title">Top Sellers</h2>
-                        <a href="" class="wid-view-more">View All</a>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/product-thumb-1.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/product-thumb-2.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Apple new mac book 2015</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/product-thumb-3.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Apple new i phone 6</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
+                @foreach($barangsuges as $suges)
+                <div class="col-md-3 col-sm-6">
+                    <div class="single-shop-product">
+                          @php
+                                    $kode_barang = $suges->kode_barang;
+                                    $foto = DB::table('gambar')
+                                    ->where('kode_barang', $kode_barang)
+                                    ->limit(1)
+                                    ->get();
+                                    @endphp
+                                    @foreach($foto as $ft)
+                                    <div class="product-upper">
+                                    <img src="{{asset('img/barang/'.$ft->nama)}}" alt="">
+                                    </div>
+                                    @endforeach
+                       
+                        <h2><a href="">{{$suges->barang}}</a></h2>
+                        <div class="product-carousel-price">
+                              @if($suges->diskon > 0)
+                                    @php
+                                    $hargadiskon = $suges->harga_barang - $suges->diskon; 
+                                    @endphp
+                                    <ins>{{"Rp ". number_format($hargadiskon,0,',','.')}}</ins>
+                                    <del>{{"Rp ". number_format($suges->harga_barang,0,',','.')}}</del>
+                                    <p>{{"Stok : ".$suges->total}}</p>
+                                    @else
+                                    <ins>{{"Rp ". number_format($suges->harga_barang,0,',','.')}}</ins>
+                                    <p>{{"Stok : ".$suges->total}}</p>
+                                    @endif
+                        </div>  
+                        
+                        <div class="product-option-shop">
+                            <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                        </div>                       
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="single-product-widget">
-                        <h2 class="product-wid-title">Recently Viewed</h2>
-                        <a href="#" class="wid-view-more">View All</a>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/product-thumb-4.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Sony playstation microsoft</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/product-thumb-1.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Sony Smart Air Condtion</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/product-thumb-2.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Samsung gallaxy note 4</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="single-product-widget">
-                        <h2 class="product-wid-title">Top New</h2>
-                        <a href="#" class="wid-view-more">View All</a>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/product-thumb-3.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Apple new i phone 6</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/product-thumb-4.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Samsung gallaxy note 4</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/product-thumb-1.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Sony playstation microsoft</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+                
             </div>
+            
+            <!--div class="row">
+                <div class="col-md-12">
+                    <div class="product-pagination text-center">
+                        <nav>
+                          <ul class="pagination">
+                            <li>
+                              <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                              </a>
+                            </li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li>
+                              <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                              </a>
+                            </li>
+                          </ul>
+                        </nav>                        
+                    </div>
+                </div>
+            </div-->
         </div>
-    </div> <!-- End product widget area -->
-    
+    </div>  
     <div class="footer-top-area">
         <div class="zigzag-bottom"></div>
         <div class="container">

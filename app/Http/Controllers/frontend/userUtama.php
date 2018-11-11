@@ -15,9 +15,26 @@ class userUtama extends Controller
      */
     public function index()
     {
-        $barangbaru = DB::table('tb_barangs')->orderby('idbarang','desc')->limit(8)->get();
+        //$barangbaru = DB::table('tb_kodes')->orderby('id','desc')->limit(8)->get();
+        $barangbaru = DB::table('tb_kodes')
+            ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')
+            ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
+            ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total'))
+            ->groupBy('tb_kodes.kode_barang')
+            ->orderby('tb_kodes.id','desc')
+            ->limit(8)
+            ->get();
+
+        $barangsuges = DB::table('tb_kodes')
+            ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')
+            ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
+            ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total'))
+            ->groupBy('tb_kodes.kode_barang')
+            ->inRandomOrder()
+            ->limit(8)
+            ->get();
         $slider = DB::table('sliders')->get();
-        return view("frontend/home",['sliders'=>$slider, 'barangbaru'=>$barangbaru]);
+        return view("frontend/home",['sliders'=>$slider, 'barangbaru'=>$barangbaru,'barangsuges'=>$barangsuges]);
     }
 
     /**
@@ -26,10 +43,6 @@ class userUtama extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function semuaproduk(){
-
-        return view('frontend/semuaproduk');
-    }
     public function create()
     {
         //
