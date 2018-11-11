@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Input;
 //});
 
 Route::resource('/','frontend\userUtama');
-Route::get('/semuaproduk','frontend\userUtama@semuaproduk');
+Route::get('/semuaproduk','frontend\Catalogcontroller@index');
 Route::get('/logout','Logincontroller@logout');
 Route::get('/validatelogin','Logincontroller@validatelogin');
 
@@ -58,8 +58,11 @@ Route::get('barang/download','Admin\Barangcontroller@downloadtemplate');
 Route::get('/dashboard','Admin\Dashboardcontroller@index');
 //==============================================================
 Route::get('/login','Logincontroller@index');
+Route::get('/loginUser','Logincontroller@loginuser');
+Route::post('/loginUser','Logincontroller@masukuser');
 Route::post('/login/masuk','Logincontroller@masuk');
 Route::get('/login/logout','Logincontroller@logout');
+Route::get('/login/logoutuser','Logincontroller@logoutuser');
 //==============================================================
 Route::get('/setting','Admin\Settingcontroller@index');
 Route::put('/setting/{id}','Admin\Settingcontroller@update');

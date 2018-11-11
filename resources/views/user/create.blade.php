@@ -154,7 +154,7 @@
 
                                         <div class="form-group">
                                             <label>Gambar Ktp</label>
-                                            <input type="file" name="gambar_ktp">
+                                            <input type="file" name="gambar_ktp" required>
                                         </div>
                                           @if($errors->has('gambar_ktp'))
                                        <div class="alert alert-danger">

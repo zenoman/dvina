@@ -37,8 +37,11 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                            @if(!Session::get('user_name'))
+                            <li><a href="{{url('/loginUser')}}"><i class="fa fa-user"></i> Login</a></li>
+                            @else
                             <li><a href="cart.html"><i class="fa fa-shopping-cart"></i>Keranjang Saya</a></li>
+                            @endif
                             <!--li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li-->
                             <li><a href="{{url('/login')}}"><i class="fa fa-users"></i>Login Admin</a></li>
                         </ul>
@@ -46,18 +49,20 @@
                 </div>
                 
                 <div class="col-md-4">
+                    @if(Session::get('user_name'))
                     <div class="header-right">
                         <ul class="list-unstyled list-inline">
                             <li class="dropdown dropdown-small">
-                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">Jhon Doe</span><b class="caret"></b></a>
+                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">{{Session::get('user_name')}}</span><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Edit Profile</a></li>
-                                    <li><a href="#">Logout</a></li>
+                                    <li><a href="{{url('/login/logoutuser')}}">Logout</a></li>
                                 </ul>
                             </li>
 
                         </ul>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -73,9 +78,11 @@
                 </div>
                 
                 <div class="col-sm-6">
+                    @if(Session::get('user_name'))
                     <div class="shopping-item">
-                        <a href="cart.html">Cart - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="cart.html">Keranjang - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -94,8 +101,8 @@
                 </div> 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">Home</a></li>
-                        <li><a href="shop.html">Semua Produk</a></li>
+                        <li class="active"><a href="{{url('/')}}">Home</a></li>
+                        <li><a href="{{url('/semuaproduk')}}">Semua Produk</a></li>
                         <li><a href="single-product.html">Hubungi Kami</a></li>
                         <!--li><a href="cart.html">Cart</a></li>
                         <li><a href="checkout.html">Checkout</a></li>
@@ -136,26 +143,26 @@
             <div class="row">
                 <div class="col-md-3 col-sm-6">
                     <div class="single-promo promo1">
-                        <i class="fa fa-refresh"></i>
-                        <p>30 Days return</p>
+                        <i class="fa fa-child"></i>
+                        <p>Harga Murah</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="single-promo promo2">
                         <i class="fa fa-truck"></i>
-                        <p>Free shipping</p>
+                        <p>Pengiriman Rapi</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="single-promo promo3">
-                        <i class="fa fa-lock"></i>
-                        <p>Secure payments</p>
+                        <i class="fa fa-rocket"></i>
+                        <p>Respon Cepat</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="single-promo promo4">
                         <i class="fa fa-gift"></i>
-                        <p>New products</p>
+                        <p>Produk Berkuwalitas</p>
                     </div>
                 </div>
             </div>
@@ -216,12 +223,13 @@
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
+            <h2 class="section-title">Anda Mungkin Suka</h2>
             <div class="row">
-                @foreach($barangbaru as $barangterbaru)
+                @foreach($barangsuges as $suges)
                 <div class="col-md-3 col-sm-6">
                     <div class="single-shop-product">
                           @php
-                                    $kode_barang = $barangterbaru->kode_barang;
+                                    $kode_barang = $suges->kode_barang;
                                     $foto = DB::table('gambar')
                                     ->where('kode_barang', $kode_barang)
                                     ->limit(1)
@@ -233,9 +241,19 @@
                                     </div>
                                     @endforeach
                        
-                        <h2><a href="">{{$barangterbaru->barang}}</a></h2>
+                        <h2><a href="">{{$suges->barang}}</a></h2>
                         <div class="product-carousel-price">
-                            <ins>$899.00</ins> <del>$999.00</del>
+                              @if($suges->diskon > 0)
+                                    @php
+                                    $hargadiskon = $suges->harga_barang - $suges->diskon; 
+                                    @endphp
+                                    <ins>{{"Rp ". number_format($hargadiskon,0,',','.')}}</ins>
+                                    <del>{{"Rp ". number_format($suges->harga_barang,0,',','.')}}</del>
+                                    <p>{{"Stok : ".$suges->total}}</p>
+                                    @else
+                                    <ins>{{"Rp ". number_format($suges->harga_barang,0,',','.')}}</ins>
+                                    <p>{{"Stok : ".$suges->total}}</p>
+                                    @endif
                         </div>  
                         
                         <div class="product-option-shop">
