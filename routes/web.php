@@ -63,6 +63,7 @@ Route::post('/loginUser','Logincontroller@masukuser');
 Route::post('/login/masuk','Logincontroller@masuk');
 Route::get('/login/logout','Logincontroller@logout');
 Route::get('/login/logoutuser','Logincontroller@logoutuser');
+Route::post('/login/register','Logincontroller@register');
 //==============================================================
 Route::get('/setting','Admin\Settingcontroller@index');
 Route::put('/setting/{id}','Admin\Settingcontroller@update');

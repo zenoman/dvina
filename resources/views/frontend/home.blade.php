@@ -188,11 +188,11 @@
                                     ->get();
                                     @endphp
                                     @foreach($foto as $ft)
-                                    <img src="{{asset('img/barang/'.$ft->nama)}}" style="height:80%;" alt="">
+                                    <img src="{{asset('img/barang/'.$ft->nama)}}" alt="">
                                     @endforeach
                                     <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                                        <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> See details</a>
+                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Masukan Keranjang</a>
+                                        <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> Detail</a>
                                     </div>
                                 </div>
                                 
@@ -257,7 +257,7 @@
                         </div>  
                         
                         <div class="product-option-shop">
-                            <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                            <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Tambah Ke Keranjang</a>
                         </div>                       
                     </div>
                 </div>
@@ -292,7 +292,7 @@
             </div-->
         </div>
     </div>  
-    <div class="footer-top-area">
+    <!--div class="footer-top-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
@@ -349,7 +349,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End footer top area -->
+    </div--> <!-- End footer top area -->
     
     <div class="footer-bottom-area">
         <div class="container">
@@ -366,10 +366,10 @@
     </div> <!-- End footer bottom area -->
    
     <!-- Latest jQuery form server -->
-    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="{{asset('user_aset/js/jquery.min.js')}}"></script>
     
     <!-- Bootstrap JS form CDN -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="{{asset('user_aset/js/bootstrap.min.js')}}"></script>
     
     <!-- jQuery sticky menu -->
     <script src="{{asset('user_aset/js/owl.carousel.min.js')}}"></script>

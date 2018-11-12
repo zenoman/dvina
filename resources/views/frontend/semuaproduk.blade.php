@@ -42,8 +42,11 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                            @if(!Session::get('user_name'))
+                            <li><a href="{{url('/loginUser')}}"><i class="fa fa-user"></i> Login</a></li>
+                            @else
                             <li><a href="cart.html"><i class="fa fa-shopping-cart"></i>Keranjang Saya</a></li>
+                            @endif
                             <!--li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li-->
                             <li><a href="{{url('/login')}}"><i class="fa fa-users"></i>Login Admin</a></li>
                         </ul>
@@ -51,18 +54,20 @@
                 </div>
                 
                 <div class="col-md-4">
+                    @if(Session::get('user_name'))
                     <div class="header-right">
                         <ul class="list-unstyled list-inline">
                             <li class="dropdown dropdown-small">
-                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">Jhon Doe</span><b class="caret"></b></a>
+                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">{{Session::get('user_name')}}</span><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Edit Profile</a></li>
-                                    <li><a href="#">Logout</a></li>
+                                    <li><a href="{{url('/login/logoutuser')}}">Logout</a></li>
                                 </ul>
                             </li>
 
                         </ul>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -78,9 +83,11 @@
                 </div>
                 
                 <div class="col-sm-6">
+                     @if(Session::get('user_name'))
                     <div class="shopping-item">
                         <a href="cart.html">Keranjang - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -175,7 +182,7 @@
                         </div>  
                         
                         <div class="product-option-shop">
-                            <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to cart</a>
+                            <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Tambah Ke Keranjang</a>
                         </div>                       
                     </div>
                 </div>
@@ -190,7 +197,7 @@
     </div>
 
 
-    <div class="footer-top-area">
+    <!--div class="footer-top-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
@@ -245,7 +252,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div-->
     <div class="footer-bottom-area">
         <div class="container">
             <div class="row">
@@ -260,10 +267,10 @@
     </div>
    
     <!-- Latest jQuery form server -->
-    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="{{asset('user_aset/js/jquery.min.js')}}"></script>
     
     <!-- Bootstrap JS form CDN -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="{{asset('user_aset/js/bootstrap.min.js')}}"></script>
     
     <!-- jQuery sticky menu -->
     <script src="{{asset('user_aset/js/owl.carousel.min.js')}}"></script>
