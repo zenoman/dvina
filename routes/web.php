@@ -1,13 +1,15 @@
 <?php
 use Illuminate\Support\Facades\Input;
 
-//Route::get('/',function()
-//{
-//	return view('welcome');
-//});
+Route::get('/hubungi',function()
+{
+	return view('frontend\hubungikami');
+});
 
 Route::resource('/','frontend\userUtama');
 Route::get('/semuaproduk','frontend\Catalogcontroller@index');
+Route::get('/detailbarang/{id}','frontend\Catalogcontroller@show');
+Route::post('/tambahkeranjang','frontend\Catalogcontroller@masukkeranjang');
 Route::get('/logout','Logincontroller@logout');
 Route::get('/validatelogin','Logincontroller@validatelogin');
 

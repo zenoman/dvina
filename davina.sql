@@ -183,8 +183,11 @@ INSERT INTO `tb_barangs` (`idbarang`, `kode`, `stok`, `warna`, `barang_jenis`) V
 DROP TABLE IF EXISTS `tb_details`;
 CREATE TABLE IF NOT EXISTS `tb_details` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idwarna` int(11) DEFAULT NULL,
+  `iduser` int(11) DEFAULT NULL,
   `faktur` varchar(100) DEFAULT NULL,
-  `tgl` varchar(100) DEFAULT NULL,
+  `tgl` varchar(30) DEFAULT NULL,
+  `tgl_kadaluarsa` varchar(30) DEFAULT NULL,
   `kode_barang` varchar(100) DEFAULT NULL,
   `barang` varchar(100) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
@@ -193,12 +196,15 @@ CREATE TABLE IF NOT EXISTS `tb_details` (
   `diskon` int(11) DEFAULT NULL,
   `total` int(11) DEFAULT NULL,
   `admin` varchar(100) DEFAULT NULL,
+  `metode` enum('langsung','pesan') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table davina.tb_details: ~1 rows (approximately)
 DELETE FROM `tb_details`;
 /*!40000 ALTER TABLE `tb_details` DISABLE KEYS */;
+INSERT INTO `tb_details` (`id`, `idwarna`, `iduser`, `faktur`, `tgl`, `tgl_kadaluarsa`, `kode_barang`, `barang`, `harga`, `jumlah`, `total_a`, `diskon`, `total`, `admin`, `metode`) VALUES
+	(2, 33, NULL, NULL, '12-11-2018', NULL, 'BRG00004', 'jilbab kediri 2', 20000, 2, 40000, NULL, NULL, NULL, 'pesan');
 /*!40000 ALTER TABLE `tb_details` ENABLE KEYS */;
 
 -- Dumping structure for table davina.tb_kategoris
@@ -302,6 +308,7 @@ DELETE FROM `tb_tambahstoks`;
 DROP TABLE IF EXISTS `tb_transaksis`;
 CREATE TABLE IF NOT EXISTS `tb_transaksis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `iduser` int(11) DEFAULT NULL,
   `faktur` varchar(100) DEFAULT NULL,
   `tgl` varchar(100) DEFAULT NULL,
   `total_a` int(11) DEFAULT NULL,
@@ -333,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.tb_users: ~2 rows (approximately)
+-- Dumping data for table davina.tb_users: ~1 rows (approximately)
 DELETE FROM `tb_users`;
 /*!40000 ALTER TABLE `tb_users` DISABLE KEYS */;
 INSERT INTO `tb_users` (`id`, `username`, `password`, `email`, `telp`, `nama`, `alamat`, `kota`, `provinsi`, `kodepos`, `ktp_gmb`) VALUES
