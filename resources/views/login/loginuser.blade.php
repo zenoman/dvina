@@ -75,6 +75,12 @@
                 <div class="col-md-4">
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Login </h2>
+                        @if(session('errorlogin'))
+                    <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{ session('errorlogin') }}
+                    </div>
+                    @endif
                         <form action="{{url('/loginUser')}}" method="post">
                             <input type="text" placeholder="Masukan Username" class="input-text" name="username">
                             <input style="width: 100%" type="password" placeholder="Masukan Password" name="password" class="input-text"><br><br>
@@ -86,44 +92,179 @@
                 </div>
                 
                 <div class="col-md-8">
+                     @if (session('status'))
+                    <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{ session('status') }}
+                    </div>
+                    @elseif(session('statuserror'))
+                    <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{ session('statuserror') }}
+                    </div>
+                    @endif
                     <div class="product-content-right">
                         <div class="woocommerce">
                             <div class="woocommerce-info">Belum Punya Akun ? <a class="showlogin" data-toggle="collapse" href="#login-form-wrap" aria-expanded="false" aria-controls="login-form-wrap">Klik disini untuk membuat</a>
                             </div>
 
-                            <form id="login-form-wrap" class="login collapse" method="post">
-
-
-                                <p>Isi data diri yang diminta di bawah ini, pastikan data diri tersebut valid dan dapat di pertanggung jawabkan.</p>
-
+                            <form id="login-form-wrap" class="login collapse" method="post" action="{{url('/login/register')}}" enctype="multipart/form-data">
+                            <p>Isi data diri yang diminta di bawah ini, pastikan data diri tersebut valid dan dapat di pertanggung jawabkan.</p>
                                 <p class="form-row form-row-first">
-                                    <label for="username">Username or email <span class="required">*</span>
+                                    <label>Nama
                                     </label>
-                                    <input type="text" id="username" name="username" class="input-text">
+                                    <input type="text" name="nama" class="form-control" style="width: 100%" value="{{ old('nama') }}" required>
+                                     @if($errors->has('nama'))
+                                        <div class="alert alert-danger">
+                                        {{ $errors->first('nama')}}
+                                         </div>
+                                        @endif
                                 </p>
-                                <p class="form-row form-row-last">
-                                    <label for="password">Password <span class="required">*</span>
+                                <p class="form-row form-row-first">
+                                    <label>Username
                                     </label>
-                                    <input type="password" id="password" name="password" class="input-text">
+                                    <input type="text" name="username" class="form-control" style="width: 100%" value="{{ old('username') }}" required>
+                                     @if($errors->has('username'))
+                                        <div class="alert alert-danger">
+                                        {{ $errors->first('username')}}
+                                         </div>
+                                        @endif
+                                </p>
+                                <p class="form-row form-row-first">
+                                    <label>Password
+                                    </label>
+                                    <input type="password" name="password" class="form-control" style="width: 100%" value="{{ old('password') }}" required>
+                                     @if($errors->has('password'))
+                                        <div class="alert alert-danger">
+                                        {{ $errors->first('password')}}
+                                         </div>
+                                        @endif
+                                </p>
+                                <p class="form-row form-row-first">
+                                    <label>Konfirmasi Password
+                                    </label>
+                                    <input type="password" name="konfirmasi_password" class="form-control" style="width: 100%" value="{{ old('konfirmasi_password') }}" required>
+                                     @if($errors->has('konfirmasi_password'))
+                                        <div class="alert alert-danger">
+                                        {{ $errors->first('konfirmasi_password')}}
+                                         </div>
+                                        @endif
+                                </p>
+                                <p class="form-row form-row-first">
+                                    <label>Email
+                                    </label>
+                                    <input type="email" name="email" class="form-control" style="width: 100%" value="{{ old('email') }}" required>
+                                      @if($errors->has('email'))
+                                        <div class="alert alert-danger">
+                                        {{ $errors->first('email')}}
+                                         </div>
+                                        @endif
+                                </p>
+                                <p class="form-row form-row-first">
+                                    <label>No Telfon
+                                    </label>
+                                    <input type="text" name="no_telfon" class="form-control" style="width: 100%" value="{{ old('no_telfon') }}" required>
+                                  @if($errors->has('no_telfon'))
+                                        <div class="alert alert-danger">
+                                        {{ $errors->first('no_telfon')}}
+                                         </div>
+                                        @endif
+                                </p>
+                                <p class="form-row form-row-first">
+                                    <label>Alamat
+                                    </label>
+                                    <input type="text" name="alamat" class="form-control" style="width: 100%" value="{{ old('alamat') }}" required>
+                                      @if($errors->has('alamat'))
+                                        <div class="alert alert-danger">
+                                        {{ $errors->first('alamat')}}
+                                         </div>
+                                        @endif
+                                </p>
+                                <p class="form-row form-row-first">
+                                    <label>Kota
+                                    </label>
+                                    <input type="text" name="kota" class="form-control" style="width: 100%" value="{{ old('kota') }}" required>
+                                      @if($errors->has('kota'))
+                                        <div class="alert alert-danger">
+                                        {{ $errors->first('kota')}}
+                                         </div>
+                                        @endif
+                                </p>
+                                <p class="form-row form-row-first">
+                                    <label>Provinsi
+                                    </label>
+                                   <select class="form-control"name="provinsi">
+                                                <option value="aceh">Aceh</option>
+                                        <option valuer="sumatera utara">Sumatera Utara</option>
+                                        <option valuer="sumatera barat">Sumatera Barat</option>
+                                        <option valuer="riau">Riau</option>
+                                        <option valuer="kepuluan riau">Kepulauan Riau</option>
+                                        <option valuer="jambi">Jambi</option>
+                                        <option valuer="sumatera selatan">Sumatera Selatan</option>
+                                        <option valuer="bangka belitung">Bangka Belitung</option>
+                                        <option valuer="bengkulu">Bengkulu</option>
+                                        <option valuer="lampung">Lampung</option>
+                                        <option valuer="jakarta">DKI Jakarta</option>
+                                        <option valuer="jawa barat">Jawa Barat</option>
+                                        <option valuer="banten">Banten</option>
+                                        <option valuer="jawa tengah">Jawa Tengah</option>
+                                        <option valuer="yogyakarta">Yogyakarta</option>
+                                        <option valuer="jawa timur">Jawa Timur</option>
+                                        <option valuer="bali">Bali</option>
+                                        <option valuer="NTB">NTB</option>
+                                        <option valuer="NTT">NTT</option>
+                                        <option valuer="kalimantan utara">Kalimantan Utara</option>
+                                        <option valuer="kalimantan barat">Kalimantan Barat</option>
+                                        <option valuer="kalimantan tengah">Kalimantan Tengah</option>
+                                        <option valuer="kalimantan selatan">Kalimantan Selatan</option>
+                                        <option valuer="kalimantan timur">Kalimantan Timur</option>
+                                        <option valuer="sulawesi utara">Sulawesi Utara</option>
+                                        <option valuer="sulawesi barat">Sulawesi Barat</option>
+                                        <option valuer="sulawesi tengah">Sulawesi Tengah</option>
+                                        <option valuer="sulawesi tenggara">Sulawesi Tenggara</option>
+                                        <option valuer="sulawesi selatan">Sulawesi Selatan</option>
+                                        <option valuer="gorontalo">Gorontalo</option>
+                                        <option valuer="maluku">Maluku</option>
+                                        <option valuer="maluku utara">Maluku Utara</option>
+                                        <option valuer="papua barat">Papua Barat</option>
+                                        <option valuer="papua">Papua</option>
+                                            </select>
+                                              @if($errors->has('provinsi'))
+                                        <div class="alert alert-danger">
+                                        {{ $errors->first('provinsi')}}
+                                         </div>
+                                        @endif
+                                </p>
+                                <p class="form-row form-row-first">
+                                    <label>Kode Pos
+                                    </label>
+                                    <input type="text" name="kode_pos" class="form-control" style="width: 100%" value="{{ old('kode_pos') }}" required>
+                                      @if($errors->has('kode_pos'))
+                                        <div class="alert alert-danger">
+                                        {{ $errors->first('kode_pos')}}
+                                         </div>
+                                        @endif
+                                </p>
+                                <p class="form-row form-row-first">
+                                    <label>Foto KTP
+                                    </label>
+                                    <input type="file" name="gambar_ktp" required>
+                                     @if($errors->has('gambar_ktp'))
+                                        <div class="alert alert-danger">
+                                        {{ $errors->first('gambar_ktp')}}
+                                         </div>
+                                        @endif
                                 </p>
                                 <div class="clear"></div>
-
-
                                 <p class="form-row">
-                                    <input type="submit" value="Login" name="login" class="button">
-                                    <label class="inline" for="rememberme"><input type="checkbox" value="forever" id="rememberme" name="rememberme"> Remember me </label>
+                                    {{csrf_field()}}
+
+                                    <input type="submit" value="Simpan" class="button">
                                 </p>
-                                <p class="lost_password">
-                                    <a href="#">Lost your password?</a>
-                                </p>
+                                
 
                                 <div class="clear"></div>
                             </form>
-
-                            
-
-                            
-
                         </div>                       
                     </div>                    
                 </div>
@@ -210,10 +351,10 @@
     </div>
    
     <!-- Latest jQuery form server -->
-    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="{{asset('user_aset/js/jquery.min.js')}}"></script>
     
     <!-- Bootstrap JS form CDN -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="{{asset('user_aset/js/bootstrap.min.js')}}"></script>
     
     <!-- jQuery sticky menu -->
     <script src="{{asset('user_aset/js/owl.carousel.min.js')}}"></script>

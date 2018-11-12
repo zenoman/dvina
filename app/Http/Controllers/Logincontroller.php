@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use App\models\Usermodel;
 
 class Logincontroller extends Controller
 {
@@ -72,8 +73,7 @@ class Logincontroller extends Controller
                 Session::put('login',TRUE);
                 return redirect('/');
         }else{
-            dd('username atau password salah');
-            //return redirect('/loginUser')->with('errorlogin','username atau password salah');
+            return back()->with('errorlogin','username atau password salah');
         }
     }
     /**
@@ -82,9 +82,62 @@ class Logincontroller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function register(Request $request)
     {
-        //
+        $roles = [
+                    'nama'      => 'required|min:5',
+                    'username'  => 'required|min:5|alpha_dash',
+                    'password'  => 'required|min:5',
+                    'konfirmasi_password'=>'required|min:5|same:password',
+                    'no_telfon' => 'required|min:5|numeric',
+                    'email'     => 'required|min:5|email',
+                    'alamat'    => 'required|min:5',
+                    'kota'      => 'required|min:5',
+                    'provinsi'  => 'required',
+                    'kode_pos'  => 'required|numeric',
+                    'gambar_ktp'=> 'image|nullable|max:2000'
+                    
+                    ];
+        $customMessages = [
+        'required'  => 'Maaf, :attribute harus di isi',
+        'min'       => 'Maaf, data yang anda masukan    terlalu sedikit',
+        'alpha_dash'=> 'Maaf, tidak menerima data lain kecuali alphabet',
+        'same'      => 'Maaf, Pastikan :attribute dan :other sama',
+        'numeric'   => 'Maaf, data harus angka',
+        'email'     => 'Maaf, data harus email',
+        'image'     => 'Maaf, file harus berupa gambar',
+        'max'       => 'Maaf, file terlalu besar'
+    ];
+
+    $this->validate($request,$roles,$customMessages);
+    if($request->hasFile('gambar_ktp')){ 
+                     $namaexs=$request->File('gambar_ktp')->getClientOriginalName();
+                     $lower_file_name=strtolower($namaexs);
+                    $replace_space=str_replace(' ','-',$lower_file_name);
+                     $namagambar=time().'-'.$replace_space;
+                     $destination = public_path('img/user');
+                   $request->file('gambar_ktp')->move($destination,$namagambar);
+                }else{
+                    $namagambar='';
+                }
+                
+
+        Usermodel::create([
+                'username' => $request->username,
+                'password' => md5($request->password),
+                'email'    => $request->email,
+                'telp'     => $request->no_telfon,
+                'nama'     => $request->nama,
+                'alamat'   => $request->alamat,
+                'kota'     => $request->kota,
+                'provinsi' => $request->provinsi,
+                'kodepos'  => $request->kode_pos,
+                'ktp_gmb'  => $namagambar
+               
+               
+
+        ]);
+                 return back()->with('status','Registrasi sukses, Silahkan Login');
     }
 
     /**

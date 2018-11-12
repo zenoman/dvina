@@ -30,7 +30,15 @@ CREATE TABLE IF NOT EXISTS `admins` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.admins: ~2 rows (approximately)
+DELETE FROM `admins`;
+/*!40000 ALTER TABLE `admins` DISABLE KEYS */;
+INSERT INTO `admins` (`id`, `username`, `password`, `nama`, `telp`, `email`, `level`) VALUES
+	(2, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'admin', '085604556715', 'satriosuklun@gmail.com', 'admin'),
+	(3, 'superadmin', '827ccb0eea8a706c4c34a16891f84e7b', 'super admin', '085682374023', 'satriosuklun@gmail.com', 'super_admin'),
+	(4, 'devasatrio', '74b213f68f648006a318f52713450f27', 'deva satrio', '085604556714', 'satriosuklun@gmail.com', 'programer');
+/*!40000 ALTER TABLE `admins` ENABLE KEYS */;
+
 -- Dumping structure for table davina.gambar
 DROP TABLE IF EXISTS `gambar`;
 CREATE TABLE IF NOT EXISTS `gambar` (
@@ -38,9 +46,20 @@ CREATE TABLE IF NOT EXISTS `gambar` (
   `kode_barang` varchar(30) DEFAULT NULL,
   `nama` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.gambar: ~6 rows (approximately)
+DELETE FROM `gambar`;
+/*!40000 ALTER TABLE `gambar` DISABLE KEYS */;
+INSERT INTO `gambar` (`id`, `kode_barang`, `nama`) VALUES
+	(10, 'BRG00004', '1541847113-download.jpg'),
+	(11, 'BRG00004', '1541847113-high-quality-muslim-hijab-scarf-cotton-jersey-hijabs-turban-muslim-hijab-infiity-scarf-muslim-head-coverings-92.jpg'),
+	(12, 'BRG00005', '1541847133-images-(2).jpg'),
+	(13, 'BRG00005', '1541847133-instant-wear-arabic-head-dress-rayon-hijab.jpg_350x350.jpg'),
+	(14, 'BRG00006', '1541850464-21220959_b_v1.jpg'),
+	(15, 'BRG00007', '1541850483-high-quality-muslim-hijab-scarf-cotton-jersey-hijabs-turban-muslim-hijab-infiity-scarf-muslim-head-coverings-92.jpg');
+/*!40000 ALTER TABLE `gambar` ENABLE KEYS */;
+
 -- Dumping structure for table davina.migrations
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE IF NOT EXISTS `migrations` (
@@ -50,7 +69,15 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.migrations: ~3 rows (approximately)
+DELETE FROM `migrations`;
+/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+	(4, '2014_10_12_000000_create_users_table', 1),
+	(5, '2014_10_12_100000_create_password_resets_table', 1),
+	(6, '2018_10_11_054351_create_pemesanans_table', 1);
+/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+
 -- Dumping structure for table davina.pemesanans
 DROP TABLE IF EXISTS `pemesanans`;
 CREATE TABLE IF NOT EXISTS `pemesanans` (
@@ -64,7 +91,11 @@ CREATE TABLE IF NOT EXISTS `pemesanans` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.pemesanans: ~0 rows (approximately)
+DELETE FROM `pemesanans`;
+/*!40000 ALTER TABLE `pemesanans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pemesanans` ENABLE KEYS */;
+
 -- Dumping structure for table davina.settings
 DROP TABLE IF EXISTS `settings`;
 CREATE TABLE IF NOT EXISTS `settings` (
@@ -77,10 +108,19 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `ico` varchar(45) DEFAULT NULL,
   `meta` text,
   `logo` varchar(50) DEFAULT NULL,
+  `keterangan` int(11) DEFAULT NULL,
+  `alamat` int(11) DEFAULT NULL,
+  `nama_toko` int(11) DEFAULT NULL,
   PRIMARY KEY (`idsettings`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.settings: ~1 rows (approximately)
+DELETE FROM `settings`;
+/*!40000 ALTER TABLE `settings` DISABLE KEYS */;
+INSERT INTO `settings` (`idsettings`, `webName`, `kontak1`, `kontak2`, `kontak3`, `email`, `ico`, `meta`, `logo`, `keterangan`, `alamat`, `nama_toko`) VALUES
+	(1, 'nama webnya 12', '123451112', '123451112', '123451112', 'devatamvan@gmail.com', '1539867788-pencil-icon.png', 'ini metanya 12', '1539867788-icons8_flat_ruler.svg.png', NULL, NULL, NULL);
+/*!40000 ALTER TABLE `settings` ENABLE KEYS */;
+
 -- Dumping structure for table davina.sliders
 DROP TABLE IF EXISTS `sliders`;
 CREATE TABLE IF NOT EXISTS `sliders` (
@@ -90,7 +130,13 @@ CREATE TABLE IF NOT EXISTS `sliders` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.sliders: ~2 rows (approximately)
+DELETE FROM `sliders`;
+/*!40000 ALTER TABLE `sliders` DISABLE KEYS */;
+INSERT INTO `sliders` (`id`, `judul`, `foto`) VALUES
+	(2, 'ini slide 2 baru gambarnya', '1541552859-20180227_054709.jpg');
+/*!40000 ALTER TABLE `sliders` ENABLE KEYS */;
+
 -- Dumping structure for table davina.tb_barangouts
 DROP TABLE IF EXISTS `tb_barangouts`;
 CREATE TABLE IF NOT EXISTS `tb_barangouts` (
@@ -103,7 +149,11 @@ CREATE TABLE IF NOT EXISTS `tb_barangouts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.tb_barangouts: ~0 rows (approximately)
+DELETE FROM `tb_barangouts`;
+/*!40000 ALTER TABLE `tb_barangouts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_barangouts` ENABLE KEYS */;
+
 -- Dumping structure for table davina.tb_barangs
 DROP TABLE IF EXISTS `tb_barangs`;
 CREATE TABLE IF NOT EXISTS `tb_barangs` (
@@ -113,9 +163,22 @@ CREATE TABLE IF NOT EXISTS `tb_barangs` (
   `warna` varchar(45) DEFAULT NULL,
   `barang_jenis` varchar(70) DEFAULT NULL,
   PRIMARY KEY (`idbarang`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.tb_barangs: ~8 rows (approximately)
+DELETE FROM `tb_barangs`;
+/*!40000 ALTER TABLE `tb_barangs` DISABLE KEYS */;
+INSERT INTO `tb_barangs` (`idbarang`, `kode`, `stok`, `warna`, `barang_jenis`) VALUES
+	(32, 'BRG00004', 10, 'merah', 'jilbab kediri 2 merah'),
+	(33, 'BRG00004', 12, 'biru', 'jilbab kediri 2 biru'),
+	(34, 'BRG00005', 10, 'putih', 'jilbab malang 2 putih'),
+	(35, 'BRG00005', 2, 'putih merah', 'jilbab malang 2 putih merah'),
+	(36, 'BRG00006', 10, 'merah', 'jilbab kediri 3 merah'),
+	(37, 'BRG00006', 12, 'biru', 'jilbab kediri 3 biru'),
+	(38, 'BRG00007', 10, 'putih', 'jilbab malang 3 putih'),
+	(39, 'BRG00007', 2, 'putih merah', 'jilbab malang 3 putih merah');
+/*!40000 ALTER TABLE `tb_barangs` ENABLE KEYS */;
+
 -- Dumping structure for table davina.tb_details
 DROP TABLE IF EXISTS `tb_details`;
 CREATE TABLE IF NOT EXISTS `tb_details` (
@@ -131,9 +194,13 @@ CREATE TABLE IF NOT EXISTS `tb_details` (
   `total` int(11) DEFAULT NULL,
   `admin` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.tb_details: ~1 rows (approximately)
+DELETE FROM `tb_details`;
+/*!40000 ALTER TABLE `tb_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_details` ENABLE KEYS */;
+
 -- Dumping structure for table davina.tb_kategoris
 DROP TABLE IF EXISTS `tb_kategoris`;
 CREATE TABLE IF NOT EXISTS `tb_kategoris` (
@@ -141,9 +208,18 @@ CREATE TABLE IF NOT EXISTS `tb_kategoris` (
   `kategori` varchar(100) DEFAULT NULL,
   `gambar` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.tb_kategoris: ~3 rows (approximately)
+DELETE FROM `tb_kategoris`;
+/*!40000 ALTER TABLE `tb_kategoris` DISABLE KEYS */;
+INSERT INTO `tb_kategoris` (`id`, `kategori`, `gambar`) VALUES
+	(4, 'kerudung wanita', '1541756913-0056a08d4b2c91f.jpg'),
+	(5, 'kerudung top', '1541851060-34-android-flat.png'),
+	(6, 'kerudung mantul', '1541851081-190835.png'),
+	(7, 'kerudung sip', '1541851116-1.jpg');
+/*!40000 ALTER TABLE `tb_kategoris` ENABLE KEYS */;
+
 -- Dumping structure for table davina.tb_kodes
 DROP TABLE IF EXISTS `tb_kodes`;
 CREATE TABLE IF NOT EXISTS `tb_kodes` (
@@ -155,36 +231,73 @@ CREATE TABLE IF NOT EXISTS `tb_kodes` (
   `deskripsi` mediumtext,
   `diskon` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.tb_kodes: ~3 rows (approximately)
+DELETE FROM `tb_kodes`;
+/*!40000 ALTER TABLE `tb_kodes` DISABLE KEYS */;
+INSERT INTO `tb_kodes` (`id`, `id_kategori`, `kode_barang`, `barang`, `harga_barang`, `deskripsi`, `diskon`) VALUES
+	(19, 4, 'BRG00004', 'jilbab kediri 2', 20000, 'ini deskripsi jilbab kediri', 1000),
+	(20, 4, 'BRG00005', 'jilbab malang 2', 12000, 'ini deskripsi jilbab malang', 0),
+	(21, 4, 'BRG00006', 'jilbab kediri 3', 20000, 'ini deskripsi jilbab kediri 3', 1000),
+	(22, 4, 'BRG00007', 'jilbab malang 3', 12000, 'ini deskripsi jilbab malang 3', 0);
+/*!40000 ALTER TABLE `tb_kodes` ENABLE KEYS */;
+
 -- Dumping structure for table davina.tb_stokawals
 DROP TABLE IF EXISTS `tb_stokawals`;
 CREATE TABLE IF NOT EXISTS `tb_stokawals` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idbarang` int(11) DEFAULT NULL,
+  `idwarna` int(11) DEFAULT NULL,
   `kode_barang` varchar(100) DEFAULT NULL,
   `barang` varchar(100) DEFAULT NULL,
   `jumlah` int(11) DEFAULT NULL,
   `tgl` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.tb_stokawals: ~16 rows (approximately)
+DELETE FROM `tb_stokawals`;
+/*!40000 ALTER TABLE `tb_stokawals` DISABLE KEYS */;
+INSERT INTO `tb_stokawals` (`id`, `idbarang`, `idwarna`, `kode_barang`, `barang`, `jumlah`, `tgl`) VALUES
+	(39, 19, 32, 'BRG00004', 'jilbab kediri 2', 10, '10-11-2018'),
+	(40, 19, 33, 'BRG00004', 'jilbab kediri 2', 12, '10-11-2018'),
+	(41, 20, 34, 'BRG00005', 'jilbab malang 2', 10, '10-11-2018'),
+	(42, 20, 35, 'BRG00005', 'jilbab malang 2', 2, '10-11-2018'),
+	(43, 21, 36, 'BRG00006', 'jilbab kediri 3', 10, '10-11-2018'),
+	(44, 21, 37, 'BRG00006', 'jilbab kediri 3', 12, '10-11-2018'),
+	(45, 22, 38, 'BRG00007', 'jilbab malang 3', 10, '10-11-2018'),
+	(46, 22, 39, 'BRG00007', 'jilbab malang 3', 2, '10-11-2018'),
+	(47, 19, 32, 'BRG00004', 'jilbab kediri 2', 10, '11-11-2018'),
+	(48, 19, 33, 'BRG00004', 'jilbab kediri 2', 12, '11-11-2018'),
+	(49, 20, 34, 'BRG00005', 'jilbab malang 2', 10, '11-11-2018'),
+	(50, 20, 35, 'BRG00005', 'jilbab malang 2', 2, '11-11-2018'),
+	(51, 21, 36, 'BRG00006', 'jilbab kediri 3', 10, '11-11-2018'),
+	(52, 21, 37, 'BRG00006', 'jilbab kediri 3', 12, '11-11-2018'),
+	(53, 22, 38, 'BRG00007', 'jilbab malang 3', 10, '11-11-2018'),
+	(54, 22, 39, 'BRG00007', 'jilbab malang 3', 2, '11-11-2018');
+/*!40000 ALTER TABLE `tb_stokawals` ENABLE KEYS */;
+
 -- Dumping structure for table davina.tb_tambahstoks
 DROP TABLE IF EXISTS `tb_tambahstoks`;
 CREATE TABLE IF NOT EXISTS `tb_tambahstoks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idbarang` int(11) DEFAULT NULL,
-  `barang` varchar(100) DEFAULT NULL,
+  `idwarna` int(11) DEFAULT NULL,
+  `idadmin` int(11) DEFAULT NULL,
+  `kode_barang` varchar(150) DEFAULT NULL,
   `jumlah` int(11) DEFAULT NULL,
   `total` int(11) DEFAULT NULL,
   `tgl` varchar(100) DEFAULT NULL,
-  `admin` varchar(45) DEFAULT NULL,
+  `keterangan` varchar(100) DEFAULT NULL,
+  `aksi` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.tb_tambahstoks: ~0 rows (approximately)
+DELETE FROM `tb_tambahstoks`;
+/*!40000 ALTER TABLE `tb_tambahstoks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_tambahstoks` ENABLE KEYS */;
+
 -- Dumping structure for table davina.tb_transaksis
 DROP TABLE IF EXISTS `tb_transaksis`;
 CREATE TABLE IF NOT EXISTS `tb_transaksis` (
@@ -198,7 +311,11 @@ CREATE TABLE IF NOT EXISTS `tb_transaksis` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.tb_transaksis: ~0 rows (approximately)
+DELETE FROM `tb_transaksis`;
+/*!40000 ALTER TABLE `tb_transaksis` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_transaksis` ENABLE KEYS */;
+
 -- Dumping structure for table davina.tb_users
 DROP TABLE IF EXISTS `tb_users`;
 CREATE TABLE IF NOT EXISTS `tb_users` (
@@ -214,9 +331,16 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
   `kodepos` varchar(45) DEFAULT NULL,
   `ktp_gmb` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.tb_users: ~2 rows (approximately)
+DELETE FROM `tb_users`;
+/*!40000 ALTER TABLE `tb_users` DISABLE KEYS */;
+INSERT INTO `tb_users` (`id`, `username`, `password`, `email`, `telp`, `nama`, `alamat`, `kota`, `provinsi`, `kodepos`, `ktp_gmb`) VALUES
+	(13, 'damara', '25d55ad283aa400af464c76d713c07ad', 'satriosuklun@gmail.com', '0984590348590', 'damara', 'gurah magersari', 'kediri', 'Jawa Timur', '89789', '1541943751-34-android-flat.png'),
+	(14, 'damara', 'e10adc3949ba59abbe56e057f20f883e', 'satriosuklun@gmail.com', '0982509280493', 'damara', 'magersari gurah', 'kediri', 'Jawa Timur', '123123', '1541977782-190835.png');
+/*!40000 ALTER TABLE `tb_users` ENABLE KEYS */;
+
 -- Dumping structure for table davina.users
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
@@ -232,7 +356,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Data exporting was unselected.
+-- Dumping data for table davina.users: ~0 rows (approximately)
+DELETE FROM `users`;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
