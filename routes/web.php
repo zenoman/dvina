@@ -70,13 +70,16 @@ Route::put('/setting/{id}','Admin\Settingcontroller@update');
 //===============================================================
 Route::resource('jual','Admin\transaksiController');
 //---transaksi autocomp barang----
-Route::get('autB',function(){
-	$term=Input::get('term');
-	$data=DB::table('tb_barangs')->select('idbarang','barang','kode','harga','stok')->where('barang','LIKE','%'.$term.'%')->get();
-	foreach($data as $dt){
-		$rta[]=array('value'=>$dt->barang,'kode'=>$dt->kode,'harga'=>$dt->harga,'stok'=>$dt->stok);
-	}
-	return Response::json($rta);
+// Route::get('autB',function(){
+// 	$term=Input::get('term');
+// 	$data=DB::table('tb_barangs')->select('idbarang','barang','kode','harga','stok')->where('barang','LIKE','%'.$term.'%')->get();
+// 	foreach($data as $dt){
+// 		$rta[]=array('value'=>$dt->barang,'kode'=>$dt->kode,'harga'=>$dt->harga,'stok'=>$dt->stok);
+// 	}
+// 	return Response::json($rta);
+// });
+Route::get("/trans",function(){
+	return view('transaksi\trans');
 });
 //----show transaksi------------------------------------------
 Route::get('/showt','Admin\transaksiController@showData');
