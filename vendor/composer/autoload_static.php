@@ -56,8 +56,8 @@ class ComposerStaticInit00518623aa70574e21ac801547913575
         'ac9e33ce6841aa5bf5d16d465a2f03a7' => __DIR__ . '/..' . '/markbaker/complex/classes/src/operations/divideinto.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
-        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '0d8253363903f0ac7b0978dcde4e28a0' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/helpers.php',
     );
 
@@ -163,8 +163,8 @@ class ComposerStaticInit00518623aa70574e21ac801547913575
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -392,6 +392,7 @@ class ComposerStaticInit00518623aa70574e21ac801547913575
         'App\\Http\\Controllers\\Admin\\Barangcontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Barangcontroller.php',
         'App\\Http\\Controllers\\Admin\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Dashboardcontroller.php',
         'App\\Http\\Controllers\\Admin\\Settingcontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Settingcontroller.php',
+        'App\\Http\\Controllers\\Admin\\Slidercontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Slidercontroller.php',
         'App\\Http\\Controllers\\Admin\\Usercontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Usercontroller.php',
         'App\\Http\\Controllers\\Admin\\transaksiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/transaksiController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
@@ -421,6 +422,7 @@ class ComposerStaticInit00518623aa70574e21ac801547913575
         'App\\models\\Settingmodel' => __DIR__ . '/../..' . '/app/models/Settingmodel.php',
         'App\\models\\User' => __DIR__ . '/../..' . '/app/models/User.php',
         'App\\models\\Usermodel' => __DIR__ . '/../..' . '/app/models/Usermodel.php',
+        'App\\models\\slider' => __DIR__ . '/../..' . '/app/models/slider.php',
         'App\\models\\transaksiModel' => __DIR__ . '/../..' . '/app/models/transaksiModel.php',
         'App\\pemesanan' => __DIR__ . '/../..' . '/app/pemesanan.php',
         'App\\tb_details' => __DIR__ . '/../..' . '/app/tb_details.php',

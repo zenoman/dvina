@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <meta name="csrf-token" content="{{csrf_token()}}">
     <title>Devina</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -26,7 +26,8 @@
 
     <!-- Custom Fonts -->
     <link href="{{asset('assets/vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
-
+    <!-- Vue Js -->
+    <script src="{{asset('js/app.js')}}" defer></script>
 </head>
 
 <body>
@@ -164,8 +165,9 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
+        <div id="app">
             @yield('content')
-        
+        </div>
 
     </div>
     <!-- /#wrapper -->
