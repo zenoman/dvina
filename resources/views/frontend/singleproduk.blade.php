@@ -170,7 +170,7 @@
                             <div class="col-sm-6 text-center">
                                 <div class="product-images">
                                     <div class="product-main-img">
-                                        @php
+                                    @php
                                     $kode_barang = $barang->kode_barang;
                                     $foto = DB::table('gambar')
                                     ->where('kode_barang', $kode_barang)
@@ -192,7 +192,7 @@
                                     <div class="product-inner-price" style="font-size: 20px;">
                                        
                                         @if($barang->diskon > 0)
-                                        <ins>{{"Rp ". number_format(($barang->harga_barang-$barang->diskon),0,',','.')}}</ins> <del>{{"Rp ". number_format($barang->harga_barang,0,',','.')}}</del>
+                                        <ins>{{"Rp ". number_format(($barang->harga_barang-($barang->diskon/100*$barang->harga_barang)),0,',','.')}}</ins> <del>{{"Rp ". number_format($barang->harga_barang,0,',','.')}}</del>
                                         @else
                                         <ins>{{"Rp ". number_format($barang->harga_barang,0,',','.')}}</ins>
                                         @endif
@@ -231,7 +231,11 @@
                                         <input type="hidden" name="kode_barang" value="{{$barang->kode_barang}}">
                                         {{ csrf_field() }}
                                         
-                                        <button class="add_to_cart_button pull-right" type="submit">Add to cart</button>
+                                        <div class="pull-right">
+                                        <button class="btn btn-md btn-primary" type="submit">Masukan Keranjang</button>
+                                        <a onclick="window.history.go(-1);" class="btn btn-lg btn-danger">Kembali</a>    
+                                        </div>
+                                        
                                     </form>   
                             </div>   
                             <div class="col-sm-12">
@@ -240,23 +244,15 @@
                                 <div class="product-inner">
                                     
                                     <div role="tabpanel">
-                                        <ul class="product-tab" role="tablist">
-                                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Deskripsi</a></li>
-                                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Warna Tersedia</a></li>
-                                        </ul>
+                                      
                                         <div class="tab-content">
                                             <div role="tabpanel" class="tab-pane fade in active" id="home">
-                                                <h2>Product Description</h2>  
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tristique, diam in consequat iaculis, est purus iaculis mauris, imperdiet facilisis ante ligula at nulla. Quisque volutpat nulla risus, id maximus ex aliquet ut. Suspendisse potenti. Nulla varius lectus id turpis dignissim porta. Quisque magna arcu, blandit quis felis vehicula, feugiat gravida diam. Nullam nec turpis ligula. Aliquam quis blandit elit, ac sodales nisl. Aliquam eget dolor eget elit malesuada aliquet. In varius lorem lorem, semper bibendum lectus lobortis ac.</p>
-
-                                                <p>Mauris placerat vitae lorem gravida viverra. Mauris in fringilla ex. Nulla facilisi. Etiam scelerisque tincidunt quam facilisis lobortis. In malesuada pulvinar neque a consectetur. Nunc aliquam gravida purus, non malesuada sem accumsan in. Morbi vel sodales libero.</p>
+                                                <h2>Deskripsi Produk</h2>  
+                                                <p>
+                                                    {{$barang->deskripsi}}
+                                                </p>
                                             </div>
-                                            <div role="tabpanel" class="tab-pane fade" id="profile">
-                                                <h2>Reviews</h2>
-                                                <div class="submit-review">
-                                                  
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                     

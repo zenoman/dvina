@@ -95,7 +95,13 @@
                                         <td>{{$row->barang}}</td>
                                         <td>{{$row->kategori}}</td>
                                         <td>{{$row->harga_barang}}</td>
-                                        <td>{{$row->diskon}}</td>
+                                        <td>
+                                            @if($row->diskon>0)
+                                            {{$row->diskon." %"}}
+                                            @else
+                                            -
+                                            @endif
+                                        </td>
                                         <td>{{$row->total}}</td>
                                         <td class="text-center">
                                             <!--a href="{{url('barang/'.$row->id.'/tambahstok')}}" class="btn btn-warning"><i class="fa fa-plus"></i></a-->

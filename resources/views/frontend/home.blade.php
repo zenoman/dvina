@@ -80,7 +80,11 @@
                 <div class="col-sm-6">
                     @if(Session::get('user_name'))
                     <div class="shopping-item">
-                        <a href="cart.html">Keranjang - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="cart.html">Keranjang - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> 
+                            @if($totalkeranjang>0)
+                            <span class="product-count">{{$totalkeranjang}}</span>
+                            @endif
+                        </a>
                     </div>
                     @endif
                 </div>
@@ -191,8 +195,8 @@
                                     <img src="{{asset('img/barang/'.$ft->nama)}}" alt="">
                                     @endforeach
                                     <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Masukan Keranjang</a>
-                                        <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> Detail</a>
+                                       
+                                        <a href="{{url('/detailbarang/'.$barangterbaru->id)}}" class="add-to-cart-link"><i class="fa fa-eye"></i> Detail</a>
                                     </div>
                                 </div>
                                 
@@ -201,7 +205,7 @@
                                 <div class="product-carousel-price">
                                     @if($barangterbaru->diskon > 0)
                                     @php
-                                    $hargadiskon = $barangterbaru->harga_barang - $barangterbaru->diskon; 
+                                    $hargadiskon = $barangterbaru->harga_barang - ($barangterbaru->diskon/100*$barangterbaru->harga_barang); 
                                     @endphp
                                     <ins>{{"Rp ". number_format($hargadiskon,0,',','.')}}</ins>
                                     <del>{{"Rp ". number_format($barangterbaru->harga_barang,0,',','.')}}</del>
@@ -245,7 +249,7 @@
                         <div class="product-carousel-price">
                               @if($suges->diskon > 0)
                                     @php
-                                    $hargadiskon = $suges->harga_barang - $suges->diskon; 
+                                    $hargadiskon = $suges->harga_barang - ($suges->diskon/100*$suges->harga_barang); 
                                     @endphp
                                     <ins>{{"Rp ". number_format($hargadiskon,0,',','.')}}</ins>
                                     <del>{{"Rp ". number_format($suges->harga_barang,0,',','.')}}</del>
@@ -258,7 +262,7 @@
                         
                         <div class="product-option-shop">
                             <!--a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Tambah Ke Keranjang</a-->
-                             <a href="{{url('/detailbarang/'.$suges->id)}}" class="add_to_cart_button">Tambah Ke Keranjang</a>
+                             <a href="{{url('/detailbarang/'.$suges->id)}}" class="add_to_cart_button">Detail Produk</a>
                         </div>                       
                     </div>
                 </div>

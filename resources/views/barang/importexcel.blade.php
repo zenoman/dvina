@@ -36,7 +36,7 @@
                                                <br><br>
                                                <img src="{{url('img/web/dvina2.PNG')}}"><br><br>
                                                <li>
-                                                   isi nama_barang dan deskripsi dengan format text, kemudian untuk harga_barang, diskon_barang isi dengan format angka. Kosongkan stok dan warna pada barang utama. Untuk lebih jelas lihat gambar di bawah
+                                                   isi <b>nama_barang</b> dan <b>deskripsi</b> dengan format text, kemudian untuk <b>harga_barang</b>, <b>diskon_barang</b> isi dengan format angka, ingat, pastikan <b>diskon_barang</b> tidak lebih dari 99. Kosongkan stok dan warna pada barang utama. Untuk lebih jelas lihat gambar di bawah
                                                </li><br>
                                                <img src="{{url('img/web/dvina3.PNG')}}"><br><br>
                                                <li>

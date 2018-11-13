@@ -5,6 +5,7 @@ namespace App\Http\Controllers\frontend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class userUtama extends Controller
 {
@@ -24,6 +25,10 @@ class userUtama extends Controller
             ->orderby('tb_kodes.id','desc')
             ->limit(8)
             ->get();
+        
+        $totalkeranjang = DB::table('tb_details')
+        ->where('iduser',Session::get('user_id'))
+        ->count();
 
         $barangsuges = DB::table('tb_kodes')
             ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')
@@ -34,7 +39,7 @@ class userUtama extends Controller
             ->limit(8)
             ->get();
         $slider = DB::table('sliders')->get();
-        return view("frontend/home",['sliders'=>$slider, 'barangbaru'=>$barangbaru,'barangsuges'=>$barangsuges]);
+        return view("frontend/home",['sliders'=>$slider, 'barangbaru'=>$barangbaru,'barangsuges'=>$barangsuges,'totalkeranjang'=>$totalkeranjang]);
     }
 
     /**

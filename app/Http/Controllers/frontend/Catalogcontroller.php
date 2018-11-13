@@ -33,7 +33,6 @@ class Catalogcontroller extends Controller
     }
     public function masukkeranjang(Request $request)
     {
-        dd(Session::get('iduser'));
         $datawarna = explode("-", $request->warna);
         $cariwarnas = DB::table('tb_barangs')
                     ->where('idbarang',$datawarna[0])
@@ -52,18 +51,23 @@ class Catalogcontroller extends Controller
             foreach ($caribarang as $barang) {
                     $nama = $barang->barang;
                     $harga = $barang->harga_barang; 
-            }            
+                    $diskon = $barang->diskon;
+            }
+            $totaldiskon = $diskon/100*$request->jumlah*$harga;            
             DB::table('tb_details')
             ->insert([
                 'idwarna'=>$datawarna[0],
-                'iduser'=>Session::get('iduser'),
+                'iduser'=>Session::get('user_id'),
                 'tgl'=>date("d-m-Y"),
                 'kode_barang'=>$request->kode_barang,
                 'barang'=>$nama,
                 'harga'=>$harga,
                 'jumlah'=>$request->jumlah,
                 'total_a'=>($request->jumlah*$harga),
+                'diskon'=>$totaldiskon,
+                'total'=>($request->jumlah*$harga)-$totaldiskon,
                 'metode'=>"pesan"
+
 
             ]);
             return back();

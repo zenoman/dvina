@@ -178,11 +178,21 @@
                         @endforeach
                         <h2><a href="">{{$barang->barang}}</a></h2>
                         <div class="product-carousel-price">
-                            <ins>$899.00</ins> <del>$999.00</del>
+                             @if($barang->diskon > 0)
+                                    @php
+                                    $hargadiskon = $barang->harga_barang - ($barang->diskon/100*$barang->harga_barang); 
+                                    @endphp
+                                    <ins>{{"Rp ". number_format($hargadiskon,0,',','.')}}</ins>
+                                    <del>{{"Rp ". number_format($barang->harga_barang,0,',','.')}}</del>
+                                    <p>{{"Stok : ".$barang->total}}</p>
+                                    @else
+                                    <ins>{{"Rp ". number_format($barang->harga_barang,0,',','.')}}</ins>
+                                    <p>{{"Stok : ".$barang->total}}</p>
+                                    @endif
                         </div>  
                         
                         <div class="product-option-shop">
-                            <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Tambah Ke Keranjang</a>
+                            <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="{{url('/detailbarang/'.$barang->id)}}">Detail Produk</a>
                         </div>                       
                     </div>
                 </div>

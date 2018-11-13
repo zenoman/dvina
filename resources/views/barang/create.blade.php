@@ -94,8 +94,9 @@
                                         @endif
                                         <div class="form-group">
                                             <label>Diskon Barang</label>
-                                            <input type="text" onkeypress="return isNumberKey(event)" class="form-control" name="diskon_barang" value="{{ old('diskon_barang') }}" required>
+                                            <input type="number" min="0" max="99" onkeypress="return isNumberKey(event)" class="form-control" name="diskon_barang" value="{{ old('diskon_barang') }}" required>
                                         </div>
+                                        
                                         @if($errors->has('diskon_barang'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('diskon_barang')}}

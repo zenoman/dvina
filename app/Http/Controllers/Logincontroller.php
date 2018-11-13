@@ -63,13 +63,15 @@ class Logincontroller extends Controller
         $password = md5($request->password);
 
         $data = DB::table('tb_users')->where([['username',$username],['password',$password]])->count();
-        // $datausers = DB::table('admins')->where([['username',$username],['password',$password]])->get();
-        // foreach ($datausers as $datauser) {
-        //     $id = $datauser->id;
-        // }
+        $datausers = DB::table('tb_users')
+        ->where([['username',$username],['password',$password]])
+        ->get();
+        foreach ($datausers as $du) {
+             $id = $du->id;
+         }
         if($data>0){
                 Session::put('user_name',$request->username);
-                //Session::put('user_id',$id);
+                Session::put('user_id',$id);
                 Session::put('login',TRUE);
                 return redirect('/');
         }else{
