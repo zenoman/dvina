@@ -1,4 +1,10 @@
 @extends('layout.master')
+@foreach($websettings as $webset)
+@section('title',$webset->webName)
+@section('favicon')
+<link rel="shortcut icon" type="image" href="{{asset('img/setting/'.$webset->ico)}}">
+@endsection
+@endforeach
 @section('content')
 <div id="page-wrapper">
             <div class="row">
@@ -64,27 +70,7 @@
                                         {{ $errors->first('email')}}
                                          </div>
                                        @endif
-                                             <div class="form-group">
-                                            <label>Ganti Icon</label><p>
-                                            <img src="../img/setting/{{$row->ico}}" width="100" height="100">
-                                            <input type="file" name="ico" required>
-                                        </div>
-                                        @if($errors->has('ico'))
-                                       <div class="alert alert-danger">
-                                        {{ $errors->first('ico')}}
-                                         </div>
-                                       @endif
-                                             <div class="form-group">
-                                            <label>Ganti Logo</label><p>
-                                            <img src="../img/setting/{{$row->logo}}" width="100" height="100">
-                                            <input type="file" name="logo" required>
-                                        </div>
-                                          @if($errors->has('logo'))
-                                       <div class="alert alert-danger">
-                                        {{ $errors->first('logo')}}
-                                         </div>
-                                       @endif
-                                        <div class="form-group">
+                                       <div class="form-group">
                                             <label>Meta</label>
                                             <input type="text" class="form-control" name="meta" value="{{$row->meta}}">
                                         </div>
@@ -94,10 +80,37 @@
                                          </div>
                                        @endif
 
+                                       <div class="form-group">
+                                            <label>Batas hari Pemesana</label>
+                                            <input type="text" class="form-control" name="kadaluarsa" value="{{$row->max_tgl}}">
+                                        </div>
+                                        
+                                             <div class="form-group">
+                                            <label>Ganti Icon</label><p>
+                                            <img src="../img/setting/{{$row->ico}}" width="100" height="100">
+                                            <input type="file" name="ico">
+                                        </div>
+                                        @if($errors->has('ico'))
+                                       <div class="alert alert-danger">
+                                        {{ $errors->first('ico')}}
+                                         </div>
+                                       @endif
+                                             <div class="form-group">
+                                            <label>Ganti Logo</label><p>
+                                            <img src="../img/setting/{{$row->logo}}" width="100" height="100">
+                                            <input type="file" name="logo">
+                                        </div>
+                                          @if($errors->has('logo'))
+                                       <div class="alert alert-danger">
+                                        {{ $errors->first('logo')}}
+                                         </div>
+                                       @endif
+
+
                                          {{csrf_field()}}
                                         <input type="hidden" name="_method" value="PUT">
                                         <input class="btn btn-primary" type="submit" name="submit" value="simpan">
-                                        <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>
+                                       
                                     </form>
                                     @endforeach
                                 </div>

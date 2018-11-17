@@ -56,7 +56,8 @@ class Logincontroller extends Controller
      */
     public function loginuser()
     {
-        return view('login/loginuser');
+        $websetting = DB::table('settings')->limit(1)->get();
+        return view('login/loginuser',['websettings'=>$websetting]);
     }
     public function masukuser(Request $request){
         $username = $request->username;

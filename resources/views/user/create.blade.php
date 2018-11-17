@@ -1,4 +1,12 @@
 @extends('layout.master')
+
+@foreach($websettings as $webset)
+@section('title',$webset->webName)
+@section('favicon')
+<link rel="shortcut icon" type="image" href="{{asset('img/setting/'.$webset->ico)}}">
+@endsection
+@endforeach
+
 @section('content')
 <div id="page-wrapper">
             <div class="row">
@@ -106,39 +114,39 @@
                                             <label>Provinsi</label>
                                             <select class="form-control"name="provinsi">
                                                 <option value="aceh">Aceh</option>
-                                        <option valuer="sumatera utara">Sumatera Utara</option>
-                                        <option valuer="sumatera barat">Sumatera Barat</option>
-                                        <option valuer="riau">Riau</option>
-                                        <option valuer="kepuluan riau">Kepulauan Riau</option>
-                                        <option valuer="jambi">Jambi</option>
-                                        <option valuer="sumatera selatan">Sumatera Selatan</option>
-                                        <option valuer="bangka belitung">Bangka Belitung</option>
-                                        <option valuer="bengkulu">Bengkulu</option>
-                                        <option valuer="lampung">Lampung</option>
-                                        <option valuer="jakarta">DKI Jakarta</option>
-                                        <option valuer="jawa barat">Jawa Barat</option>
-                                        <option valuer="banten">Banten</option>
-                                        <option valuer="jawa tengah">Jawa Tengah</option>
-                                        <option valuer="yogyakarta">Yogyakarta</option>
-                                        <option valuer="jawa timur">Jawa Timur</option>
-                                        <option valuer="bali">Bali</option>
-                                        <option valuer="NTB">NTB</option>
-                                        <option valuer="NTT">NTT</option>
-                                        <option valuer="kalimantan utara">Kalimantan Utara</option>
-                                        <option valuer="kalimantan barat">Kalimantan Barat</option>
-                                        <option valuer="kalimantan tengah">Kalimantan Tengah</option>
-                                        <option valuer="kalimantan selatan">Kalimantan Selatan</option>
-                                        <option valuer="kalimantan timur">Kalimantan Timur</option>
-                                        <option valuer="sulawesi utara">Sulawesi Utara</option>
-                                        <option valuer="sulawesi barat">Sulawesi Barat</option>
-                                        <option valuer="sulawesi tengah">Sulawesi Tengah</option>
-                                        <option valuer="sulawesi tenggara">Sulawesi Tenggara</option>
-                                        <option valuer="sulawesi selatan">Sulawesi Selatan</option>
-                                        <option valuer="gorontalo">Gorontalo</option>
-                                        <option valuer="maluku">Maluku</option>
-                                        <option valuer="maluku utara">Maluku Utara</option>
-                                        <option valuer="papua barat">Papua Barat</option>
-                                        <option valuer="papua">Papua</option>
+                                        <option value="sumatera utara">Sumatera Utara</option>
+                                        <option value="sumatera barat">Sumatera Barat</option>
+                                        <option value="riau">Riau</option>
+                                        <option value="kepuluan riau">Kepulauan Riau</option>
+                                        <option value="jambi">Jambi</option>
+                                        <option value="sumatera selatan">Sumatera Selatan</option>
+                                        <option value="bangka belitung">Bangka Belitung</option>
+                                        <option value="bengkulu">Bengkulu</option>
+                                        <option value="lampung">Lampung</option>
+                                        <option value="jakarta">DKI Jakarta</option>
+                                        <option value="jawa barat">Jawa Barat</option>
+                                        <option value="banten">Banten</option>
+                                        <option value="jawa tengah">Jawa Tengah</option>
+                                        <option value="yogyakarta">Yogyakarta</option>
+                                        <option value="jawa timur">Jawa Timur</option>
+                                        <option value="bali">Bali</option>
+                                        <option value="NTB">NTB</option>
+                                        <option value="NTT">NTT</option>
+                                        <option value="kalimantan utara">Kalimantan Utara</option>
+                                        <option value="kalimantan barat">Kalimantan Barat</option>
+                                        <option value="kalimantan tengah">Kalimantan Tengah</option>
+                                        <option value="kalimantan selatan">Kalimantan Selatan</option>
+                                        <option value="kalimantan timur">Kalimantan Timur</option>
+                                        <option value="sulawesi utara">Sulawesi Utara</option>
+                                        <option value="sulawesi barat">Sulawesi Barat</option>
+                                        <option value="sulawesi tengah">Sulawesi Tengah</option>
+                                        <option value="sulawesi tenggara">Sulawesi Tenggara</option>
+                                        <option value="sulawesi selatan">Sulawesi Selatan</option>
+                                        <option value="gorontalo">Gorontalo</option>
+                                        <option value="maluku">Maluku</option>
+                                        <option value="maluku utara">Maluku Utara</option>
+                                        <option value="papua barat">Papua Barat</option>
+                                        <option value="papua">Papua</option>
                                             </select>
                                         </div>
 

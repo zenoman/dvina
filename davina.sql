@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `tb_barangs` (
   PRIMARY KEY (`idbarang`)
 ) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.tb_barangs: ~10 rows (approximately)
+-- Dumping data for table davina.tb_barangs: ~8 rows (approximately)
 DELETE FROM `tb_barangs`;
 /*!40000 ALTER TABLE `tb_barangs` DISABLE KEYS */;
 INSERT INTO `tb_barangs` (`idbarang`, `kode`, `stok`, `warna`, `barang_jenis`) VALUES
@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `tb_details` (
   `admin` varchar(100) DEFAULT NULL,
   `metode` enum('langsung','pesan') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table davina.tb_details: ~0 rows (approximately)
 DELETE FROM `tb_details`;

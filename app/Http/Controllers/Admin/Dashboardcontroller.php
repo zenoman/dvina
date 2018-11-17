@@ -33,9 +33,11 @@ class DashboardController extends Controller
     				]);
     		}
         }
+        $websetting = DB::table('settings')->limit(1)->get();
         return view('home/index',[
             'jumlahuser'=>$this->jumlahuser(),
-            'jumlahstok'=>$this->jumlahstok()
+            'jumlahstok'=>$this->jumlahstok(),
+            'websettings'=>$websetting
         ]);
     }
 

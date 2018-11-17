@@ -16,8 +16,9 @@ class Kategoricontroller extends Controller
      */
     public function index()
     {
+        $websetting = DB::table('settings')->limit(1)->get();
         $kategoris = Kategorimodel::get();
-        return view('kategori/index',['kategori'=>$kategoris]);
+        return view('kategori/index',['kategori'=>$kategoris,'websettings'=>$websetting]);
     }
 
     /**

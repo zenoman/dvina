@@ -1,4 +1,12 @@
 @extends('layout.master')
+
+@foreach($websettings as $webset)
+@section('title',$webset->webName)
+@section('favicon')
+<link rel="shortcut icon" type="image" href="{{asset('img/setting/'.$webset->ico)}}">
+@endsection
+@endforeach
+
 @section('css')
 <!-- DataTables CSS -->
     <link href="{{asset('assets/vendor/datatables-plugins/dataTables.bootstrap.css')}}" rel="stylesheet">
@@ -37,16 +45,14 @@
                                         
 
                                         <div class="modal-body">
-                                           <form method="post" action="user/cari">
+                                           <form method="post" action="{{url('user/cari')}}">
                                             <div class="form-group">
-                                                <input type="" name="cari" class="form-control" placeholder="cari berdasarkan nama user" required>
+                                                <input type="text" name="cari" class="form-control" placeholder="cari berdasarkan nama user" required>
                                             </div>
                                            {{csrf_field()}}
-                                        </div>
-                                        <div class="modal-footer">
-                                            
-                                            <button type="submit" class="btn btn-info"><i class="fa fa-search"></i> Cari Data</button>
+                                            <input type="submit" class="btn btn-info" value="Cari Data">
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                            
                                             </form>
                                         </div>
                                  
@@ -128,14 +134,7 @@
             responsive: true,
             "paging":false
         });
-         // tooltip demo
-    $('.tooltip-demo').tooltip({
-        selector: "[data-toggle=tooltip]",
-        container: "body"
-    })
-    // popover demo
-    $("[data-toggle=popover]")
-        .popover()
     });
+  
     </script>
         @endsection

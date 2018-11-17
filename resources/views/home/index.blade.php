@@ -1,4 +1,10 @@
 @extends('layout.master')
+@foreach($websettings as $webset)
+@section('title',$webset->webName)
+@section('favicon')
+<link rel="shortcut icon" type="image" href="{{asset('img/setting/'.$webset->ico)}}">
+@endsection
+@endforeach
 @section('content')
 <div id="page-wrapper">
            <div class="row">

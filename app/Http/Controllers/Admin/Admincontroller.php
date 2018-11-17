@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\Controller;
 use App\models\Adminmodel;
+use Illuminate\Support\Facades\DB;
 class Admincontroller extends Controller
 {
     /**
@@ -15,8 +16,9 @@ class Admincontroller extends Controller
      */
     public function index()
     {
+        $websetting = DB::table('settings')->limit(1)->get();
         $admins = Adminmodel::get();
-        return view('admin/index',['admin'=>$admins]);
+        return view('admin/index',['admin'=>$admins,'websettings'=>$websetting]);
     }
 
     /**
@@ -26,13 +28,15 @@ class Admincontroller extends Controller
      */
     public function create()
     {
-        return view('admin/create');
+        $websetting = DB::table('settings')->limit(1)->get();
+        return view('admin/create',['websettings'=>$websetting]);
     }
 
     public function changepass($id)
     {
+        $websetting = DB::table('settings')->limit(1)->get();
         $admin = Adminmodel::find($id);
-        return view('admin/changepass',['dataadmin'=>$admin]);
+        return view('admin/changepass',['dataadmin'=>$admin,'websettings'=>$websetting]);
     }
 
     public function actionchangepass(Request $request, $id){
@@ -123,8 +127,9 @@ class Admincontroller extends Controller
      */
     public function edit($id)
     {
+        $websetting = DB::table('settings')->limit(1)->get();
         $admin = Adminmodel::find($id);
-        return view('admin/edit',['dataadmin'=>$admin]);
+        return view('admin/edit',['dataadmin'=>$admin,'websettings'=>$websetting]);
     }
 
     /**

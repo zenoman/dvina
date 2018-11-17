@@ -1,4 +1,11 @@
 @extends('layout.master')
+@foreach($websettings as $webset)
+@section('title',$webset->webName)
+@section('favicon')
+<link rel="shortcut icon" type="image" href="{{asset('img/setting/'.$webset->ico)}}">
+@endsection
+@endforeach
+
 @section('css')
 <!-- DataTables CSS -->
     <link href="{{asset('assets/vendor/datatables-plugins/dataTables.bootstrap.css')}}" rel="stylesheet">

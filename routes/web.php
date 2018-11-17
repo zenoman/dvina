@@ -1,12 +1,11 @@
 <?php
 use Illuminate\Support\Facades\Input;
 
-Route::get('/hubungi',function()
-{
-	return view('frontend\hubungikami');
-});
-
+Route::get('/hubungikami','frontend\userUtama@hubungi');
+Route::get('/keranjang','frontend\Catalogcontroller@keranjang');
 Route::resource('/','frontend\userUtama');
+Route::get('/editprofileuser','frontend\userUtama@edituser');
+Route::post('/editprofileuser','frontend\userUtama@aksiedit');
 Route::get('/semuaproduk','frontend\Catalogcontroller@index');
 Route::get('/detailbarang/{id}','frontend\Catalogcontroller@show');
 Route::post('/tambahkeranjang','frontend\Catalogcontroller@masukkeranjang');

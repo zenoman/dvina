@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\support\Facades\File;
 use Illuminate\Http\Request;
 use App\models\slider;
+use Illuminate\Support\Facades\DB;
 
 class Slidercontroller extends Controller
 {
@@ -16,8 +17,9 @@ class Slidercontroller extends Controller
      */
     public function index()
     {
+        $websetting = DB::table('settings')->limit(1)->get();
         $sliders = slider::all();
-        return view('slider/index',['sliders'=>$sliders]);
+        return view('slider/index',['sliders'=>$sliders,'websettings'=>$websetting]);
     }
 
     /**
@@ -27,7 +29,8 @@ class Slidercontroller extends Controller
      */
     public function create()
     {
-        return view('slider/input');
+        $websetting = DB::table('settings')->limit(1)->get();
+        return view('slider/input',['websettings'=>$websetting]);
     }
 
     /**
@@ -83,8 +86,9 @@ class Slidercontroller extends Controller
      */
     public function edit($id)
     {
+        $websetting = DB::table('settings')->limit(1)->get();
         $slider = slider::find($id);
-        return view('slider/edit',['slider'=>$slider]);
+        return view('slider/edit',['slider'=>$slider,'websettings'=>$websetting]);
     }
 
     /**

@@ -10,7 +10,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login User</title>
+    @foreach($websettings as $webset)
     
+    <link rel="shortcut icon" type="image" href="{{asset('img/setting/'.$webset->ico)}}">
+    @endforeach
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
@@ -27,12 +30,6 @@
     <link rel="stylesheet" href="{{asset('user_aset/style.css')}}">
     <link rel="stylesheet" href="{{asset('user_aset/css/responsive.css')}}">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body>
    
@@ -83,9 +80,16 @@
                     @endif
                         <form action="{{url('/loginUser')}}" method="post">
                             <input type="text" placeholder="Masukan Username" class="input-text" name="username">
-                            <input style="width: 100%" type="password" placeholder="Masukan Password" name="password" class="input-text"><br><br>
+                            <input style="width: 100%" type="password" placeholder="Masukan Password" id="loginpass" name="password" class="input-text">
+                            <p class="form-row">
+                             <label class="inline" for="rememberme">
+                                <input type="checkbox" onclick="tampilsandi()"> Tampilkan Sandi
+                            </label>
+                            </p>
+                          
                             {{ @csrf_field() }}
                             <input type="submit" value="Login">
+                            <button type="button" class="tombol-merah" onclick="window.history.go(-1);" > kembali</button>
                         </form>
                     </div>
                     
@@ -195,39 +199,39 @@
                                     </label>
                                    <select class="form-control"name="provinsi">
                                                 <option value="aceh">Aceh</option>
-                                        <option valuer="sumatera utara">Sumatera Utara</option>
-                                        <option valuer="sumatera barat">Sumatera Barat</option>
-                                        <option valuer="riau">Riau</option>
-                                        <option valuer="kepuluan riau">Kepulauan Riau</option>
-                                        <option valuer="jambi">Jambi</option>
-                                        <option valuer="sumatera selatan">Sumatera Selatan</option>
-                                        <option valuer="bangka belitung">Bangka Belitung</option>
-                                        <option valuer="bengkulu">Bengkulu</option>
-                                        <option valuer="lampung">Lampung</option>
-                                        <option valuer="jakarta">DKI Jakarta</option>
-                                        <option valuer="jawa barat">Jawa Barat</option>
-                                        <option valuer="banten">Banten</option>
-                                        <option valuer="jawa tengah">Jawa Tengah</option>
-                                        <option valuer="yogyakarta">Yogyakarta</option>
-                                        <option valuer="jawa timur">Jawa Timur</option>
-                                        <option valuer="bali">Bali</option>
-                                        <option valuer="NTB">NTB</option>
-                                        <option valuer="NTT">NTT</option>
-                                        <option valuer="kalimantan utara">Kalimantan Utara</option>
-                                        <option valuer="kalimantan barat">Kalimantan Barat</option>
-                                        <option valuer="kalimantan tengah">Kalimantan Tengah</option>
-                                        <option valuer="kalimantan selatan">Kalimantan Selatan</option>
-                                        <option valuer="kalimantan timur">Kalimantan Timur</option>
-                                        <option valuer="sulawesi utara">Sulawesi Utara</option>
-                                        <option valuer="sulawesi barat">Sulawesi Barat</option>
-                                        <option valuer="sulawesi tengah">Sulawesi Tengah</option>
-                                        <option valuer="sulawesi tenggara">Sulawesi Tenggara</option>
-                                        <option valuer="sulawesi selatan">Sulawesi Selatan</option>
-                                        <option valuer="gorontalo">Gorontalo</option>
-                                        <option valuer="maluku">Maluku</option>
-                                        <option valuer="maluku utara">Maluku Utara</option>
-                                        <option valuer="papua barat">Papua Barat</option>
-                                        <option valuer="papua">Papua</option>
+                                        <option value="sumatera utara">Sumatera Utara</option>
+                                        <option value="sumatera barat">Sumatera Barat</option>
+                                        <option value="riau">Riau</option>
+                                        <option value="kepuluan riau">Kepulauan Riau</option>
+                                        <option value="jambi">Jambi</option>
+                                        <option value="sumatera selatan">Sumatera Selatan</option>
+                                        <option value="bangka belitung">Bangka Belitung</option>
+                                        <option value="bengkulu">Bengkulu</option>
+                                        <option value="lampung">Lampung</option>
+                                        <option value="jakarta">DKI Jakarta</option>
+                                        <option value="jawa barat">Jawa Barat</option>
+                                        <option value="banten">Banten</option>
+                                        <option value="jawa tengah">Jawa Tengah</option>
+                                        <option value="yogyakarta">Yogyakarta</option>
+                                        <option value="jawa timur">Jawa Timur</option>
+                                        <option value="bali">Bali</option>
+                                        <option value="NTB">NTB</option>
+                                        <option value="NTT">NTT</option>
+                                        <option value="kalimantan utara">Kalimantan Utara</option>
+                                        <option value="kalimantan barat">Kalimantan Barat</option>
+                                        <option value="kalimantan tengah">Kalimantan Tengah</option>
+                                        <option value="kalimantan selatan">Kalimantan Selatan</option>
+                                        <option value="kalimantan timur">Kalimantan Timur</option>
+                                        <option value="sulawesi utara">Sulawesi Utara</option>
+                                        <option value="sulawesi barat">Sulawesi Barat</option>
+                                        <option value="sulawesi tengah">Sulawesi Tengah</option>
+                                        <option value="sulawesi tenggara">Sulawesi Tenggara</option>
+                                        <option value="sulawesi selatan">Sulawesi Selatan</option>
+                                        <option value="gorontalo">Gorontalo</option>
+                                        <option value="maluku">Maluku</option>
+                                        <option value="maluku utara">Maluku Utara</option>
+                                        <option value="papua barat">Papua Barat</option>
+                                        <option value="papua">Papua</option>
                                             </select>
                                               @if($errors->has('provinsi'))
                                         <div class="alert alert-danger">
@@ -273,82 +277,19 @@
     </div>
 
 
-    <div class="footer-top-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-about-us">
-                        <h2>u<span>Stora</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
-                        <div class="footer-social">
-                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-menu">
-                        <h2 class="footer-wid-title">User Navigation </h2>
-                        <ul>
-                            <li><a href="">My account</a></li>
-                            <li><a href="">Order history</a></li>
-                            <li><a href="">Wishlist</a></li>
-                            <li><a href="">Vendor contact</a></li>
-                            <li><a href="">Front page</a></li>
-                        </ul>                        
-                    </div>
-                </div>
-                
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-menu">
-                        <h2 class="footer-wid-title">Categories</h2>
-                        <ul>
-                            <li><a href="">Mobile Phone</a></li>
-                            <li><a href="">Home accesseries</a></li>
-                            <li><a href="">LED TV</a></li>
-                            <li><a href="">Computer</a></li>
-                            <li><a href="">Gadets</a></li>
-                        </ul>                        
-                    </div>
-                </div>
-                
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-newsletter">
-                        <h2 class="footer-wid-title">Newsletter</h2>
-                        <p>Sign up to our newsletter and get exclusive deals you wont find anywhere else straight to your inbox!</p>
-                        <div class="newsletter-form">
-                            <input type="email" placeholder="Type your email">
-                            <input type="submit" value="Subscribe">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="footer-bottom-area">
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12 text-center">
                     <div class="copyright">
-                        <p>&copy; 2015 uCommerce. All Rights Reserved. <a href="http://www.freshdesignweb.com" target="_blank">freshDesignweb.com</a></p>
+                       <p>&copy; 2015 uCommerce. All Rights Reserved. <a href="http://www.freshdesignweb.com" target="_blank">freshDesignweb.com</a></p>
                     </div>
                 </div>
                 
-                <div class="col-md-4">
-                    <div class="footer-card-icon">
-                        <i class="fa fa-cc-discover"></i>
-                        <i class="fa fa-cc-mastercard"></i>
-                        <i class="fa fa-cc-paypal"></i>
-                        <i class="fa fa-cc-visa"></i>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
+     <!-- End footer bottom area -->
    
     <!-- Latest jQuery form server -->
     <script src="{{asset('user_aset/js/jquery.min.js')}}"></script>
@@ -365,5 +306,16 @@
     
     <!-- Main Script -->
     <script src="{{asset('user_aset/js/main.js')}}"></script>
+    <script type="text/javascript">
+        function tampilsandi() {
+    var x = document.getElementById("loginpass");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
+
+    </script>
   </body>
 </html>

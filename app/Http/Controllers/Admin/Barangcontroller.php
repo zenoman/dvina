@@ -21,13 +21,14 @@ class Barangcontroller extends Controller
             ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total'))
             ->groupBy('tb_kodes.kode_barang')
             ->paginate(50);
-         //$barang = DB::table('tb_kodes')->paginate(50);
-        return view('barang/index',['barang'=>$barang]);
+        $websetting = DB::table('settings')->limit(1)->get();
+        return view('barang/index',['barang'=>$barang,'websettings'=>$websetting]);
     }
 
     public function importexcel ()
     {
-        return view('barang/importexcel');
+        $websetting = DB::table('settings')->limit(1)->get();
+        return view('barang/importexcel',['websettings'=>$websetting]);
     }
 
     public function exsportexcel()
@@ -110,6 +111,7 @@ class Barangcontroller extends Controller
 
     public function create()
     {
+        $websetting = DB::table('settings')->limit(1)->get();
         $kode = DB::table('tb_kodes')->max('kode_barang');
         if($kode != NULL){
             $numkode = substr($kode, 3);
@@ -118,8 +120,9 @@ class Barangcontroller extends Controller
         }else{
             $newkode = "BRG00001";
         }
+        $websetting = DB::table('settings')->limit(1)->get();
         $kategori = DB::table('tb_kategoris')->get();
-        return view('barang/create',['kode'=>$newkode,'kategori'=>$kategori]);
+        return view('barang/create',['kode'=>$newkode,'kategori'=>$kategori,'websettings'=>$websetting]);
     }
 
     public function tambahstok($id){
@@ -267,6 +270,7 @@ class Barangcontroller extends Controller
    
     public function cari(Request $request)
     {
+        $websetting = DB::table('settings')->limit(1)->get();
          $barang = DB::table('tb_kodes')
             ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')
             ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
@@ -274,7 +278,7 @@ class Barangcontroller extends Controller
             ->where('tb_kodes.barang','like','%'.$request->cari.'%')
             ->groupBy('tb_kodes.kode_barang')->get();
 //dd($databarang);
-        return view('barang/pencarian',['barang'=>$barang, 'cari'=>$request->cari]);
+        return view('barang/pencarian',['barang'=>$barang, 'cari'=>$request->cari,'websettings'=>$websetting]);
     }
 
     public function hapusgambar($id){
@@ -295,6 +299,7 @@ class Barangcontroller extends Controller
      */
     public function edit($id)
     {
+        $websetting = DB::table('settings')->limit(1)->get();
         $barang = DB::table('tb_kodes')->where('id',$id)->get();
         foreach ($barang as $row) {
             $kode = $row->kode_barang;
@@ -304,7 +309,7 @@ class Barangcontroller extends Controller
         $fotos = DB::table('gambar')->where('kode_barang',$kode)->get();
         $jumlah_foto = DB::table('gambar')->where('kode_barang',$kode)->count();
         $barangwarna = DB::table('tb_barangs')->where('kode',$kode)->get();
-        return view('barang/edit',['kategori'=>$kategori,'barang'=>$barang,'warna'=>$warna,'fotos'=>$fotos,'idnya'=>$id,'kode'=>$kode,'jumlah_foto'=>$jumlah_foto,'warna'=>$barangwarna]);
+        return view('barang/edit',['kategori'=>$kategori,'barang'=>$barang,'warna'=>$warna,'fotos'=>$fotos,'idnya'=>$id,'kode'=>$kode,'jumlah_foto'=>$jumlah_foto,'warna'=>$barangwarna,'websettings'=>$websetting]);
     }
 
     public function update(Request $request, $id)

@@ -1,3 +1,10 @@
+.llink{
+  color:white;
+}
+.llink:hover{
+  color:white;
+  text-decoration: none;
+}
 .floatleft { float: left }
 .floatright { float: right }
 .alignleft {
@@ -707,6 +714,26 @@ width: 10px;
 .single-sidebar {
     margin-bottom: 50px;
 }
+.tombol-merah{
+  background: none repeat scroll 0 0 #d9534f;
+    border: medium none;
+    color: #fff;
+    padding: 11px 20px;
+    text-transform: uppercase;
+}
+.tombol-merah:hover {background-color: #222;color: #fff;text-decoration: none}
+input[type="text"], input[type="password"], input[type="email"], textarea {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+.tombol{
+  background: none repeat scroll 0 0 #5a88ca;
+    border: medium none;
+    color: #fff;
+    padding: 11px 20px;
+    text-transform: uppercase;
+}
+.tombol:hover {background-color: #222;color: #fff;text-decoration: none}
 input[type="text"], input[type="password"], input[type="email"], textarea {
     border: 1px solid #ddd;
     padding: 10px;
@@ -941,9 +968,9 @@ td.actions div.coupon {
     width: 57%;
 }
 .cart_totals {
-    float: right;
+    
     margin-bottom: 50px;
-    width: 40%;
+   
 }
 .cart-collaterals h2 {
     color: #5a88ca;

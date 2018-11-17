@@ -1,6 +1,10 @@
 @extends('layout.master')
-@section('plugincss')
+@foreach($websettings as $webset)
+@section('title',$webset->webName)
+@section('favicon')
+<link rel="shortcut icon" type="image" href="{{asset('img/setting/'.$webset->ico)}}">
 @endsection
+@endforeach
 
 @section('content')
 <script type="text/javascript">

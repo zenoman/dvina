@@ -18,8 +18,9 @@ class Usercontroller extends Controller
      */
     public function index()
     {
+        $websetting = DB::table('settings')->limit(1)->get();
         $users = Usermodel::orderBy('id','desc')->paginate(40);
-        return view('user/index',['user'=> $users]);
+        return view('user/index',['user'=> $users,'websettings'=>$websetting]);
     }
 
     /**
@@ -29,14 +30,16 @@ class Usercontroller extends Controller
      */
     public function cariuser(Request $request)
     {
+        $websetting = DB::table('settings')->limit(1)->get();
         $datauser = DB::table('tb_users')->where('nama','like','%'.$request->cari.'%')->get();
         
-        return view('user/pencarian', ['datauser'=>$datauser, 'cari'=>$request->cari]);
+        return view('user/pencarian', ['datauser'=>$datauser, 'cari'=>$request->cari,'websettings'=>$websetting]);
     }
 
     public function create()
     {
-        return view('user/create');
+        $websetting = DB::table('settings')->limit(1)->get();
+        return view('user/create',['websettings'=>$websetting]);
     }
 
     /**
@@ -124,13 +127,15 @@ class Usercontroller extends Controller
      */
     public function edit($id)
     {
+        $websetting = DB::table('settings')->limit(1)->get();
         $user = Usermodel::find($id);
-        return view('user/edit',['datauser'=>$user]);
+        return view('user/edit',['datauser'=>$user,'websettings'=>$websetting]);
     }
     public function changepass($id)
     {
+        $websetting = DB::table('settings')->limit(1)->get();
         $user = Usermodel::find($id);
-        return view('user/changepass',['datauser'=>$user]);
+        return view('user/changepass',['datauser'=>$user,'websettings'=>$websetting]);
     }
 
     public function actchangepass(Request $request, $id)
