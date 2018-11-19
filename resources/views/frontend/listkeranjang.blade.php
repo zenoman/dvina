@@ -7,14 +7,7 @@
     @endforeach
     @endsection
 
-    @section('cart')            
-    @if(Session::get('user_name'))
-    <div class="shopping-item">
-        <a href="cart.html">Keranjang - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
-    </div>
-    @endif
-    @endsection
-
+    
     @section('navigation')
     <ul class="nav navbar-nav">
         <li><a href="{{url('/')}}">Home</a></li>
@@ -35,6 +28,7 @@
             </div>
         </div>
     </div>
+     @if($jumlah > 0)
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -47,7 +41,14 @@
                                     <tbody>
                                         <tr class="cart-subtotal">
                                             <th>Subtotal</th>
-                                            <td><span class="amount">£15.00</span></td>
+
+                                            <td>
+                                            @foreach($subtotal as $totals)
+                                                <span class="amount">
+                                                {{"Rp ". number_format($totals->total,0,',','.')}}
+                                                </span>
+                                            @endforeach
+                                            </td>
                                         </tr>
 
                                         <tr class="shipping">
@@ -86,7 +87,7 @@
                                         @foreach($barangs as $barang)
                                         <tr class="cart_item">
                                             <td class="product-remove">
-                                                <a title="Remove this item" class="remove" href="#">×</a> 
+                                                <a title="Remove this item" class="remove" onclick="return confirm('hapus barang dari keranjang ?')" href="{{url('/hapuskeranjang/'.$barang->id)}}">×</a> 
                                             </td>
 
 
@@ -117,13 +118,18 @@
                                         @endforeach
                                         <tr>
                                             <td class="actions" colspan="7">
-                                                
-                                                <button type="button" class="tombol">
+                                               
+                                               <a href="{{url('/belisekarang')}}">
+                                                   <button type="button" class="tombol">
                                                     Beli Sekarang
                                                 </button>
-                                                <button type="button" class="tombol-merah">
+                                               </a>
+                                                
+
+                                                <button onclick="window.history.go(-1);" type="button" class="tombol-merah">
                                                     Kembali
                                                 </button>
+                                                
                                             </td>
                                         </tr>
 
@@ -135,5 +141,17 @@
             </div>
         </div>
     </div>
+    @else
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h2>Maaf, Keranjang Anda Kosong</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
     @endsection
   

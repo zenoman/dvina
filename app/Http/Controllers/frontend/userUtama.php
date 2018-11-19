@@ -23,7 +23,7 @@ class userUtama extends Controller
             ->get();
         
         $totalkeranjang = DB::table('tb_details')
-        ->where('iduser',Session::get('user_id'))
+        ->where([['iduser',Session::get('user_id')],['faktur',null]])
         ->count();
 
         $barangsuges = DB::table('tb_kodes')

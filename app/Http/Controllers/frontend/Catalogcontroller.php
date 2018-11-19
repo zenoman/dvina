@@ -24,13 +24,20 @@ class Catalogcontroller extends Controller
 
     public function keranjang(){
         $barangs =  DB::table('tb_details')
-                    ->select('tb_details.*','tb_barangs.warna','tb_kodes.id','tb_kodes.diskon')
+                    ->select('tb_details.*','tb_barangs.warna','tb_kodes.id as idkode','tb_kodes.diskon')
                     ->join('tb_kodes','tb_details.kode_barang','=','tb_kodes.kode_barang')
                     ->join('tb_barangs','tb_details.idwarna','=','tb_barangs.idbarang')
-                    ->where('iduser',Session::get('user_id'))
+                    ->where([['tb_details.iduser',Session::get('user_id')],['tb_details.faktur',null]])
                     ->get();
+
+        $subtotal = DB::table('tb_details')
+                    ->select(DB::raw('SUM(total) as total'))
+                   ->where([['tb_details.iduser',Session::get('user_id')],['tb_details.faktur',null]])
+                    ->get();
+        $jumlah = DB::table('tb_details')->where('iduser',Session::get('user_id'))->count();
+        //dd($jumlah);
         $websetting = DB::table('settings')->limit(1)->get();
-        return view('frontend/listkeranjang',['websettings'=>$websetting,'barangs'=>$barangs]);
+        return view('frontend/listkeranjang',['websettings'=>$websetting,'barangs'=>$barangs,'subtotal'=>$subtotal,'jumlah'=>$jumlah]);
     }
 
     public function show($id){
@@ -95,5 +102,69 @@ class Catalogcontroller extends Controller
             return back();
         }
     }
+    }
+
+    public function transaksi(){
+        $datauser = DB::table('tb_users')
+                    ->where('id',Session::get('user_id'))
+                    ->get();
+
+        $barangs = DB::table('tb_details')
+                    ->select(DB::raw('tb_details.*,tb_kodes.barang'))
+                    ->join('tb_kodes','tb_details.kode_barang','=','tb_kodes.kode_barang')
+                    ->where([['tb_details.iduser',Session::get('user_id')],['tb_details.faktur',null]])
+                    ->get();
+
+        $subtotal = DB::table('tb_details')
+                    ->select(DB::raw('SUM(total) as total'))
+                   ->where([['tb_details.iduser',Session::get('user_id')],['tb_details.faktur',null]])
+                    ->get();
+
+        $websetting = DB::table('settings')->limit(1)->get();
+        return view('frontend\transaksi',['websettings'=>$websetting,'barangs'=>$barangs,'subtotal'=>$subtotal,'datauser'=>$datauser]);
+    }
+
+    public function hapuskeranjang($id){
+        DB::table('tb_details')->where('id',$id)->delete();
+        return back();
+    }
+
+    public function aksibeli(Request $request){
+        $iduser     = Session::get('user_id');
+        $kode = DB::table('tb_transaksis')->max('faktur');
+        if($kode != NULL){
+            $numkode = substr($kode, 5);
+            $countkode = $numkode+1;
+            $newkode = "DVINA".sprintf("%05s", $countkode);
+        }else{
+            $newkode = "DVINA00001";
+        }
+        $tgl = date("d-m-Y");
+        $total = $request->total;
+        $alamat = $request->alamat;
+        $pembayaran = $request->pembayaran;
+        $keterangan = $request->keterangan;
+
+        DB::table('tb_transaksis')
+        ->insert([
+            'iduser'=>$iduser,
+            'faktur'=>$newkode,
+            'tgl'=>$tgl,
+            'total'=>$total,
+            'status'=>'terkirim',
+            'alamat_tujuan'=>$alamat,
+            'keterangan'=>$keterangan
+        ]);
+        DB::table('tb_details')
+        ->where([['iduser',Session::get('user_id')],['faktur',null]])
+        ->update([
+            'faktur'=>$newkode
+        ]);
+
+         return redirect('transaksisaya');
+    }
+
+    public function transaksisaya(){
+        return view('frontend/transaksisaya');
     }
 }

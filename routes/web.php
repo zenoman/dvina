@@ -1,6 +1,9 @@
 <?php
 use Illuminate\Support\Facades\Input;
-
+Route::get('/transaksisaya','frontend\Catalogcontroller@transaksisaya');
+Route::post('/aksibeli','frontend\Catalogcontroller@aksibeli');
+Route::get('/belisekarang','frontend\Catalogcontroller@transaksi');
+Route::get('/hapuskeranjang/{id}','frontend\Catalogcontroller@hapuskeranjang');
 Route::get('/hubungikami','frontend\userUtama@hubungi');
 Route::get('/keranjang','frontend\Catalogcontroller@keranjang');
 Route::resource('/','frontend\userUtama');
