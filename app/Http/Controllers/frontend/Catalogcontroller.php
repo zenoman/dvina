@@ -18,8 +18,16 @@ class Catalogcontroller extends Controller
             ->groupBy('tb_kodes.kode_barang')
             ->orderby('tb_kodes.id','desc')
             ->paginate(15);
+        $totalkeranjang = DB::table('tb_details')
+        ->where([['iduser',Session::get('user_id')],['faktur',null]])
+        ->count();
+
+        $totalbayar = DB::table('tb_details')
+                        ->select(DB::raw('SUM(total) as newtotal'))
+                        ->where([['iduser',Session::get('user_id')],['faktur',null]])
+                        ->get();
         $kategori = DB::table('tb_kategoris')->get();
-    	return view('frontend/semuaproduk',['barangs'=>$barangs,'kategoris'=>$kategori,'websettings'=>$websetting]);
+    	return view('frontend/semuaproduk',['barangs'=>$barangs,'kategoris'=>$kategori,'websettings'=>$websetting,'totalkeranjang'=>$totalkeranjang,'totalbayar'=>$totalbayar]);
     }
 
     public function keranjang(){
@@ -34,7 +42,7 @@ class Catalogcontroller extends Controller
                     ->select(DB::raw('SUM(total) as total'))
                    ->where([['tb_details.iduser',Session::get('user_id')],['tb_details.faktur',null]])
                     ->get();
-        $jumlah = DB::table('tb_details')->where('iduser',Session::get('user_id'))->count();
+        $jumlah = DB::table('tb_details')->where([['iduser',Session::get('user_id')],['faktur',null]])->count();
         //dd($jumlah);
         $websetting = DB::table('settings')->limit(1)->get();
         return view('frontend/listkeranjang',['websettings'=>$websetting,'barangs'=>$barangs,'subtotal'=>$subtotal,'jumlah'=>$jumlah]);
@@ -165,6 +173,8 @@ class Catalogcontroller extends Controller
     }
 
     public function transaksisaya(){
-        return view('frontend/transaksisaya');
+        $transaksi = DB::table('tb_transaksis')->where('iduser',Session::get('user_id'))->get();
+        $websetting = DB::table('settings')->limit(1)->get();
+        return view('frontend/transaksisaya',['websettings'=>$websetting,'transaksis'=>$transaksi]);
     }
 }

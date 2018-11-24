@@ -26,6 +26,11 @@ class userUtama extends Controller
         ->where([['iduser',Session::get('user_id')],['faktur',null]])
         ->count();
 
+        $totalbayar = DB::table('tb_details')
+                        ->select(DB::raw('SUM(total) as newtotal'))
+                        ->where([['iduser',Session::get('user_id')],['faktur',null]])
+                        ->get();
+
         $barangsuges = DB::table('tb_kodes')
             ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')
             ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
@@ -35,7 +40,7 @@ class userUtama extends Controller
             ->limit(8)
             ->get();
         $slider = DB::table('sliders')->get();
-        return view("frontend/home",['sliders'=>$slider, 'barangbaru'=>$barangbaru,'barangsuges'=>$barangsuges,'totalkeranjang'=>$totalkeranjang,'websettings'=>$websetting]);
+        return view("frontend/home",['sliders'=>$slider, 'barangbaru'=>$barangbaru,'barangsuges'=>$barangsuges,'totalkeranjang'=>$totalkeranjang,'websettings'=>$websetting,'totalbayar'=>$totalbayar]);
     }
 
     public function edituser()

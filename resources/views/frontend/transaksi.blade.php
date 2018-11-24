@@ -135,8 +135,6 @@
 
                                 
                                 <div id="order_review" style="position: relative;">
-                                   
-
                                     <div id="payment">
                                        <div class="form-row place-order">
                                             <input type="submit" data-value="Place order" value="Ajukan Pembelian" id="place_order" name="woocommerce_checkout_place_order" class="button alt" onclick="return confirm('Apakah Data Sudah Benar ?')">
