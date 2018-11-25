@@ -107,6 +107,9 @@
                             <a href="{{url('/barang')}}"><i class="fa fa-cube fa-fw"></i> Barang</a>
                         </li>
                         <li>
+                            <a href="{{url('/pembelian')}}"><i class="fa fa-money fa-fw"></i> Pembelian</a>
+                        </li>
+                        <li>
                             <a href="{{url('/slider')}}"><i class="fa fa-image fa-fw"></i> Slider</a>
                         </li>
                         <li>

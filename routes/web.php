@@ -1,5 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Input;
+Route::get('/pembelian/{id}/terima','Admin\PembelianController@terima');
+Route::get('/pembelian','Admin\PembelianController@index');
+//=======================================================
 Route::resource('bank','Admin\BankController');
 //========================================================
 Route::get('/cektransaksi','Admin\Dashboardcontroller@cektransaksi');

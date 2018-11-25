@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\models\bankmodel;
 use Illuminate\Support\Facades\DB;
 
-class BankController extends Controller
+class PembelianController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,23 @@ class BankController extends Controller
     public function index()
     {
         $websetting = DB::table('settings')->limit(1)->get();
-        $databank = bankmodel::where('id','>',1)->get();
-        return view('bank/index',['databank'=>$databank,'websettings'=>$websetting]);
+        $pembelians = DB::table('tb_transaksis')
+                    ->select(DB::raw('tb_transaksis.*,tb_users.username,tb_users.telp,tb_bank.nama_bank'))
+                    ->join('tb_users','tb_transaksis.iduser','=','tb_users.id')
+                    ->join('tb_bank','tb_transaksis.pembayaran','=','tb_bank.id')
+                    ->orderby('tb_transaksis.id','desc')
+                    ->paginate(40);
+        return view('pembelian/index',['pembelians'=>$pembelians,'websettings'=>$websetting]);
+    }
+
+    public function terima($id){
+        DB::table('tb_transaksis')
+        ->where('id',$id)
+        ->update(['status'=>'diterima']);
+        
+
+        return back()->with('status','Pembelian Diterima');
+
     }
 
     /**
@@ -39,11 +53,7 @@ class BankController extends Controller
      */
     public function store(Request $request)
     {
-        bankmodel::create([
-            'nama_bank'=>$request->bank,
-            'rekening'=>$request->rekening
-        ]);
-        return redirect('bank')->with('status','Tambah Data berhasil');
+        //
     }
 
     /**
@@ -77,12 +87,7 @@ class BankController extends Controller
      */
     public function update(Request $request, $id)
     {
-        bankmodel::find($id)
-                    ->update([
-                        'nama_bank'=>$request->bank,
-                        'rekening'=>$request->rekening
-                    ]);
-        return redirect('bank')->with('status','Edit Data berhasil');
+        //
     }
 
     /**
@@ -93,7 +98,6 @@ class BankController extends Controller
      */
     public function destroy($id)
     {
-        bankmodel::destroy($id);
-        return redirect('bank')->with('status','Hapus Data berhasil');
+        //
     }
 }
