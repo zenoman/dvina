@@ -52,9 +52,31 @@ class DashboardController extends Controller
     }
 
     public function cektransaksi(){
-        // $transaksi = DB::table('tb_transaksis')
-        //             ->where('')
+        $transaksi = DB::table('tb_transaksis')
+                    ->select(DB::raw('tb_transaksis.*,tb_users.username'))
+                    ->join('tb_users','tb_transaksis.iduser','=','tb_users.id')
+                    ->where('tb_transaksis.status','terkirim')
+                    ->get();
+        return response()->json($transaksi);
+    }
+    public function updatetransaksi($id){
+       
+        DB::table('tb_transaksis')
+        ->update([
+            'status'=>'dibaca'
+        ])
+        ->where('id',$id);
     }
 
+    public function cekbar(){
+        $transaksi = DB::table('tb_transaksis')
+                    ->select(DB::raw('tb_transaksis.*,tb_users.username'))
+                    ->join('tb_users','tb_transaksis.iduser','=','tb_users.id')
+                    ->where('tb_transaksis.status','terkirim')
+                    ->orwhere('tb_transaksis.status','dibaca')
+                    ->limit(10)
+                    ->get();
+        return response()->json($transaksi);
+    }
     
 }

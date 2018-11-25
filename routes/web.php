@@ -3,6 +3,8 @@ use Illuminate\Support\Facades\Input;
 Route::resource('bank','Admin\BankController');
 //========================================================
 Route::get('/cektransaksi','Admin\Dashboardcontroller@cektransaksi');
+Route::get('/cekbar','Admin\Dashboardcontroller@cekbar');
+Route::get('/cektransaksi/{id}','Admin\Dashboardcontroller@updatetransaksi');
 //========================================================
 Route::get('/transaksisaya','frontend\Catalogcontroller@transaksisaya');
 Route::post('/aksibeli','frontend\Catalogcontroller@aksibeli');
