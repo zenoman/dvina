@@ -1,5 +1,9 @@
 <?php
 use Illuminate\Support\Facades\Input;
+Route::resource('bank','Admin\BankController');
+//========================================================
+Route::get('/cektransaksi','Admin\Dashboardcontroller@cektransaksi');
+//========================================================
 Route::get('/transaksisaya','frontend\Catalogcontroller@transaksisaya');
 Route::post('/aksibeli','frontend\Catalogcontroller@aksibeli');
 Route::get('/belisekarang','frontend\Catalogcontroller@transaksi');

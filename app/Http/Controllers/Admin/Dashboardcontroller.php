@@ -51,5 +51,10 @@ class DashboardController extends Controller
         return $jumlah;
     }
 
+    public function cektransaksi(){
+        // $transaksi = DB::table('tb_transaksis')
+        //             ->where('')
+    }
+
     
 }

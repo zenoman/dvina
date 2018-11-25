@@ -161,6 +161,9 @@
                             <a href="{{url('/slider')}}"><i class="fa fa-image fa-fw"></i> Slider</a>
                         </li>
                         <li>
+                            <a href="{{url('bank')}}"><i class="fa fa-credit-card"></i> Rekening Toko</a>
+                        </li>
+                        <li>
                             <a href="{{url('/setting')}}"><i class="fa fa-gear fa-fw"></i> Setting</a>
                         </li>
                         </ul>
@@ -192,7 +195,10 @@
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     
     @yield('js')
+    <script type="text/javascript">
+        
 
+    </script>
 </body>
 
 </htmlassets

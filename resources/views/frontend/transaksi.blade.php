@@ -110,9 +110,10 @@
                                                     <label class="" for="shipping_country">Metode Pembayaran
                                                     </label>
                                                     <select class="country_to_state country_select" id="shipping_country" name="pembayaran">
-                                                        <option value="bayar di toko">Bayar Di toko</option>
-                                                        <option value="bri">BRI</option>
-                                                        <option value="bca">BCA</option>
+                                                        <option value="toko">Bayar Di toko</option>
+                                                        @foreach($rekening as $rek)
+                                                    <option value="{{$rek->id}}">{{$rek->nama_bank}}</option>
+                                                        @endforeach
                                                         
                                                     </select>
                                                 </p>

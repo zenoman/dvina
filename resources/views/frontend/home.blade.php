@@ -113,8 +113,7 @@
                                     <img src="{{asset('img/barang/'.$ft->nama)}}" alt="">
                                     @endforeach
                                     <div class="product-hover">
-                                       
-                                        <a href="{{url('/detailbarang/'.$barangterbaru->id)}}" class="add-to-cart-link"><i class="fa fa-eye"></i> Detail</a>
+                                       <a href="{{url('/detailbarang/'.$barangterbaru->id)}}" class="add-to-cart-link"><i class="fa fa-eye"></i> Detail</a>
                                     </div>
                                 </div>
                                 
