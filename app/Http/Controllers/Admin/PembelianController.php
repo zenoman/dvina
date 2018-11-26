@@ -30,11 +30,24 @@ class PembelianController extends Controller
         ->where('id',$id)
         ->update(['status'=>'diterima']);
         
-
-        return back()->with('status','Pembelian Diterima');
-
+       return back()->with('status','Pembelian Diterima');
     }
 
+    public function tolak($id){
+        DB::table('tb_transaksis')
+        ->where('id',$id)
+        ->update(['status'=>'ditolak']);
+        
+       return back()->with('status','Pembelian Ditolak');
+    }
+
+    public function sukses($id){
+        DB::table('tb_transaksis')
+        ->where('id',$id)
+        ->update(['status'=>'sukses']);
+        
+       return back()->with('status','Pembelian Sukses');
+    }
     /**
      * Show the form for creating a new resource.
      *

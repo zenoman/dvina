@@ -67,21 +67,28 @@
                                         <td>{{$row->nama_bank}}</td>
                                         <td>
                                             @if($row->status=='terkirim' || $row->status=='dibaca')
-                                            Menunggu Persetujuan
+                                            <label class="label label-success">
+                                                Menunggu Persetujuan
+                                            </label>
                                             @elseif($row->status=='diterima')
+                                            label.labellabel-succes
                                             Menunggu Pembayaran
-                                            @elseif($row->status=='ditolak')]
+                                            @elseif($row->status=='ditolak')
                                             Di Tolak
+                                            @elseif($row->status=='sukses')
+                                            Transaksi Sukses
                                             @endif
                                         </td>
                                         <td class="text-center">
                                             @if($row->status=='terkirim' || $row->status=='dibaca')
                                             <a href="{{url('/pembelian/'.$row->id.'/terima')}}" onclick="return confirm('Terima Pembelian Ini ?')" class="btn btn-success btn-sm">Terima</a>
-                                            <a onclick="return confirm('Tolak Pembelian Ini ?')" class="btn btn-danger btn-sm">Tolak</a>
+                                            <a href="{{url('/pembelian/'.$row->id.'/tolak')}}" onclick="return confirm('Tolak Pembelian Ini ?')" class="btn btn-danger btn-sm">Tolak</a>
                                             @elseif($row->status=='diterima')
-                                            Menunggu Pembayaran
-                                            @elseif($row->status=='ditolak')]
-                                            Di Tolak
+                                            <a href="{{url('/pembelian/'.$row->id.'/sukses')}}" onclick="return confirm('Anda Yakin Pembelian Ini Telah Sukses?')" class="btn btn-success btn-sm">Transaksi Sukses</a>
+                                            @elseif($row->status=='sukses')
+                                            <a href="#" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
+                                            @elseif($row->status=='ditolak')
+                                            <a href="#" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
                                             @endif                              
                                         </td>
                                     </tr>
