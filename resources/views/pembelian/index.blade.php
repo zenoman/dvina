@@ -67,27 +67,98 @@
                                         <td>{{$row->nama_bank}}</td>
                                         <td>
                                             @if($row->status=='terkirim' || $row->status=='dibaca')
-                                            <label class="label label-success">
+                                            <label class="label label-warning">
                                                 Menunggu Persetujuan
                                             </label>
                                             @elseif($row->status=='diterima')
-                                            label.labellabel-succes
-                                            Menunggu Pembayaran
+                                            <label class="label label-primary">
+                                                Menunggu Pembayaran
+                                            </label>
                                             @elseif($row->status=='ditolak')
-                                            Di Tolak
+                                            <label class="label label-danger">
+                                                Di Tolak
+                                            </label>
                                             @elseif($row->status=='sukses')
-                                            Transaksi Sukses
+                                            <label class="label label-success">
+                                                Transaksi Sukses
+                                            </label>
+                                            @else
+                                            <label class="label label-default">
+                                                Di Batalkan
+                                            </label>
                                             @endif
                                         </td>
                                         <td class="text-center">
                                             @if($row->status=='terkirim' || $row->status=='dibaca')
-                                            <a href="{{url('/pembelian/'.$row->id.'/terima')}}" onclick="return confirm('Terima Pembelian Ini ?')" class="btn btn-success btn-sm">Terima</a>
+                                            <!-- <a href="{{url('/pembelian/'.$row->id.'/terima')}}" onclick="return confirm('Terima Pembelian Ini ?')" class="btn btn-success btn-sm">Terima</a> -->
+                                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal{{$row->id}}">
+                                            Terima
+                                            </button>
+                                            <div class="modal fade" id="myModal{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Terima Pembelian</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                <div class="table-responsive">
+                                    @php
+                                    $databarang = DB::table('tb_details')
+                                                ->where('faktur',$row->faktur)
+                                                ->get();
+                                    @endphp
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">
+                                            Nama Barang</th>
+                                            <th class="text-center">
+                                            Warna</th>
+                                            <th class="text-center">
+                                            Jumlah</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($databarang as $brg)
+                                        <tr>
+                                            <td>
+                                                {{$brg->barang}}
+                                            </td>
+                                            <td>
+                                                {{$brg->idwarna}}
+                                            </td>
+                                            <td>
+                                                {{$brg->jumlah}}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                                              
+                                                
+                                                
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+
                                             <a href="{{url('/pembelian/'.$row->id.'/tolak')}}" onclick="return confirm('Tolak Pembelian Ini ?')" class="btn btn-danger btn-sm">Tolak</a>
                                             @elseif($row->status=='diterima')
                                             <a href="{{url('/pembelian/'.$row->id.'/sukses')}}" onclick="return confirm('Anda Yakin Pembelian Ini Telah Sukses?')" class="btn btn-success btn-sm">Transaksi Sukses</a>
                                             @elseif($row->status=='sukses')
                                             <a href="#" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
                                             @elseif($row->status=='ditolak')
+                                            <a href="#" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
+                                            @else                                 
                                             <a href="#" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
                                             @endif                              
                                         </td>

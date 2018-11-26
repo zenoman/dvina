@@ -110,7 +110,6 @@
                                                     <label class="" for="shipping_country">Metode Pembayaran
                                                     </label>
                                                     <select class="country_to_state country_select" id="shipping_country" name="pembayaran">
-                                                        <option value="toko">Bayar Di toko</option>
                                                         @foreach($rekening as $rek)
                                                     <option value="{{$rek->id}}">{{$rek->nama_bank}}</option>
                                                         @endforeach
@@ -138,8 +137,10 @@
                                 <div id="order_review" style="position: relative;">
                                     <div id="payment">
                                        <div class="form-row place-order">
+                                        @if($jumlah>0)
                                             <input type="submit" data-value="Place order" value="Ajukan Pembelian" id="place_order" name="woocommerce_checkout_place_order" class="button alt" onclick="return confirm('Apakah Data Sudah Benar ?')">
-                                            <button type="button" class="tombol-merah">
+                                            @endif
+                                            <button type="button" class="tombol-merah" onclick="window.history.go(-1);">
                                                 Kembali
                                             </button>
                                         </div>

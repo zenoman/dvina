@@ -62,10 +62,10 @@ class DashboardController extends Controller
     public function updatetransaksi($id){
        
         DB::table('tb_transaksis')
+        ->where('id',$id)
         ->update([
             'status'=>'dibaca'
-        ])
-        ->where('id',$id);
+        ]);
     }
 
     public function cekbar(){

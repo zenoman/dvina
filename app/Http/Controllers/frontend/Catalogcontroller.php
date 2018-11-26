@@ -127,9 +127,12 @@ class Catalogcontroller extends Controller
                     ->select(DB::raw('SUM(total) as total'))
                    ->where([['tb_details.iduser',Session::get('user_id')],['tb_details.faktur',null]])
                     ->get();
+        $jumlahbarang = DB::table('tb_details')
+                        ->where([['tb_details.iduser',Session::get('user_id')],['tb_details.faktur',null]])
+                        ->count();
         $rekening = DB::table('tb_bank')->get();
         $websetting = DB::table('settings')->limit(1)->get();
-        return view('frontend\transaksi',['websettings'=>$websetting,'barangs'=>$barangs,'subtotal'=>$subtotal,'datauser'=>$datauser,'rekening'=>$rekening]);
+        return view('frontend\transaksi',['websettings'=>$websetting,'barangs'=>$barangs,'subtotal'=>$subtotal,'datauser'=>$datauser,'rekening'=>$rekening,'jumlah'=>$jumlahbarang]);
     }
 
     public function hapuskeranjang($id){
