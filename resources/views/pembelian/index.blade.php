@@ -102,10 +102,43 @@
                                             <h4 class="modal-title" id="myModalLabel">Terima Pembelian</h4>
                                         </div>
                                         <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6 text-left">
+                                                    <table>
+                                                        <tr>
+                                                            <td><b>Pembeli</b></td>
+                                                            <td>&nbsp;:&nbsp;</td>
+                                                            <td>{{$row->username}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Tujuan</b></td>
+                                                            <td>&nbsp;:&nbsp;</td>
+                                                            <td>{{$row->alamat_tujuan}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>No.Telp</b></td>
+                                                            <td>&nbsp;:&nbsp;</td>
+                                                            <td>{{$row->telp}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Metode</b></td>
+                                                            <td>&nbsp;:&nbsp;</td>
+                                                            <td>{{$row->nama_bank}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 text-right">
+                                                    {{$row->tgl}}
+                                                    <h2><b>{{$row->faktur}}</b></h2>
+                                                </div>
+                                            </div>
+                                            
                                 <div class="table-responsive">
                                     @php
                                     $databarang = DB::table('tb_details')
-                                                ->where('faktur',$row->faktur)
+                                                ->select(DB::raw('tb_details.*,tb_barangs.warna'))
+                                                ->join('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
+                                                ->where('tb_details.faktur',$row->faktur)
                                                 ->get();
                                     @endphp
                                 <table class="table table-striped table-bordered table-hover">
@@ -117,6 +150,8 @@
                                             Warna</th>
                                             <th class="text-center">
                                             Jumlah</th>
+                                            <th class="text-center">Harga</th>
+                                            <th class="text-center">Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -126,23 +161,53 @@
                                                 {{$brg->barang}}
                                             </td>
                                             <td>
-                                                {{$brg->idwarna}}
+                                                {{$brg->warna}}
                                             </td>
                                             <td>
                                                 {{$brg->jumlah}}
                                             </td>
+                                            <td>
+                                                {{"Rp ". number_format($brg->harga,0,',','.')}}
+                                            </td>
+                                            <td>
+                                                {{"Rp ". number_format($brg->total,0,',','.')}}
+                                            </td>
                                         </tr>
                                     @endforeach
+                                    <tr>
+                                        <td colspan="4"><h3>Total</h3></td>
+                                        <td colspan="1"><h3>
+                                             {{"Rp ". number_format($row->total,0,',','.')}}
+                                        </h3></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
-                                              
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                         <p class="help-block text-left">NB: Total sudah termasuk diskon</p>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 text-right">
+                                        <form action="pembelian" method="post" role="form">
+                                            <div class="form-group">
+                                            <label>Masukan Ongkir</label>
+                                            <input type="text" name="ongkir" class="form-control">
+                                            <input type="hidden" name="total" value="{{$row->total}}">
+                                            <input type="hidden" name="admin" value="{{Session::get('iduser')}}">
+                                            <input type="hidden" name="kode" value="{{$row->id}}">
+                                            {{csrf_field()}}
+                                            </div>
+                                       
+                                    </div>
+                                </div> 
                                                 
                                                 
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                                            <button type="submit" onclick="return confirm('Terima Transaksi ?')" class="btn btn-primary">Terima</button>
+                                             </form>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                             
                                         </div>
                                     </div>

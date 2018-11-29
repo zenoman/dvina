@@ -25,10 +25,19 @@ class PembelianController extends Controller
         return view('pembelian/index',['pembelians'=>$pembelians,'websettings'=>$websetting]);
     }
 
-    public function terima($id){
+    public function terima(Request $request){
+        $id         = $request->kode;
+        $idadmin    = $request->admin;
+        $total      = $request->total + $request->ongkir;
+        $ongkir     = $request->ongkir;
+
         DB::table('tb_transaksis')
         ->where('id',$id)
-        ->update(['status'=>'diterima']);
+        ->update([
+            'status'=>'diterima',
+            'total_akhir'=>$total,
+            'ongkir'=>$ongkir
+        ]);
         
        return back()->with('status','Pembelian Diterima');
     }

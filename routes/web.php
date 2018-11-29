@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Input;
+Route::post('/pembelian','Admin\PembelianController@terima');
 Route::get('/pembelian/{id}/sukses','Admin\PembelianController@sukses');
 Route::get('/pembelian/{id}/tolak','Admin\PembelianController@tolak');
 Route::get('/pembelian/{id}/terima','Admin\PembelianController@terima');
