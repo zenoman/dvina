@@ -1,10 +1,15 @@
-$( document ).ready(function() {
-    		checktransaksi();
-    		cekbarnotivikasi();
-    		setInterval(function(){
+$(document).ready(function() {
+    		
+            checktransaksi();
+    		
+            cekbarnotivikasi();
+    		
+            setInterval(function(){
     			checktransaksi();
     			cekbarnotivikasi();
     		},7000);
+            
+            var notif = document.getElementById('notif');
 
     		function checktransaksi(){
     			 $.ajax({
@@ -51,13 +56,13 @@ $( document ).ready(function() {
     		function tampilnotifikasi(data){
     			$.each(data,function(key, value){
     				$.notify(value.username+" Memesan Barang");
-    				
+    				notif.play();
     				$.ajax({
                     type:'GET',
                     dataType:'json',
                     url: '/cektransaksi/'+value.id,
                     error: function(){
-                    	Alert('error');
+                    
                     }
                 	});
     			});

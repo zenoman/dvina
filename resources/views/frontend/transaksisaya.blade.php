@@ -60,13 +60,18 @@
                                             </td>
                                             <td class="product-price">
                                                 <span class="amount">
-                                                {{$transaksi->status}}
+                                                    @if($transaksi->status=='dibaca' || $transaksi->status=='terkirim')
+                                                    Menunggu Persetujuan
+                                                    @else
+                                                    {{$transaksi->status}}
+                                                    @endif
                                             	</span> 
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                {{ $transaksis->links() }}
                                 <div class="woocommerce-info">NB: Pastikan Menyertakan Faktur Pada Berita Transfer. Jika Ada yang Keluhan Atau Kurang Jelas, Hubungi CP Kami Di Tab Hubungi Kami 
                             	</div>
                         </div>                        

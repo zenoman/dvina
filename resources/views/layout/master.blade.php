@@ -127,10 +127,10 @@
         <div id="app">
             @yield('content')
         </div>
-
+    <audio src="{{asset('files/notif.mp3')}}" type="audio/mpeg" id="notif"></audio>
     </div>
     <!-- /#wrapper -->
-
+    
     <!-- jQuery -->
     <script src="{{asset('assets/vendor/jquery/jquery.min.js')}}"></script>
 
@@ -149,7 +149,7 @@
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     
     @yield('js')
-
+    
     <script src="{{asset('assets/js/notifikasi.js')}}"></script>
 </body>
 

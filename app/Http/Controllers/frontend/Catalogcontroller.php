@@ -177,7 +177,7 @@ class Catalogcontroller extends Controller
     }
 
     public function transaksisaya(){
-        $transaksi = DB::table('tb_transaksis')->where('iduser',Session::get('user_id'))->get();
+        $transaksi = DB::table('tb_transaksis')->where('iduser',Session::get('user_id'))->paginate(15);
         $websetting = DB::table('settings')->limit(1)->get();
         return view('frontend/transaksisaya',['websettings'=>$websetting,'transaksis'=>$transaksi]);
     }
