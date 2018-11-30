@@ -45,11 +45,33 @@
                                     	@foreach($transaksis as $transaksi)
                                         <tr class="cart_item">
                                             
-
-
-                                            <td class="product-name">
-                                            	{{$transaksi->faktur}}
+                                            <td class="product-name text-primary">
+                                            	
+                                                    <a href="#" data-toggle="modal" data-target="#myModal{{$transaksi->id}}" style="color:#428bca;">
+                                                       {{$transaksi->faktur}} 
+                                                    </a>
+                                                
                                             </td>
+                                             <div class="modal fade" id="myModal{{$transaksi->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Daftar Barang Yang Di beli</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            @php
+                                            $detailnya = DB::table('tb_details')
+                                            ->where('faktur',$transaksi->faktur)
+                                            ->get();
+                                            @endphp
+                                            @foreach($detailnya as $dtail)
+                                        {{$dtail->faktur}}
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                                             <td class="product-name">
                                             	{{$transaksi->tgl}}
                                             </td>

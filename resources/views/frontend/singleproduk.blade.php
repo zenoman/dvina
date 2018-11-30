@@ -44,29 +44,32 @@
                 <div class="col-md-4">
                     
                     <div class="single-sidebar">
-                        <h2 class="sidebar-title">Products</h2>
+                        <h2 class="sidebar-title">Produk Lain</h2>
+                       @foreach($baranglain as $lain)
                         <div class="thubmnail-recent">
-                            <img src="{{asset('user_aset/img/product-thumb-1.jpg')}}" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
+                             @php
+                                    $kode_barang = $lain->kode_barang;
+                                    $foto = DB::table('gambar')
+                                    ->where('kode_barang', $kode_barang)
+                                    ->limit(1)
+                                    ->get();
+                                    @endphp
+                                    @foreach($foto as $ft)
+                                    
+                            <img src="{{asset('img/barang/'.$ft->nama)}}" class="recent-thumb" alt="">
+                                    @endforeach
+                            <h2><a href="{{url('/detailbarang/'.$lain->id)}}">{{$lain->barang}}</a></h2>
                             <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$100.00</del>
+                                
+                                        @if($lain->diskon > 0)
+                                        <ins>{{"Rp ". number_format(($lain->harga_barang-($lain->diskon/100*$lain->harga_barang)),0,',','.')}}</ins> <del>{{"Rp ". number_format($lain->harga_barang,0,',','.')}}</del>
+                                        @else
+                                        <ins>{{"Rp ". number_format($lain->harga_barang,0,',','.')}}</ins>
+                                        @endif
                             </div>                             
                         </div>
-                       
-                        <div class="thubmnail-recent">
-                            <img src="{{asset('user_aset/img/product-thumb-1.jpg')}}" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$100.00</del>
-                            </div>                             
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="{{asset('user_aset/img/product-thumb-1.jpg')}}" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$100.00</del>
-                            </div>                             
-                        </div>
+                       @endforeach
+
                     </div>
                 </div>
                 

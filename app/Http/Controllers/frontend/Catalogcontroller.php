@@ -58,8 +58,12 @@ class Catalogcontroller extends Controller
             ->orderby('tb_kodes.id','desc')
             ->where('tb_kodes.id',$id)
             ->get();
+        $baranglain = DB::table('tb_kodes')
+            ->inRandomOrder()
+            ->limit(3)
+            ->get();
             //dd($barangs);
-        return view('frontend/singleproduk',['databarang'=>$barangs,'websettings'=>$websetting]);
+        return view('frontend/singleproduk',['baranglain'=>$baranglain,'databarang'=>$barangs,'websettings'=>$websetting]);
     }
 
     public function masukkeranjang(Request $request)
