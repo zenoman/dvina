@@ -90,12 +90,12 @@
                         <li>
                             <a href="{{url('/admin')}}"><i class="fa fa-user fa-fw"></i> Admin</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="{{url('/jual')}}"><i class="fa fa-cart-plus fa-fw"></i> Transaksi Barang</a>
                         </li>
                         <li>
                             <a href="{{url('/pesan')}}"><i class="fa fa-tags fa-fw"></i> Pemesanan Barang</a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="{{url('/user')}}"><i class="fa fa-users fa-fw"></i> User</a>
                         </li>

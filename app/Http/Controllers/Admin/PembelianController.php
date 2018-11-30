@@ -95,9 +95,11 @@ class PembelianController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function hapus($id)
     {
-        //
+        DB::table('tb_details')->where('faktur',$id)->delete();
+        DB::table('tb_transaksis')->where('faktur',$id)->delete();
+        return back()->with('status','Data Berhasil Dihapus');
     }
 
     /**
