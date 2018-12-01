@@ -9,9 +9,21 @@
  
     @section('cart')        
     @if(Session::get('user_name'))
+    @if($totalkeranjang > 0)
     <div class="shopping-item">
-        <a href="cart.html">Keranjang - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+        <a href="{{url('/keranjang')}}">Keranjang - 
+            <span class="cart-amunt">
+            @foreach($totalbayar as $tb)
+            {{"Rp ". number_format($tb->newtotal,0,',','.')}}
+            @endforeach
+            </span> 
+        <i class="fa fa-shopping-cart"></i> 
+            @if($totalkeranjang>0)
+            <span class="product-count">{{$totalkeranjang}}</span>
+            @endif
+        </a>
     </div>
+    @endif
     @endif
     @endsection
     

@@ -62,8 +62,15 @@ class Catalogcontroller extends Controller
             ->inRandomOrder()
             ->limit(3)
             ->get();
+        $totalkeranjang = DB::table('tb_details')
+        ->where([['iduser',Session::get('user_id')],['faktur',null]])
+        ->count();
+        $totalbayar = DB::table('tb_details')
+                        ->select(DB::raw('SUM(total) as newtotal'))
+                        ->where([['iduser',Session::get('user_id')],['faktur',null]])
+                        ->get();
             //dd($barangs);
-        return view('frontend/singleproduk',['baranglain'=>$baranglain,'databarang'=>$barangs,'websettings'=>$websetting]);
+        return view('frontend/singleproduk',['baranglain'=>$baranglain,'databarang'=>$barangs,'websettings'=>$websetting,'totalkeranjang'=>$totalkeranjang,'totalbayar'=>$totalbayar]);
     }
 
     public function masukkeranjang(Request $request)
@@ -188,7 +195,7 @@ class Catalogcontroller extends Controller
             ->where('tb_kodes.barang','like','%'.$request->cari.'%')
             ->groupBy('tb_kodes.kode_barang')
             ->orderby('tb_kodes.id','desc')
-            ->paginate(15);
+            ->paginate(1);
         $totalkeranjang = DB::table('tb_details')
         ->where([['iduser',Session::get('user_id')],['faktur',null]])
         ->count();
@@ -204,5 +211,29 @@ class Catalogcontroller extends Controller
         $transaksi = DB::table('tb_transaksis')->where('iduser',Session::get('user_id'))->paginate(15);
         $websetting = DB::table('settings')->limit(1)->get();
         return view('frontend/transaksisaya',['websettings'=>$websetting,'transaksis'=>$transaksi]);
+    }
+
+    public function kategori($id){
+        $websetting = DB::table('settings')->limit(1)->get();
+        $barangs = DB::table('tb_kodes')
+            ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')
+            ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
+            ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total'))
+            ->where('tb_kodes.id_kategori',$id)
+            ->groupBy('tb_kodes.kode_barang')
+            ->orderby('tb_kodes.id','desc')
+            ->paginate(1);
+        $totalkeranjang = DB::table('tb_details')
+        ->where([['iduser',Session::get('user_id')],['faktur',null]])
+        ->count();
+
+        $totalbayar = DB::table('tb_details')
+                        ->select(DB::raw('SUM(total) as newtotal'))
+                        ->where([['iduser',Session::get('user_id')],['faktur',null]])
+                        ->get();
+
+        $kategori = DB::table('tb_kategoris')->get();
+        
+        return view('frontend/tampilkategor',['websettings'=>$websetting,'barangs'=>$barangs,'kategoris'=>$kategori,'websettings'=>$websetting,'totalkeranjang'=>$totalkeranjang,'totalbayar'=>$totalbayar]);
     }
 }

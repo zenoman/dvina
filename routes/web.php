@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Input;
+Route::get('/semuaproduk/{id}/kategori','frontend\Catalogcontroller@kategori');
 Route::post('/cari','frontend\Catalogcontroller@caribarang');
 Route::get('/pembelian/{id}/hapus','Admin\PembelianController@hapus');
 Route::post('/pembelian','Admin\PembelianController@terima');

@@ -41,9 +41,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="product-bit-title text-center">
-                        @if($status=='nama')
-                        <h2>Hasil Cari</h2>
-                        @endif
+                        <h2>Barang Dengan Kategori</h2>
                     </div>
                 </div>
             </div>

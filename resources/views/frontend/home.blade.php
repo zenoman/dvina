@@ -12,7 +12,7 @@
     @if(Session::get('user_name'))
     @if($totalkeranjang > 0)
     <div class="shopping-item">
-        <a href="cart.html">Keranjang - 
+        <a href="{{url('/keranjang')}}">Keranjang - 
             <span class="cart-amunt">
             @foreach($totalbayar as $tb)
             {{"Rp ". number_format($tb->newtotal,0,',','.')}}
