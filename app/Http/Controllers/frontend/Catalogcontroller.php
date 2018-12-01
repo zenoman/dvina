@@ -179,7 +179,27 @@ class Catalogcontroller extends Controller
 
          return redirect('transaksisaya');
     }
+    public function caribarang(Request $request){
+        $websetting = DB::table('settings')->limit(1)->get();
+        $barangs = DB::table('tb_kodes')
+            ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')
+            ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
+            ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total'))
+            ->where('tb_kodes.barang','like','%'.$request->cari.'%')
+            ->groupBy('tb_kodes.kode_barang')
+            ->orderby('tb_kodes.id','desc')
+            ->paginate(15);
+        $totalkeranjang = DB::table('tb_details')
+        ->where([['iduser',Session::get('user_id')],['faktur',null]])
+        ->count();
 
+        $totalbayar = DB::table('tb_details')
+                        ->select(DB::raw('SUM(total) as newtotal'))
+                        ->where([['iduser',Session::get('user_id')],['faktur',null]])
+                        ->get();
+         $kategori = DB::table('tb_kategoris')->get();
+        return view('frontend/hasilcari',['websettings'=>$websetting,'barangs'=>$barangs,'kategoris'=>$kategori,'websettings'=>$websetting,'totalkeranjang'=>$totalkeranjang,'totalbayar'=>$totalbayar,'status'=>'nama']);
+    }
     public function transaksisaya(){
         $transaksi = DB::table('tb_transaksis')->where('iduser',Session::get('user_id'))->paginate(15);
         $websetting = DB::table('settings')->limit(1)->get();

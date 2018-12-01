@@ -30,7 +30,7 @@
     @section('navigation')
     <ul class="nav navbar-nav">
         <li><a href="{{url('/')}}">Home</a></li>
-        <li class="active"><a href="{{url('/semuaproduk')}}">Semua Produk</a></li>
+        <li><a href="{{url('/semuaproduk')}}">Semua Produk</a></li>
         <li><a href="{{url('/hubungikami')}}">Hubungi Kami</a></li>
     </ul>
     @endsection
@@ -41,7 +41,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="product-bit-title text-center">
-                        <h2>Semua Produk</h2>
+                        @if($status=='nama')
+                        <h2>Hasil Cari</h2>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -58,7 +60,6 @@
                         <h2 class="sidebar-title">Cari Produk</h2>
                         <form action="{{url('/cari')}}" method="post">
                             <input type="text" placeholder="Cari Berdasarkan Nama" name="cari" required>
-                            {{csrf_field()}}
                             <input type="submit" value="Cari">
                         </form>
                     </div>
