@@ -90,22 +90,45 @@
                     <div class="product-content-right">
                         
                         <div class="row">
-                            <div class="col-sm-6 text-center">
-                                <div class="product-images">
-                                    <div class="product-main-img">
-                                    @php
+                            <div class="col-sm-6">
+                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                          @php
                                     $kode_barang = $barang->kode_barang;
                                     $foto = DB::table('gambar')
                                     ->where('kode_barang', $kode_barang)
-                                    ->limit(1)
-                                    ->get();
+                                   ->get();
+                                   $ii=0;
                                     @endphp
                                     @foreach($foto as $ft)
+                                    @php
+                                    $ii++;
+                                    @endphp
+
+                                    @if($ii == 1)
+                                    <div class="item active">
+                                    @else
+                                    <div class="item">
+                                    @endif
+                                   
                                     <img src="{{asset('img/barang/'.$ft->nama)}}" alt="" width="auto">
+                                      </div>
                                     @endforeach
+                                      
+
                                     </div>
-                                    
-                                </div>
+
+                                    <!-- Left and right controls -->
+                                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                                      <span class="glyphicon glyphicon-chevron-left"></span>
+                                      <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                                      <span class="glyphicon glyphicon-chevron-right"></span>
+                                     
+                                    </a>
+                                  </div>
+                                
                              </div>
                             <div class="col-sm-6">
                                 <h2 class="product-name">
@@ -181,9 +204,10 @@
                                         </div>
                                         
                                     </form>   
-                            </div>   
+                            </div> 
+                           
                             <div class="col-sm-12">
-                                
+                                 <br>
                             
                                 <div class="product-inner">
                                     

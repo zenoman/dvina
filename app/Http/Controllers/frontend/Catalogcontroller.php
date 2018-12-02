@@ -222,7 +222,7 @@ class Catalogcontroller extends Controller
             ->where('tb_kodes.id_kategori',$id)
             ->groupBy('tb_kodes.kode_barang')
             ->orderby('tb_kodes.id','desc')
-            ->paginate(1);
+            ->paginate(15);
         $totalkeranjang = DB::table('tb_details')
         ->where([['iduser',Session::get('user_id')],['faktur',null]])
         ->count();
