@@ -100,7 +100,8 @@ class Catalogcontroller extends Controller
                     $harga = $barang->harga_barang; 
                     $diskon = $barang->diskon;
             }
-            $totaldiskon = $diskon/100*$request->jumlah*$harga;            
+            $totaldiskon = $diskon/100*$request->jumlah*$harga;
+            $harga_total = ($harga*$request->jumlah)-$totaldiskon;             
             DB::table('tb_details')
             ->insert([
                 'idwarna'=>$datawarna[0],
@@ -112,8 +113,8 @@ class Catalogcontroller extends Controller
                 'harga'=>$harga,
                 'jumlah'=>$request->jumlah,
                 'total_a'=>($request->jumlah*$harga),
-                'diskon'=>$totaldiskon,
-                'total'=>($request->jumlah*$harga)-$totaldiskon,
+                'diskon'=>$diskon,
+                'total'=>$harga_total,
                 'metode'=>"pesan"
 
 
@@ -122,7 +123,28 @@ class Catalogcontroller extends Controller
         }
     }
     }
-
+    public function tolak(Request $request){
+        $kode = $request->kode;
+        $iduser = $request->iduser;
+        $keterangan = $request->keterangan;
+        $transaksi = DB::table('tb_transaksis')
+        ->where('id',$kode)
+        ->get();
+        foreach ($transaksi as $row) {
+            DB::table('log_cancel')
+            ->insert([
+                'faktur'=>$row->faktur,
+                'total_akhir'=>$row->total,
+                'tgl'=>date("d-m-Y"),
+                'bulan'=>date("m"),
+                'status'=>'dicancel',
+                'id_user'=>$iduser,
+                'keterangan'=>$keterangan
+            ]);
+            DB::table('tb_transaksis')->where('id',$kode)->delete();
+        }
+       return back();
+    }
     public function transaksi(){
         $datauser = DB::table('tb_users')
                     ->where('id',Session::get('user_id'))

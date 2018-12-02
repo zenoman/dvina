@@ -44,20 +44,19 @@
                                             <th class="product-thumbnail">Tanggal</th>
                                             <th class="product-price">Total Harga</th>
                                             <th class="product-quantity">Status</th>
+                                            <th class="product-quantity">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     	@foreach($transaksis as $transaksi)
                                         <tr class="cart_item">
                                             
-                                            <td class="product-name text-primary">
+                                            <td class="product-name">
                                             	
-                                                    <a href="#" data-toggle="modal" data-target="#myModal{{$transaksi->id}}" style="color:#428bca;">
+                                                    <a href="#" data-toggle="modal" data-target="#myModal{{$transaksi->id}}" style="color:#428bca;" class="text-primary">
                                                        {{$transaksi->faktur}} 
                                                     </a>
-                                                
-                                            </td>
-                                             <div class="modal fade" id="myModal{{$transaksi->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                            <div class="modal fade" id="myModal{{$transaksi->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -67,17 +66,102 @@
                                         <div class="modal-body">
                                             @php
                                             $detailnya = DB::table('tb_details')
+                                            ->select(DB::raw('tb_details.*,tb_barangs.warna'))
+                                            ->join('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
                                             ->where('faktur',$transaksi->faktur)
                                             ->get();
                                             @endphp
-                                            @foreach($detailnya as $dtail)
-                                        {{$dtail->faktur}}
-                                            @endforeach
+                                    <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">
+                                            Nama Barang</th>
+                                            <th class="text-center">
+                                            Warna</th>
+                                            <th class="text-center">
+                                            Jumlah</th>
+                                            <th class="text-center">Harga</th>
+                                            <th class="text-center">Diskon</th>
+                                            <th class="text-center">Total</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($detailnya as $brg)
+                                        <tr>
+                                            <td>
+                                                {{$brg->barang}}
+                                            </td>
+                                            <td>
+                                                {{$brg->warna}}
+                                            </td>
+                                            <td>
+                                                {{$brg->jumlah}} Pcs
+                                            </td>
+                                            <td>
+                                                {{"Rp ". number_format($brg->harga,0,',','.')}}
+                                            </td>
+                                            <td>
+                                                @if($brg->diskon > 0)
+                                                {{$brg->diskon}} %
+                                                @else
+                                                -
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {{"Rp ". number_format($brg->total,0,',','.')}}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                        @if($transaksi->total_akhir=='')
+                                        <tr>
+                                            <td colspan="5">Subtotal</td>
+                                            <td><b>
+                                                {{"Rp ". number_format($transaksi->total,0,',','.')}}
+                                            </b></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">Ongkir</td>
+                                            <td> - </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">Total</td>
+                                            <td> - </td>
+                                        </tr>
+                                        @else
+                                        <tr>
+                                            <td colspan="5">Subtotal</td>
+                                            <td>
+                                                <b>
+                                                {{"Rp ". number_format($transaksi->total,0,',','.')}}
+                                            </b>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">Ongkir</td>
+                                            <td><b>
+                                                {{"Rp ". number_format($transaksi->ongkir,0,',','.')}}
+                                            </b></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">Total</td>
+                                            <td><b>
+                                                {{"Rp ". number_format($transaksi->total_akhir,0,',','.')}}
+                                            </b></td>
+                                        </tr>
+                                        @endif
+                                        
+                                    </tbody>
+                                        </table>
+                                        
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
-                                            <td class="product-name">
+                                    
+                                            </td>
+                                    <td class="product-name">
                                             	{{$transaksi->tgl}}
                                             </td>
                                             <td class="product-quantity">
@@ -97,6 +181,32 @@
                                                     {{$transaksi->status}}
                                                     @endif
                                             	</span> 
+                                            </td>
+                                            <td>
+                                                @if($transaksi->status=='terkirim' || $transaksi->status=='dibaca')
+                                                <button data-toggle="modal" data-target="#Modal{{$transaksi->id}}" class="tombol-merah">Batal</button>
+                            <div class="modal fade " id="Modal{{$transaksi->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Batalkan Pembelian</h4>
+                                        </div>
+                                        <div class="modal-body text-left">
+                                            <form action="/transaksi/tolak" method="post">
+                                                 <label>Keterangan</label>
+                                            <textarea name="keterangan" class="form-control" rows="3" cols="75"></textarea>
+                                             <input type="hidden" value="{{$transaksi->id}}" name="kode">
+                                            <input type="hidden" value="{{Session::get('user_id')}}" name="iduser">
+                                            <p class="help-block text-left">Masukan Keterangan Pembatalan Transaksi</p>
+                                            {{csrf_field()}}
+                                            <button type="submit" class="tombol" onclick="return confirm('Batalkan Transaksi ?')">Kirim</button>    
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach
