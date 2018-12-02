@@ -42,11 +42,26 @@ class PembelianController extends Controller
        return back()->with('status','Pembelian Diterima');
     }
 
-    public function tolak($id){
-        DB::table('tb_transaksis')
-        ->where('id',$id)
-        ->update(['status'=>'ditolak']);
-        
+    public function tolak(Request $request){
+        $kode = $request->kode;
+        $iduser = $request->iduser;
+        $keterangan = $request->keterangan;
+        $transaksi = DB::table('tb_transaksis')
+        ->where('id',$kode)
+        ->get();
+        foreach ($transaksi as $row) {
+            DB::table('log_cancel')
+            ->insert([
+                'faktur'=>$row->faktur,
+                'total_akhir'=>$row->total,
+                'tgl'=>date("d-m-Y"),
+                'bulan'=>date("m"),
+                'status'=>'ditolak',
+                'id_admin'=>$iduser,
+                'keterangan'=>$keterangan
+            ]);
+            DB::table('tb_transaksis')->where('id',$kode)->delete();
+        }
        return back()->with('status','Pembelian Ditolak');
     }
 

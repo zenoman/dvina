@@ -76,7 +76,10 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="./"><img src="{{asset('user_aset/img/logo.png')}}"></a></h1>
+                    
+     @foreach($websettings as $webset)
+     <h1><a href="{{url('/')}}"><img src="{{asset('img/setting/'.$webset->logo)}}"></a></h1>
+    @endforeach
                     </div>
                 </div>
                 

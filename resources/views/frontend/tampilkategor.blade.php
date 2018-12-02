@@ -113,7 +113,6 @@
                @endforeach
             </div>
             <div class="text-center">
-            {{ $barangs->links() }}
             <br><button type="button" onclick="window.history.go(-1);" class="tombol-merah">Kembali</button>
                 </div>
 

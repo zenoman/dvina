@@ -14,6 +14,17 @@
     <link href="{{asset('assets/vendor/datatables-responsive/dataTables.responsive.css')}}" rel="stylesheet">
 @endsection
 @section('content')
+<script type="text/javascript">
+     function isNumberKey(evt)
+      {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+         return true;
+      }
+      
+</script>
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -88,10 +99,10 @@
                                             </label>
                                             @endif
                                         </td>
-                                        <td class="text-center">
+                                        <td>
                                             @if($row->status=='terkirim' || $row->status=='dibaca')
                                             <!-- <a href="{{url('/pembelian/'.$row->id.'/terima')}}" onclick="return confirm('Terima Pembelian Ini ?')" class="btn btn-success btn-sm">Terima</a> -->
-                                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal{{$row->id}}">
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal{{$row->id}}">
                                             Terima
                                             </button>
                                             <div class="modal fade" id="myModal{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -191,7 +202,8 @@
                                         <form action="pembelian" method="post" role="form">
                                             <div class="form-group">
                                             <label>Masukan Ongkir</label>
-                                            <input type="text" name="ongkir" class="form-control">
+                                            <input type="text" name="ongkir" class="form-control" required value="0" onkeypress="return isNumberKey(event)">
+                                             <p class="help-block text-right">Ongkir Harus Di isi / Masukan angka 0 </p>
                                             <input type="hidden" name="total" value="{{$row->total}}">
                                             <input type="hidden" name="admin" value="{{Session::get('iduser')}}">
                                             <input type="hidden" name="kode" value="{{$row->id}}">
@@ -216,7 +228,35 @@
                                 <!-- /.modal-dialog -->
                             </div>
 
-                                            <a href="{{url('/pembelian/'.$row->id.'/tolak')}}" onclick="return confirm('Tolak Pembelian Ini ?')" class="btn btn-danger btn-sm">Tolak</a>
+                                            <!-- <a href="{{url('/pembelian/'.$row->id.'/tolak')}}" onclick="return confirm('Tolak Pembelian Ini ?')" class="btn btn-danger btn-sm">Tolak</a> -->
+                            
+                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modaltolak{{$row->id}}" onclick="return confirm('Tolak Pembelian Ini ?')">
+                            Tolak
+                            </button>
+                            <div class="modal fade" id="modaltolak{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Tolak Pembelian</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                           <form action="/pembelian/tolak" role="form" method="post">
+                                            <input type="hidden" value="{{$row->id}}" name="kode">
+                                            <input type="hidden" value="{{Session::get('iduser')}}" name="iduser">
+                                            <div class="form-group">
+                                            <label>Keterangan</label>
+                                            <textarea name="keterangan" class="form-control" rows="3" cols="75"></textarea>
+                                            {{csrf_field()}}    
+                                            </div><br><br>
+                                            <button type="submit" class="btn btn-primary">
+                                                Tolak
+                                            </button>
+                                            </form>       
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
                                             @elseif($row->status=='diterima')
                                             <a href="{{url('/pembelian/'.$row->id.'/sukses')}}" onclick="return confirm('Anda Yakin Pembelian Ini Telah Sukses?')" class="btn btn-success btn-sm">Transaksi Sukses</a>
                                             @elseif($row->status=='sukses')

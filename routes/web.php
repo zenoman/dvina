@@ -4,6 +4,7 @@ Route::get('/semuaproduk/{id}/kategori','frontend\Catalogcontroller@kategori');
 Route::post('/cari','frontend\Catalogcontroller@caribarang');
 Route::get('/pembelian/{id}/hapus','Admin\PembelianController@hapus');
 Route::post('/pembelian','Admin\PembelianController@terima');
+Route::post('/pembelian/tolak','Admin\PembelianController@tolak');
 Route::get('/pembelian/{id}/sukses','Admin\PembelianController@sukses');
 Route::get('/pembelian/{id}/tolak','Admin\PembelianController@tolak');
 Route::get('/pembelian/{id}/terima','Admin\PembelianController@terima');

@@ -13,6 +13,11 @@
         <li><a href="{{url('/hubungikami')}}">Hubungi Kami</a></li>
     </ul>
     @endsection
+    @section('logo')
+     @foreach($websettings as $webset)
+     <h1><a href="{{url('/')}}"><img src="{{asset('img/setting/'.$webset->logo)}}"></a></h1>
+    @endforeach
+    @endsection
     @section('content')
     <div class="product-big-title-area">
         <div class="container">
@@ -77,7 +82,11 @@
                                             </td>
                                             <td class="product-quantity">
                                             	<span class="amount">
+                                                @if($transaksi->total_akhir=='')
                                             	{{"Rp ". number_format($transaksi->total,0,',','.')}}
+                                                @else
+                                                {{"Rp ". number_format($transaksi->total_akhir,0,',','.')}}
+                                                @endif
                                                 </span>
                                             </td>
                                             <td class="product-price">

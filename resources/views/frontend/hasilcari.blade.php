@@ -6,7 +6,11 @@
     <link rel="shortcut icon" type="image" href="{{asset('img/setting/'.$webset->ico)}}">
     @endforeach
     @endsection
-    
+    @section('logo')
+     @foreach($websettings as $webset)
+     <h1><a href="{{url('/')}}"><img src="{{asset('img/setting/'.$webset->logo)}}"></a></h1>
+    @endforeach
+    @endsection
     @section('cart')
     @if(Session::get('user_name'))
     @if($totalkeranjang > 0)
@@ -115,7 +119,6 @@
                @endforeach
             </div>
             <div class="text-center">
-            {{ $barangs->links() }}
             <br><button type="button" onclick="window.history.go(-1);" class="tombol-merah">Kembali</button>
                 </div>
 
