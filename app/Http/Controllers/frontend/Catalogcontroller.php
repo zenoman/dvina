@@ -235,6 +235,12 @@ class Catalogcontroller extends Controller
         return view('frontend/transaksisaya',['websettings'=>$websetting,'transaksis'=>$transaksi]);
     }
 
+    public function transaksigagal(){
+        $transaksi = DB::table('tb_transaksis')->where('iduser',Session::get('user_id'))->paginate(15);
+        $websetting = DB::table('settings')->limit(1)->get();
+        return view('frontend/transaksisaya',['websettings'=>$websetting,'transaksis'=>$transaksi]);
+    }
+
     public function kategori($id){
         $websetting = DB::table('settings')->limit(1)->get();
         $barangs = DB::table('tb_kodes')

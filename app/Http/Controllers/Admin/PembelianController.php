@@ -57,12 +57,22 @@ class PembelianController extends Controller
                 'tgl'=>date("d-m-Y"),
                 'bulan'=>date("m"),
                 'status'=>'ditolak',
+                'id_user'=>$row->iduser,
                 'id_admin'=>$iduser,
                 'keterangan'=>$keterangan
             ]);
             DB::table('tb_transaksis')->where('id',$kode)->delete();
         }
        return back()->with('status','Pembelian Ditolak');
+    }
+    public function listtolak(){
+        $websetting = DB::table('settings')->limit(1)->get();
+        $cancels = DB::table('log_cancel')
+                    ->select(DB::raw('log_cancel.*,tb_users.username,tb_users.telp'))
+                    ->join('tb_users','log_cancel.id_user','=','tb_users.id')
+                    ->orderby('log_cancel.id','desc')
+                    ->paginate(40);
+        return view('pembelian/listcancel',['cancels'=>$cancels,'websettings'=>$websetting]);
     }
 
     public function sukses($id){

@@ -230,7 +230,7 @@
 
                                             <!-- <a href="{{url('/pembelian/'.$row->id.'/tolak')}}" onclick="return confirm('Tolak Pembelian Ini ?')" class="btn btn-danger btn-sm">Tolak</a> -->
                             
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modaltolak{{$row->id}}" onclick="return confirm('Tolak Pembelian Ini ?')">
+                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modaltolak{{$row->id}}">
                             Tolak
                             </button>
                             <div class="modal fade" id="modaltolak{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -249,7 +249,7 @@
                                             <textarea name="keterangan" class="form-control" rows="3" cols="75"></textarea>
                                             {{csrf_field()}}    
                                             </div><br><br>
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Tolak Pembelian Ini ?')">
                                                 Tolak
                                             </button>
                                             </form>       

@@ -110,6 +110,9 @@
                             <a href="{{url('/pembelian')}}"><i class="fa fa-money fa-fw"></i> Pembelian</a>
                         </li>
                         <li>
+                            <a href="{{url('/pembelian/gagal')}}"><i class="fa fa-asl-interpreting fa-fw"></i> Transaksi Gagal</a>
+                        </li>
+                        <li>
                             <a href="{{url('/slider')}}"><i class="fa fa-image fa-fw"></i> Slider</a>
                         </li>
                         <li>
