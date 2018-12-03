@@ -133,14 +133,18 @@ class Catalogcontroller extends Controller
         foreach ($transaksi as $row) {
             DB::table('log_cancel')
             ->insert([
-                'faktur'=>$row->faktur,
+                'faktur'=>$row->faktur."C",
                 'total_akhir'=>$row->total,
                 'tgl'=>date("d-m-Y"),
                 'bulan'=>date("m"),
-                'ongkir'=>$row->ongkir,
                 'status'=>'dicancel',
                 'id_user'=>$iduser,
                 'keterangan'=>$keterangan
+            ]);
+              DB::table('tb_details')
+            ->where('faktur',$row->faktur)
+            ->update([
+                'faktur'=>$row->faktur."C"
             ]);
             DB::table('tb_transaksis')->where('id',$kode)->delete();
         }

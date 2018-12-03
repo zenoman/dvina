@@ -113,16 +113,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                        <tr>
-                                            <td colspan="5">Ongkir</td>
-                                            <td>
-                                                @if($transaksi->ongkir>0)
-                                                    {{"Rp ". number_format($transaksi->ongkir,0,',','.')}}
-                                                @else
-                                                -
-                                                @endif
-                                            </td>
-                                        </tr>
+                                       
                                         <tr>
                                             <td colspan="5">Total</td>
                                             <td><b>

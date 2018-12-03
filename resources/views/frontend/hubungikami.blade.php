@@ -11,13 +11,7 @@
      <h1><a href="{{url('/')}}"><img src="{{asset('img/setting/'.$webset->logo)}}"></a></h1>
     @endforeach
     @endsection
-    @section('cart')            
-    @if(Session::get('user_name'))
-    <div class="shopping-item">
-        <a href="cart.html">Keranjang - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
-    </div>
-    @endif
-    @endsection
+   
 
     @section('navigation')
     <ul class="nav navbar-nav">

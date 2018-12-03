@@ -70,7 +70,6 @@ CREATE TABLE IF NOT EXISTS `log_cancel` (
   `total_akhir` int(11) DEFAULT NULL,
   `tgl` varchar(25) DEFAULT NULL,
   `bulan` int(5) DEFAULT NULL,
-  `ongkir` int(11) DEFAULT '0',
   `status` enum('dicancel','ditolak') DEFAULT NULL,
   `id_user` int(11) DEFAULT NULL,
   `id_admin` int(11) DEFAULT NULL,
@@ -78,12 +77,12 @@ CREATE TABLE IF NOT EXISTS `log_cancel` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.log_cancel: ~2 rows (approximately)
+-- Dumping data for table davina.log_cancel: ~0 rows (approximately)
 DELETE FROM `log_cancel`;
 /*!40000 ALTER TABLE `log_cancel` DISABLE KEYS */;
-INSERT INTO `log_cancel` (`id`, `faktur`, `total_akhir`, `tgl`, `bulan`, `ongkir`, `status`, `id_user`, `id_admin`, `keterangan`) VALUES
-	(1, 'DVINA00001', 36000, '02-12-2018', 12, 0, 'dicancel', 15, 15, 'uang e udah habis mau buat tf'),
-	(2, 'DVINA00002', 43000, '03-12-2018', 12, 0, 'ditolak', 15, 4, 'aku lagi males mba');
+INSERT INTO `log_cancel` (`id`, `faktur`, `total_akhir`, `tgl`, `bulan`, `status`, `id_user`, `id_admin`, `keterangan`) VALUES
+	(1, 'DVINA00001C', 156000, '03-12-2018', 12, 'ditolak', 15, 4, 'asdklfjkl'),
+	(2, 'DVINA00001C', 119000, '03-12-2018', 12, 'dicancel', 15, NULL, 'asdfsad');
 /*!40000 ALTER TABLE `log_cancel` ENABLE KEYS */;
 
 -- Dumping structure for table davina.migrations
@@ -247,15 +246,16 @@ CREATE TABLE IF NOT EXISTS `tb_details` (
   `admin` varchar(100) DEFAULT NULL,
   `metode` enum('langsung','pesan') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.tb_details: ~2 rows (approximately)
+-- Dumping data for table davina.tb_details: ~0 rows (approximately)
 DELETE FROM `tb_details`;
 /*!40000 ALTER TABLE `tb_details` DISABLE KEYS */;
 INSERT INTO `tb_details` (`id`, `idwarna`, `iduser`, `faktur`, `tgl`, `tgl_kadaluarsa`, `kode_barang`, `barang`, `harga`, `jumlah`, `total_a`, `diskon`, `total`, `admin`, `metode`) VALUES
-	(1, 32, 15, 'DVINA00001', '02-12-2018', '4-12-2018', 'BRG00004', 'jilbab kediri 2', 20000, 2, 40000, 10, 36000, NULL, 'pesan'),
-	(2, 36, 15, 'DVINA00002', '02-12-2018', '4-12-2018', 'BRG00006', 'jilbab kediri 3', 20000, 1, 20000, 5, 19000, NULL, 'pesan'),
-	(3, 39, 15, 'DVINA00002', '02-12-2018', '4-12-2018', 'BRG00007', 'jilbab malang 3', 12000, 2, 24000, 0, 24000, NULL, 'pesan');
+	(1, 35, 15, 'DVINA00001C', '03-12-2018', '5-12-2018', 'BRG00005', 'jilbab malang 2', 12000, 1, 12000, 0, 12000, NULL, 'pesan'),
+	(2, 33, 15, 'DVINA00001C', '03-12-2018', '5-12-2018', 'BRG00004', 'jilbab kediri 2', 20000, 8, 160000, 10, 144000, NULL, 'pesan'),
+	(3, 36, 15, 'DVINA00001C', '03-12-2018', '5-12-2018', 'BRG00006', 'jilbab kediri 3', 20000, 5, 100000, 5, 95000, NULL, 'pesan'),
+	(4, 35, 15, 'DVINA00001C', '03-12-2018', '5-12-2018', 'BRG00005', 'jilbab malang 2', 12000, 2, 24000, 0, 24000, NULL, 'pesan');
 /*!40000 ALTER TABLE `tb_details` ENABLE KEYS */;
 
 -- Dumping structure for table davina.tb_kategoris
@@ -500,7 +500,7 @@ CREATE TABLE IF NOT EXISTS `tb_transaksis` (
   `pembayaran` varchar(50) DEFAULT NULL,
   `keterangan` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table davina.tb_transaksis: ~0 rows (approximately)
 DELETE FROM `tb_transaksis`;

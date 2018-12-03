@@ -118,6 +118,7 @@
                                     <label>Nama
                                     </label>
                                     <input type="text" name="nama" class="form-control" style="width: 100%" value="{{ old('nama') }}" required>
+                                    <p class="help-block text-left">Minimal 5 Karakter</p>
                                      @if($errors->has('nama'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('nama')}}
@@ -128,6 +129,7 @@
                                     <label>Username
                                     </label>
                                     <input type="text" name="username" class="form-control" style="width: 100%" value="{{ old('username') }}" required>
+                                    <p class="help-block text-left">Minimal 5 Karakter alphanumerik</p>
                                      @if($errors->has('username'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('username')}}
@@ -138,6 +140,7 @@
                                     <label>Password
                                     </label>
                                     <input type="password" name="password" class="form-control" style="width: 100%" value="{{ old('password') }}" required>
+                                    <p class="help-block text-left">Minimal 5 Karakter</p>
                                      @if($errors->has('password'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('password')}}
@@ -253,6 +256,7 @@
                                     <label>Foto KTP
                                     </label>
                                     <input type="file" name="gambar_ktp" required>
+                                    <p class="help-block text-left">Foto KTP wajib di isi</p>
                                      @if($errors->has('gambar_ktp'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('gambar_ktp')}}

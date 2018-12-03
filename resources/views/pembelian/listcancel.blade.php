@@ -61,7 +61,7 @@
                                         <td>{{$no}}</td>
                                          
                                         <td>
-                                         <a data-toggle="modal" data-target="#myModal{{$row->id}}">
+                                         <a href="#" data-toggle="modal" data-target="#myModal{{$row->id}}">
                                         {{$row->faktur}}
                                         </a>
                                         <div class="modal fade" id="myModal{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -125,7 +125,21 @@
                                     </div>
                                     </div>   
                                         </td>
-                                        <td>{{$row->username}}</td>
+                                        <td>
+                                        @if($row->status=='dicancel')
+                                            {{$row->username}}
+                                        @else
+                                        @php
+                                            $halo = DB::table('admins')
+                                            ->where('id',$row->id_admin)
+                                            ->get();
+                                        @endphp
+                                            @foreach($halo as $admin)
+                                                {{$admin->username}}
+                                            @endforeach
+
+                                        @endif
+                                        </td>
                                         <td>{{$row->tgl}}</td>
                                         <td>{{$row->status}}</td>
                                         <td>{{$row->keterangan}}</td>

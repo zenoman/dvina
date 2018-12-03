@@ -52,21 +52,30 @@ class PembelianController extends Controller
         foreach ($transaksi as $row) {
             DB::table('log_cancel')
             ->insert([
-                'faktur'=>$row->faktur,
+                'faktur'=>$row->faktur."C",
                 'total_akhir'=>$row->total,
                 'tgl'=>date("d-m-Y"),
                 'bulan'=>date("m"),
                 'status'=>'ditolak',
-                'ongkir'=>$row->ongkir,
                 'id_user'=>$row->iduser,
                 'id_admin'=>$iduser,
                 'keterangan'=>$keterangan
+            ]);
+            DB::table('tb_details')
+            ->where('faktur',$row->faktur)
+            ->update([
+                'faktur'=>$row->faktur."C"
             ]);
             DB::table('tb_transaksis')->where('id',$kode)->delete();
         }
        return back()->with('status','Pembelian Ditolak');
     }
     public function listtolak(){
+        // $datacancel = DB::table('log_cancel')->where('bulan',date("m"))->get();
+        // dd($datacancel);
+        // foreach ($datacancel as $row) {
+        //     DB::table('tb_details')->where('')
+        // }
         $websetting = DB::table('settings')->limit(1)->get();
         $cancels = DB::table('log_cancel')
                     ->select(DB::raw('log_cancel.*,tb_users.username,tb_users.telp'))

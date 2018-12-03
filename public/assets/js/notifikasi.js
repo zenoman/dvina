@@ -38,7 +38,7 @@ $(document).ready(function() {
     			$.each(data,function(key, value){
     				
     				rows = rows + '<li>';
-    				rows = rows + '<a href="#">';
+    				rows = rows + '<a>';
                     rows = rows + '<div>';
                     rows = rows + '<i class="fa fa-shopping-cart fa-fw"></i> '+value.username+' Membeli Barang';
                     rows = rows + '</div>';        
@@ -47,7 +47,7 @@ $(document).ready(function() {
                     rows = rows + '<li class="divider"></li>';              
                 });
                 rows = rows+'<li>';
-                rows = rows+'<a class="text-center active" href="#"><strong>Lihat Semua Pemberitahuan </strong><i class="fa fa-angle-right"></i>';
+                rows = rows+'<a class="text-center active" href="/pembelian"><strong>Lihat Semua Pemberitahuan </strong><i class="fa fa-angle-right"></i>';
                 rows = rows +'</a>';
                 rows = rows + '</li>';
                 rows = rows + '</ul>';

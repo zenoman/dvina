@@ -51,13 +51,13 @@
                     <li>
                         
 						<img src="{{asset('img/slider/'.$slider->foto)}}" alt="Slide">
-						<div class="caption-group">
+						<!-- <div class="caption-group">
 							<h2 class="caption title">
 								iPhone <span class="primary">6 <strong>Plus</strong></span>
 							</h2>
 							<h4 class="caption subtitle">Dual SIM</h4>
 							<a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
-						</div>
+						</div> -->
 					</li>
 					@endforeach
 				</ul>

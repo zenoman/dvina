@@ -95,13 +95,22 @@
                         
                         <div class="row">
                             <div class="col-sm-6">
-                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                    <div class="carousel-inner">
-                                          @php
+                                    @php
                                     $kode_barang = $barang->kode_barang;
+                                    $jumlahfoto = DB::table('gambar')
+                                    ->where('kode_barang', $kode_barang)
+                                   ->count();
+                                   @endphp
+
+                                   @if($jumlahfoto>1)
+                                   <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                    @php
+                                    
                                     $foto = DB::table('gambar')
                                     ->where('kode_barang', $kode_barang)
                                    ->get();
+                                   
                                    $ii=0;
                                     @endphp
                                     @foreach($foto as $ft)
@@ -111,12 +120,15 @@
 
                                     @if($ii == 1)
                                     <div class="item active">
+                                        <img src="{{asset('img/barang/'.$ft->nama)}}" alt="" width="auto">
+                                      </div>
                                     @else
                                     <div class="item">
+                                        <img src="{{asset('img/barang/'.$ft->nama)}}" alt="" width="auto">
+                                      </div>
                                     @endif
                                    
-                                    <img src="{{asset('img/barang/'.$ft->nama)}}" alt="" width="auto">
-                                      </div>
+                                    
                                     @endforeach
                                       
 
@@ -133,7 +145,20 @@
                                     </a>
                                   </div>
                                 
-                             </div>
+                                   @else
+                                   @php
+                                    $foto = DB::table('gambar')
+                                    ->where('kode_barang', $kode_barang)
+                                    ->limit(1)
+                                    ->get();
+                                    @endphp
+                                    @foreach($foto as $ft)
+                                    
+                            <img src="{{asset('img/barang/'.$ft->nama)}}" alt="">
+                                    @endforeach
+                                   @endif
+                                 
+                         </div>
                             <div class="col-sm-6">
                                 <h2 class="product-name">
                                 
