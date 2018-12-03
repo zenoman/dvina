@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="product-bit-title text-center">
-                        <h2>Transaksi Saya</h2>
+                        <h2>Transaksi Gagal</h2>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                                             <th class="product-thumbnail">Tanggal</th>
                                             <th class="product-price">Total Harga</th>
                                             <th class="product-quantity">Status</th>
-                                            <th class="product-quantity">Aksi</th>
+                                        
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -113,35 +113,15 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                        @if($transaksi->total_akhir=='')
-                                        <tr>
-                                            <td colspan="5">Subtotal</td>
-                                            <td><b>
-                                                {{"Rp ". number_format($transaksi->total,0,',','.')}}
-                                            </b></td>
-                                        </tr>
                                         <tr>
                                             <td colspan="5">Ongkir</td>
-                                            <td> - </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="5">Total</td>
-                                            <td> - </td>
-                                        </tr>
-                                        @else
-                                        <tr>
-                                            <td colspan="5">Subtotal</td>
                                             <td>
-                                                <b>
-                                                {{"Rp ". number_format($transaksi->total,0,',','.')}}
-                                            </b>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="5">Ongkir</td>
-                                            <td><b>
-                                                {{"Rp ". number_format($transaksi->ongkir,0,',','.')}}
-                                            </b></td>
+                                                @if($transaksi->ongkir>0)
+                                                    {{"Rp ". number_format($transaksi->ongkir,0,',','.')}}
+                                                @else
+                                                -
+                                                @endif
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td colspan="5">Total</td>
@@ -149,7 +129,9 @@
                                                 {{"Rp ". number_format($transaksi->total_akhir,0,',','.')}}
                                             </b></td>
                                         </tr>
-                                        @endif
+                                        
+                                        
+                                       
                                         
                                     </tbody>
                                         </table>
@@ -182,38 +164,12 @@
                                                     @endif
                                             	</span> 
                                             </td>
-                                            <td>
-                                                @if($transaksi->status=='terkirim' || $transaksi->status=='dibaca')
-                                                <button data-toggle="modal" data-target="#Modal{{$transaksi->id}}" class="tombol-merah">Batal</button>
-                            <div class="modal fade " id="Modal{{$transaksi->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            <h4 class="modal-title" id="myModalLabel">Batalkan Pembelian</h4>
-                                        </div>
-                                        <div class="modal-body text-left">
-                                            <form action="/transaksi/tolak" method="post">
-                                                 <label>Keterangan</label>
-                                            <textarea name="keterangan" class="form-control" rows="3" cols="75"></textarea>
-                                             <input type="hidden" value="{{$transaksi->id}}" name="kode">
-                                            <input type="hidden" value="{{Session::get('user_id')}}" name="iduser">
-                                            <p class="help-block text-left">Masukan Keterangan Pembatalan Transaksi</p>
-                                            {{csrf_field()}}
-                                            <button type="submit" class="tombol" onclick="return confirm('Batalkan Transaksi ?')">Kirim</button>    
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                                                @endif
-                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                                 {{ $transaksis->links() }}
-                                <div class="woocommerce-info">NB: Pastikan Menyertakan Faktur Pada Berita Transfer. Jika Ada yang Keluhan Atau Kurang Jelas, Hubungi CP Kami Di Tab Hubungi Kami 
+                                <div class="woocommerce-info text-center">NB: Ini hanya pemberitahuan sementara, informasi ini dapat sewaktu-waktu di hapus oleh admin. 
                             	</div>
                         </div>                        
                     </div>                    

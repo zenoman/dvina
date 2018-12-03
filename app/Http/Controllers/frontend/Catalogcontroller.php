@@ -137,6 +137,7 @@ class Catalogcontroller extends Controller
                 'total_akhir'=>$row->total,
                 'tgl'=>date("d-m-Y"),
                 'bulan'=>date("m"),
+                'ongkir'=>$row->ongkir,
                 'status'=>'dicancel',
                 'id_user'=>$iduser,
                 'keterangan'=>$keterangan
@@ -236,9 +237,9 @@ class Catalogcontroller extends Controller
     }
 
     public function transaksigagal(){
-        $transaksi = DB::table('tb_transaksis')->where('iduser',Session::get('user_id'))->paginate(15);
+        $transaksi = DB::table('log_cancel')->where('id_user',Session::get('user_id'))->paginate(15);
         $websetting = DB::table('settings')->limit(1)->get();
-        return view('frontend/transaksisaya',['websettings'=>$websetting,'transaksis'=>$transaksi]);
+        return view('frontend/transaksibatal',['websettings'=>$websetting,'transaksis'=>$transaksi]);
     }
 
     public function kategori($id){

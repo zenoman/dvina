@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.1.30-MariaDB - mariadb.org binary distribution
+-- Server version:               10.1.25-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win32
 -- HeidiSQL Version:             9.4.0.5174
 -- --------------------------------------------------------
@@ -62,6 +62,30 @@ INSERT INTO `gambar` (`id`, `kode_barang`, `nama`) VALUES
 	(17, 'BRG00008', '1542109149-instant-wear-arabic-head-dress-rayon-hijab.jpg_350x350.jpg');
 /*!40000 ALTER TABLE `gambar` ENABLE KEYS */;
 
+-- Dumping structure for table davina.log_cancel
+DROP TABLE IF EXISTS `log_cancel`;
+CREATE TABLE IF NOT EXISTS `log_cancel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `faktur` varchar(300) DEFAULT NULL,
+  `total_akhir` int(11) DEFAULT NULL,
+  `tgl` varchar(25) DEFAULT NULL,
+  `bulan` int(5) DEFAULT NULL,
+  `ongkir` int(11) DEFAULT '0',
+  `status` enum('dicancel','ditolak') DEFAULT NULL,
+  `id_user` int(11) DEFAULT NULL,
+  `id_admin` int(11) DEFAULT NULL,
+  `keterangan` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table davina.log_cancel: ~2 rows (approximately)
+DELETE FROM `log_cancel`;
+/*!40000 ALTER TABLE `log_cancel` DISABLE KEYS */;
+INSERT INTO `log_cancel` (`id`, `faktur`, `total_akhir`, `tgl`, `bulan`, `ongkir`, `status`, `id_user`, `id_admin`, `keterangan`) VALUES
+	(1, 'DVINA00001', 36000, '02-12-2018', 12, 0, 'dicancel', 15, 15, 'uang e udah habis mau buat tf'),
+	(2, 'DVINA00002', 43000, '03-12-2018', 12, 0, 'ditolak', 15, 4, 'aku lagi males mba');
+/*!40000 ALTER TABLE `log_cancel` ENABLE KEYS */;
+
 -- Dumping structure for table davina.migrations
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE IF NOT EXISTS `migrations` (
@@ -117,11 +141,11 @@ CREATE TABLE IF NOT EXISTS `settings` (
   PRIMARY KEY (`idsettings`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.settings: ~1 rows (approximately)
+-- Dumping data for table davina.settings: ~0 rows (approximately)
 DELETE FROM `settings`;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
 INSERT INTO `settings` (`idsettings`, `webName`, `kontak1`, `kontak2`, `kontak3`, `email`, `ico`, `meta`, `logo`, `keterangan`, `alamat`, `nama_toko`, `max_tgl`) VALUES
-	(1, 'Devina', '085604556777', '089456817354', '085601473652', 'satriosuklun@gmail.com', '1542366882-190835.png', 'toko hijab murah meriah', '1542366882-34-android-flat.png', NULL, NULL, NULL, 2);
+	(1, 'Devina', '085604556777', '089456817354', '085601473652', 'satriosuklun@gmail.com', '1542366882-190835.png', 'toko hijab murah meriah', '1543717647-logo-dvina.png', NULL, NULL, NULL, 2);
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 
 -- Dumping structure for table davina.sliders
@@ -133,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `sliders` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.sliders: ~1 rows (approximately)
+-- Dumping data for table davina.sliders: ~0 rows (approximately)
 DELETE FROM `sliders`;
 /*!40000 ALTER TABLE `sliders` DISABLE KEYS */;
 INSERT INTO `sliders` (`id`, `judul`, `foto`) VALUES
@@ -223,16 +247,15 @@ CREATE TABLE IF NOT EXISTS `tb_details` (
   `admin` varchar(100) DEFAULT NULL,
   `metode` enum('langsung','pesan') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.tb_details: ~4 rows (approximately)
+-- Dumping data for table davina.tb_details: ~2 rows (approximately)
 DELETE FROM `tb_details`;
 /*!40000 ALTER TABLE `tb_details` DISABLE KEYS */;
 INSERT INTO `tb_details` (`id`, `idwarna`, `iduser`, `faktur`, `tgl`, `tgl_kadaluarsa`, `kode_barang`, `barang`, `harga`, `jumlah`, `total_a`, `diskon`, `total`, `admin`, `metode`) VALUES
-	(1, 39, 15, 'DVINA00004', '26-11-2018', '28-11-2018', 'BRG00007', 'jilbab malang 3', 12000, 2, 24000, 0, 24000, NULL, 'pesan'),
-	(2, 38, 15, 'DVINA00005', '26-11-2018', '28-11-2018', 'BRG00007', 'jilbab malang 3', 12000, 4, 48000, 0, 48000, NULL, 'pesan'),
-	(3, 36, 15, 'DVINA00006', '26-11-2018', '28-11-2018', 'BRG00006', 'jilbab kediri 3', 20000, 3, 60000, 3000, 57000, NULL, 'pesan'),
-	(4, 33, 15, 'DVINA00006', '26-11-2018', '28-11-2018', 'BRG00004', 'jilbab kediri 2', 20000, 3, 60000, 6000, 54000, NULL, 'pesan');
+	(1, 32, 15, 'DVINA00001', '02-12-2018', '4-12-2018', 'BRG00004', 'jilbab kediri 2', 20000, 2, 40000, 10, 36000, NULL, 'pesan'),
+	(2, 36, 15, 'DVINA00002', '02-12-2018', '4-12-2018', 'BRG00006', 'jilbab kediri 3', 20000, 1, 20000, 5, 19000, NULL, 'pesan'),
+	(3, 39, 15, 'DVINA00002', '02-12-2018', '4-12-2018', 'BRG00007', 'jilbab malang 3', 12000, 2, 24000, 0, 24000, NULL, 'pesan');
 /*!40000 ALTER TABLE `tb_details` ENABLE KEYS */;
 
 -- Dumping structure for table davina.tb_kategoris
@@ -263,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `tb_kodes` (
   `barang` varchar(150) DEFAULT NULL,
   `harga_barang` int(11) DEFAULT NULL,
   `deskripsi` mediumtext,
-  `diskon` int(11) DEFAULT NULL,
+  `diskon` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
@@ -289,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `tb_stokawals` (
   `jumlah` int(11) DEFAULT NULL,
   `tgl` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=183 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table davina.tb_stokawals: ~94 rows (approximately)
 DELETE FROM `tb_stokawals`;
@@ -388,7 +411,57 @@ INSERT INTO `tb_stokawals` (`id`, `idbarang`, `idwarna`, `kode_barang`, `barang`
 	(129, 22, 38, 'BRG00007', 'jilbab malang 3', 10, '26-11-2018'),
 	(130, 22, 39, 'BRG00007', 'jilbab malang 3', 2, '26-11-2018'),
 	(131, 23, 40, 'BRG00008', 'jilbab keren', 20, '26-11-2018'),
-	(132, 23, 41, 'BRG00008', 'jilbab keren', 10, '26-11-2018');
+	(132, 23, 41, 'BRG00008', 'jilbab keren', 10, '26-11-2018'),
+	(133, 19, 32, 'BRG00004', 'jilbab kediri 2', 10, '28-11-2018'),
+	(134, 19, 33, 'BRG00004', 'jilbab kediri 2', 12, '28-11-2018'),
+	(135, 20, 34, 'BRG00005', 'jilbab malang 2', 10, '28-11-2018'),
+	(136, 20, 35, 'BRG00005', 'jilbab malang 2', 2, '28-11-2018'),
+	(137, 21, 36, 'BRG00006', 'jilbab kediri 3', 10, '28-11-2018'),
+	(138, 21, 37, 'BRG00006', 'jilbab kediri 3', 12, '28-11-2018'),
+	(139, 22, 38, 'BRG00007', 'jilbab malang 3', 10, '28-11-2018'),
+	(140, 22, 39, 'BRG00007', 'jilbab malang 3', 2, '28-11-2018'),
+	(141, 23, 40, 'BRG00008', 'jilbab keren', 20, '28-11-2018'),
+	(142, 23, 41, 'BRG00008', 'jilbab keren', 10, '28-11-2018'),
+	(143, 19, 32, 'BRG00004', 'jilbab kediri 2', 10, '29-11-2018'),
+	(144, 19, 33, 'BRG00004', 'jilbab kediri 2', 12, '29-11-2018'),
+	(145, 20, 34, 'BRG00005', 'jilbab malang 2', 10, '29-11-2018'),
+	(146, 20, 35, 'BRG00005', 'jilbab malang 2', 2, '29-11-2018'),
+	(147, 21, 36, 'BRG00006', 'jilbab kediri 3', 10, '29-11-2018'),
+	(148, 21, 37, 'BRG00006', 'jilbab kediri 3', 12, '29-11-2018'),
+	(149, 22, 38, 'BRG00007', 'jilbab malang 3', 10, '29-11-2018'),
+	(150, 22, 39, 'BRG00007', 'jilbab malang 3', 2, '29-11-2018'),
+	(151, 23, 40, 'BRG00008', 'jilbab keren', 20, '29-11-2018'),
+	(152, 23, 41, 'BRG00008', 'jilbab keren', 10, '29-11-2018'),
+	(153, 19, 32, 'BRG00004', 'jilbab kediri 2', 10, '30-11-2018'),
+	(154, 19, 33, 'BRG00004', 'jilbab kediri 2', 12, '30-11-2018'),
+	(155, 20, 34, 'BRG00005', 'jilbab malang 2', 10, '30-11-2018'),
+	(156, 20, 35, 'BRG00005', 'jilbab malang 2', 2, '30-11-2018'),
+	(157, 21, 36, 'BRG00006', 'jilbab kediri 3', 10, '30-11-2018'),
+	(158, 21, 37, 'BRG00006', 'jilbab kediri 3', 12, '30-11-2018'),
+	(159, 22, 38, 'BRG00007', 'jilbab malang 3', 10, '30-11-2018'),
+	(160, 22, 39, 'BRG00007', 'jilbab malang 3', 2, '30-11-2018'),
+	(161, 23, 40, 'BRG00008', 'jilbab keren', 20, '30-11-2018'),
+	(162, 23, 41, 'BRG00008', 'jilbab keren', 10, '30-11-2018'),
+	(163, 19, 32, 'BRG00004', 'jilbab kediri 2', 10, '02-12-2018'),
+	(164, 19, 33, 'BRG00004', 'jilbab kediri 2', 12, '02-12-2018'),
+	(165, 20, 34, 'BRG00005', 'jilbab malang 2', 10, '02-12-2018'),
+	(166, 20, 35, 'BRG00005', 'jilbab malang 2', 2, '02-12-2018'),
+	(167, 21, 36, 'BRG00006', 'jilbab kediri 3', 10, '02-12-2018'),
+	(168, 21, 37, 'BRG00006', 'jilbab kediri 3', 12, '02-12-2018'),
+	(169, 22, 38, 'BRG00007', 'jilbab malang 3', 10, '02-12-2018'),
+	(170, 22, 39, 'BRG00007', 'jilbab malang 3', 2, '02-12-2018'),
+	(171, 23, 40, 'BRG00008', 'jilbab keren', 20, '02-12-2018'),
+	(172, 23, 41, 'BRG00008', 'jilbab keren', 10, '02-12-2018'),
+	(173, 19, 32, 'BRG00004', 'jilbab kediri 2', 10, '03-12-2018'),
+	(174, 19, 33, 'BRG00004', 'jilbab kediri 2', 12, '03-12-2018'),
+	(175, 20, 34, 'BRG00005', 'jilbab malang 2', 10, '03-12-2018'),
+	(176, 20, 35, 'BRG00005', 'jilbab malang 2', 2, '03-12-2018'),
+	(177, 21, 36, 'BRG00006', 'jilbab kediri 3', 10, '03-12-2018'),
+	(178, 21, 37, 'BRG00006', 'jilbab kediri 3', 12, '03-12-2018'),
+	(179, 22, 38, 'BRG00007', 'jilbab malang 3', 10, '03-12-2018'),
+	(180, 22, 39, 'BRG00007', 'jilbab malang 3', 2, '03-12-2018'),
+	(181, 23, 40, 'BRG00008', 'jilbab keren', 20, '03-12-2018'),
+	(182, 23, 41, 'BRG00008', 'jilbab keren', 10, '03-12-2018');
 /*!40000 ALTER TABLE `tb_stokawals` ENABLE KEYS */;
 
 -- Dumping structure for table davina.tb_tambahstoks
@@ -416,29 +489,22 @@ DROP TABLE IF EXISTS `tb_transaksis`;
 CREATE TABLE IF NOT EXISTS `tb_transaksis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `iduser` int(11) DEFAULT NULL,
-  `faktur` varchar(100) DEFAULT NULL,
+  `faktur` varchar(300) DEFAULT NULL,
   `tgl` varchar(100) DEFAULT NULL,
   `total` int(11) DEFAULT NULL,
   `status` enum('terkirim','dibaca','diterima','ditolak','sukses','batal') DEFAULT NULL,
   `alamat_tujuan` text,
   `admin` varchar(100) DEFAULT NULL,
-  `ongkir` int(11) DEFAULT NULL,
+  `ongkir` int(11) DEFAULT '0',
   `total_akhir` int(11) DEFAULT NULL,
   `pembayaran` varchar(50) DEFAULT NULL,
   `keterangan` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.tb_transaksis: ~6 rows (approximately)
+-- Dumping data for table davina.tb_transaksis: ~0 rows (approximately)
 DELETE FROM `tb_transaksis`;
 /*!40000 ALTER TABLE `tb_transaksis` DISABLE KEYS */;
-INSERT INTO `tb_transaksis` (`id`, `iduser`, `faktur`, `tgl`, `total`, `status`, `alamat_tujuan`, `admin`, `ongkir`, `total_akhir`, `pembayaran`, `keterangan`) VALUES
-	(1, 15, 'DVINA00001', '19-11-2018', 60000, 'sukses', 'magersari gurah jln pga no 1', NULL, NULL, NULL, '3', 'ihjkhjkhjk'),
-	(2, 15, 'DVINA00002', '19-11-2018', 24000, 'dibaca', 'magersari gurah jln pga no 1', NULL, NULL, NULL, '4', 'pengen yang baru'),
-	(3, 15, 'DVINA00003', '24-11-2018', 63750, 'dibaca', 'magersari gurah jln pga no 1', NULL, NULL, NULL, '1', 'cepet ya kirim nya'),
-	(4, 15, 'DVINA00004', '26-11-2018', 24000, 'dibaca', 'magersari gurah jln pga no 1', NULL, NULL, NULL, '1', 'bagus banget'),
-	(5, 15, 'DVINA00005', '26-11-2018', 48000, 'dibaca', 'magersari gurah jln pga no 1', NULL, NULL, NULL, '4', 'sdf'),
-	(6, 15, 'DVINA00006', '26-11-2018', 111000, 'dibaca', 'magersari gurah jln pga no 1', NULL, NULL, NULL, '5', 'mantab');
 /*!40000 ALTER TABLE `tb_transaksis` ENABLE KEYS */;
 
 -- Dumping structure for table davina.tb_users
@@ -456,13 +522,14 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
   `kodepos` varchar(45) DEFAULT NULL,
   `ktp_gmb` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.tb_users: ~1 rows (approximately)
+-- Dumping data for table davina.tb_users: ~0 rows (approximately)
 DELETE FROM `tb_users`;
 /*!40000 ALTER TABLE `tb_users` DISABLE KEYS */;
 INSERT INTO `tb_users` (`id`, `username`, `password`, `email`, `telp`, `nama`, `alamat`, `kota`, `provinsi`, `kodepos`, `ktp_gmb`) VALUES
-	(15, 'damara', '74b213f68f648006a318f52713450f27', 'satriosuklun@gmail.com', '085604556714', 'damara satrio', 'magersari gurah jln pga no 1', 'kediri', 'jawa timur', '14045', '1542359347-21220959_b_v1.jpg');
+	(15, 'damara', '74b213f68f648006a318f52713450f27', 'satriosuklun@gmail.com', '085604556714', 'damara satrio', 'magersari gurah jln pga no 1', 'kediri', 'jawa timur', '14045', '1542359347-21220959_b_v1.jpg'),
+	(16, 'jianfitri', '121288a5d8785d1ef9aedb82bce753e9', 'jian@gmail.com', '02934820384', 'jian fitri', 'ngancar, kediri', 'kediri', 'aceh', '0002', '1543496839-whatsapp-image-2018-11-29-at-08.34.05.jpeg');
 /*!40000 ALTER TABLE `tb_users` ENABLE KEYS */;
 
 -- Dumping structure for table davina.users

@@ -101,7 +101,7 @@
                                         </td>
                                         <td>
                                             @if($row->status=='terkirim' || $row->status=='dibaca')
-                                            <!-- <a href="{{url('/pembelian/'.$row->id.'/terima')}}" onclick="return confirm('Terima Pembelian Ini ?')" class="btn btn-success btn-sm">Terima</a> -->
+                                           
                                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal{{$row->id}}">
                                             Terima
                                             </button>

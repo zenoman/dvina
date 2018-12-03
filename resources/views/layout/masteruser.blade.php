@@ -36,7 +36,7 @@
                             @else
                             <li><a href="{{url('/keranjang')}}"><i class="fa fa-shopping-cart"></i>Keranjang Saya</a></li>
                              <li><a href="{{url('/transaksisaya')}}"><i class="fa fa-file"></i>Transaksi Saya</a></li>
-                            <li><a href="{{url('/transaksisaya')}}"><i class="fa fa-trash"></i>Transaksi Gagal</a></li>
+                            <li><a href="{{url('/transaksigagal')}}"><i class="fa fa-trash"></i>Transaksi Gagal</a></li>
                             @endif
                            
                         </ul>

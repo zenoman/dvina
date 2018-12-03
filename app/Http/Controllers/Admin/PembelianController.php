@@ -57,6 +57,7 @@ class PembelianController extends Controller
                 'tgl'=>date("d-m-Y"),
                 'bulan'=>date("m"),
                 'status'=>'ditolak',
+                'ongkir'=>$row->ongkir,
                 'id_user'=>$row->iduser,
                 'id_admin'=>$iduser,
                 'keterangan'=>$keterangan
