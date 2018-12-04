@@ -46,13 +46,23 @@ class PembelianController extends Controller
         $kode = $request->kode;
         $iduser = $request->iduser;
         $keterangan = $request->keterangan;
+        //==================================================
+        $maxkode = DB::table('log_cancel')->max('faktur');
+        if($maxkode != NULL){
+            $numkode = substr($maxkode, 6);
+            $countkode = $numkode+1;
+            $newkode = "Cancel".sprintf("%05s", $countkode);
+        }else{
+            $newkode = "Cancel00001";
+        }
+        //===================================================
         $transaksi = DB::table('tb_transaksis')
         ->where('id',$kode)
         ->get();
         foreach ($transaksi as $row) {
             DB::table('log_cancel')
             ->insert([
-                'faktur'=>$row->faktur."C",
+                'faktur'=>$newkode,
                 'total_akhir'=>$row->total,
                 'tgl'=>date("d-m-Y"),
                 'bulan'=>date("m"),
@@ -61,21 +71,37 @@ class PembelianController extends Controller
                 'id_admin'=>$iduser,
                 'keterangan'=>$keterangan
             ]);
-            DB::table('tb_details')
+            $caridetail = DB::table('tb_details')
             ->where('faktur',$row->faktur)
-            ->update([
-                'faktur'=>$row->faktur."C"
-            ]);
+            ->get();
+            foreach ($caridetail as $cdl) {
+                DB::table('detail_cancel')
+                ->insert([
+                'idwarna'=>$cdl->idwarna,
+                'iduser'=>$cdl->iduser,
+                'kode'=>$newkode,
+                'tgl'=>$cdl->tgl,
+                'jumlah'=>$cdl->jumlah,
+                'harga'=>$cdl->harga,
+                'barang'=>$cdl->barang,
+                'total'=>$cdl->total,
+                'diskon'=>$cdl->diskon
+                ]);
+            }
+            DB::table('tb_details')->where('faktur',$row->faktur)->delete();
             DB::table('tb_transaksis')->where('id',$kode)->delete();
         }
        return back()->with('status','Pembelian Ditolak');
     }
     public function listtolak(){
-        // $datacancel = DB::table('log_cancel')->where('bulan',date("m"))->get();
-        // dd($datacancel);
-        // foreach ($datacancel as $row) {
-        //     DB::table('tb_details')->where('')
-        // }
+        $datacancel = DB::table('log_cancel')->where('bulan','!=',date("m"))->get();
+        foreach ($datacancel as $row) {
+            $detailcancel = DB::table('detail_cancel')
+            ->where('kode',$row->faktur)
+            ->delete();
+        }
+        DB::table('log_cancel')->where('bulan','!=',date("m"))->delete();
+        //=================================================================
         $websetting = DB::table('settings')->limit(1)->get();
         $cancels = DB::table('log_cancel')
                     ->select(DB::raw('log_cancel.*,tb_users.username,tb_users.telp'))

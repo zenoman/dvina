@@ -73,10 +73,10 @@
                                         </div>
                                         <div class="modal-body">
                                             @php
-                                    $databarang = DB::table('tb_details')
-                                                ->select(DB::raw('tb_details.*,tb_barangs.warna'))
-                                                ->join('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
-                                                ->where('tb_details.faktur',$row->faktur)
+                                    $databarang = DB::table('detail_cancel')
+                                                ->select(DB::raw('detail_cancel.*,tb_barangs.warna'))
+                                                ->join('tb_barangs','tb_barangs.idbarang','=','detail_cancel.idwarna')
+                                                ->where('detail_cancel.kode',$row->faktur)
                                                 ->get();
                                     @endphp
                                 <table class="table table-striped table-bordered table-hover">
@@ -88,6 +88,7 @@
                                             Warna</th>
                                             <th class="text-center">
                                             Jumlah</th>
+                                            <th class="text-center">Diskon</th>
                                             <th class="text-center">Harga</th>
                                             <th class="text-center">Total</th>
                                         </tr>
@@ -95,26 +96,29 @@
                                     <tbody>
                                     @foreach($databarang as $brg)
                                         <tr>
-                                            <td>
+                                            <td class="text-center">
                                                 {{$brg->barang}}
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 {{$brg->warna}}
                                             </td>
-                                            <td>
-                                                {{$brg->jumlah}}
+                                            <td class="text-center">
+                                                {{$brg->jumlah}} Pcs
                                             </td>
-                                            <td>
+                                            <td class="text-center">
+                                                {{$brg->diskon}} %
+                                            </td>
+                                            <td class="text-center">
                                                 {{"Rp ". number_format($brg->harga,0,',','.')}}
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 {{"Rp ". number_format($brg->total,0,',','.')}}
                                             </td>
                                         </tr>
                                     @endforeach
                                     <tr>
-                                        <td colspan="4"><h3>Total</h3></td>
-                                        <td colspan="1"><h3>
+                                        <td colspan="5" class="text-center"><h3>Total</h3></td>
+                                        <td colspan="1" class="text-center"><h3>
                                              {{"Rp ". number_format($row->total_akhir,0,',','.')}}
                                         </h3></td>
                                     </tr>

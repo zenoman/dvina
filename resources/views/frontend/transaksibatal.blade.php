@@ -65,10 +65,10 @@
                                         </div>
                                         <div class="modal-body">
                                             @php
-                                            $detailnya = DB::table('tb_details')
-                                            ->select(DB::raw('tb_details.*,tb_barangs.warna'))
-                                            ->join('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
-                                            ->where('faktur',$transaksi->faktur)
+                                            $detailnya = DB::table('detail_cancel')
+                                            ->select(DB::raw('detail_cancel.*,tb_barangs.warna'))
+                                            ->join('tb_barangs','tb_barangs.idbarang','=','detail_cancel.idwarna')
+                                            ->where('detail_cancel.kode',$transaksi->faktur)
                                             ->get();
                                             @endphp
                                     <table class="table table-striped table-bordered table-hover">
