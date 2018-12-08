@@ -16,3 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('listBarang/','Admin\Barangcontroller@getBarang');
+Route::get('listKategori/','Admin\Kategoricontroller@getKategori');
+Route::post('/loginUser','Logincontroller@loginApi');

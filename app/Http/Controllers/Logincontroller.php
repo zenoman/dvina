@@ -187,4 +187,9 @@ class Logincontroller extends Controller
     {
         //
     }
+
+    //-------------------- API ANDROID ----------------------
+    function loginApi(Request $req){
+        
+    }
 }

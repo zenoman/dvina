@@ -165,4 +165,9 @@ class Kategoricontroller extends Controller
         Kategorimodel::destroy($id);
         return redirect('kategori')->with('status','Hapus Data Sukses');
     }
+    //-------------------- API ANDROID-----------------
+    function getKategori(){
+        $kat=DB::table('tb_kategoris')->paginate(10);
+        return response()->json($kat);
+    }
 }
