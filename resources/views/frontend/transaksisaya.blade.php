@@ -205,6 +205,47 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>  
+                                                @elseif($transaksi->status=='diterima')
+
+                                                <button data-toggle="modal" data-target="#Modalbayar{{$transaksi->id}}" class="tombol">
+                                                    Cara Bayar
+                                                </button>  
+                                                <div class="modal fade " id="Modalbayar{{$transaksi->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Cara Bayar</h4>
+                                        </div>
+                                        <div class="modal-body text-left">
+                                            @php
+                                            $metodebayar = DB::table('tb_bank')
+                                            ->where('id',$transaksi->pembayaran)
+                                            ->get();
+                                            @endphp
+                                            @foreach($metodebayar as $mtd)
+                                                @if($transaksi->pembayaran>1)
+                                                <ol>
+                                                    <li>Transfer ke bank <b>{{$mtd->nama_bank}}</b> dengan nomer rekening <b>{{$mtd->rekening}}</b></li>
+                                                    <li>Tulis Faktur di berita transfer, yaitu <b>{{$transaksi->faktur}}</b>.</li>
+                                                    <li>Konfirmasi pembayaran dengan salah satu admin cp kami di tab hubungi kami.</li>
+                                                    <li>Setelah di cek tranferan anda, barang akan di kirim oleh admin kami.</li>
+                                                    <li>Tunggu kedatangan barang & happy shoping</li>
+                                                </ol>
+                                                
+                                                @else
+                                                <ol>
+                                                    <li>Pergi Ketoko</li>
+                                                    <li>Tujukan Nomer Faktur Pembelian, Yaitu "<b>{{$transaksi->faktur}}</b>"</li>
+                                                    <li>Bayar Sesuai Total Pembelian</li>
+                                                    <li>Jangan Lupa Bahagia</li>
+                                                </ol>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                                                 @endif
                                             </td>
