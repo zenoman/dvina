@@ -36,13 +36,46 @@
     <div class="single-product-area">
         <div class="container">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126486.11387369903!2d112.03784828547029!3d-7.822487605206616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7858fb7bf1947d%3A0x4027a76e3531190!2sGurah%2C+Kediri%2C+Jawa+Timur!5e0!3m2!1sid!2sid!4v1542003545581" width="1135" height="500" frameborder="0" style="border:0" allowfullscreen></iframe>
-            <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Isi Data Dibawah Ini Sesuai Perintah !
-                        </div>
-                        <div class="panel-body">
-                        </div>
+            @foreach($websettings as $webs)
+            <div class="promo-area">
+        <div class="zigzag-bottom"></div>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="single-promo promo1">
+                        <i class="fa fa-child"></i>
+                        <p>Admin 1</p>
+                        <p>{{$webs->kontak1}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="single-promo promo2">
+                        <i class="fa fa-child"></i>
+                        <p>Admin 2</p>
+                        <p>{{$webs->kontak2}}</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="single-promo promo3">
+                        <i class="fa fa-child"></i>
+                        <p>Admin 3</p>
+                        <p>{{$webs->kontak3}}</p>
+                    </div>
+                </div>
+                
             </div>
+    </div> <!-- End promo area -->
+    <div class="row">
+        <div class="jumbotron col-md-12" style="width: 100%;">
+              <h2><b>Alamat</b></h2>
+              <p class="lead">{{$webs->alamat}}</p>
+              <hr class="my-4">
+              <p>{{$webs->keterangan}}</p>
+              
+            </div>
+    </div>
+            
+            @endforeach
          </div>
     </div>
     @endsection
