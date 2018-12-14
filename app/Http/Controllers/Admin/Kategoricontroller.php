@@ -167,7 +167,7 @@ class Kategoricontroller extends Controller
     }
     //-------------------- API ANDROID-----------------
     function getKategori(){
-        $kat=DB::table('tb_kategoris')->paginate(10);
-        return response()->json($kat);
+        $kat=DB::table('tb_kategoris')->get();
+        return response()->json(["data"=>$kat]);
     }
 }

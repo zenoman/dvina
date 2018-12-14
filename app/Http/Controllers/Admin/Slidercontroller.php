@@ -150,4 +150,9 @@ class Slidercontroller extends Controller
         slider::destroy($id);
         return redirect ('slider')->with ('status','Hapus Data Sukses');
     }
+    //------------------- API ------------------------
+    function getSlider(){
+        $slide=slider::all();
+        return response()->json(["data"=>$slide]);
+    }
 }

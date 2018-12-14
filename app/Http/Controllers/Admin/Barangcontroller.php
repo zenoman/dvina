@@ -419,12 +419,21 @@ class Barangcontroller extends Controller
 //------------------------------- API ANDROID _--------------
     function getBarang(){
         $barang = DB::table('tb_kodes')
-        ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')
-        ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
-        ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total'))
+        ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')       
+        ->join('gambar','tb_kodes.kode_barang','=','gambar.kode_barang')
+        ->select(DB::raw('tb_kodes.*,gambar.nama, tb_kategoris.kategori'))
         ->groupBy('tb_kodes.kode_barang')
         ->paginate(10);
         return response()->json($barang);
+    }
+    function listEtalase(){
+        $barang = DB::table('tb_kodes')
+        ->join('gambar','tb_kodes.kode_barang','=','gambar.kode_barang')       
+        ->select(DB::raw('tb_kodes.*,gambar.nama'))
+        ->orderByRaw('RAND()')
+        ->limit(7)
+        ->get();
+        return response()->json(["data"=>$barang]);
     }
     
 }
