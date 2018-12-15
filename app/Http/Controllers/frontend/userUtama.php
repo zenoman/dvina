@@ -37,7 +37,7 @@ class userUtama extends Controller
             ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total'))
             ->groupBy('tb_kodes.kode_barang')
             ->inRandomOrder()
-            ->limit(8)
+            ->limit(4)
             ->get();
         $slider = DB::table('sliders')->get();
         return view("frontend/home",['sliders'=>$slider, 'barangbaru'=>$barangbaru,'barangsuges'=>$barangsuges,'totalkeranjang'=>$totalkeranjang,'websettings'=>$websetting,'totalbayar'=>$totalbayar]);

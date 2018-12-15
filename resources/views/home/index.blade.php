@@ -117,6 +117,7 @@
                         <!-- /.panel-body -->
                     </div>
                 </div>
+                
                 <div class="col-lg-4">
                 <div class="panel panel-default">
                         <div class="panel-heading">
@@ -136,46 +137,75 @@
     <script src="{{asset('assets/vendor/raphael/raphael.min.js')}}"></script>
     <script src="{{asset('assets/vendor/morrisjs/morris.min.js')}}"></script>
     <!--script src="{{asset('assets/data/morris-data.js')}}"></script-->
+    @php
+        $date = date('d-m-Y');
+        $waktu = strtotime($date);
+        
+        $minus7 = strtotime("-7 days", $waktu);
+        $hasil7 = date('d-m-Y',$minus7);
+        $jumlah7 = DB::table('tb_transaksis')->where('tgl',$hasil7)->count();
 
+        $minus6 = strtotime("-6 days", $waktu);
+        $hasil6 = date('d-m-Y',$minus6);
+        $jumlah6 = DB::table('tb_transaksis')->where('tgl',$hasil6)->count();
+
+        $minus5 = strtotime("-5 days", $waktu);
+        $hasil5 = date('d-m-Y',$minus5);
+        $jumlah5 = DB::table('tb_transaksis')->where('tgl',$hasil5)->count();
+
+        $minus4 = strtotime("-4 days", $waktu);
+        $hasil4 = date('d-m-Y',$minus4);
+        $jumlah4 = DB::table('tb_transaksis')->where('tgl',$hasil4)->count();
+
+        $minus3 = strtotime("-3 days", $waktu);
+        $hasil3 = date('d-m-Y',$minus3);
+        $jumlah3 = DB::table('tb_transaksis')->where('tgl',$hasil3)->count();
+
+        $minus2 = strtotime("-2 days", $waktu);
+        $hasil2 = date('d-m-Y',$minus2);
+        $jumlah2 = DB::table('tb_transaksis')->where('tgl',$hasil2)->count();
+
+        $minus1 = strtotime("-1 days", $waktu);
+        $hasil1 = date('d-m-Y',$minus1);
+        $jumlah1 = DB::table('tb_transaksis')->where('tgl',$hasil1)->count();
+
+        $jumlah = DB::table('tb_transaksis')->where('tgl',$date)->count(); 
+    @endphp
+                
     <script type="text/javascript">
         $(function() {
 
     Morris.Area({
+        parseTime:false,
         element: 'morris-area-chart',
         data: [{
-            period: '2010-03',
-            itouch: 2
+            period: '{{$hasil7}}',
+            itouch: {{$jumlah7}}
         }, {
-            period: '2010-04',
-            itouch: 21
+            period: '{{$hasil6}}',
+            itouch: {{$jumlah6}}
         }, {
-            period: '2010-05',
-            itouch: 25
+            period: '{{$hasil5}}',
+            itouch: {{$jumlah5}}
         }, {
-            period: '2010-06',
-            itouch: 5
+            period: '{{$hasil4}}',
+            itouch: {{$jumlah4}}
         }, {
-            period: '2010-07',
-            itouch: 22
+            period: '{{$hasil3}}',
+            itouch: {{$jumlah3}}
         }, {
-            period: '2010-08',
-            itouch: 18
+            period: '{{$hasil2}}',
+            itouch: {{$jumlah2}}
         }, {
-            period: '2010-09',
-            itouch: 15
+            period: '{{$hasil1}}',
+            itouch: {{$jumlah1}}
         }, {
-            period: '2010-10',
-            itouch: 51
-        }, {
-            period: '2010-11',
-            itouch: 20
-        }, {
-            period: '2010-12',
-            itouch: 17
+            period: '{{$date}}',
+            itouch: {{$jumlah}}
         }],
-        xkey: 'period',
+        xkey: ['period'],
         ykeys: ['itouch'],
-        labels: ['iPod Touch'],
+        labels: ['Jumlah'],
         pointSize: 2,
         hideHover: 'auto',
         resize: true
