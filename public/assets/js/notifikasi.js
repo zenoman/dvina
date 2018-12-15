@@ -18,6 +18,7 @@ $(document).ready(function() {
                     url: '/cektransaksi',
                     success:function(data){
                        tampilnotifikasi(data);
+                       tampilbar(data);
                     }
                 });
     		}

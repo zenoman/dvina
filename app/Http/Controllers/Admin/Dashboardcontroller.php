@@ -14,6 +14,7 @@ class DashboardController extends Controller
     {
 
     	$tgl = date('d-m-Y');
+
     	$check = DB::table('tb_stokawals')->where('tgl',$tgl)->count();
         if($check <= 0 ){
             $databarang = DB::table('tb_kodes')
@@ -37,6 +38,8 @@ class DashboardController extends Controller
         return view('home/index',[
             'jumlahuser'=>$this->jumlahuser(),
             'jumlahstok'=>$this->jumlahstok(),
+            'jumlahtransaksi' =>$this->jumlahtransaksi(),
+            'jumlahtransaksig'=>$this->jumlahtransaksig(),
             'websettings'=>$websetting
         ]);
     }
@@ -46,6 +49,18 @@ class DashboardController extends Controller
         return $jumlah;
     }
 
+    function jumlahtransaksi(){
+        $bulan = date('m');
+
+        $jumlah = DB::table('tb_transaksis')->where('tgl','like','%'.$bulan.'%')->count();
+        return $jumlah;
+    }
+    function jumlahtransaksig(){
+        $bulan = date('m');
+
+        $jumlah = DB::table('log_cancel')->where('bulan',$bulan)->count();
+        return $jumlah;
+    }
     function jumlahstok(){
         $jumlah = DB::table('tb_barangs')->sum('stok');
         return $jumlah;

@@ -108,14 +108,18 @@
                                             <label>Deskripsi Barang</label>
                                             <textarea class="form-control" name="deskripsi" rows="5">{{$row->deskripsi}}</textarea>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Harga Barang</label>
+                                          <label>Harga Barang</label>
+                                        <div class="form-group input-group">
+                                          
+                                            <span class="input-group-addon">Rp. </span>
                                             <input type="text" onkeypress="return isNumberKey(event)" class="form-control" name="harga_barang" value="{{$row->harga_barang}}">
                                         </div>
 
-                                        <div class="form-group">
-                                            <label>Diskon Barang</label>
+                                        <label>Diskon Barang</label>
+                                        <div class="form-group input-group">
+                                            
                                             <input type="number" min="0" max="99" onkeypress="return isNumberKey(event)" class="form-control" name="diskon_barang" value="{{$row->diskon}}" required>
+                                            <span class="input-group-addon">%</span>
                                         </div>
                                         
                                         {{csrf_field()}}
@@ -148,6 +152,9 @@
                                 <div class="form-group">
                                   <label for="pwd">Stok:</label>
                                   <input type="text" onkeypress="return isNumberKey(event)" class="form-control" placeholder="Masukan Stok" name="stok">
+                                  @foreach($barang as $row2)
+                                    <input type="hidden" value="{{$row2->barang}}" name="nama_brg">
+                                  @endforeach
                                   <input type="hidden" name="kode" value="{{$kode}}">
                                 </div>
                                 {{@csrf_field()}}
@@ -199,6 +206,9 @@
                                             <label>Stok</label>
                                             <input class="form-control" onkeypress="return isNumberKey(event)" name="stok" type="text" value="{{$war->stok}}" required>
                                             <input name="oldstok" type="hidden" value="{{$war->stok}}">
+                                            @foreach($barang as $row3)
+                                    <input type="hidden" value="{{$row3->barang}}" name="nama_brg">
+                                  @endforeach
                                         </div>
                                         <div class="form-group">
                                             <label>Keterangan</label>

@@ -17,7 +17,7 @@
                                     <i class="fa fa-shopping-cart fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
+                                    <div class="huge">{{$jumlahtransaksi}}</div>
                                     <div>Transaksi bulan ini</div>
                                 </div>
                             </div>
@@ -87,8 +87,8 @@
                                     <i class="fa fa-support fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>Support Tickets!</div>
+                                    <div class="huge">{{$jumlahtransaksig}}</div>
+                                    <div>Transaksi gagal</div>
                                 </div>
                             </div>
                         </div>

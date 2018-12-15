@@ -9,11 +9,7 @@ use App\models\Usermodel;
 
 class Logincontroller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function index()
     {
         return view('login/index');
@@ -49,11 +45,6 @@ class Logincontroller extends Controller
         return redirect('login')->with('status','Maaf, Anda Harus Login');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function loginuser()
     {
         $websetting = DB::table('settings')->limit(1)->get();
@@ -79,12 +70,7 @@ class Logincontroller extends Controller
             return back()->with('errorlogin','username atau password salah');
         }
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function register(Request $request)
     {
         $roles = [

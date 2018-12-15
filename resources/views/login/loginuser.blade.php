@@ -38,8 +38,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
+                    
                     <div class="logo">
-                        <h1><a href="./"><img src="{{asset('user_aset/img/logo.png')}}"></a></h1>
+                        @foreach($websettings as $webset)
+     <h1><a href="{{url('/')}}"><img src="{{asset('img/setting/'.$webset->logo)}}"></a></h1>
+    @endforeach
                     </div>
                 </div>
                 
@@ -100,11 +103,14 @@
                     <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                 {{ session('status') }}
+
                     </div>
-                    @elseif(session('statuserror'))
+                    
+                    @endif
+                    @if(count($errors)>0)
                     <div class="alert alert-danger alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{ session('statuserror') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Maaf, Data Yang Anda Masukan Salah / Tidak valid
                     </div>
                     @endif
                     <div class="product-content-right">
@@ -286,13 +292,15 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <div class="copyright">
-                       <p>&copy; 2015 uCommerce. All Rights Reserved. <a href="http://www.freshdesignweb.com" target="_blank">freshDesignweb.com</a></p>
+                        <p>&copy; 2018 <a class="llink" onclick="login()">Devina</a>. All Rights Reserved. <a href="#" target="_blank">Joyoboyo Intermedia</a></p>
                     </div>
                 </div>
                 
+               
             </div>
         </div>
     </div>
+   
      <!-- End footer bottom area -->
    
     <!-- Latest jQuery form server -->

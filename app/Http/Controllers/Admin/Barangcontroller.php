@@ -72,7 +72,8 @@ class Barangcontroller extends Controller
         ->where('idbarang',$id)
         ->update([
             'stok' => $request->stok,
-            'warna' =>$request->warna
+            'warna' =>$request->warna,
+            'barang_jenis'=>$request->nama_brg." ".$request->warna
         ]);
                 return back();
     }
@@ -81,11 +82,13 @@ class Barangcontroller extends Controller
         return back();
     }
     public function tambahwarna(Request $request){
+        
         DB::table('tb_barangs')
         ->insert([
             'kode'=>$request->kode,
             'warna'=>$request->warna,
-            'stok' =>$request->stok
+            'stok' =>$request->stok,
+            'barang_jenis'=>$request->nama_brg." ".$request->warna
         ]);
         return back();
     }
