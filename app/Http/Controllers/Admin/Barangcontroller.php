@@ -20,6 +20,7 @@ class Barangcontroller extends Controller
             ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
             ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total'))
             ->groupBy('tb_kodes.kode_barang')
+            ->orderby('tb_kodes.id','desc')
             ->paginate(50);
         $websetting = DB::table('settings')->limit(1)->get();
         return view('barang/index',['barang'=>$barang,'websettings'=>$websetting]);
@@ -47,7 +48,7 @@ class Barangcontroller extends Controller
                 'kode_barang'=>$request->kode,
                 'jumlah'=>$stok,
                 'tgl'=>date("d-m-Y"),
-                'total'=>$request->harga_barang*$stok,
+                'total'=>$request->harga_beli*$stok,
                 'keterangan'=>$request->deskripsi,
                 'aksi'=>'tambah'
 
@@ -61,7 +62,7 @@ class Barangcontroller extends Controller
                 'kode_barang'=>$request->kode,
                 'jumlah'=>$stok,
                 'tgl'=>date("d-m-Y"),
-                'total'=>$request->harga_barang*$stok,
+                'total'=>$request->harga_beli*$stok,
                 'keterangan'=>$request->deskripsi,
                 'aksi'=>'kurangi'
 
@@ -154,14 +155,11 @@ class Barangcontroller extends Controller
    
     public function store(Request $request)
     {
-        //dd($request);
         $rules = [
             'kode_barang' => 'required|min:3',
             'nama_barang' => 'required',
             "photo.*"  => "required|image|max:2048"
         ];
-        
-
         $customMessages = [
         'required'  => 'Maaf, :attribute harus di isi',
         'min'       => 'Maaf, data yang anda masukan    terlalu sedikit',
@@ -170,9 +168,10 @@ class Barangcontroller extends Controller
         'numeric'   => 'Maaf, data harus angka',
         'email'     => 'Maaf, data harus email',
         'image'     => 'Maaf, file harus berupa gambar',
-        'max'       => 'Maaf, file terlalu besar'
-    ];
+        'max'       => 'Maaf, file terlalu besar'];
+
     $this->validate($request, $rules, $customMessages);
+
     $jumlah_file = sizeof($request->file('photo'));
     if($jumlah_file>4){
         return redirect('barang/create')->with('errorfoto','Maaf, Foto tidak boleh lebih dari 4');
@@ -201,36 +200,50 @@ class Barangcontroller extends Controller
                 'stok' => $request->stok[$i],
                 'warna' => $warna
             ]);
+         $id = DB::getPdo()->lastInsertId();
+         DB::table('tb_tambahstoks')
+            ->insert([
+                'idwarna'=>$id,
+                'idadmin'=>Session::get('iduser'),
+                'kode_barang'=>$request->kode_barang,
+                'jumlah'=>$request->stok[$i],
+                'tgl'=>date("d-m-Y"),
+                'total'=>$request->harga_beli*$request->stok[$i],
+                'keterangan'=>'menambah pertama kali',
+                'aksi'=>'tambah'
+
+            ]);
          $i++;
     }
         Barangmodel::create([
             'kode_barang'=>$request->kode_barang,
             'barang'=>$request->nama_barang,
             'harga_barang'=>$request->harga_barang,
+            'harga_beli'=>$request->harga_beli,
             'diskon'=>$request->diskon_barang,
             'id_kategori'=>$kategori[0],
             'deskripsi'=>$request->deskripsi
         ]);
         //==================================================
-          $kode = DB::table('tb_kodes')->max('kode_barang');
-        if($kode != NULL){
-            $databarang = DB::table('tb_kodes')
-            ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
-            ->select('tb_kodes.*','tb_barangs.warna','tb_barangs.stok','tb_barangs.idbarang')
-            ->where('tb_kodes.kode_barang',$kode)
-            ->get();
-            foreach ($databarang as $row) {
-                DB::table('tb_stokawals')
-                    ->insert([
-                        'idbarang'=>$row->id,
-                        'idwarna'=>$row->idbarang,
-                        'kode_barang'=>$row->kode_barang,
-                        'barang'=>$row->barang,
-                        'jumlah'=>$row->stok,
-                        'tgl'=>date('d-m-Y')
-                    ]);
-            }
-        }
+        //   $kode = DB::table('tb_kodes')->max('kode_barang');
+        // if($kode != NULL){
+        //     $databarang = DB::table('tb_kodes')
+        //     ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
+        //     ->select('tb_kodes.*','tb_barangs.warna','tb_barangs.stok','tb_barangs.idbarang')
+        //     ->where('tb_kodes.kode_barang',$kode)
+        //     ->get();
+        //     foreach ($databarang as $row) {
+        //         DB::table('tb_stokawals')
+        //             ->insert([
+        //                 'idbarang'=>$row->id,
+        //                 'idwarna'=>$row->idbarang,
+        //                 'kode_barang'=>$row->kode_barang,
+        //                 'barang'=>$row->barang,
+        //                 'jumlah'=>$row->stok,
+        //                 'tgl'=>date('d-m-Y')
+        //             ]);
+        //     }
+        // }
 
         return redirect('barang')->with('status','data berhasil di simpan');
     }
@@ -327,14 +340,14 @@ class Barangcontroller extends Controller
                 ]);
             }
 
-            $stawals = DB::table('tb_stokawals')->where('kode_barang',$request->kode_barang)->get();
-            foreach ($stawals as $stawal) {
-                 DB::table('tb_stokawals')
-                ->where('id',$stawal->id)
-                ->update([
-                    'barang'=>$request->nama_barang
-                ]);
-            }
+            // $stawals = DB::table('tb_stokawals')->where('kode_barang',$request->kode_barang)->get();
+            // foreach ($stawals as $stawal) {
+            //      DB::table('tb_stokawals')
+            //     ->where('id',$stawal->id)
+            //     ->update([
+            //         'barang'=>$request->nama_barang
+            //     ]);
+            // }
         }
 
         $kode = $request->idbarang;
@@ -344,6 +357,7 @@ class Barangcontroller extends Controller
             'id_kategori'=>$request->kategori_barang,
             'barang'=>$request->nama_barang,
             'harga_barang'=>$request->harga_barang,
+            'harga_beli'=>$request->harga_beli,
             'deskripsi'=>$request->deskripsi,
             'diskon'=>$request->diskon_barang
 
@@ -372,12 +386,12 @@ class Barangcontroller extends Controller
         }
         DB::table('gambar')->where('kode_barang',$kodenya)->delete();
         DB::table('tb_tambahstoks')->where('kode_barang', $kodenya)->delete();
-        DB::table('tb_stokawals')->where('idbarang',$id)->delete();
+        // DB::table('tb_stokawals')->where('idbarang',$id)->delete();
         DB::table('tb_barangs')->where('kode', $kodenya)->delete();
         DB::table('tb_kodes')->where('kode_barang', $kodenya)->delete();    
     }else{
         DB::table('tb_tambahstoks')->where('kode_barang', $kodenya)->delete();
-        DB::table('tb_stokawals')->where('idbarang',$id)->delete();
+        // DB::table('tb_stokawals')->where('idbarang',$id)->delete();
         DB::table('tb_barangs')->where('kode', $kodenya)->delete();
         DB::table('tb_kodes')->where('kode_barang', $kodenya)->delete();
     }

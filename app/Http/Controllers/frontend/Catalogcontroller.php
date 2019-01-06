@@ -272,6 +272,7 @@ class Catalogcontroller extends Controller
     }
 
     public function kategori($id){
+        $kat = DB::table('tb_kategoris')->where('id',$id)->get();
         $websetting = DB::table('settings')->limit(1)->get();
         $barangs = DB::table('tb_kodes')
             ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')
@@ -292,6 +293,6 @@ class Catalogcontroller extends Controller
 
         $kategori = DB::table('tb_kategoris')->get();
         
-        return view('frontend/tampilkategor',['websettings'=>$websetting,'barangs'=>$barangs,'kategoris'=>$kategori,'websettings'=>$websetting,'totalkeranjang'=>$totalkeranjang,'totalbayar'=>$totalbayar]);
+        return view('frontend/tampilkategor',['websettings'=>$websetting,'barangs'=>$barangs,'kategoris'=>$kategori,'websettings'=>$websetting,'totalkeranjang'=>$totalkeranjang,'totalbayar'=>$totalbayar,'kat'=>$kat]);
     }
 }

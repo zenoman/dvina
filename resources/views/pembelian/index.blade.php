@@ -71,7 +71,12 @@
                                     <?php $no = $i++;?>
                                     <tr>
                                         <td>{{$no}}</td>
-                                        <td>{{$row->faktur}}</td>
+                                        <td>
+                                            <a href="{{url('pembelian/'.$row->id.'/detail')}}" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-eye"></i>
+                                                {{$row->faktur}}
+                                            </a>
+                                        </td>
                                         <td>{{$row->username}}</td>
                                         <td>{{$row->telp}}</td>
                                         <td>{{$row->tgl}}</td>

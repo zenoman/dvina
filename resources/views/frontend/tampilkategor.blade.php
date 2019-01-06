@@ -41,7 +41,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="product-bit-title text-center">
-                        <h2>Barang Dengan Kategori</h2>
+                        @foreach($kat as $kt)
+                        <h2>Kategori {{$kt->kategori}}</h2>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -67,7 +69,7 @@
                         <h2 class="sidebar-title">Kategori</h2>
                         <ul>
                            @foreach($kategoris as $kategori)
-                            <li><a href="">{{$kategori->kategori}}</a></li>
+                            <li><a href="{{url('/semuaproduk/'.$kategori->id.'/kategori')}}">{{$kategori->kategori}}</a></li>
                             @endforeach
                         </ul>
                     </div>

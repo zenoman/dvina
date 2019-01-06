@@ -120,11 +120,11 @@
 
                                     @if($ii == 1)
                                     <div class="item active">
-                                        <img src="{{asset('img/barang/'.$ft->nama)}}" alt="" width="auto">
+                                        <img src="{{asset('img/barang/'.$ft->nama)}}" alt="" style="width: 100%">
                                       </div>
                                     @else
                                     <div class="item">
-                                        <img src="{{asset('img/barang/'.$ft->nama)}}" alt="" width="auto">
+                                        <img src="{{asset('img/barang/'.$ft->nama)}}" alt="" style="width: 100%">
                                       </div>
                                     @endif
                                    

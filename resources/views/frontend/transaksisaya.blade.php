@@ -256,6 +256,8 @@
                                 {{ $transaksis->links() }}
                                 <div class="woocommerce-info">NB: Pastikan Menyertakan Faktur Pada Berita Transfer. Jika Ada yang Keluhan Atau Kurang Jelas, Hubungi CP Kami Di Tab Hubungi Kami 
                             	</div>
+                                 <div class="woocommerce-info">Info : Akun anda akan otomatis terkena banned / pembekuan akun apabila mencancel pesanan sejumlah 3 kali 
+                                </div>
                         </div>                        
                     </div>                    
                 </div>

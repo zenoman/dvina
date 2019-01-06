@@ -181,8 +181,19 @@ class PembelianController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function detail($id)
     {
-        //
+        $kode = DB::table('tb_transaksis')
+        ->where('id',$id)
+        ->limit(1)
+        ->get();
+        foreach ($kode as $row) {
+            $kodenya = $row->faktur;
+        }
+        $data = DB::table('tb_details')
+        ->where('faktur',$kodenya)
+        ->get();
+         $websetting = DB::table('settings')->limit(1)->get();
+         return view('pembelian/detail',['kode'=>$kode,'data'=>$data,'websettings'=>$websetting]);
     }
 }

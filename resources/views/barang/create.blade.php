@@ -80,7 +80,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Foto</label>
-                                            <input type="file" class="form-control" name="photo[]" multiple required>
+                                            <input type="file" class="form-control" name="photo[]" multiple required  accept="image/*">
                                             <p class="help-block">*Foto Tidak Lebih Dari 4 File</p> 
                                         </div>
                                          @if (session('errorfoto'))
@@ -88,19 +88,31 @@
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                 {{ session('errorfoto') }}
                     </div>
-                    @endif
-                                        <div class="form-group">
-                                            <label>Harga Barang</label>
+                    @endif      <label>Harga Jual Barang</label>
+                                        <div class="form-group input-group">
+                                            
+                                            <span class="input-group-addon">Rp.</span>
                                             <input type="text" onkeypress="return isNumberKey(event)" class="form-control" name="harga_barang" value="{{ old('harga_barang') }}" required>
+
                                         </div>
-                                        @if($errors->has('nama_barang'))
+
+                                        @if($errors->has('harga_barang'))
                                         <div class="alert alert-danger">
-                                        {{ $errors->first('nama_barang')}}
+                                        {{ $errors->first('harga_barang')}}
                                          </div>
                                         @endif
-                                        <div class="form-group">
-                                            <label>Diskon Barang</label>
+                                        <label>Harga Beli Barang</label>
+                                        <div class="form-group input-group">
+                                            
+                                            <span class="input-group-addon">Rp.</span>
+                                            <input type="text" onkeypress="return isNumberKey(event)" class="form-control" name="harga_beli" value="{{ old('harga_beli') }}" required>
+
+                                        </div>
+                                        <label>Diskon Barang</label>
+                                        <div class="form-group input-group">
+                                            
                                             <input type="number" min="0" max="99" onkeypress="return isNumberKey(event)" class="form-control" name="diskon_barang" value="{{ old('diskon_barang') }}" required>
+                                            <span class="input-group-addon">%</span>
                                         </div>
                                         
                                         @if($errors->has('diskon_barang'))
@@ -116,9 +128,10 @@
                                         <label>Warna</label>
                                         <input type="text" name="warna[]" value="" class="form-control" required>
                                         </div>
-                                        <div class="col-md-6 form-group">
+                                        <div class="col-md-6 form-group input-group">
                                         <label>Stok</label>
                                         <input type="text" onkeypress="return isNumberKey(event)" name="stok[]" value="" class="form-control" required>
+
                                         </div>
                                         </div>
                                          </div>

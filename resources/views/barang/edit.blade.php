@@ -108,11 +108,17 @@
                                             <label>Deskripsi Barang</label>
                                             <textarea class="form-control" name="deskripsi" rows="5">{{$row->deskripsi}}</textarea>
                                         </div>
-                                          <label>Harga Barang</label>
+                                          <label>Harga Jual Barang</label>
                                         <div class="form-group input-group">
                                           
                                             <span class="input-group-addon">Rp. </span>
                                             <input type="text" onkeypress="return isNumberKey(event)" class="form-control" name="harga_barang" value="{{$row->harga_barang}}">
+                                        </div>
+                                         <label>Harga Beli Barang</label>
+                                        <div class="form-group input-group">
+                                          
+                                            <span class="input-group-addon">Rp. </span>
+                                            <input type="text" onkeypress="return isNumberKey(event)" class="form-control" name="harga_beli" value="{{$row->harga_beli}}">
                                         </div>
 
                                         <label>Diskon Barang</label>
@@ -132,11 +138,8 @@
                                 </div>
                               
                             </div>
-                            <!-- /.row (nested) -->
                         </div>
-                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                            <h4>Edit Variasi Warna & Stok</h4>
@@ -201,7 +204,7 @@
                                             <input class="form-control" name="warna" type="text" required value="{{$war->warna}}">
                                         </div>
                                         <input type="hidden" name="kode" value="{{$kode}}">
-                                         <input type="hidden" name="harga_barang" value="{{$row->harga_barang}}">
+                                         <input type="hidden" name="harga_beli" value="{{$row->harga_beli}}">
                                         <div class="form-group">
                                             <label>Stok</label>
                                             <input class="form-control" onkeypress="return isNumberKey(event)" name="stok" type="text" value="{{$war->stok}}" required>
