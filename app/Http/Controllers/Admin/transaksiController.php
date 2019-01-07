@@ -120,4 +120,29 @@ class transaksiController extends Controller
         $post=DB::delete("delete from tb_details where id=?",[$id]);
         return response()->json(['done']);
     }
+
+
+//--------------------------- API Android =--------------------------
+    function orderBarang(Request $request){
+        $id=$request->get('idwarna');
+        $iduser=$request->get('iduser');        
+        $tgl=date('dd-MM-yyyy');
+        //$tglExp=date('');
+        $kode=$request->get('kode_barang');
+        $barang=$request->get('barang');
+        $harga=$request->get('harga');
+        $jumlah=$request->get('jumlah');
+        $totala=$harga*$jumlah;
+        $diskon=$request->get('diskon');
+        $total=$totala-($totala*$diskon/100);
+        $metod="pesan";
+//simpan ke Query
+        $data=DB::insert("insert into tb_details(idwarna,iduser,tgl,tgl_kadaluarsa,kode_barang,barang,harga,jumlah,total_a,diskon,total,metode) values(?,?,?,?,?,?,?,?,?,?,?,?)",[$id,$iduser,$tgl,$tglExp,$kode,$barang,$harga,$jumlah,$totala,$diskon,$total,$metod]);
+        if ($data){
+            return response()->json(["status"=>"1","msg"=>"Berhasil Dipesan"]);
+        }else{
+            return response()->json(["status"=>"0","msg"=>"Gagal Dipesan"]);
+        }
+
+    }
 }

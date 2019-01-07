@@ -21,6 +21,11 @@ Route::get('listEtalase/','Admin\Barangcontroller@listEtalase');
 Route::get('listKategori/','Admin\Kategoricontroller@getKategori');
 Route::post('/loginUser','Logincontroller@loginApi');
 Route::get('slider/','Admin\Slidercontroller@getSlider');
-Route::get('kategori/{public}/{img}/{kategori}',function(){
+Route::post('login/','Logincontroller@loginApi');
+Route::get('gambar_item/{id}','Admin\Barangcontroller@gmbItem');
+Route::get('warna_item/{id}','Admin\Barangcontroller@warnaItem');
+Route::get('kategori/{id}','Admin\Barangcontroller@perKategori');
+Route::get('kategoriPage/{id}?page={page}','Admin\Barangcontroller@perPageKategori');
+//pemesanan
+Route::post('pesan/','Admin\transaksiController@orderBarang');
 
-});
