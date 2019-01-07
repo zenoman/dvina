@@ -9,23 +9,12 @@ use App\models\Adminmodel;
 use Illuminate\Support\Facades\DB;
 class Admincontroller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $websetting = DB::table('settings')->limit(1)->get();
         $admins = Adminmodel::get();
         return view('admin/index',['admin'=>$admins,'websettings'=>$websetting]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $websetting = DB::table('settings')->limit(1)->get();
@@ -70,12 +59,6 @@ class Admincontroller extends Controller
         }
        
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $rules = [
@@ -107,38 +90,16 @@ class Admincontroller extends Controller
 
         return redirect('admin')->with('status','Input Data Sukses');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $websetting = DB::table('settings')->limit(1)->get();
         $admin = Adminmodel::find($id);
         return view('admin/edit',['dataadmin'=>$admin,'websettings'=>$websetting]);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $rules = [
@@ -169,13 +130,6 @@ class Admincontroller extends Controller
             ]);
         return redirect('admin')->with('status','Edit Data Sukses');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
          Adminmodel::destroy($id);

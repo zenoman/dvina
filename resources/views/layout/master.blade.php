@@ -121,6 +121,19 @@
                         <li>
                             <a href="{{url('/setting')}}"><i class="fa fa-gear fa-fw"></i> Setting</a>
                         </li>
+                        <li>
+                            <a><i class="fa fa-file fa-fw"></i> Laporan<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                                <li>
+                                    <a href="{{url('/laporan/pengeluaran')}}">Laporan Pengeluaran</a>
+                                </li>
+                                <li>
+                                    <a href="buttons.html">Laporan Pemasukan</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        
                         </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

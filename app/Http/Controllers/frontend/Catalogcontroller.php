@@ -106,8 +106,8 @@ class Catalogcontroller extends Controller
             ->insert([
                 'idwarna'=>$datawarna[0],
                 'iduser'=>Session::get('user_id'),
-                'tgl'=>date("d-m-Y"),
-                'tgl_kadaluarsa'=>$day."-".date("m")."-".date("Y"),
+                'tgl'=>date("Y-m-d"),
+                'tgl_kadaluarsa'=>date("Y")."-".date("m")."-".$day,
                 'kode_barang'=>$request->kode_barang,
                 'barang'=>$nama,
                 'harga'=>$harga,
@@ -145,7 +145,7 @@ class Catalogcontroller extends Controller
             ->insert([
                 'faktur'=>$newkode,
                 'total_akhir'=>$row->total,
-                'tgl'=>date("d-m-Y"),
+                'tgl'=>date("Y-m-d"),
                 'bulan'=>date("m"),
                 'status'=>'dicancel',
                 'id_user'=>$iduser,
@@ -213,7 +213,7 @@ class Catalogcontroller extends Controller
         }else{
             $newkode = "DVINA00001";
         }
-        $tgl = date("d-m-Y");
+        $tgl = date("Y-m-d");
         $total = $request->total;
         $alamat = $request->alamat;
         $pembayaran = $request->pembayaran;

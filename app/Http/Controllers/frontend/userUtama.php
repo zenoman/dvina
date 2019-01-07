@@ -112,55 +112,11 @@ class userUtama extends Controller
                 'kodepos'  => $request->kode_pos
                 ]);
                 }
-                
-
-        
-                 return back()->with('status','Edit Profile Sukses');
+                return back()->with('status','Edit Profile Sukses');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function hubungi()
     {
         $websetting = DB::table('settings')->limit(1)->get();
         return view('frontend/hubungikami',['websettings'=>$websetting]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

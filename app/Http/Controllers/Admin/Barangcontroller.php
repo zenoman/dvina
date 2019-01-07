@@ -47,7 +47,7 @@ class Barangcontroller extends Controller
                 'idadmin'=>Session::get('iduser'),
                 'kode_barang'=>$request->kode,
                 'jumlah'=>$stok,
-                'tgl'=>date("d-m-Y"),
+                'tgl'=>date("Y-m-d"),
                 'total'=>$request->harga_beli*$stok,
                 'keterangan'=>$request->deskripsi,
                 'aksi'=>'tambah'
@@ -61,7 +61,7 @@ class Barangcontroller extends Controller
                 'idadmin'=>Session::get('iduser'),
                 'kode_barang'=>$request->kode,
                 'jumlah'=>$stok,
-                'tgl'=>date("d-m-Y"),
+                'tgl'=>date("Y-m-d"),
                 'total'=>$request->harga_beli*$stok,
                 'keterangan'=>$request->deskripsi,
                 'aksi'=>'kurangi'
@@ -147,7 +147,7 @@ class Barangcontroller extends Controller
             'barang'=>$request->nama_barang,
             'jumlah'=>$request->stok,
             'total'=>$request->stok*$request->harga,
-            'tgl'=>date("d-m-Y")
+            'tgl'=>date("Y-m-d")
         ]);
 
         return redirect('barang')->with('status','Tambah Stok Berhasil');
@@ -207,7 +207,7 @@ class Barangcontroller extends Controller
                 'idadmin'=>Session::get('iduser'),
                 'kode_barang'=>$request->kode_barang,
                 'jumlah'=>$request->stok[$i],
-                'tgl'=>date("d-m-Y"),
+                'tgl'=>date("Y-m-d"),
                 'total'=>$request->harga_beli*$request->stok[$i],
                 'keterangan'=>'menambah pertama kali',
                 'aksi'=>'tambah'
