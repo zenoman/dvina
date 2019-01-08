@@ -37,7 +37,7 @@
                     </div>
                     @endif
                     
-                    <a href="{{url('barang/create')}}" class="btn btn-primary"><i class="fa fa-pencil"></i> Tambah Data</a>
+                   <!--  <a href="{{url('barang/create')}}" class="btn btn-primary"><i class="fa fa-pencil"></i> Tambah Data</a>
                      <a href="{{url('barang/importexcel')}}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Import Excel</a>
                      <button class="btn btn-info" data-toggle="modal" data-target="#searchModal">
                                         <i class="fa fa-search"></i> Cari Data</button>
@@ -65,11 +65,8 @@
                                         </div>
                                  
                                     </div>
-                                    <!-- /.modal-content -->
                                 </div>
-                                <!-- /.modal-dialog -->
-                            </div>
-                            <!-- /.modal -->
+                            </div>-->
                     <br><br>   
                     <div class="panel panel-default">
                         <div class="panel-heading">

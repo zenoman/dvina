@@ -1,6 +1,9 @@
 <?php
 use Illuminate\Support\Facades\Input;
 //laporan
+Route::get('/exsportpengeluaran/{bulan}/{tahun}','Admin\laporanController@exsportpengeluaran');
+Route::get('/cetakpengeluaran/{bulan}/{tahun}','Admin\laporanController@cetakpengeluaran');
+Route::get('/tampilpengeluaran','Admin\laporanController@tampilpengeluaran');
 Route::get('/laporan/pengeluaran','Admin\laporanController@pilihpengeluaran');
 
 //pembelian

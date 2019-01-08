@@ -25,13 +25,13 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form action="/admin" role="form" method="POST">
+                                    <form action="/tampilpengeluaran" role="form" method="GET">
                                         
                                         <div class="form-group">
                                         	<label>Bulan </label>
-                                        	<select name="level" class="form-control">
+                                        	<select name="bulan" class="form-control">
                                         		@foreach($data as $row)
-                                                <option value="admin">{{$row->bulan}}-{{$row->tahun}}</option>
+                                                <option value="{{$row->bulan}}-{{$row->tahun}}">{{$row->bulan}}-{{$row->tahun}}</option>
                                         		@endforeach
                                         	</select>
                                         </div>
