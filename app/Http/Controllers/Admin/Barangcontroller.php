@@ -452,5 +452,28 @@ class Barangcontroller extends Controller
         ->get();
         return response()->json(["data"=>$barang]);
     }
+    function gmbItem($id){
+        $gmb=DB::table('gambar')
+            ->select('nama')
+            ->where('kode_barang',$id)->get();       
+        return response()->json(["data"=>$gmb]);    
+    }
+    function warnaItem($id){
+        $warna=DB::table('tb_barangs')
+            ->join("tb_kodes","tb_kodes.kode_barang","=","tb_barangs.kode")
+            ->select(DB::raw("tb_kodes.deskripsi,tb_barangs.*"))
+            ->where('kode',$id)
+            ->get();
+            return response()->json(["data_barang"=>$warna]);    
+    }
+    function perKategori($id){
+        $data = DB::table('tb_kodes')
+            ->join('gambar',"gambar.kode_barang","=","tb_kodes.kode_barang")
+            ->select(DB::raw("tb_kodes.*,gambar.nama"))
+            ->where('id_kategori',$id)
+            ->paginate(5);
+        return response()->json($data);
+        
+    }
     
 }

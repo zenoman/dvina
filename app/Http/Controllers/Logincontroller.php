@@ -176,11 +176,17 @@ class Logincontroller extends Controller
 
     //-------------------- API ANDROID ----------------------
     function loginApi(Request $req){
-        $username = $request->username;
-        $password = md5($request->password);
+        $username = $req->username;
+        $password = md5($req->password);
 
-        $data = DB::table('admins')->where([['username',$username],['password',$password]])->count();
-        $datausers = DB::table('admins')->where([['username',$username],['password',$password]])->get();
-        
+        $data = DB::table('tb_users')->where([['username',$username],['password',$password]])->count();
+        $datausers = DB::table('tb_users')
+        ->where([['username',$username],['password',$password]])
+        ->get();
+        if($data>0){
+        return response()->json(["status"=>"1","data"=>$datausers]);
+        }else{
+            return response()->json(["status"=>"0","data"=>$datausers]);
+        }
     }
 }
