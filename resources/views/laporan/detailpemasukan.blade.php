@@ -2,7 +2,7 @@
 @foreach($websettings as $webset)
 @section('title',$webset->webName)
 @section('favicon')
-<link rel="shortcut icon" type="image" href="{{asset('img/setting/'.$webset->ico)}}">
+    <link rel="shortcut icon" type="image" href="{{asset('img/setting/'.$webset->ico)}}">
 @endsection
 @endforeach
 
@@ -14,7 +14,7 @@
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Laporan Pemasukan Bulan {{$bulan}} Tahun {{$tahun}} </h1>
+                    <h1 class="page-header">Laporan Detail Pemasukan Bulan {{$bulan}} Tahun {{$tahun}} </h1>
 
                 </div>
             </div>
@@ -27,13 +27,13 @@
                                 {{ session('status') }}
                     </div>
                     @endif
-                    <a href="{{url('/cetakpemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-primary" target="_blank()"><i class="fa fa-print"></i> Print</a>
+                    <a href="{{url('/cetakdetailpemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-primary" target="_blank()"><i class="fa fa-print"></i> Print</a>
 
-                    <a href="{{url('/exsportpemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Exsport Excel</a>
+                    <a href="{{url('/exsportdetailpemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Exsport Excel</a>
                     <br><br>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            List Data Pengeluaran
+                            List Data Detail Pengeluaran
                         </div>
 
                         <div class="panel-body">
@@ -75,13 +75,14 @@
                                   @endforeach
                                 </tbody>
                             </table>
+                            <div class="text-right">
+                                <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>
+                            </div>
+                            
                             {{ $data->links() }}
                         </div>
-                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
         </div>
         @endsection

@@ -5,12 +5,31 @@ ini_set('max_execution_time', 180);
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Exports\detailpemasukan;
 use App\Exports\PengeluaranExport;
 use App\Exports\pemasukanExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class laporanController extends Controller
 {
+    public function exsportdetailpemasukan($bulan,$tahun){
+        $namafile = "laporan_detail_pemasukan_bulan_".$bulan."_tahun_".$tahun.".xlsx";
+     return Excel::download(new detailpemasukan($bulan,$tahun),$namafile);
+    }
+
+    public function cetakdetailpemasukan($bulan,$tahun){
+         $data = DB::table('tb_details')
+        ->select(DB::raw('tb_details.*,tb_users.username,tb_barangs.barang_jenis'))
+        ->leftjoin('tb_users','tb_users.id','=','tb_details.iduser')
+        ->leftjoin('tb_transaksis','tb_transaksis.faktur','=','tb_details.faktur')
+        ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
+        ->whereMonth('tb_details.tgl',$bulan)
+        ->whereYear('tb_details.tgl',$tahun)
+        ->where('tb_transaksis.status','=','sukses')
+        ->orwhere('tb_transaksis.status','=','diterima')
+        ->get();
+        return view('laporan/cetakdetailpemasukan',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun]);
+    }
     public function tampildetailpemasukan(Request $request){
         $webinfo = DB::table('settings')->limit(1)->get();
         $tanggalnya = explode('-', $request->bulan);

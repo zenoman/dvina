@@ -1,6 +1,12 @@
 <?php
 use Illuminate\Support\Facades\Input;
+//backup
+Route::get('/tampilbackup','Admin\backupController@tampil');
+Route::get('/backup','Admin\backupController@index');
+
 //laporan
+Route::get('/exsportdetailpemasukan/{bulan}/{tahun}','Admin\laporanController@exsportdetailpemasukan');
+Route::get('/cetakdetailpemasukan/{bulan}/{tahun}','Admin\laporanController@cetakdetailpemasukan');
 Route::get('/tampildetailpemasukan','Admin\laporanController@tampildetailpemasukan');
 Route::get('/laporan/detailpemasukan','Admin\laporanController@pilihdetailpemasukan');
 Route::get('/exsportpemasukan/{bulan}/{tahun}','Admin\laporanController@exsportpemasukan');

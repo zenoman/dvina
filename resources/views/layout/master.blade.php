@@ -122,6 +122,9 @@
                             <a href="{{url('/setting')}}"><i class="fa fa-gear fa-fw"></i> Setting</a>
                         </li>
                         <li>
+                            <a href="{{url('/backup')}}"><i class="fa fa-download fa-fw"></i> Backup Data</a>
+                        </li>
+                        <li>
                             <a><i class="fa fa-file fa-fw"></i> Laporan<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
                                 <li>
