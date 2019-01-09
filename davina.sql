@@ -324,7 +324,7 @@ CREATE TABLE IF NOT EXISTS `tb_tambahstoks` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.tb_tambahstoks: ~2 rows (approximately)
+-- Dumping data for table davina.tb_tambahstoks: ~6 rows (approximately)
 DELETE FROM `tb_tambahstoks`;
 /*!40000 ALTER TABLE `tb_tambahstoks` DISABLE KEYS */;
 INSERT INTO `tb_tambahstoks` (`id`, `idwarna`, `idadmin`, `kode_barang`, `jumlah`, `total`, `tgl`, `keterangan`, `aksi`) VALUES
@@ -363,7 +363,7 @@ INSERT INTO `tb_transaksis` (`id`, `iduser`, `faktur`, `tgl`, `total`, `status`,
 	(3, 16, 'DVINA00003', '2019-01-07', 108600, 'sukses', 'ngancar, kediri', NULL, 2400, 111000, '1', 'halo halo'),
 	(4, 16, 'DVINA00004', '2019-01-07', 106250, 'sukses', 'ngancar, kediri', NULL, 0, 106250, '1', 'cepet ya'),
 	(5, 16, 'DVINA00005', '2019-01-07', 145800, 'sukses', 'ngancar, kediri', NULL, 0, 145800, '1', 'halo halo'),
-	(6, 17, 'DVINA00006', '2019-01-08', 88600, 'sukses', 'gur', NULL, 0, 88600, '1', 'cepet ya gan');
+	(6, 17, 'DVINA00006', '2019-02-08', 88600, 'sukses', 'gur', NULL, 0, 88600, '1', 'cepet ya gan');
 /*!40000 ALTER TABLE `tb_transaksis` ENABLE KEYS */;
 
 -- Dumping structure for table davina.tb_users

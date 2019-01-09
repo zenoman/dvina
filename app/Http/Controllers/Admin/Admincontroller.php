@@ -44,7 +44,6 @@ class Admincontroller extends Controller
          ];
         $this->validate($request,$rules,$customMessages);
         $newpass =md5($request->konfirmasi_password);
-        //dd($newpass);
         if($request->password==$newpass){
             if($request->konfirmasi_password_baru==$request->password_baru){
                  Adminmodel::find($id)->update([
@@ -107,9 +106,7 @@ class Admincontroller extends Controller
             'username'=>'required|min:5|alpha_dash',
             'no_telfon'=>'required|min:5|numeric',
             'email'=>'required|min:5|email'
-            //'password_lama'=>'required|min:5|same:password_terdahulu',
-            //'password_baru'=>'required|min:5',
-            //'konfirmasi_password_baru'=>'required|min:5|same:password_baru',
+            
             ];
         $customMessages = [
         'required'  => 'Maaf, :attribute harus di isi',
@@ -117,7 +114,7 @@ class Admincontroller extends Controller
         'alpha_dash'=> 'Maaf, tidak menerima data lain kecuali alphabet',
         'numeric'   => 'Maaf, data harus angka',
         'email'     => 'Maaf, data harus email'
-        //'same'      => 'Maaf, Pastikan :attribute dan :other sama',
+        
          ];
         $this->validate($request,$rules,$customMessages);
         

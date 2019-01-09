@@ -128,7 +128,10 @@
                                     <a href="{{url('/laporan/pengeluaran')}}">Laporan Pengeluaran</a>
                                 </li>
                                 <li>
-                                    <a href="buttons.html">Laporan Pemasukan</a>
+                                    <a href="{{url('/laporan/pemasukan')}}">Laporan Pemasukan</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('/laporan/detailpemasukan')}}">Laporan Detail Pemasukan</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
