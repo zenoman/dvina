@@ -8,10 +8,56 @@ use Illuminate\Support\Facades\DB;
 use App\Exports\detailpemasukan;
 use App\Exports\PengeluaranExport;
 use App\Exports\pemasukanExport;
+use App\Exports\pemasukanlain;
 use Maatwebsite\Excel\Facades\Excel;
 
 class laporanController extends Controller
 {
+    public function exportpemasukanlain($bulan , $tahun){
+    $namafile = "laporan_pemasukan_lain_bulan_".$bulan."_tahun_".$tahun.".xlsx";
+     return Excel::download(new pemasukanlain($bulan,$tahun),$namafile);
+    }
+
+    public function cetakpemasukanlain($bulan,$tahun){
+        $data = DB::table('tb_tambahstoks')
+        ->select(DB::raw('tb_tambahstoks.*,admins.username,tb_barangs.barang_jenis,tb_kodes.harga_beli'))
+        ->leftjoin('admins','admins.id','=','tb_tambahstoks.idadmin')
+        ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_tambahstoks.idwarna')
+        ->leftjoin('tb_kodes','tb_kodes.kode_barang','=','tb_tambahstoks.kode_barang')
+        ->where('tb_tambahstoks.aksi','kurangi')
+        ->whereMonth('tb_tambahstoks.tgl',$bulan)
+        ->whereYear('tb_tambahstoks.tgl',$tahun)
+        ->orderby('tb_tambahstoks.id','desc')
+        ->get();
+
+        return view('laporan/cetakpemasukanlain',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun]);
+    }
+    public function tampilpemasukanlain(Request $request){
+        $webinfo = DB::table('settings')->limit(1)->get();
+        $tanggalnya = explode('-', $request->bulan);
+        $data = DB::table('tb_tambahstoks')
+        ->select(DB::raw('tb_tambahstoks.*,admins.username,tb_barangs.barang_jenis,tb_kodes.harga_beli'))
+        ->leftjoin('admins','admins.id','=','tb_tambahstoks.idadmin')
+        ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_tambahstoks.idwarna')
+        ->leftjoin('tb_kodes','tb_kodes.kode_barang','=','tb_tambahstoks.kode_barang')
+        ->where('tb_tambahstoks.aksi','kurangi')
+        ->whereMonth('tb_tambahstoks.tgl',$tanggalnya[0])
+        ->whereYear('tb_tambahstoks.tgl',$tanggalnya[1])
+        ->orderby('tb_tambahstoks.id','desc')
+        ->paginate(40);
+        return view('laporan/pemasukanlain',['data'=>$data,'websettings'=>$webinfo,'bulan'=>$tanggalnya[0],'tahun'=>$tanggalnya[1],'data3'=>$data->appends(request()->input())]);
+    }
+    public function pilihpemasukanlain(){
+        $data = DB::table('tb_tambahstoks')
+        ->select(DB::raw('MONTH(tgl) as bulan, YEAR(tgl) as tahun'))
+        ->where('aksi','kurangi')
+        ->groupby('bulan')
+        ->groupby('tahun')
+        ->orderby('tgl','desc')
+        ->get();
+        $websetting = DB::table('settings')->limit(1)->get();
+        return view('laporan/pilihpemasukanlain',['data'=>$data,'websettings'=>$websetting]);
+    }
     public function exsportdetailpemasukan($bulan,$tahun){
         $namafile = "laporan_detail_pemasukan_bulan_".$bulan."_tahun_".$tahun.".xlsx";
      return Excel::download(new detailpemasukan($bulan,$tahun),$namafile);
@@ -104,6 +150,7 @@ class laporanController extends Controller
     public function pilihpengeluaran(){
     	$data = DB::table('tb_tambahstoks')
         ->select(DB::raw('MONTH(tgl) as bulan, YEAR(tgl) as tahun'))
+        ->where('aksi','tambah')
         ->groupby('bulan')
         ->groupby('tahun')
         ->orderby('tgl','desc')

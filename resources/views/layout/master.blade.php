@@ -110,6 +110,12 @@
                             <a href="{{url('/pembelian')}}"><i class="fa fa-money fa-fw"></i> Pembelian</a>
                         </li>
                         <li>
+                            <a href="#"><i class="fa fa-dollar fa-fw"></i> Pembelian Lain</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-reply fa-fw"></i> Pengeluaran</a>
+                        </li>
+                        <li>
                             <a href="{{url('/pembelian/gagal')}}"><i class="fa fa-asl-interpreting fa-fw"></i> Transaksi Gagal</a>
                         </li>
                         <li>
@@ -135,6 +141,9 @@
                                 </li>
                                 <li>
                                     <a href="{{url('/laporan/detailpemasukan')}}">Laporan Detail Pemasukan</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('/laporan/pemasukanlain')}}">Laporan Pemasukan Lain</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

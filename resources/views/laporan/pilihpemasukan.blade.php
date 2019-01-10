@@ -41,7 +41,7 @@
                                          </div>
                                        @endif
                                         {{csrf_field()}}
-                                        <input class="btn btn-primary" type="submit" name="submit" value="simpan">
+                                        <input class="btn btn-primary" type="submit" name="submit" value="lanjut">
                                         <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>
                                     </form>
                                 </div>

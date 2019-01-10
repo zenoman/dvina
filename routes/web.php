@@ -5,6 +5,10 @@ Route::get('/tampilbackup','Admin\backupController@tampil');
 Route::get('/backup','Admin\backupController@index');
 
 //laporan
+Route::get('/exsportpemasukanlain/{bulan}/{tahun}','Admin\laporanController@exportpemasukanlain');
+Route::get('/cetakpemasukanlain/{bulan}/{tahun}','Admin\laporanController@cetakpemasukanlain');
+Route::get('/tampilpemasukanlain','Admin\laporanController@tampilpemasukanlain');
+Route::get('/laporan/pemasukanlain','Admin\laporanController@pilihpemasukanlain');
 Route::get('/exsportdetailpemasukan/{bulan}/{tahun}','Admin\laporanController@exsportdetailpemasukan');
 Route::get('/cetakdetailpemasukan/{bulan}/{tahun}','Admin\laporanController@cetakdetailpemasukan');
 Route::get('/tampildetailpemasukan','Admin\laporanController@tampildetailpemasukan');
