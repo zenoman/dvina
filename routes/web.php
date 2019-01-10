@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Input;
+Route::get('/pembelianlain','Admin\pembelianlainController@index');
 //backup
 Route::get('/tampilbackup','Admin\backupController@tampil');
 Route::get('/backup','Admin\backupController@index');

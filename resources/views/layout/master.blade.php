@@ -110,7 +110,7 @@
                             <a href="{{url('/pembelian')}}"><i class="fa fa-money fa-fw"></i> Pembelian</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-dollar fa-fw"></i> Pembelian Lain</a>
+                            <a href="{{url('/pembelianlain')}}"><i class="fa fa-dollar fa-fw"></i> Pembelian Lain</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-reply fa-fw"></i> Pengeluaran</a>
