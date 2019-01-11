@@ -16,6 +16,12 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
+                     @if (session('status'))
+                    <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{ session('status') }}
+                    </div>
+                    @endif
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Edit Data Dibawah Ini Sesuai Perintah !
@@ -34,33 +40,41 @@
                                         {{ $errors->first('webname')}}
                                          </div>
                                        @endif
-                                        <div class="form-group">
+                                       <div class="row">
+                                           <div class="col-md-4 form-group">
                                             <label>Kontak1</label>
                                             <input type="text" class="form-control" name="kontak1" value="{{$row->kontak1}}">
-                                        </div>
                                          @if($errors->has('kontak1'))
                                        <div class="alert alert-danger">
                                         {{ $errors->first('kontak1')}}
                                          </div>
                                        @endif
-                                        <div class="form-group">
+                                        </div>
+
+                                        <div class="col-md-4 form-group">
                                             <label>Kontak2</label>
                                             <input type="text" class="form-control" name="kontak2" value="{{$row->kontak2}}">
-                                        </div>
-                                         @if($errors->has('kontak2'))
+                                             @if($errors->has('kontak2'))
                                        <div class="alert alert-danger">
                                         {{ $errors->first('kontak2')}}
                                          </div>
                                        @endif
-                                        <div class="form-group">
+                                        </div>
+                                        <div class="col-md-4 form-group">
                                             <label>Kontak3</label>
                                             <input type="text" class="form-control" name="kontak3" value="{{$row->kontak3}}">
-                                        </div>
-                                         @if($errors->has('kontak3'))
+                                            @if($errors->has('kontak3'))
                                        <div class="alert alert-danger">
                                         {{ $errors->first('kontak3')}}
                                          </div>
                                        @endif
+                                        </div>
+                                       </div>
+                                        
+                                        
+
+
+                                         
                                         <div class="form-group">
                                             <label>Email</label>
                                             <input type="text" class="form-control" name="email" value="{{$row->email}}">
@@ -84,7 +98,12 @@
                                             <label>Batas hari Pemesana</label>
                                             <input type="text" class="form-control" name="kadaluarsa" value="{{$row->max_tgl}}">
                                         </div>
-                                        
+                                        <div class="form-group">
+                                            <label>Peraturan Belanja</label>
+                                            <textarea class="form-control" name="peraturan" rows="8" id="mytextarea">
+                                                {{$row->peraturan}}
+                                            </textarea>
+                                        </div>
                                              <div class="form-group">
                                             <label>Ganti Icon</label><p>
                                             <img src="../img/setting/{{$row->ico}}" width="100" height="100">
@@ -127,4 +146,12 @@
             <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
+        @endsection
+        @section('js')
+        <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+  <script>
+  tinymce.init({
+    selector: '#mytextarea'
+  });
+  </script>
         @endsection

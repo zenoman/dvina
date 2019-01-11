@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+ini_set('max_execution_time', 180);
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 class Settingcontroller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $websetting = DB::table('settings')->limit(1)->get();
@@ -22,37 +17,6 @@ class Settingcontroller extends Controller
         return view('setting/edit',['setting'=>$setings,'websettings'=>$websetting]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //$settings = Settingmodel::find('idsetting',$id);
-        // dd($settings);
-        //return view('setting/edit',['settings'=>$settings]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $rules = [
@@ -161,7 +125,8 @@ class Settingcontroller extends Controller
             'email'=>$request->email,
             'logo'=>$namelogo,
             'meta'=>$request->meta,
-            'max_tgl'=>$request->kadaluarsa
+            'max_tgl'=>$request->kadaluarsa,
+            'peraturan'=>$request->peraturan
             ]);
             }else{
             DB::table('settings')
@@ -173,8 +138,9 @@ class Settingcontroller extends Controller
             'kontak3'=>$request->kontak3,
             'email'=>$request->email,
             'meta'=>$request->meta,
-            'max_tgl'=>$request->kadaluarsa
-            ]);
+            'max_tgl'=>$request->kadaluarsa,
+            'peraturan'=>$request->peraturan
+        ]);
             }
 
             
@@ -182,13 +148,6 @@ class Settingcontroller extends Controller
         }
         return redirect('setting')->with('status','Edit Data Sukses');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
          Settingmodel::destroy($id);

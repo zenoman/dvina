@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\frontend;
-
+ini_set('max_execution_time', 180);
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -45,9 +45,18 @@ class userUtama extends Controller
 
     public function edituser()
     {
+        $totalkeranjang = DB::table('tb_details')
+        ->where([['iduser',Session::get('user_id')],['faktur',null]])
+        ->count();
+
+        $totalbayar = DB::table('tb_details')
+                        ->select(DB::raw('SUM(total) as newtotal'))
+                        ->where([['iduser',Session::get('user_id')],['faktur',null]])
+                        ->get();
+
         $datausers = DB::table('tb_users')->where('id',Session::get('user_id'))->get();
         $websetting = DB::table('settings')->limit(1)->get();
-        return view('frontend/edituser',['websettings'=>$websetting,'users'=>$datausers]);
+        return view('frontend/edituser',['websettings'=>$websetting,'users'=>$datausers,'totalkeranjang'=>$totalkeranjang,'totalbayar'=>$totalbayar]);
     }
     public function aksiedit(Request $request)
     {

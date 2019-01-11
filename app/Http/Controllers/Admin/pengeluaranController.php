@@ -6,18 +6,18 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
-class pembelianlainController extends Controller
+class pengeluaranController extends Controller
 {
-	public function index(){
-	$webinfo = DB::table('settings')->limit(1)->get();
-	$data = DB::table('tb_tambahstoks')
+    public function index(){
+    	$webinfo = DB::table('settings')->limit(1)->get();
+    	$data = DB::table('tb_tambahstoks')
         ->select(DB::raw('tb_tambahstoks.*,admins.username,tb_barangs.barang_jenis,tb_kodes.harga_beli'))
         ->leftjoin('admins','admins.id','=','tb_tambahstoks.idadmin')
         ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_tambahstoks.idwarna')
         ->leftjoin('tb_kodes','tb_kodes.kode_barang','=','tb_tambahstoks.kode_barang')
-        ->where('tb_tambahstoks.aksi','kurangi')
+        ->where('tb_tambahstoks.aksi','tambah')
         ->orderby('tb_tambahstoks.id','desc')
         ->paginate(40);
-	return view('pembelianlain/index',['data'=>$data,'websettings'=>$webinfo]);
-	}
-}	
+    	return view('pengeluaran/index',['websettings'=>$webinfo,'data'=>$data]);
+    }
+}

@@ -43,10 +43,10 @@
                              @if(!Session::get('user_name'))
                             <li><a href="{{url('/loginUser')}}"><i class="fa fa-user"></i> Login</a></li>
                             @else
-                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i>Keranjang Saya</a></li>
+                            <li><a href="{{url('/keranjang')}}"><i class="fa fa-shopping-cart"></i>Keranjang Saya</a></li>
+                             <li><a href="{{url('/transaksisaya')}}"><i class="fa fa-file"></i>Transaksi Saya</a></li>
+                            <li><a href="{{url('/transaksigagal')}}"><i class="fa fa-trash"></i>Transaksi Gagal</a></li>
                             @endif
-                            <!--li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li-->
-                            <li><a href="{{url('/login')}}"><i class="fa fa-users"></i>Login Admin</a></li>
                         </ul>
                     </div>
                 </div>
@@ -84,12 +84,23 @@
                 </div>
                 
                 <div class="col-sm-6">
-                  
-                    @if(Session::get('user_name'))
-                    <div class="shopping-item">
-                        <a href="cart.html">Keranjang - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
-                    </div>
-                    @endif
+                  @if(Session::get('user_name'))
+    @if($totalkeranjang > 0)
+    <div class="shopping-item">
+        <a href="{{url('/keranjang')}}">Keranjang - 
+            <span class="cart-amunt">
+            @foreach($totalbayar as $tb)
+            {{"Rp ". number_format($tb->newtotal,0,',','.')}}
+            @endforeach
+            </span> 
+        <i class="fa fa-shopping-cart"></i> 
+            @if($totalkeranjang>0)
+            <span class="product-count">{{$totalkeranjang}}</span>
+            @endif
+        </a>
+    </div>
+    @endif
+    @endif
                 </div>
             </div>
         </div>
@@ -111,6 +122,8 @@
                         <li><a href="{{url('/')}}">Home</a></li>
                         <li><a href="{{url('/semuaproduk')}}">Semua Produk</a></li>
                         <li><a href="{{url('/hubungikami')}}">Hubungi Kami</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#exampleModal">Peraturan Belanja</a></li>
+
                     </ul>
                 </div>  
             </div>
@@ -340,7 +353,24 @@
             </div>
         </div>
     </div> 
-   
+   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Peraturan Belanja</h5>
+      </div>
+      <div class="modal-body">
+        @foreach($websettings as $webset)
+            {!! $webset->peraturan !!}
+    
+        @endforeach
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
     <!-- Latest jQuery form server -->
     <script src="{{asset('user_aset/js/jquery.min.js')}}"></script>
     

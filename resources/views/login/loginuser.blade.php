@@ -279,7 +279,19 @@
 
                                 <div class="clear"></div>
                             </form>
-                        </div>                       
+                        </div>
+                         <div class="woocommerce">
+                            <div class="woocommerce-info">
+                                <h3>
+                                    <strong>
+                                    Peraturan Berbelanja        
+                                    </strong>
+                                </h3>
+                            @foreach($websettings as $webset)
+                                {!! $webset->peraturan !!}
+                            @endforeach
+                            </div>
+                        </div>                      
                     </div>                    
                 </div>
             </div>

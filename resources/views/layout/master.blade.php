@@ -113,7 +113,7 @@
                             <a href="{{url('/pembelianlain')}}"><i class="fa fa-dollar fa-fw"></i> Pembelian Lain</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-reply fa-fw"></i> Pengeluaran</a>
+                            <a href="{{url('/pengeluaran')}}"><i class="fa fa-reply fa-fw"></i> Pengeluaran</a>
                         </li>
                         <li>
                             <a href="{{url('/pembelian/gagal')}}"><i class="fa fa-asl-interpreting fa-fw"></i> Transaksi Gagal</a>

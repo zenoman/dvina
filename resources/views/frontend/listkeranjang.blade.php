@@ -17,6 +17,8 @@
         <li><a href="{{url('/')}}">Home</a></li>
         <li><a href="{{url('/semuaproduk')}}">Semua Produk</a></li>
         <li><a href="{{url('/hubungikami')}}">Hubungi Kami</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#exampleModal">Peraturan Belanja</a></li>
+
     </ul>
     @endsection
 
@@ -157,5 +159,23 @@
         </div>
     </div>
     @endif
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Peraturan Belanja</h5>
+      </div>
+      <div class="modal-body">
+        @foreach($websettings as $webset)
+            {!! $webset->peraturan !!}
+    
+        @endforeach
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
     @endsection
   

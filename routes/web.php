@@ -1,6 +1,11 @@
 <?php
 use Illuminate\Support\Facades\Input;
+//pengeluaran
+Route::get('/pengeluaran','Admin\pengeluaranController@index');
+
+//pembelian lain
 Route::get('/pembelianlain','Admin\pembelianlainController@index');
+
 //backup
 Route::get('/tampilbackup','Admin\backupController@tampil');
 Route::get('/backup','Admin\backupController@index');
@@ -120,9 +125,11 @@ Route::post('/login/masuk','Logincontroller@masuk');
 Route::get('/login/logout','Logincontroller@logout');
 Route::get('/login/logoutuser','Logincontroller@logoutuser');
 Route::post('/login/register','Logincontroller@register');
-//==============================================================
+
+//setting web
 Route::get('/setting','Admin\Settingcontroller@index');
 Route::put('/setting/{id}','Admin\Settingcontroller@update');
+
 //===============================================================
 Route::resource('jual','Admin\transaksiController');
 //---transaksi autocomp barang----

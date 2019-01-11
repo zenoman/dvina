@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+ini_set('max_execution_time', 180);
 use App\Http\Controllers\Controller;
 use Illuminate\support\Facades\File;
 use Illuminate\Http\Request;
