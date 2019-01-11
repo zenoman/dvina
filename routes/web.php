@@ -1,5 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Input;
+//captcha
+Route::get('refreshcaptcha', 'Logincontroller@refreshCaptcha');
+
 //pengeluaran
 Route::get('/pengeluaran','Admin\pengeluaranController@index');
 

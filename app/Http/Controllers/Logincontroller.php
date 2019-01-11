@@ -44,13 +44,20 @@ class Logincontroller extends Controller
         Session::flush();
         return redirect('login')->with('status','Maaf, Anda Harus Login');
     }
-
+    public function refreshCaptcha()
+    {
+        return response()->json(['captcha'=> captcha_img()]);
+    }
     public function loginuser()
     {
         $websetting = DB::table('settings')->limit(1)->get();
         return view('login/loginuser',['websettings'=>$websetting]);
     }
     public function masukuser(Request $request){
+        
+         $request->validate([
+            'kodecap' => 'required|captcha'
+        ]);
         $username = $request->username;
         $password = md5($request->password);
 

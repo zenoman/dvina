@@ -81,14 +81,26 @@
                                 {{ session('errorlogin') }}
                     </div>
                     @endif
+                    @if ($errors->first('kodecap'))
+                      <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                Maaf, Kode Captcha Salah
+                    </div>
+                  @endif
                         <form action="{{url('/loginUser')}}" method="post">
-                            <input type="text" placeholder="Masukan Username" class="input-text" name="username">
-                            <input style="width: 100%" type="password" placeholder="Masukan Password" id="loginpass" name="password" class="input-text">
+                            <input type="text" placeholder="Masukan Username" class="input-text" name="username" required>
+                            <input style="width: 100%" type="password" placeholder="Masukan Password" id="loginpass" name="password" class="input-text" required>
                             <p class="form-row">
                              <label class="inline" for="rememberme">
                                 <input type="checkbox" onclick="tampilsandi()"> Tampilkan Sandi
                             </label>
                             </p>
+                            <div class="captcha">
+                            <span>{!! captcha_img() !!}</span>
+                            <button type="button" class="btn btn-success"><i class="fa fa-refresh" id="refresh"></i></button>
+                            </div>
+                            <br>
+                            <input type="text" placeholder="Masukan Kode Captcha" class="input-text" name="kodecap" required>
                           
                             {{ @csrf_field() }}
                             <input type="submit" value="Login">
@@ -107,7 +119,7 @@
                     </div>
                     
                     @endif
-                    @if(count($errors)>0)
+                    @if($errors->has('email')||$errors->has('nama')||$errors->has('username')||$errors->has('password')||$errors->has('konfirmasi_password')||$errors->has('no_telfon')||$errors->has('alamat')||$errors->has('kota')||$errors->first('provinsi')||$errors->first('kode_pos'))
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         Maaf, Data Yang Anda Masukan Salah / Tidak valid
@@ -339,7 +351,15 @@
         x.type = "password";
     }
 }
-
-    </script>
+$('#refresh').click(function(){
+  $.ajax({
+     type:'GET',
+     url:'refreshcaptcha',
+     success:function(data){
+        $(".captcha span").html(data.captcha);
+     }
+  });
+});
+</script>
   </body>
 </html>

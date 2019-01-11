@@ -120,10 +120,7 @@ return [
     */
 
     'providers' => [
-
-        /*
-         * Laravel Framework Service Providers...
-         */
+        Mews\Captcha\CaptchaServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
@@ -175,6 +172,7 @@ return [
     */
 
     'aliases' => [
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
