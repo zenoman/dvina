@@ -45,18 +45,21 @@ CREATE TABLE IF NOT EXISTS `detail_cancel` (
   `idwarna` int(11) DEFAULT NULL,
   `iduser` int(11) DEFAULT NULL,
   `kode` text,
-  `tgl` varchar(20) DEFAULT NULL,
+  `tgl` date DEFAULT NULL,
   `jumlah` int(11) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
   `barang` varchar(100) DEFAULT NULL,
   `total` int(11) DEFAULT NULL,
   `diskon` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.detail_cancel: ~0 rows (approximately)
+-- Dumping data for table davina.detail_cancel: ~2 rows (approximately)
 DELETE FROM `detail_cancel`;
 /*!40000 ALTER TABLE `detail_cancel` DISABLE KEYS */;
+INSERT INTO `detail_cancel` (`id`, `idwarna`, `iduser`, `kode`, `tgl`, `jumlah`, `harga`, `barang`, `total`, `diskon`) VALUES
+	(1, 48, 16, 'Cancel00001', '2019-01-12', 3, 20000, 'kerudung manis', 57000, 5),
+	(2, 45, 16, 'Cancel00001', '2019-01-12', 1, 27000, 'kerudung mantab', 24300, 10);
 /*!40000 ALTER TABLE `detail_cancel` ENABLE KEYS */;
 
 -- Dumping structure for table davina.gambar
@@ -84,24 +87,45 @@ INSERT INTO `gambar` (`id`, `kode_barang`, `nama`) VALUES
 	(26, 'BRG00010', '1546774002-download.jpg');
 /*!40000 ALTER TABLE `gambar` ENABLE KEYS */;
 
+-- Dumping structure for table davina.keranjang_cancel
+DROP TABLE IF EXISTS `keranjang_cancel`;
+CREATE TABLE IF NOT EXISTS `keranjang_cancel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tgl` date DEFAULT NULL,
+  `idbarang` int(11) NOT NULL DEFAULT '0',
+  `jumlah` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table davina.keranjang_cancel: ~3 rows (approximately)
+DELETE FROM `keranjang_cancel`;
+/*!40000 ALTER TABLE `keranjang_cancel` DISABLE KEYS */;
+INSERT INTO `keranjang_cancel` (`id`, `tgl`, `idbarang`, `jumlah`) VALUES
+	(1, '2019-01-12', 40, 3),
+	(2, '2019-01-12', 41, 2),
+	(3, '2019-01-12', 40, 2);
+/*!40000 ALTER TABLE `keranjang_cancel` ENABLE KEYS */;
+
 -- Dumping structure for table davina.log_cancel
 DROP TABLE IF EXISTS `log_cancel`;
 CREATE TABLE IF NOT EXISTS `log_cancel` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `faktur` varchar(300) DEFAULT NULL,
   `total_akhir` int(11) DEFAULT NULL,
-  `tgl` varchar(25) DEFAULT NULL,
+  `tgl` date DEFAULT NULL,
   `bulan` int(5) DEFAULT NULL,
   `status` enum('dicancel','ditolak') DEFAULT NULL,
   `id_user` int(11) DEFAULT NULL,
   `id_admin` int(11) DEFAULT NULL,
   `keterangan` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.log_cancel: ~0 rows (approximately)
+-- Dumping data for table davina.log_cancel: ~1 rows (approximately)
 DELETE FROM `log_cancel`;
 /*!40000 ALTER TABLE `log_cancel` DISABLE KEYS */;
+INSERT INTO `log_cancel` (`id`, `faktur`, `total_akhir`, `tgl`, `bulan`, `status`, `id_user`, `id_admin`, `keterangan`) VALUES
+	(1, 'Cancel00001', 81300, '2019-01-12', 1, 'dicancel', 16, NULL, 'mahal');
 /*!40000 ALTER TABLE `log_cancel` ENABLE KEYS */;
 
 -- Dumping structure for table davina.migrations
@@ -202,8 +226,8 @@ CREATE TABLE IF NOT EXISTS `tb_barangs` (
 DELETE FROM `tb_barangs`;
 /*!40000 ALTER TABLE `tb_barangs` DISABLE KEYS */;
 INSERT INTO `tb_barangs` (`idbarang`, `kode`, `stok`, `warna`, `barang_jenis`) VALUES
-	(40, 'BRG00008', 18, 'hitam', 'instan gayatri hitam'),
-	(41, 'BRG00008', 12, 'biru', 'instan gayatri biru'),
+	(40, 'BRG00008', 15, 'hitam', 'instan gayatri hitam'),
+	(41, 'BRG00008', 10, 'biru', 'instan gayatri biru'),
 	(44, 'BRG00009', 8, 'merah', 'kerudung mantab merah'),
 	(45, 'BRG00009', 17, 'biru', 'kerudung mantab biru'),
 	(46, 'BRG00009', 3, 'kuning', 'kerudung mantab kuning'),
@@ -231,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `tb_details` (
   `admin` varchar(100) DEFAULT NULL,
   `metode` enum('langsung','pesan') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table davina.tb_details: ~11 rows (approximately)
 DELETE FROM `tb_details`;
@@ -358,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `tb_transaksis` (
   `pembayaran` varchar(50) DEFAULT NULL,
   `keterangan` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table davina.tb_transaksis: ~6 rows (approximately)
 DELETE FROM `tb_transaksis`;
@@ -412,6 +436,16 @@ DROP TRIGGER IF EXISTS `in_stok`;
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
 DELIMITER //
 CREATE TRIGGER `in_stok` AFTER INSERT ON `detail_cancel` FOR EACH ROW update tb_barangs set stok=stok+new.jumlah where idbarang=new.idwarna//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- Dumping structure for trigger davina.keranjang_dihapus
+DROP TRIGGER IF EXISTS `keranjang_dihapus`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `keranjang_dihapus` AFTER INSERT ON `keranjang_cancel` FOR EACH ROW BEGIN
+update tb_barangs set stok=stok+new.jumlah where idbarang=new.idbarang;
+END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
 

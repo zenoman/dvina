@@ -94,14 +94,7 @@ class PembelianController extends Controller
        return back()->with('status','Pembelian Ditolak');
     }
     public function listtolak(){
-        $datacancel = DB::table('log_cancel')->where('bulan','!=',date("m"))->get();
-        foreach ($datacancel as $row) {
-            $detailcancel = DB::table('detail_cancel')
-            ->where('kode',$row->faktur)
-            ->delete();
-        }
-        DB::table('log_cancel')->where('bulan','!=',date("m"))->delete();
-        //=================================================================
+        
         $websetting = DB::table('settings')->limit(1)->get();
         $cancels = DB::table('log_cancel')
                     ->select(DB::raw('log_cancel.*,tb_users.username,tb_users.telp'))

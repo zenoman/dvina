@@ -138,35 +138,35 @@
     <script src="{{asset('assets/vendor/morrisjs/morris.min.js')}}"></script>
     <!--script src="{{asset('assets/data/morris-data.js')}}"></script-->
     @php
-        $date = date('d-m-Y');
+        $date = date('Y-m-d');
         $waktu = strtotime($date);
         
         $minus7 = strtotime("-7 days", $waktu);
-        $hasil7 = date('d-m-Y',$minus7);
+        $hasil7 = date('Y-m-d',$minus7);
         $jumlah7 = DB::table('tb_transaksis')->where('tgl',$hasil7)->count();
 
         $minus6 = strtotime("-6 days", $waktu);
-        $hasil6 = date('d-m-Y',$minus6);
+        $hasil6 = date('Y-m-d',$minus6);
         $jumlah6 = DB::table('tb_transaksis')->where('tgl',$hasil6)->count();
 
         $minus5 = strtotime("-5 days", $waktu);
-        $hasil5 = date('d-m-Y',$minus5);
+        $hasil5 = date('Y-m-d',$minus5);
         $jumlah5 = DB::table('tb_transaksis')->where('tgl',$hasil5)->count();
 
         $minus4 = strtotime("-4 days", $waktu);
-        $hasil4 = date('d-m-Y',$minus4);
+        $hasil4 = date('Y-m-d',$minus4);
         $jumlah4 = DB::table('tb_transaksis')->where('tgl',$hasil4)->count();
 
         $minus3 = strtotime("-3 days", $waktu);
-        $hasil3 = date('d-m-Y',$minus3);
+        $hasil3 = date('Y-m-d',$minus3);
         $jumlah3 = DB::table('tb_transaksis')->where('tgl',$hasil3)->count();
 
         $minus2 = strtotime("-2 days", $waktu);
-        $hasil2 = date('d-m-Y',$minus2);
+        $hasil2 = date('Y-m-d',$minus2);
         $jumlah2 = DB::table('tb_transaksis')->where('tgl',$hasil2)->count();
 
         $minus1 = strtotime("-1 days", $waktu);
-        $hasil1 = date('d-m-Y',$minus1);
+        $hasil1 = date('Y-m-d',$minus1);
         $jumlah1 = DB::table('tb_transaksis')->where('tgl',$hasil1)->count();
 
         $jumlah = DB::table('tb_transaksis')->where('tgl',$date)->count(); 

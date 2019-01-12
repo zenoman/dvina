@@ -15,28 +15,52 @@ class DashboardController extends Controller
    
     public function index()
     {
-
-    	$tgl = date('d-m-Y');
-
-    	// $check = DB::table('tb_stokawals')->where('tgl',$tgl)->count();
-     //    if($check <= 0 ){
-     //        $databarang = DB::table('tb_kodes')
-     //        ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
-     //        ->select('tb_kodes.*','tb_barangs.warna','tb_barangs.stok','tb_barangs.idbarang')
-     //        ->get();
-     //        //dd($barang);
+        $tgl = date('d-m-Y');
+        // $check = DB::table('tb_stokawals')->where('tgl',$tgl)->count();
+        //    if($check <= 0 ){
+        //        $databarang = DB::table('tb_kodes')
+        //        ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
+        //        ->select('tb_kodes.*','tb_barangs.warna','tb_barangs.stok','tb_barangs.idbarang')
+        //        ->get();
+        //        //dd($barang);
     	// 	foreach ($databarang as $row) {
     	// 		DB::table('tb_stokawals')
     	// 			->insert([
     	// 				'idbarang'=>$row->id,
-     //                    'idwarna'=>$row->idbarang,
+        //                    'idwarna'=>$row->idbarang,
     	// 				'kode_barang'=>$row->kode_barang,
     	// 				'barang'=>$row->barang,
-     //                    'jumlah'=>$row->stok,
+        //              'jumlah'=>$row->stok,
     	// 				'tgl'=>$tgl
     	// 			]);
     	// 	}
-     //    }
+        //  }
+        $hapuslogcancel = DB::table('log_cancel')
+        ->whereMonth('tgl','!=',date("m"))
+        ->delete();
+
+        $hapusdetailcancel = DB::table('detail_cancel')
+        ->whereMonth('tgl','!=',date("m"))
+        ->delete();
+
+        $hapuscancelkeranjang = DB::table('keranjang_cancel')
+        ->whereMonth('tgl','!=',date("m"))
+        ->delete();
+        
+        $datakeranjang = DB::table('tb_details')
+        ->whereNull('faktur')
+        ->get();
+        foreach ($datakeranjang as $row) {
+            if($row->tgl_kadaluarsa < date('Y-m-d')){
+                DB::table('keranjang_cancel')
+                ->insert([
+                    'tgl'=>date('Y-m-d'),
+                    'idbarang'=>$row->idwarna,
+                    'jumlah'=>$row->jumlah
+                ]);
+                DB::table('tb_details')->where('id',$row->id)->delete();
+            }
+        }
         $websetting = DB::table('settings')->limit(1)->get();
         return view('home/index',[
             'jumlahuser'=>$this->jumlahuser(),
@@ -54,16 +78,15 @@ class DashboardController extends Controller
 
     function jumlahtransaksi(){
         $bulan = date('m');
-
         $jumlah = DB::table('tb_transaksis')->where('tgl','like','%'.$bulan.'%')->count();
         return $jumlah;
     }
     function jumlahtransaksig(){
         $bulan = date('m');
-
         $jumlah = DB::table('log_cancel')->where('bulan',$bulan)->count();
         return $jumlah;
     }
+
     function jumlahstok(){
         $jumlah = DB::table('tb_barangs')->sum('stok');
         return $jumlah;
@@ -77,9 +100,9 @@ class DashboardController extends Controller
                     ->get();
         return response()->json($transaksi);
     }
+
     public function updatetransaksi($id){
-       
-        DB::table('tb_transaksis')
+       DB::table('tb_transaksis')
         ->where('id',$id)
         ->update([
             'status'=>'dibaca'

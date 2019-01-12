@@ -199,7 +199,20 @@ class Catalogcontroller extends Controller
     }
 
     public function hapuskeranjang($id){
+        $databarang = DB::table('tb_details')
+        ->where('id',$id)
+        ->get();
+
+        foreach ($databarang as $row) {
+        DB::table('keranjang_cancel')
+        ->insert([
+            'tgl'=>date('Y-m-d'),
+            'idbarang'=>$row->idwarna,
+            'jumlah'=>$row->jumlah
+        ]);
+        
         DB::table('tb_details')->where('id',$id)->delete();
+        }
         return back();
     }
 
