@@ -30,12 +30,12 @@ CREATE TABLE IF NOT EXISTS `admins` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.admins: ~3 rows (approximately)
+-- Dumping data for table davina.admins: ~2 rows (approximately)
 DELETE FROM `admins`;
 /*!40000 ALTER TABLE `admins` DISABLE KEYS */;
 INSERT INTO `admins` (`id`, `username`, `password`, `nama`, `telp`, `email`, `level`) VALUES
 	(3, 'superadmin', '827ccb0eea8a706c4c34a16891f84e7b', 'super admin', '085682374023', 'satriosuklun@gmail.com', 'super_admin'),
-	(4, 'devasatrio', '74b213f68f648006a318f52713450f27', 'deva satrio', '085604556714', 'satriosuklun@gmail.com', 'programer');
+	(4, 'devasatrio', '74b213f68f648006a318f52713450f27', 'deifa satrio damara', '085604556715', 'satrio@gmail.com', 'programer');
 /*!40000 ALTER TABLE `admins` ENABLE KEYS */;
 
 -- Dumping structure for table davina.detail_cancel
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `gambar` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.gambar: ~11 rows (approximately)
+-- Dumping data for table davina.gambar: ~10 rows (approximately)
 DELETE FROM `gambar`;
 /*!40000 ALTER TABLE `gambar` DISABLE KEYS */;
 INSERT INTO `gambar` (`id`, `kode_barang`, `nama`) VALUES
@@ -138,14 +138,15 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `alamat` text,
   `nama_toko` int(11) DEFAULT NULL,
   `max_tgl` int(5) DEFAULT NULL,
+  `peraturan` text,
   PRIMARY KEY (`idsettings`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.settings: ~0 rows (approximately)
+-- Dumping data for table davina.settings: ~1 rows (approximately)
 DELETE FROM `settings`;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` (`idsettings`, `webName`, `kontak1`, `kontak2`, `kontak3`, `email`, `ico`, `meta`, `logo`, `keterangan`, `alamat`, `nama_toko`, `max_tgl`) VALUES
-	(1, 'Devina', '085604556777', '089456817354', '085601473652', 'satriosuklun@gmail.com', '1542366882-190835.png', 'toko hijab murah meriah', '1543717647-logo-dvina.png', 'dvina adalah toko hijab grosir yang telah terbukti memiliki harga dan kwalitas terbaik se karisidenan kediri', 'magersari, gurah kediri, jln pga no 1', NULL, 2);
+INSERT INTO `settings` (`idsettings`, `webName`, `kontak1`, `kontak2`, `kontak3`, `email`, `ico`, `meta`, `logo`, `keterangan`, `alamat`, `nama_toko`, `max_tgl`, `peraturan`) VALUES
+	(1, 'Devina', '085604556777', '089456817354', '085601473652', 'satriosuklun@gmail.com', '1542366882-190835.png', 'toko hijab murah meriah', '1543717647-logo-dvina.png', 'dvina adalah toko hijab grosir yang telah terbukti memiliki harga dan kwalitas terbaik se karisidenan kediri', 'magersari, gurah kediri, jln pga no 1', NULL, 2, '<p>1. pastikan telah menjadi member devina hijab kediri</p>\r\n<p>2. jangan lupa bayar setelah beli produk</p>\r\n<p>3. setiap barang yang telah di masukan keranjang akan hilang secara otomatis apabila tidak di beli dalam jangka waktu 3 hari</p>\r\n<p>4. Happy Shopping gengs</p>');
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 
 -- Dumping structure for table davina.sliders
@@ -157,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `sliders` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.sliders: ~2 rows (approximately)
+-- Dumping data for table davina.sliders: ~3 rows (approximately)
 DELETE FROM `sliders`;
 /*!40000 ALTER TABLE `sliders` DISABLE KEYS */;
 INSERT INTO `sliders` (`id`, `judul`, `foto`) VALUES
@@ -201,14 +202,14 @@ CREATE TABLE IF NOT EXISTS `tb_barangs` (
 DELETE FROM `tb_barangs`;
 /*!40000 ALTER TABLE `tb_barangs` DISABLE KEYS */;
 INSERT INTO `tb_barangs` (`idbarang`, `kode`, `stok`, `warna`, `barang_jenis`) VALUES
-	(40, 'BRG00008', 20, 'hitam', 'instan gayatri hitam'),
-	(41, 'BRG00008', 15, 'biru', 'instan gayatri biru'),
-	(44, 'BRG00009', 10, 'merah', 'kerudung mantab merah'),
+	(40, 'BRG00008', 18, 'hitam', 'instan gayatri hitam'),
+	(41, 'BRG00008', 12, 'biru', 'instan gayatri biru'),
+	(44, 'BRG00009', 8, 'merah', 'kerudung mantab merah'),
 	(45, 'BRG00009', 17, 'biru', 'kerudung mantab biru'),
 	(46, 'BRG00009', 3, 'kuning', 'kerudung mantab kuning'),
 	(47, 'BRG00009', 17, 'hitam', 'kerudung mantab hitam'),
-	(48, 'BRG00010', 15, 'merah', 'kerudung manis merah'),
-	(49, 'BRG00010', 15, 'biru', 'kerudung manis biru');
+	(48, 'BRG00010', 13, 'merah', 'kerudung manis merah'),
+	(49, 'BRG00010', 10, 'biru', 'kerudung manis biru');
 /*!40000 ALTER TABLE `tb_barangs` ENABLE KEYS */;
 
 -- Dumping structure for table davina.tb_details
@@ -232,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `tb_details` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.tb_details: ~9 rows (approximately)
+-- Dumping data for table davina.tb_details: ~11 rows (approximately)
 DELETE FROM `tb_details`;
 /*!40000 ALTER TABLE `tb_details` DISABLE KEYS */;
 INSERT INTO `tb_details` (`id`, `idwarna`, `iduser`, `faktur`, `tgl`, `tgl_kadaluarsa`, `kode_barang`, `barang`, `harga`, `jumlah`, `total_a`, `diskon`, `total`, `admin`, `metode`) VALUES
@@ -322,9 +323,9 @@ CREATE TABLE IF NOT EXISTS `tb_tambahstoks` (
   `keterangan` varchar(100) DEFAULT NULL,
   `aksi` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.tb_tambahstoks: ~6 rows (approximately)
+-- Dumping data for table davina.tb_tambahstoks: ~11 rows (approximately)
 DELETE FROM `tb_tambahstoks`;
 /*!40000 ALTER TABLE `tb_tambahstoks` DISABLE KEYS */;
 INSERT INTO `tb_tambahstoks` (`id`, `idwarna`, `idadmin`, `kode_barang`, `jumlah`, `total`, `tgl`, `keterangan`, `aksi`) VALUES
@@ -333,7 +334,12 @@ INSERT INTO `tb_tambahstoks` (`id`, `idwarna`, `idadmin`, `kode_barang`, `jumlah
 	(3, 48, 4, 'BRG00010', 2, 30000, '2019-01-08', 'tambah barang', 'tambah'),
 	(4, 41, 4, 'BRG00008', 10, 220000, '2019-01-08', 'restock', 'tambah'),
 	(5, 40, 4, 'BRG00008', 4, 88000, '2019-01-08', 'restock', 'tambah'),
-	(6, 48, 4, 'BRG00010', 3, 45000, '2019-01-08', 'tambah barang', 'tambah');
+	(6, 48, 4, 'BRG00010', 3, 45000, '2019-01-08', 'tambah barang', 'tambah'),
+	(7, 48, 4, 'BRG00010', 2, 30000, '2019-01-10', 'di beli sama dulur', 'kurangi'),
+	(8, 49, 4, 'BRG00010', 5, 75000, '2019-01-10', 'di pindah ke offline', 'kurangi'),
+	(9, 40, 4, 'BRG00008', 2, 44000, '2019-01-10', 'di beli tetangga', 'kurangi'),
+	(10, 41, 4, 'BRG00008', 3, 66000, '2019-01-10', 'di beli temen', 'kurangi'),
+	(11, 44, 4, 'BRG00009', 2, 40000, '2019-01-10', 'di beli temen', 'kurangi');
 /*!40000 ALTER TABLE `tb_tambahstoks` ENABLE KEYS */;
 
 -- Dumping structure for table davina.tb_transaksis
@@ -354,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `tb_transaksis` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table davina.tb_transaksis: ~3 rows (approximately)
+-- Dumping data for table davina.tb_transaksis: ~6 rows (approximately)
 DELETE FROM `tb_transaksis`;
 /*!40000 ALTER TABLE `tb_transaksis` DISABLE KEYS */;
 INSERT INTO `tb_transaksis` (`id`, `iduser`, `faktur`, `tgl`, `total`, `status`, `alamat_tujuan`, `admin`, `ongkir`, `total_akhir`, `pembayaran`, `keterangan`) VALUES
@@ -388,7 +394,7 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
 DELETE FROM `tb_users`;
 /*!40000 ALTER TABLE `tb_users` DISABLE KEYS */;
 INSERT INTO `tb_users` (`id`, `username`, `password`, `email`, `telp`, `nama`, `alamat`, `kota`, `provinsi`, `kodepos`, `ktp_gmb`, `cancel`) VALUES
-	(16, 'jianfitri', '74b213f68f648006a318f52713450f27', 'jian@gmail.com', '02934820384', 'jian fitri', 'ngancar, kediri', 'kediri', 'aceh', '0002', '1543496839-whatsapp-image-2018-11-29-at-08.34.05.jpeg', 0),
+	(16, 'jianfitri', '74b213f68f648006a318f52713450f27', 'jian@gmail.com', '02934820384', 'jian fitri', 'ngancar, kediri', 'kediri', 'jawa timur', '0002', '1543496839-whatsapp-image-2018-11-29-at-08.34.05.jpeg', 0),
 	(17, 'abiihsan', '74b213f68f648006a318f52713450f27', 'abiihsan4@gmail.com', '0865546748676765678', 'abi ihsan fadli', 'gur', 'kediri', 'aceh', '64181', '1544792743-22310196_833901743438799_7008136422851244887_n.jpg', 0),
 	(18, 'dian_ade00', '85064efb60a9601805dcea56ec5402f7', 'blackwolf2103@outlook.com', '43546435634534', 'testing', 'dasdsadsadas', 'askdjaskjd', 'jawa timur', '897239', '1544792950-295311_ilustrasi-hujan-uang_663_382.jpg', 0);
 /*!40000 ALTER TABLE `tb_users` ENABLE KEYS */;
