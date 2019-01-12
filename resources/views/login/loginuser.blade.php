@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-	ustora by freshdesignweb.com
-	Twitter: https://twitter.com/freshdesignweb
-	URL: https://www.freshdesignweb.com/ustora/
--->
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -97,7 +92,7 @@
                             </p>
                             <div class="captcha">
                             <span>{!! captcha_img() !!}</span>
-                            <button type="button" class="btn btn-success"><i class="fa fa-refresh" id="refresh"></i></button>
+                            <button type="button" class="btn btn-success" id="refresh"><i class="fa fa-refresh"></i></button>
                             </div>
                             <br>
                             <input type="text" placeholder="Masukan Kode Captcha" class="input-text" name="kodecap" required>

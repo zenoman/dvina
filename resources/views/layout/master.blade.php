@@ -47,7 +47,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Welcome {{Session::get('username')}}</a>
+                <a class="navbar-brand" href="{{url('/dashboard')}}">Welcome {{Session::get('level')}} {{Session::get('username')}}</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -67,19 +67,19 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="{{url('/admin/'.Session::get('iduser'))}}"><i class="fa fa-user fa-fw"></i> Edit Profile</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        
+                        <li class="divider"></li>
+                        <li><a href="{{url('/admin/'.Session::get('iduser').'/changepass')}}"><i class="fa fa-key fa-fw"></i> Edit Password</a>
                         </li>
+                        
                         <li class="divider"></li>
                         <li><a href="{{url('/logout')}}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
-                    <!-- /.dropdown-user -->
                 </li>
-                <!-- /.dropdown -->
             </ul>
-            <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">

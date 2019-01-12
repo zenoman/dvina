@@ -118,7 +118,7 @@ Route::get('/barang/importexcel','Admin\Barangcontroller@importexcel');
 Route::get('/barang/eksportkategori','Admin\Barangcontroller@exsportexcel');
 Route::post('/barang/aksiimportexcel','Admin\Barangcontroller@aksiimportexcel');
 Route::get('barang/download','Admin\Barangcontroller@downloadtemplate');
-//=============================================================
+//dashboard admin
 Route::get('/dashboard','Admin\Dashboardcontroller@index');
 //==============================================================
 Route::get('/login','Logincontroller@index');

@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+    public function editprofil(){
+        return view('home/editprofile');
+    }
    
     public function index()
     {

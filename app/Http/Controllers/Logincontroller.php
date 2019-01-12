@@ -12,9 +12,13 @@ class Logincontroller extends Controller
    
     public function index()
     {
-        return view('login/index');
+        $websetting = DB::table('settings')->limit(1)->get();
+        return view('login/index',['websettings'=>$websetting]);
     }
     public function masuk(Request $request){
+        $request->validate([
+            'kodecap' => 'required|captcha'
+        ]);
         $username = $request->username;
         $password = md5($request->password);
 
@@ -22,14 +26,16 @@ class Logincontroller extends Controller
         $datausers = DB::table('admins')->where([['username',$username],['password',$password]])->get();
         foreach ($datausers as $datauser) {
             $id = $datauser->id;
+            $level = $datauser->level;
         }
         if($data>0){
                 Session::put('username',$request->username);
                 Session::put('iduser',$id);
+                Session::put('level',$level);
                 Session::put('login',TRUE);
                 return redirect('dashboard');
         }else{
-            return redirect('login');
+            return redirect('login')->with('status','Maaf, Username atau Password Salah');
         }
     }
     public function logout(){

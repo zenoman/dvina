@@ -112,7 +112,7 @@
                                         </td>
                                         <td>{{$row->total}}</td>
                                         <td class="text-center">
-                                            <!--a href="{{url('barang/'.$row->id.'/tambahstok')}}" class="btn btn-warning"><i class="fa fa-plus"></i></a-->
+                                            
                                             <a href="{{url('barang/'.$row->id.'/edit')}}" class="btn btn-success"><i class="fa fa-wrench"></i></a>
                                             <a onclick="return confirm('Hapus Data ?')" href="{{url('barang/'.$row->id.'/hapus')}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                         </td>

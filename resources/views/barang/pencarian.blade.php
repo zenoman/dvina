@@ -36,37 +36,7 @@
                                 {{ session('statuserror') }}
                     </div>
                     @endif
-                    
-                   <!--  <a href="{{url('barang/create')}}" class="btn btn-primary"><i class="fa fa-pencil"></i> Tambah Data</a>
-                     <a href="{{url('barang/importexcel')}}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Import Excel</a>
-                     <button class="btn btn-info" data-toggle="modal" data-target="#searchModal">
-                                        <i class="fa fa-search"></i> Cari Data</button>
-
-                                        <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="myModalLabel">Cari Data Spesifik Dari Semua Data</h4>
-                                        </div>
-                                        
-
-                                        <div class="modal-body">
-                                           <form method="post" action="barang/cari">
-                                            <div class="form-group">
-                                                <input type="" name="cari" class="form-control" placeholder="cari berdasarkan nama barang" required>
-                                            </div>
-                                           {{csrf_field()}}
-                                        </div>
-                                        <div class="modal-footer">
-                                            
-                                            <button type="submit" class="btn btn-info"><i class="fa fa-search"></i> Cari Data</button>
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                            </form>
-                                        </div>
-                                 
-                                    </div>
-                                </div>
-                            </div>-->
+                
                     <br><br>   
                     <div class="panel panel-default">
                         <div class="panel-heading">

@@ -32,7 +32,7 @@
 
                                             <input type="hidden" name="username" value="{{$dataadmin->username}}">
 
-                                            <input type="text" class="form-control" name="konfirmasi_username">
+                                            <input type="text" class="form-control" name="konfirmasi_username" required>
                                             
                                             <p class="help-block">*Masukan Username user yang akan di ganti passwordnya</p>
                                         
@@ -48,7 +48,7 @@
                                             <label>Konfirmasi Password</label>
                                             <input type="hidden" name="password" value="{{$dataadmin->password}}">
 
-                                            <input type="password" class="form-control" name="konfirmasi_password">
+                                            <input type="password" class="form-control" name="konfirmasi_password" required>
 
                                             <p class="help-block">*Masukan password lama user yang akan diganti passwordnya</p>
                                             @if (session('errorpass1'))
@@ -66,7 +66,7 @@
                                         <hr>
                                         <div class="form-group">
                                             <label>Password Baru</label>
-                                            <input type="password" class="form-control" name="password_baru">
+                                            <input type="password" class="form-control" name="password_baru" required>
                                         </div>
                                        @if($errors->has('password_baru'))
                                         <div class="alert alert-danger">
@@ -76,7 +76,7 @@
 
                                         <div class="form-group">
                                             <label>Konfirmasi Password Baru</label>
-                                            <input type="password" name="konfirmasi_password_baru" class="form-control">
+                                            <input type="password" name="konfirmasi_password_baru" class="form-control" required>
                                             @if($errors->has('konfirmasi_password_baru'))
                                             <div class="alert alert-danger">
                                                 {{$errors->first('konfirmasi_password_baru')}}

@@ -112,13 +112,13 @@
                                         <div class="form-group input-group">
                                           
                                             <span class="input-group-addon">Rp. </span>
-                                            <input type="text" onkeypress="return isNumberKey(event)" class="form-control" name="harga_barang" value="{{$row->harga_barang}}">
+                                            <input type="text" onkeypress="return isNumberKey(event)" class="form-control" name="harga_barang" value="{{$row->harga_barang}}" required>
                                         </div>
                                          <label>Harga Beli Barang</label>
                                         <div class="form-group input-group">
                                           
                                             <span class="input-group-addon">Rp. </span>
-                                            <input type="text" onkeypress="return isNumberKey(event)" class="form-control" name="harga_beli" value="{{$row->harga_beli}}">
+                                            <input type="text" onkeypress="return isNumberKey(event)" class="form-control" name="harga_beli" value="{{$row->harga_beli}}" required>
                                         </div>
 
                                         <label>Diskon Barang</label>

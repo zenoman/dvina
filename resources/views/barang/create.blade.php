@@ -76,7 +76,7 @@
                                         
                                         <div class="form-group">
                                             <label>Deskripsi Barang</label>
-                                            <textarea class="form-control" name="deskripsi" rows="5  "></textarea>
+                                            <textarea class="form-control" name="deskripsi" rows="5"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Foto</label>
