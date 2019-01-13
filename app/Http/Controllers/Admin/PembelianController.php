@@ -18,8 +18,8 @@ class PembelianController extends Controller
         $websetting = DB::table('settings')->limit(1)->get();
         $pembelians = DB::table('tb_transaksis')
                     ->select(DB::raw('tb_transaksis.*,tb_users.username,tb_users.telp,tb_bank.nama_bank'))
-                    ->join('tb_users','tb_transaksis.iduser','=','tb_users.id')
-                    ->join('tb_bank','tb_transaksis.pembayaran','=','tb_bank.id')
+                    ->leftjoin('tb_users','tb_transaksis.iduser','=','tb_users.id')
+                    ->leftjoin('tb_bank','tb_transaksis.pembayaran','=','tb_bank.id')
                     ->orderby('tb_transaksis.id','desc')
                     ->paginate(40);
         return view('pembelian/index',['pembelians'=>$pembelians,'websettings'=>$websetting]);
@@ -98,7 +98,7 @@ class PembelianController extends Controller
         $websetting = DB::table('settings')->limit(1)->get();
         $cancels = DB::table('log_cancel')
                     ->select(DB::raw('log_cancel.*,tb_users.username,tb_users.telp'))
-                    ->join('tb_users','log_cancel.id_user','=','tb_users.id')
+                    ->leftjoin('tb_users','log_cancel.id_user','=','tb_users.id')
                     ->orderby('log_cancel.id','desc')
                     ->paginate(40);
         return view('pembelian/listcancel',['cancels'=>$cancels,'websettings'=>$websetting]);

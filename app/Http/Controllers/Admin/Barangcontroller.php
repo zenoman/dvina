@@ -385,12 +385,12 @@ class Barangcontroller extends Controller
             File::delete('img/barang/'.$foto->nama);
         }
         DB::table('gambar')->where('kode_barang',$kodenya)->delete();
-        DB::table('tb_tambahstoks')->where('kode_barang', $kodenya)->delete();
+        //DB::table('tb_tambahstoks')->where('kode_barang', $kodenya)->delete();
         // DB::table('tb_stokawals')->where('idbarang',$id)->delete();
         DB::table('tb_barangs')->where('kode', $kodenya)->delete();
         DB::table('tb_kodes')->where('kode_barang', $kodenya)->delete();    
     }else{
-        DB::table('tb_tambahstoks')->where('kode_barang', $kodenya)->delete();
+        //DB::table('tb_tambahstoks')->where('kode_barang', $kodenya)->delete();
         // DB::table('tb_stokawals')->where('idbarang',$id)->delete();
         DB::table('tb_barangs')->where('kode', $kodenya)->delete();
         DB::table('tb_kodes')->where('kode_barang', $kodenya)->delete();
@@ -422,7 +422,7 @@ class Barangcontroller extends Controller
         foreach ($fotos as $foto) {
             File::delete('img/barang/'.$foto->nama);
         }}
-        DB::table('tb_tambahstoks')->where('kode_barang', $kodenya)->delete();
+        //DB::table('tb_tambahstoks')->where('kode_barang', $kodenya)->delete();
         DB::table('gambar')->where('kode_barang',$kodenya)->delete();
         DB::table('tb_stokawals')->where('kode_barang',$kodenya)->delete();
         DB::table('tb_barangs')->where('kode', $kodenya)->delete();

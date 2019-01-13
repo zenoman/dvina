@@ -94,7 +94,7 @@ class laporanController extends Controller
     public function pilihdetailpemasukan(){
         $data = DB::table('tb_details')
         ->select(DB::raw('MONTH(tgl) as bulan, YEAR(tgl) as tahun'))
-        ->where('faktur','!=','')
+        ->whereNotNull('faktur')
         ->groupby('bulan')
         ->groupby('tahun')
         ->orderby('tgl','desc')

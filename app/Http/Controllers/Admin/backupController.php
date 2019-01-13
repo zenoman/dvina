@@ -16,8 +16,37 @@ class backupController extends Controller
     	$bulan = $request->bulan;
     	$tahun = $request->tahun;
 
+        $totalpengeluaran = DB::table('tb_tambahstoks')
+        ->where('aksi','tambah')
+        ->whereMonth('tgl',$bulan)
+        ->whereYear('tgl',$tahun)
+        ->count();
+        $totalpemasukan = DB::table('tb_transaksis')
+        ->whereMonth('tb_transaksis.tgl',$bulan)
+        ->whereYear('tb_transaksis.tgl',$tahun)
+        ->where('tb_transaksis.status','sukses')
+        ->orwhere('tb_transaksis.status','diterima')
+        ->count();
+        $totaldetailpemasukan = DB::table('tb_details')
+        ->whereNotNull('faktur')
+        ->whereMonth('tgl',$bulan)
+        ->whereYear('tgl',$tahun)
+        ->count();
+        $totalpemasukanlain = DB::table('tb_tambahstoks')
+        ->where('aksi','kurangi')
+        ->whereMonth('tgl',$bulan)
+        ->whereYear('tgl',$tahun)
+        ->count();
     	$webinfo = DB::table('settings')->limit(1)->get();
 
-    	return view('backup/tampil',['websettings'=>$webinfo,'bulan'=>$bulan,'tahun'=>$tahun]);
+    	return view('backup/tampil',[
+            'websettings'=>$webinfo,
+            'bulan'=>$bulan,
+            'tahun'=>$tahun,
+            'totalpemasukan'=>$totalpemasukan,
+            'totalpengeluaran'=>$totalpengeluaran,
+            'totalpemasukanlain'=>$totalpemasukanlain,
+            'totaldetailpemasukan'=>$totaldetailpemasukan
+        ]);
     }
 }
