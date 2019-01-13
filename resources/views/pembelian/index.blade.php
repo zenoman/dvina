@@ -153,7 +153,7 @@
                                     @php
                                     $databarang = DB::table('tb_details')
                                                 ->select(DB::raw('tb_details.*,tb_barangs.warna'))
-                                                ->join('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
+                                                ->leftjoin('tb_barangs','tb_barangs.id','=','tb_details.idwarna')
                                                 ->where('tb_details.faktur',$row->faktur)
                                                 ->get();
                                     @endphp

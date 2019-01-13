@@ -128,7 +128,7 @@
                                         <label>Warna</label>
                                         <input type="text" name="warna[]" value="" class="form-control" required>
                                         </div>
-                                        <div class="col-md-6 form-group input-group">
+                                        <div class="col-md-6 form-group">
                                         <label>Stok</label>
                                         <input type="text" onkeypress="return isNumberKey(event)" name="stok[]" value="" class="form-control" required>
 

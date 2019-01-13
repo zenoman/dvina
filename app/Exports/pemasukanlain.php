@@ -18,7 +18,7 @@ class pemasukanlain implements FromCollection, WithHeadings
         return DB::table('tb_tambahstoks')
         ->select(DB::raw('tb_tambahstoks.tgl,tb_tambahstoks.kode_barang,tb_barangs.barang_jenis,tb_tambahstoks.jumlah,tb_kodes.harga_beli,tb_tambahstoks.total,admins.username,tb_tambahstoks.keterangan'))
         ->leftjoin('admins','admins.id','=','tb_tambahstoks.idadmin')
-        ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_tambahstoks.idwarna')
+        ->leftjoin('tb_barangs','tb_barangs.id','=','tb_tambahstoks.idwarna')
         ->leftjoin('tb_kodes','tb_kodes.kode_barang','=','tb_tambahstoks.kode_barang')
         ->where('tb_tambahstoks.aksi','kurangi')
         ->whereMonth('tb_tambahstoks.tgl',$this->bulan)

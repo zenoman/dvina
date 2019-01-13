@@ -8,5 +8,5 @@ class Barangdetailmodel extends Model
 {
     public $timestamps = false;
     protected $table = 'tb_barangs';
-    protected $guarded = ['idbarang'];
+    protected $guarded = ['id'];
 }

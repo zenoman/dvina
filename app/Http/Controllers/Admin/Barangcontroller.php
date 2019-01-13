@@ -70,7 +70,7 @@ class Barangcontroller extends Controller
         }
 
         DB::table('tb_barangs')
-        ->where('idbarang',$id)
+        ->where('id',$id)
         ->update([
             'stok' => $request->stok,
             'warna' =>$request->warna,
@@ -79,7 +79,7 @@ class Barangcontroller extends Controller
                 return back();
     }
     public function hapuswarna($id){
-        DB::table('tb_barangs')->where('idbarang',$id)->delete();
+        DB::table('tb_barangs')->where('id',$id)->delete();
         return back();
     }
     public function tambahwarna(Request $request){
@@ -130,14 +130,14 @@ class Barangcontroller extends Controller
     }
 
     public function tambahstok($id){
-        $barang = DB::table('tb_barangs')->where('idbarang',$id)->get();
+        $barang = DB::table('tb_barangs')->where('id',$id)->get();
         return view('barang/tambahstok',['barang'=>$barang]);
     }
 
     public function aksitambahstok(Request $request){
         $idbarang = $request->idbarang;
         DB::table('tb_barangs')
-        ->where('idbarang',$idbarang)
+        ->where('id',$idbarang)
         ->update([
             'stok'=> $request->stok_lama + $request->stok
             ]);
@@ -155,6 +155,7 @@ class Barangcontroller extends Controller
    
     public function store(Request $request)
     {
+        // dd($request);
         $rules = [
             'kode_barang' => 'required|min:3',
             'nama_barang' => 'required',
@@ -193,26 +194,27 @@ class Barangcontroller extends Controller
         $kategori = explode("-",$request->kategori);
     $i=0;
     foreach ($request->warna as $warna) {
-
-         DB::table('tb_barangs')->insert([
+         $total = $request->harga_beli*$request->stok[$i];
+         $stok = $request->stok[$i];
+         $idnya = DB::table('tb_barangs')->insert([
                 'barang_jenis'=>$request->nama_barang." ".$warna,
                 'kode' => $request->kode_barang,
-                'stok' => $request->stok[$i],
+                'stok' => $stok,
                 'warna' => $warna
             ]);
-         $id = DB::getPdo()->lastInsertId();
+         //$kode = $idnya;
+         //$id = DB::getPdo()->lastInsertId();
          DB::table('tb_tambahstoks')
             ->insert([
-                'idwarna'=>$id,
+                'idwarna'=>1,
                 'idadmin'=>Session::get('iduser'),
                 'kode_barang'=>$request->kode_barang,
                 'jumlah'=>$request->stok[$i],
                 'tgl'=>date("Y-m-d"),
-                'total'=>$request->harga_beli*$request->stok[$i],
+                'total'=>$total,
                 'keterangan'=>'menambah pertama kali',
                 'aksi'=>'tambah'
-
-            ]);
+        ]);
          $i++;
     }
         Barangmodel::create([
@@ -334,7 +336,7 @@ class Barangcontroller extends Controller
             $warnas = DB::table('tb_barangs')->where('kode',$request->kode_barang)->get();
             foreach ($warnas as $warna) {
                 DB::table('tb_barangs')
-                ->where('idbarang',$warna->idbarang)
+                ->where('id',$warna->idbarang)
                 ->update([
                     'barang_jenis'=>$request->nama_barang." ".$warna->warna
                 ]);

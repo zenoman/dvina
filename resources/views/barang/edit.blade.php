@@ -186,16 +186,16 @@
                                             <td>{{$war->warna}}</td>
                                             <td>{{$war->stok}} Pcs</td>
                                             <td>
-                                                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal{{$war->idbarang}}">Edit</button>
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal{{$war->id}}">Edit</button>
 
-                                <div class="modal fade" id="myModal{{$war->idbarang}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="myModal{{$war->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                             <h4 class="modal-title" id="myModalLabel">Edit Data</h4>
                                         </div>
-                                        <form role="form" method="POST" action="{{url('/barang/'.$war->idbarang.'/updatewarna')}}" enctype="multipart/form-data">
+                                        <form role="form" method="POST" action="{{url('/barang/'.$war->id.'/updatewarna')}}" enctype="multipart/form-data">
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -233,7 +233,7 @@
                                 </div>
                                 <!-- /.modal-dialog -->
                             </div>
-                                                <a onclick="return confirm('Hapus Data ?')" href="{{url('/barang/'.$war->idbarang.'/hapuswarna')}}" class="btn btn-danger">hapus</a>
+                                                <a onclick="return confirm('Hapus Data ?')" href="{{url('/barang/'.$war->id.'/hapuswarna')}}" class="btn btn-danger">hapus</a>
                                             </td>
                                         </tr>
                                         @endforeach

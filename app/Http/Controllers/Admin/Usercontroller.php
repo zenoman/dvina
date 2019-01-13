@@ -22,12 +22,22 @@ class Usercontroller extends Controller
         $users = Usermodel::orderBy('id','desc')->paginate(40);
         return view('user/index',['user'=> $users,'websettings'=>$websetting]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function unbanned($id){
+         DB::table('tb_users')
+        ->where('id',$id)
+        ->update([
+            'cancel'=>0
+        ]);
+        return redirect('user');
+    }
+    public function banned($id){
+        DB::table('tb_users')
+        ->where('id',$id)
+        ->update([
+            'cancel'=>3
+        ]);
+        return redirect('user');
+    }
     public function cariuser(Request $request)
     {
         $websetting = DB::table('settings')->limit(1)->get();
@@ -41,13 +51,6 @@ class Usercontroller extends Controller
         $websetting = DB::table('settings')->limit(1)->get();
         return view('user/create',['websettings'=>$websetting]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $roles = [

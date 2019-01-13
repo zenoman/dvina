@@ -83,7 +83,10 @@ Route::put('/admin/{id}','Admin\Admincontroller@update');
 Route::get('/admin/{id}/delete','Admin\Admincontroller@destroy');
 Route::get('/admin/{id}/changepass','Admin\Admincontroller@changepass');
 Route::put('/admin/{id}/changepass','Admin\Admincontroller@actionchangepass');
-//=========================================================
+
+//user
+Route::get('user/{id}/unbanned','Admin\Usercontroller@unbanned');
+Route::get('user/{id}/banned','Admin\Usercontroller@banned');
 Route::get('/user','Admin\Usercontroller@index');
 Route::post('/user','Admin\Usercontroller@store');
 Route::get('/user/create','Admin\Usercontroller@create');
