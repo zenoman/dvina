@@ -16,7 +16,7 @@ class pemasukanExport implements FromCollection, WithHeadings
     public function collection()
     {
     	return DB::table('tb_transaksis')
-        ->select(DB::raw('tb_transaksis.*,tb_users.username,tb_bank.nama_bank'))
+        ->select(DB::raw('tb_transaksis.tgl,tb_transaksis.faktur,tb_users.username,tb_transaksis.alamat_tujuan,tb_bank.nama_bank,tb_transaksis.ongkir,tb_transaksis.total_akhir'))
         ->leftjoin('tb_users','tb_users.id','=','tb_transaksis.iduser')
         ->leftjoin('tb_bank','tb_bank.id','=','tb_transaksis.pembayaran')
         ->whereMonth('tb_transaksis.tgl',$this->bulan)
@@ -29,7 +29,6 @@ class pemasukanExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'No',
             'tanggal',
             'Faktur',
             'Pembeli',

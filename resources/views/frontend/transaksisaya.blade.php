@@ -69,7 +69,7 @@
                                             @php
                                             $detailnya = DB::table('tb_details')
                                             ->select(DB::raw('tb_details.*,tb_barangs.warna'))
-                                            ->leftjoin('tb_barangs','tb_barangs.id','=','tb_details.idwarna')
+                                            ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
                                             ->where('faktur',$transaksi->faktur)
                                             ->get();
                                             @endphp

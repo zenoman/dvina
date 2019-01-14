@@ -172,7 +172,21 @@ class Catalogcontroller extends Controller
             DB::table('tb_details')->where('faktur',$row->faktur)->delete();
             DB::table('tb_transaksis')->where('id',$kode)->delete();
         }
-       return back();
+        $datauser = DB::table('tb_users')
+        ->where('id',Session::get('user_id'))
+        ->get();
+        foreach ($datauser as $usr) {
+            $jumlahcancel = $usr->cancel+1;
+            DB::table('tb_users')
+            ->where('id',Session::get('user_id'))
+            ->update(['cancel'=>$jumlahcancel]);
+        }
+        if($jumlahcancel >= 3){
+            return redirect('/login/logoutuser');
+        }else{
+
+           return back();
+        }
     }
 
     public function transaksi(){

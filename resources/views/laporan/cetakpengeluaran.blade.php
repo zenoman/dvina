@@ -25,7 +25,7 @@
                                         <th>Nama Barang</th>
                                         <th>Jumlah</th>
                                         <th>Harga Barang</th>
-                                        <th>Total</th>
+                                        <th>Subtotal</th>
                                         <th>Pembuat</th>
                                     </tr>
                                 </thead>
@@ -53,5 +53,8 @@
                                   @endforeach
                                 </tbody>
                             </table>
+                        @foreach($total as $tot)
+                        <h4>Total : {{"Rp ".number_format($tot->totalnya,0,',','.')}}</h4>
+                        @endforeach
 </body>
 </html>

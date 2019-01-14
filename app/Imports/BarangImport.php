@@ -59,7 +59,7 @@ class BarangImport implements ToCollection, WithHeadingRow
                 'idadmin'=>Session::get('iduser'),
                 'kode_barang'=>$newkode,
                 'jumlah'=>$row['stok'],
-                'tgl'=>date("d-m-Y"),
+                'tgl'=>date("Y-m-d"),
                 'total'=>$row['harga_beli']*$row['stok'],
                 'keterangan'=>'menambah pertama kali',
                 'aksi'=>'tambah'

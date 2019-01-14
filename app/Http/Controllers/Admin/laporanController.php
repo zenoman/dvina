@@ -118,7 +118,14 @@ class laporanController extends Controller
         ->orwhere('tb_transaksis.status','diterima')
         ->orderby('tb_transaksis.faktur','desc')
         ->get();
-        return view('laporan/cetakpemasukan',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun]);
+        $totalnya = DB::table('tb_transaksis')
+        ->select(DB::raw('SUM(total_akhir) as totalnya'))
+        ->whereMonth('tb_transaksis.tgl',$bulan)
+        ->whereYear('tb_transaksis.tgl',$tahun)
+        ->where('tb_transaksis.status','sukses')
+        ->orwhere('tb_transaksis.status','diterima')
+        ->get();
+        return view('laporan/cetakpemasukan',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun,'total'=>$totalnya]);
     }
     public function tampilpemasukan(Request $request){
         $webinfo = DB::table('settings')->limit(1)->get();
@@ -190,8 +197,13 @@ class laporanController extends Controller
         ->whereYear('tb_tambahstoks.tgl',$tahun)
         ->orderby('tb_tambahstoks.id','desc')
         ->get();
-
-        return view('laporan/cetakpengeluaran',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun]);
+        $total = DB::table('tb_tambahstoks')
+        ->select(DB::raw('SUM(total) as totalnya'))
+        ->where('tb_tambahstoks.aksi','tambah')
+        ->whereMonth('tb_tambahstoks.tgl',$bulan)
+        ->whereYear('tb_tambahstoks.tgl',$tahun)
+        ->get();
+        return view('laporan/cetakpengeluaran',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun,'total'=>$total]);
     } 
 
 }

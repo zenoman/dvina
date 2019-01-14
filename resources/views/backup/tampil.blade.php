@@ -52,7 +52,7 @@
                             <div class="row">
                                
                                 <div class="col-xs-12 text-center">
-                                    <div class="huge">26</div>
+                                    <div class="huge">{{$totalpemasukan}}</div>
                                     <div>Total Pemasukan</div>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                             <div class="row">
                                
                                 <div class="col-xs-12 text-center">
-                                    <div class="huge">26</div>
+                                    <div class="huge">{{$totaldetailpemasukan}}</div>
                                     <div>Total Detail Pemasukan</div>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                             <div class="row">
                                
                                 <div class="col-xs-12 text-center">
-                                    <div class="huge">26</div>
+                                    <div class="huge">{{$totalpemasukanlain}}</div>
                                     <div>Total Pengeluaran Lain</div>
                                 </div>
                             </div>
@@ -105,19 +105,51 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade active in" id="home">
                                     <h4>Backup Data Pengeluaran</h4>
-                                    
+                                    <a href="{{url('/cetakpengeluaran/'.$bulan.'/'.$tahun)}}" onclick="return confirm('Cetak data pengeluaran ?')" class="btn btn-warning" target="_blank()">
+                                       <i class="fa fa-print"></i> Print
+                                    </a>
+                                    <a href="{{url('/exsportpengeluaran/'.$bulan.'/'.$tahun)}}" class="btn btn-success" onclick="return confirm('Export data pengeluaran ?')">
+                                       <i class="fa fa-file-excel-o"></i> Export Excel
+                                    </a>
+                                    <a href="#" class="btn btn-danger">
+                                       <i class="fa fa-trash"></i> Hapus Data
+                                    </a>
                                 </div>
                                 <div class="tab-pane fade" id="profile">
                                     <h4>Backup Data Pemasukan</h4>
-                                    
+                                    <a href="{{url('/cetakpemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-warning" onclick="return confirm('Cetak data pemasukan ?')" target="_blank()">
+                                       <i class="fa fa-print"></i> Print
+                                    </a>
+                                    <a href="{{url('/exsportpemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-success" onclick="return confirm('Export data pemasukan ?')">
+                                       <i class="fa fa-file-excel-o"></i> Export Excel
+                                    </a>
+                                    <a href="#" class="btn btn-danger">
+                                       <i class="fa fa-trash"></i> Hapus Data
+                                    </a>
                                 </div>
                                 <div class="tab-pane fade" id="messages">
                                     <h4>Backup Data Detail Pemasukan</h4>
-                                    
+                                    <a href="#" class="btn btn-warning">
+                                       <i class="fa fa-print"></i> Print
+                                    </a>
+                                    <a href="#" class="btn btn-success">
+                                       <i class="fa fa-file-excel-o"></i> Export Excel
+                                    </a>
+                                    <a href="#" class="btn btn-danger">
+                                       <i class="fa fa-trash"></i> Hapus Data
+                                    </a>
                                 </div>
                                 <div class="tab-pane fade" id="settings">
                                     <h4>Backup Data Pemasukan Lain</h4>
-                                    
+                                    <a href="#" onclick="return confirm('Cetak data pemasukan lain ?')" class="btn btn-warning">
+                                       <i class="fa fa-print"></i> Print
+                                    </a>
+                                    <a href="#" class="btn btn-success">
+                                       <i class="fa fa-file-excel-o"></i> Export Excel
+                                    </a>
+                                    <a href="#" class="btn btn-danger">
+                                       <i class="fa fa-trash"></i> Hapus Data
+                                    </a>
                                 </div>
                             </div>
                         </div>

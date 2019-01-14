@@ -73,15 +73,21 @@ class Logincontroller extends Controller
         ->get();
         foreach ($datausers as $du) {
              $id = $du->id;
+             $jumlahcancel=$du->cancel;
          }
-        if($data>0){
+         if($jumlahcancel>=3){
+            return back()->with('errorlogin','Maaf, akun anda di banned tanyakan admin untuk info lebih lanjut');
+         }else{
+            if($data>0){
                 Session::put('user_name',$request->username);
                 Session::put('user_id',$id);
                 Session::put('login',TRUE);
                 return redirect('/');
-        }else{
-            return back()->with('errorlogin','username atau password salah');
-        }
+            }else{
+                return back()->with('errorlogin','username atau password salah');
+            }
+         }
+        
     }
     
     public function register(Request $request)
