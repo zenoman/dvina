@@ -46,7 +46,7 @@
                                             <label>Stok saat ini</label>
                                             <input type="text" name="stok_lama" class="form-control" value="{{$row->stok}}" readonly>
                                         </div>
-                                        <input type="hidden" name="idbarang" value="{{$row->id}}">
+                                        <input type="hidden" name="idbarang" value="{{$row->idbarang}}">
                                         <hr>
                                         <div class="form-group">
                                             <label>Tambahkan Stok</label>

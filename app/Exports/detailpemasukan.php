@@ -19,7 +19,7 @@ class detailpemasukan implements FromCollection, WithHeadings
         ->select(DB::raw('tb_details.tgl,tb_details.faktur,tb_details.kode_barang,tb_users.username,tb_barangs.barang_jenis,tb_details.harga,tb_details.jumlah,tb_details.diskon,tb_details.total'))
         ->leftjoin('tb_users','tb_users.id','=','tb_details.iduser')
         ->leftjoin('tb_transaksis','tb_transaksis.faktur','=','tb_details.faktur')
-        ->leftjoin('tb_barangs','tb_barangs.id','=','tb_details.idwarna')
+        ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
         ->whereMonth('tb_details.tgl',$this->bulan)
         ->whereYear('tb_details.tgl',$this->tahun)
         ->where('tb_transaksis.status','=','sukses')

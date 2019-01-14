@@ -34,7 +34,7 @@ class Catalogcontroller extends Controller
         $barangs =  DB::table('tb_details')
                     ->select('tb_details.*','tb_barangs.warna','tb_kodes.id as idkode','tb_kodes.diskon')
                     ->join('tb_kodes','tb_details.kode_barang','=','tb_kodes.kode_barang')
-                    ->join('tb_barangs','tb_details.idwarna','=','tb_barangs.id')
+                    ->join('tb_barangs','tb_details.idwarna','=','tb_barangs.idbarang')
                     ->where([['tb_details.iduser',Session::get('user_id')],['tb_details.faktur',null]])
                     ->get();
 
@@ -83,7 +83,7 @@ class Catalogcontroller extends Controller
 
         $datawarna = explode("-", $request->warna);
         $cariwarnas = DB::table('tb_barangs')
-                    ->where('id',$datawarna[0])
+                    ->where('idbarang',$datawarna[0])
                     ->get();
         
         foreach ($cariwarnas as $warna) {

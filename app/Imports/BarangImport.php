@@ -48,7 +48,7 @@ class BarangImport implements ToCollection, WithHeadingRow
                     $newkode = $this->olderkode();
                 DB::table('tb_barangs')->insert([
                 'kode'=> $newkode,
-                'stok' => $row['stok'],
+                'stok' => 0,
                 'warna' => $row['warna'],
                 'barang_jenis'=>$row['nama_barang']
                 ]);

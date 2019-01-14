@@ -75,7 +75,7 @@
                                             @php
                                     $databarang = DB::table('detail_cancel')
                                                 ->select(DB::raw('detail_cancel.*,tb_barangs.warna'))
-                                                ->leftjoin('tb_barangs','tb_barangs.id','=','detail_cancel.idwarna')
+                                                ->leftjoin('tb_barangs','tb_barangs.idbarang','=','detail_cancel.idwarna')
                                                 ->where('detail_cancel.kode',$row->faktur)
                                                 ->get();
                                     @endphp
