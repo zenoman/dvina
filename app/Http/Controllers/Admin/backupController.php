@@ -49,4 +49,39 @@ class backupController extends Controller
             'totaldetailpemasukan'=>$totaldetailpemasukan
         ]);
     }
+    public function hapuspengeluaran($bulan,$tahun){
+        DB::table('tb_tambahstoks')
+        ->where('tb_tambahstoks.aksi','tambah')
+        ->whereMonth('tb_tambahstoks.tgl',$bulan)
+        ->whereYear('tb_tambahstoks.tgl',$tahun)
+        ->delete();
+        return back();
+    }
+    public function hapuspemasukan($bulan,$tahun){
+         DB::table('tb_transaksis')
+        ->whereMonth('tb_transaksis.tgl',$bulan)
+        ->whereYear('tb_transaksis.tgl',$tahun)
+        ->where('tb_transaksis.status','sukses')
+        ->orwhere('tb_transaksis.status','diterima')
+        ->delete();
+
+        return back();
+    }
+    public function hapusdetailpemasukan($bulan,$tahun){
+        DB::table('tb_details')
+        ->whereMonth('tb_details.tgl',$bulan)
+        ->whereYear('tb_details.tgl',$tahun)
+        ->delete();
+
+        return back();
+    }
+
+    public function hapuspemasukanlain($bulan,$tahun){
+        DB::table('tb_tambahstoks')
+        ->where('tb_tambahstoks.aksi','kurangi')
+        ->whereMonth('tb_tambahstoks.tgl',$bulan)
+        ->whereYear('tb_tambahstoks.tgl',$tahun)
+        ->delete();
+        return back();
+    }
 }

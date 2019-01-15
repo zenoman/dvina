@@ -9,7 +9,11 @@ Route::get('/pengeluaran','Admin\pengeluaranController@index');
 //pembelian lain
 Route::get('/pembelianlain','Admin\pembelianlainController@index');
 
-//backup
+//backup hapuspemasukanlain
+Route::get('/hapuspemasukanlain/{bulan}/{tahun}','Admin\backupController@hapuspemasukanlain');
+Route::get('/hapusdetailpemasukan/{bulan}/{tahun}','Admin\backupController@hapusdetailpemasukan');
+Route::get('/hapuspemasukan/{bulan}/{tahun}','Admin\backupController@hapuspemasukan');
+Route::get('/hapuspengeluaran/{bulan}/{tahun}','Admin\backupController@hapuspengeluaran');
 Route::get('/tampilbackup','Admin\backupController@tampil');
 Route::get('/backup','Admin\backupController@index');
 

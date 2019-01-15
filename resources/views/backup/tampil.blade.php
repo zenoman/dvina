@@ -81,7 +81,7 @@
                                
                                 <div class="col-xs-12 text-center">
                                     <div class="huge">{{$totalpemasukanlain}}</div>
-                                    <div>Total Pengeluaran Lain</div>
+                                    <div>Total Pemasukan Lain</div>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                                     <a href="{{url('/exsportpengeluaran/'.$bulan.'/'.$tahun)}}" class="btn btn-success" onclick="return confirm('Export data pengeluaran ?')">
                                        <i class="fa fa-file-excel-o"></i> Export Excel
                                     </a>
-                                    <a href="#" class="btn btn-danger">
+                                    <a href="{{url('/hapuspengeluaran/'.$bulan.'/'.$tahun)}}" class="btn btn-danger" onclick="return confirm('Hapus data pengeluaran ?')">
                                        <i class="fa fa-trash"></i> Hapus Data
                                     </a>
                                 </div>
@@ -123,31 +123,31 @@
                                     <a href="{{url('/exsportpemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-success" onclick="return confirm('Export data pemasukan ?')">
                                        <i class="fa fa-file-excel-o"></i> Export Excel
                                     </a>
-                                    <a href="#" class="btn btn-danger">
+                                    <a href="{{url('/hapuspemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-danger" onclick="return confirm('Hapus data pemasukan ?')">
                                        <i class="fa fa-trash"></i> Hapus Data
                                     </a>
                                 </div>
                                 <div class="tab-pane fade" id="messages">
                                     <h4>Backup Data Detail Pemasukan</h4>
-                                    <a href="#" class="btn btn-warning">
+                                    <a href="{{url('/cetakdetailpemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-warning" onclick="return confirm('Cetak detail pemasukan ? ')" target="_blank()">
                                        <i class="fa fa-print"></i> Print
                                     </a>
-                                    <a href="#" class="btn btn-success">
+                                    <a href="{{url('/exsportdetailpemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-success" onclick="return confirm('Export detail pemasukan ?')">
                                        <i class="fa fa-file-excel-o"></i> Export Excel
                                     </a>
-                                    <a href="#" class="btn btn-danger">
+                                    <a href="{{url('/hapusdetailpemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-danger" onclick="return confirm('Hapus data detail pemasukan ?')">
                                        <i class="fa fa-trash"></i> Hapus Data
                                     </a>
                                 </div>
                                 <div class="tab-pane fade" id="settings">
                                     <h4>Backup Data Pemasukan Lain</h4>
-                                    <a href="#" onclick="return confirm('Cetak data pemasukan lain ?')" class="btn btn-warning">
+                                    <a href="{{url('/cetakpemasukanlain/'.$bulan.'/'.$tahun)}}" onclick="return confirm('Cetak data pemasukan lain ?')" class="btn btn-warning" target="_blank()">
                                        <i class="fa fa-print"></i> Print
                                     </a>
-                                    <a href="#" class="btn btn-success">
+                                    <a href="{{url('/exsportpemasukanlain/'.$bulan.'/'.$tahun)}}" class="btn btn-success" onclick="return confirm('Export pemasukan lain ?')">
                                        <i class="fa fa-file-excel-o"></i> Export Excel
                                     </a>
-                                    <a href="#" class="btn btn-danger">
+                                    <a href="{{url('/hapuspemasukanlain/'.$bulan.'/'.$tahun)}}" class="btn btn-danger" onclick="return confirm('Hapus data pemasukan lain ?')">
                                        <i class="fa fa-trash"></i> Hapus Data
                                     </a>
                                 </div>

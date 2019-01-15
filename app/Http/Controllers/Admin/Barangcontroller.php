@@ -39,8 +39,14 @@ class Barangcontroller extends Controller
 
     }
     public function updatewarna(Request $request, $id){
+        $hargaoptional = $request->harga_lain;
         if ($request->oldstok < $request->stok) {
             $stok = $request->stok - $request->oldstok;
+            if($hargaoptional != 0){
+                $total = $hargaoptional;
+            }else{
+                $total = $request->harga_beli*$stok;
+            }
             DB::table('tb_tambahstoks')
             ->insert([
                 'idwarna'=>$id,
@@ -48,13 +54,18 @@ class Barangcontroller extends Controller
                 'kode_barang'=>$request->kode,
                 'jumlah'=>$stok,
                 'tgl'=>date("Y-m-d"),
-                'total'=>$request->harga_beli*$stok,
+                'total'=>$total,
                 'keterangan'=>$request->deskripsi,
                 'aksi'=>'tambah'
 
             ]);
         }elseif($request->oldstok > $request->stok){
             $stok = $request->oldstok - $request->stok;
+            if($hargaoptional != 0){
+                $total = $hargaoptional;
+            }else{
+                $total = $request->harga_beli*$stok;
+            }
             DB::table('tb_tambahstoks')
             ->insert([
                 'idwarna'=>$id,
@@ -62,7 +73,7 @@ class Barangcontroller extends Controller
                 'kode_barang'=>$request->kode,
                 'jumlah'=>$stok,
                 'tgl'=>date("Y-m-d"),
-                'total'=>$request->harga_beli*$stok,
+                'total'=>$total,
                 'keterangan'=>$request->deskripsi,
                 'aksi'=>'kurangi'
 
@@ -83,13 +94,30 @@ class Barangcontroller extends Controller
         return back();
     }
     public function tambahwarna(Request $request){
+        if($request->hrg_lain!=''){
+            $total = $request->hrg_lain;
+        }else{
+            $total = $request->hrgbeli_brg*$request->stok;
+        }
         
         DB::table('tb_barangs')
         ->insert([
             'kode'=>$request->kode,
             'warna'=>$request->warna,
-            'stok' =>$request->stok,
+            'stok' =>0,
             'barang_jenis'=>$request->nama_brg." ".$request->warna
+        ]);
+        $id = DB::getPdo()->lastInsertId();
+        DB::table('tb_tambahstoks')
+            ->insert([
+                'idwarna'=>$id,
+                'idadmin'=>Session::get('iduser'),
+                'kode_barang'=>$request->kode,
+                'jumlah'=>$request->stok,
+                'tgl'=>date("Y-m-d"),
+                'total'=>$total,
+                'keterangan'=>'menambah pertama kali',
+                'aksi'=>'tambah'
         ]);
         return back();
     }

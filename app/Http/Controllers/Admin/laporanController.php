@@ -29,8 +29,13 @@ class laporanController extends Controller
         ->whereYear('tb_tambahstoks.tgl',$tahun)
         ->orderby('tb_tambahstoks.id','desc')
         ->get();
-
-        return view('laporan/cetakpemasukanlain',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun]);
+        $total = DB::table('tb_tambahstoks')
+        ->select(DB::raw('SUM(total) as totalnya'))
+        ->where('tb_tambahstoks.aksi','kurangi')
+        ->whereMonth('tb_tambahstoks.tgl',$bulan)
+        ->whereYear('tb_tambahstoks.tgl',$tahun)
+        ->get();
+        return view('laporan/cetakpemasukanlain',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun,'totalnya'=>$total]);
     }
     public function tampilpemasukanlain(Request $request){
         $webinfo = DB::table('settings')->limit(1)->get();

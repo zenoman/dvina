@@ -57,5 +57,8 @@
                                   @endforeach
                                 </tbody>
                             </table>
+                            @foreach($totalnya as $tot)
+                            <h3>Total : {{"Rp ".number_format($tot->totalnya,0,',','.')}}</h3>
+                            @endforeach
 </body>
 </html>

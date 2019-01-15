@@ -150,18 +150,23 @@
                               <form class="form-inline" action="{{url('/barang/warna')}}" method="post">
                                 <div class="form-group">
                                   <label for="email">Warna:</label>
-                                  <input type="text" class="form-control" placeholder="Masukan Warna" name="warna">
+                                  <input type="text" class="form-control" placeholder="Masukan Warna" name="warna" required>
                                 </div>
                                 <div class="form-group">
                                   <label for="pwd">Stok:</label>
-                                  <input type="text" onkeypress="return isNumberKey(event)" class="form-control" placeholder="Masukan Stok" name="stok">
+                                  <input type="text" onkeypress="return isNumberKey(event)" class="form-control" placeholder="Masukan Stok" name="stok" required>
                                   @foreach($barang as $row2)
                                     <input type="hidden" value="{{$row2->barang}}" name="nama_brg">
+                                    <input type="hidden" value="{{$row2->harga_beli}}" name="hrgbeli_brg">
                                   @endforeach
                                   <input type="hidden" name="kode" value="{{$kode}}">
                                 </div>
+                                <div class="form-group">
+                                  <label for="email">Harga Lain:</label>
+                                  <input type="text" class="form-control" placeholder="Opsional" name="hrg_lain" onkeypress="return isNumberKey(event)">
+                                </div>
                                 {{@csrf_field()}}
-                                <button type="submit" class="btn btn-success">Simpan</button>
+                                <button type="submit" class="btn btn-success">Tambah</button>
                               </form>
                             </div>
                             <hr>
@@ -217,6 +222,12 @@
                                             <label>Keterangan</label>
                                             <textarea class="form-control" name="deskripsi" rows="3"></textarea>
                                             <p class="help-block">Masukan Keterangan kenapa anda mengedit variasi warna ini.</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Total Harga (opsional) </label>
+                                            <input class="form-control" onkeypress="return isNumberKey(event)" name="harga_lain" type="text">
+                                             <p class="help-block">Silahkan kosongi apabila harga sesuai dengan harga beli / harga jual.
+                                             </p>
                                         </div>
                                         {{ csrf_field() }}
                                        <input type="hidden" name="_method" value="PUT">
