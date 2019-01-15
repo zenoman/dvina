@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 ini_set('max_execution_time', 180);
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\models\Adminmodel;
 use Illuminate\Support\Facades\DB;
@@ -61,12 +62,12 @@ class Admincontroller extends Controller
     public function store(Request $request)
     {
         $rules = [
-                    'nama'      => 'required|min:5',
-                    'username'  => 'required|min:5|alpha_dash',
+                    'nama'      => 'required|',
+                    'username'  => 'required|alpha_dash',
                     'password'  => 'required|min:5',
-                    'konfirmasi_password'=>'required|min:5|same:password',
-                    'no_telfon' => 'required|min:5|numeric',
-                    'email'     => 'required|min:5|email'
+                    'konfirmasi_password'=>'required|same:password',
+                    'no_telfon' => 'required|numeric',
+                    'email'     => 'required|email'
                     ];
 
     $customMessages = [
@@ -80,7 +81,7 @@ class Admincontroller extends Controller
         $this->validate($request,$rules,$customMessages);
         Adminmodel::create([
             'username'  => $request->username,
-            'password'  => md5($request->password),
+            'password'  => Hash::make($request->password),
             'nama'      => $request->nama,
             'telp'      => $request->no_telfon,
             'email'     => $request->email,

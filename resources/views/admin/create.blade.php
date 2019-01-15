@@ -8,6 +8,16 @@
 @endforeach
 
 @section('content')
+<script type="text/javascript">
+     function isNumberKey(evt)
+      {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+         return true;
+      }
+</script>
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -72,7 +82,7 @@
 
                                         <div class="form-group">
                                             <label>No. Telfon</label>
-                                            <input type="text" class="form-control" placeholder="Contoh : 085222333XXX" name="no_telfon" value="{{ old('no_telfon') }}">
+                                            <input type="text" class="form-control" placeholder="Contoh : 085222333XXX" name="no_telfon" value="{{ old('no_telfon') }}" onkeypress="return isNumberKey(event)">
                                         </div required>
                                         @if($errors->has('no_telfon'))
                                         <div class="alert alert-danger">
@@ -82,7 +92,7 @@
 
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" class="form-control" placeholder="Contoh : email@example.com" name="email" value={{ old('email') }} required>
+                                            <input type="email" class="form-control" placeholder="Contoh : email@example.com" name="email" value="{{ old('email') }}" required>
                                         </div>
                                         <div class="form-group">
                                         	<label>Level </label>

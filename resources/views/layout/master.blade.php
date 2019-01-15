@@ -1,7 +1,7 @@
 @if(!Session::get('username'))
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     window.location.href = '{{url("/validatelogin")}}';
-</script>
+</script> -->
 @endif
 <!DOCTYPE html>
 <html lang="en">
