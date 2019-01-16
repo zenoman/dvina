@@ -32,7 +32,7 @@
                                 {{ session('status') }}
                     </div>
                     @endif
-                    <a href="admin/create" class="btn btn-primary"><i class="fa fa-pencil"></i> Tambah Data</a>
+                    <a href="{{url('admin/create')}}" class="btn btn-primary"><i class="fa fa-pencil"></i> Tambah Data</a>
                     <br><br>
                     <div class="panel panel-default">
                         <div class="panel-heading">

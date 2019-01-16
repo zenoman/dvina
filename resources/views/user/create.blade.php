@@ -29,8 +29,9 @@
                                         
                                         <div class="form-group">
                                             <label>Nama</label>
-                                            <input type="text" class="form-control" placeholder="contoh : deva satrio" name="nama" value="{{ old('nama') }}">
+                                            <input type="text" class="form-control" placeholder="contoh : deva satrio" name="nama" value="{{ old('nama') }}" required>
                                         </div>
+
                                         @if($errors->has('nama'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('nama')}}
@@ -40,8 +41,9 @@
 
                                         <div class="form-group">
                                             <label>Username</label>
-                                            <input type="text" class="form-control" placeholder="contoh : devasatrio" name="username" value="{{ old('username') }}">
+                                            <input type="text" class="form-control" placeholder="contoh : devasatrio" name="username" value="{{ old('username') }}" required>
                                         </div>
+
                                         @if($errors->has('username'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('username')}}
@@ -51,7 +53,7 @@
 
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input type="password" class="form-control" name="password">
+                                            <input type="password" class="form-control" name="password" required>
                                         </div>
                                         @if($errors->has('password'))
                                         <div class="alert alert-danger">
@@ -61,7 +63,7 @@
 
                                         <div class="form-group">
                                             <label>Konfirmasi Password</label>
-                                            <input type="password" class="form-control" name="konfirmasi_password">
+                                            <input type="password" class="form-control" name="konfirmasi_password" required>
                                         </div>
                                         @if($errors->has('konfirmasi_password'))
                                         <div class="alert alert-danger">
@@ -72,7 +74,7 @@
 
                                         <div class="form-group">
                                             <label>No. Telfon</label>
-                                            <input type="text" class="form-control" placeholder="Contoh : 085222333XXX" name="no_telfon" value="{{ old('no_telfon') }}">
+                                            <input type="text" class="form-control" placeholder="Contoh : 085222333XXX" name="no_telfon" value="{{ old('no_telfon') }}" required>
                                         </div>
                                         @if($errors->has('no_telfon'))
                                         <div class="alert alert-danger">
@@ -82,7 +84,7 @@
 
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" class="form-control" placeholder="Contoh : email@example.com" name="email" value={{ old('email') }}>
+                                            <input type="email" class="form-control" placeholder="Contoh : email@example.com" name="email" value="{{ old('email')}}" required>
                                         </div>
                                        @if($errors->has('email'))
                                        <div class="alert alert-danger">
@@ -102,7 +104,7 @@
 
                                         <div class="form-group">
                                             <label>Kota</label>
-                                            <input type="text" class="form-control" placeholder="Contoh : Kediri" name="kota" value={{ old('kota') }}>
+                                            <input type="text" class="form-control" placeholder="Contoh : Kediri" name="kota" value="{{ old('kota') }}" required>
                                         </div>
                                           @if($errors->has('kota'))
                                        <div class="alert alert-danger">
@@ -152,7 +154,7 @@
 
                                         <div class="form-group">
                                             <label>Kode Pos</label>
-                                            <input type="text" class="form-control" placeholder="Contoh : 06" name="kode_pos" value={{ old('kode_pos') }}>
+                                            <input type="text" class="form-control" placeholder="Contoh : 06" name="kode_pos" value="{{ old('kode_pos') }}" required>
                                         </div>
                                           @if($errors->has('kode_pos'))
                                        <div class="alert alert-danger">
@@ -162,7 +164,7 @@
 
                                         <div class="form-group">
                                             <label>Gambar Ktp</label>
-                                            <input type="file" name="gambar_ktp" required>
+                                            <input type="file" name="gambar_ktp" accept="image/*" required>
                                         </div>
                                           @if($errors->has('gambar_ktp'))
                                        <div class="alert alert-danger">

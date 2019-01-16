@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\models\Adminmodel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+
 class Admincontroller extends Controller
 {
     public function index()
@@ -31,9 +33,10 @@ class Admincontroller extends Controller
 
     public function actionchangepass(Request $request, $id){
         $rules = [
-                'konfirmasi_username'       =>  'required|min:5|same:username',
-                'konfirmasi_password'       =>  'required|min:5',
-                'konfirmasi_password_baru'  =>  'required|min:5'
+                'konfirmasi_username'       =>  'required|same:username',
+                'konfirmasi_password'       =>  'required|min:8',
+                'password_baru' => 'required',
+                'konfirmasi_password_baru'  =>  'required|min:8'
             ];
         $customMessages = [
         'required'  => 'Maaf, :attribute harus di isi',
@@ -44,18 +47,17 @@ class Admincontroller extends Controller
         'same'      => 'Maaf, :attribute salah'
          ];
         $this->validate($request,$rules,$customMessages);
-        $newpass =md5($request->konfirmasi_password);
-        if($request->password==$newpass){
+        if(Hash::check($request->konfirmasi_password, $request->password)){
             if($request->konfirmasi_password_baru==$request->password_baru){
                  Adminmodel::find($id)->update([
-            'password' => md5($request->konfirmasi_password_baru)
+            'password' => Hash::make($request->konfirmasi_password_baru)
         ]);
         return redirect('admin')->with('status','Edit Password berhasil');
             }else{
              return redirect('admin/'.$id.'/changepass')->with('errorpass2','Maaf, Konfimasi Password Baru Anda Salah');
             }
         }else{
-        return redirect('admin/'.$id.'/changepass')->with('errorpass1','Maaf, Konfimasi Password Anda Salah');
+        return redirect('admin/'.$id.'/changepass')->with('errorpass1','Maaf, Konfimasi password lama anda salah');
         }
        
     }
@@ -63,8 +65,8 @@ class Admincontroller extends Controller
     {
         $rules = [
                     'nama'      => 'required|',
-                    'username'  => 'required|alpha_dash',
-                    'password'  => 'required|min:5',
+                    'username'  => 'required|min:8|alpha_dash',
+                    'password'  => 'required|min:8',
                     'konfirmasi_password'=>'required|same:password',
                     'no_telfon' => 'required|numeric',
                     'email'     => 'required|email'
@@ -79,7 +81,12 @@ class Admincontroller extends Controller
         'email'     => 'Maaf, data harus email'
     ];
         $this->validate($request,$rules,$customMessages);
-        Adminmodel::create([
+        $dataadmin = DB::table('admins')->where('username',$request->username)->count();
+        if($dataadmin>0){
+            return back()
+            ->with('status','Maaf, username telah di pakai');
+        }else{
+            Adminmodel::create([
             'username'  => $request->username,
             'password'  => Hash::make($request->password),
             'nama'      => $request->nama,
@@ -88,11 +95,10 @@ class Admincontroller extends Controller
             'level'     => $request->level
         ]);
 
-        return redirect('admin')->with('status','Input Data Sukses');
-    }
-    public function show($id)
-    {
-        //
+        return redirect('admin')
+        ->with('status','Input Data Sukses');
+        }
+        
     }
     public function edit($id)
     {
@@ -103,10 +109,10 @@ class Admincontroller extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'nama'=>'required|min:5',
-            'username'=>'required|min:5|alpha_dash',
-            'no_telfon'=>'required|min:5|numeric',
-            'email'=>'required|min:5|email'
+            'nama'=>'required',
+            'username'=>'required|min:8|alpha_dash',
+            'no_telfon'=>'required|numeric',
+            'email'=>'required|email'
             
             ];
         $customMessages = [
@@ -118,8 +124,13 @@ class Admincontroller extends Controller
         
          ];
         $this->validate($request,$rules,$customMessages);
-        
-        Adminmodel::find($id)->update([
+        if($request->oldusername != $request->username){
+            $datauser = DB::table('admins')->where('username',$request->username)->count();
+            if($datauser>0){
+                return back()
+                ->with('status','Maaf, username sudah dipakai');
+            }else{
+            Adminmodel::find($id)->update([
             'username'=>$request->username,
             'nama'=>$request->nama,
             'telp'=>$request->no_telfon,
@@ -127,6 +138,18 @@ class Admincontroller extends Controller
             'level'=>$request->level
             ]);
         return redirect('admin')->with('status','Edit Data Sukses');
+            }
+        }else{
+            Adminmodel::find($id)->update([
+            'username'=>$request->username,
+            'nama'=>$request->nama,
+            'telp'=>$request->no_telfon,
+            'email'=>$request->email,
+            'level'=>$request->level
+            ]);
+        return redirect('admin')->with('status','Edit Data Sukses');
+        }
+        
     }
     public function destroy($id)
     {

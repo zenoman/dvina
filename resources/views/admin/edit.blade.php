@@ -8,16 +8,30 @@
 @endforeach
 
 @section('content')
+<script type="text/javascript">
+     function isNumberKey(evt)
+      {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+         return true;
+      }
+</script>
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Edit Data Admin</h1>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
+                      @if (session('status'))
+                    <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{ session('status') }}
+                    </div>
+                    @endif
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Edit Data Dibawah Ini Sesuai Perintah !
@@ -25,10 +39,10 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form action="/admin/{{$dataadmin->id}}" role="form" method="POST">
+                                    <form action="{{url('/admin/'.$dataadmin->id)}}" role="form" method="POST">
                                         <div class="form-group">
                                             <label>Nama</label>
-                                            <input type="text" class="form-control" name="nama" value="{{$dataadmin->nama}}">
+                                            <input type="text" class="form-control" name="nama" value="{{$dataadmin->nama}}" required>
                                         </div>
                                         @if($errors->has('nama'))
                                         <div class="alert alert-danger">
@@ -37,7 +51,9 @@
                                         @endif
                                         <div class="form-group">
                                             <label>Username</label>
-                                            <input type="text" class="form-control" value="{{$dataadmin->username}}" name="username">
+                                            <input type="text" class="form-control" value="{{$dataadmin->username}}" name="username" required>
+                                            <input type="hidden" value="{{$dataadmin->username}}" name="oldusername">
+                                            <p class="help-block">*Minimal 8 karakter</p>
                                         </div>
                                         @if($errors->has('username'))
                                         <div class="alert alert-danger">
@@ -48,7 +64,7 @@
                                         
                                         <div class="form-group">
                                             <label>No. Telfon</label>
-                                            <input type="text" class="form-control" value="{{$dataadmin->telp}}" name="no_telfon">
+                                            <input type="text" class="form-control" value="{{$dataadmin->telp}}" name="no_telfon" onkeypress="return isNumberKey(event)" required>
                                         </div>
                                         @if($errors->has('no_telfon'))
                                         <div class="alert alert-danger">
@@ -58,7 +74,7 @@
 
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" class="form-control" name="email" value="{{$dataadmin->email}}">
+                                            <input type="email" class="form-control" name="email" value="{{$dataadmin->email}}" required>
                                         </div>
                                        @if($errors->has('email'))
                                         <div class="alert alert-danger">

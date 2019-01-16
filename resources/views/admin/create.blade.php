@@ -9,7 +9,7 @@
 
 @section('content')
 <script type="text/javascript">
-     function isNumberKey(evt)
+function isNumberKey(evt)
       {
          var charCode = (evt.which) ? evt.which : event.keyCode
          if (charCode > 31 && (charCode < 48 || charCode > 57))
@@ -17,6 +17,22 @@
 
          return true;
       }
+function mouseoverPass(obj) {
+  var obj = document.getElementById('myPassword');
+  obj.type = "text";
+}
+function mouseoutPass(obj) {
+  var obj = document.getElementById('myPassword');
+  obj.type = "password";
+}
+ function mouseoverPass1(obj) {
+  var obj = document.getElementById('myPassword1');
+  obj.type = "text";
+}
+function mouseoutPass1(obj) {
+  var obj = document.getElementById('myPassword1');
+  obj.type = "password";
+}
 </script>
 <div id="page-wrapper">
             <div class="row">
@@ -28,6 +44,12 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
+                     @if (session('status'))
+                    <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{ session('status') }}
+                    </div>
+                    @endif
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Isi Data Dibawah Ini Sesuai Perintah !
@@ -35,7 +57,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form action="/admin" role="form" method="POST">
+                                    <form action="{{url('/admin')}}" role="form" method="POST">
                                         <div class="form-group">
                                             <label>Nama</label>
                                             <input type="text" class="form-control" placeholder="contoh : deva satrio" name="nama" value="{{ old('nama') }}" required>
@@ -51,6 +73,7 @@
                                         <div class="form-group">
                                             <label>Username</label>
                                             <input type="text" class="form-control" placeholder="contoh : devasatrio" name="username" value="{{ old('username') }}" required>
+                                            <p class="help-block">*Minimal 8 karakter</p>
                                         </div>
                                         @if($errors->has('username'))
                                         <div class="alert alert-danger">
@@ -58,21 +81,24 @@
                                          </div>
                                         @endif
 
-
-                                        <div class="form-group">
-                                            <label>Password</label>
-                                            <input type="password" class="form-control" name="password" required>
+                                        <label>Password</label>
+                                        <div class="form-group input-group">
+                                            
+                                            <input type="password" class="form-control" name="password" required id="myPassword">
+                                           <span class="input-group-addon" onmouseover="mouseoverPass();" onmouseout="mouseoutPass();"><i class="fa fa-eye"></i></span>
                                         </div>
+                                         <p class="help-block">*Minimal 8 karakter</p>
                                         @if($errors->has('password'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('password')}}
                                          </div>
                                         @endif
-
-                                        <div class="form-group">
-                                            <label>Konfirmasi Password</label>
-                                            <input type="password" class="form-control" name="konfirmasi_password">
-                                        </div required>
+                                        <label>Konfirmasi Password</label>
+                                        <div class="form-group input-group">
+                                            
+                                            <input type="password" class="form-control" name="konfirmasi_password"  required id="myPassword1"> 
+                                            <span class="input-group-addon" onmouseover="mouseoverPass1();" onmouseout="mouseoutPass1();"><i class="fa fa-eye"></i></span>
+                                        </div>
                                         @if($errors->has('konfirmasi_password'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('konfirmasi_password')}}

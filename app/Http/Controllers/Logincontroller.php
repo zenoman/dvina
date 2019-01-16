@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use App\models\Usermodel;
 
 class Logincontroller extends Controller
@@ -20,22 +21,27 @@ class Logincontroller extends Controller
             'kodecap' => 'required|captcha'
         ]);
         $username = $request->username;
-        $password = md5($request->password);
+        $mypassword = $request->password;
 
-        $data = DB::table('admins')->where([['username',$username],['password',$password]])->count();
-        $datausers = DB::table('admins')->where([['username',$username],['password',$password]])->get();
-        foreach ($datausers as $datauser) {
-            $id = $datauser->id;
-            $level = $datauser->level;
-        }
+        $data = DB::table('admins')->where('username',$username)->count();
         if($data>0){
-                Session::put('username',$request->username);
+            $datauser = DB::table('admins')->where('username',$username)->get();
+            foreach ($datauser as $row) {
+                $password = $row->password;
+                $id = $row->id;
+                $level = $row->level;
+            }
+            if(Hash::check($mypassword, $password)){
+                 Session::put('username',$request->username);
                 Session::put('iduser',$id);
                 Session::put('level',$level);
                 Session::put('login',TRUE);
                 return redirect('dashboard');
+            }else{
+                 return redirect('login')->with('status','Maaf, password salah');
+            }
         }else{
-            return redirect('login')->with('status','Maaf, Username atau Password Salah');
+            return redirect('login')->with('status','Maaf, Username tidak detemukan');
         }
     }
     public function logout(){

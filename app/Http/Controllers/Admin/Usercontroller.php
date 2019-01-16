@@ -7,16 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\models\Usermodel;
 
 class Usercontroller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+   public function index()
     {
         $websetting = DB::table('settings')->limit(1)->get();
         $users = Usermodel::orderBy('id','desc')->paginate(40);
@@ -51,10 +47,10 @@ class Usercontroller extends Controller
         $websetting = DB::table('settings')->limit(1)->get();
         return view('user/create',['websettings'=>$websetting]);
     }
+
     public function store(Request $request)
     {
-        $roles = [
-                    'nama'      => 'required|min:5',
+        $roles = [  'nama'      => 'required|min:5',
                     'username'  => 'required|min:5|alpha_dash',
                     'password'  => 'required|min:5',
                     'konfirmasi_password'=>'required|min:5|same:password',
@@ -64,9 +60,8 @@ class Usercontroller extends Controller
                     'kota'      => 'required|min:5',
                     'provinsi'  => 'required',
                     'kode_pos'  => 'required|numeric',
-                    'gambar_ktp'=> 'image|nullable|max:2000'
-                    
-                    ];
+                    'gambar_ktp'=> 'image|nullable|max:2000'];
+
         $customMessages = [
         'required'  => 'Maaf, :attribute harus di isi',
         'min'       => 'Maaf, data yang anda masukan    terlalu sedikit',
@@ -75,38 +70,34 @@ class Usercontroller extends Controller
         'numeric'   => 'Maaf, data harus angka',
         'email'     => 'Maaf, data harus email',
         'image'     => 'Maaf, file harus berupa gambar',
-        'max'       => 'Maaf, file terlalu besar'
-    ];
+        'max'       => 'Maaf, file terlalu besar'];
 
     $this->validate($request,$roles,$customMessages);
+
     if($request->hasFile('gambar_ktp')){ 
-                     $namaexs=$request->File('gambar_ktp')->getClientOriginalName();
-                     $lower_file_name=strtolower($namaexs);
-                    $replace_space=str_replace(' ','-',$lower_file_name);
-                     $namagambar=time().'-'.$replace_space;
-                     $destination = public_path('img/user');
-                   $request->file('gambar_ktp')->move($destination,$namagambar);
-                }else{
-                    $namagambar='';
-                }
+    $namaexs=$request->File('gambar_ktp')->getClientOriginalName();
+    $lower_file_name=strtolower($namaexs);
+    $replace_space=str_replace(' ','-',$lower_file_name);
+    $namagambar=time().'-'.$replace_space;
+    $destination = public_path('img/user');
+    $request->file('gambar_ktp')->move($destination,$namagambar);
+    }else{
+        $namagambar='';
+    }
                 
-
-        Usermodel::create([
-                'username' => $request->username,
-                'password' => md5($request->password),
-                'email'    => $request->email,
-                'telp'     => $request->no_telfon,
-                'nama'     => $request->nama,
-                'alamat'   => $request->alamat,
-                'kota'     => $request->kota,
-                'provinsi' => $request->provinsi,
-                'kodepos'  => $request->kode_pos,
-                'ktp_gmb'  => $namagambar
-               
-               
-
-        ]);
-                 return redirect('user')->with('status','Input Data Sukses');
+    Usermodel::create([
+        'username' => $request->username,
+        'password' => Hash::make($request->password),
+        'email'    => $request->email,
+        'telp'     => $request->no_telfon,
+        'nama'     => $request->nama,
+        'alamat'   => $request->alamat,
+        'kota'     => $request->kota,
+        'provinsi' => $request->provinsi,
+        'kodepos'  => $request->kode_pos,
+        'ktp_gmb'  => $namagambar
+    ]);
+    return redirect('user')->with('status','Input Data Sukses');
 
   
     }

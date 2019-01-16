@@ -8,6 +8,32 @@
 @endforeach
 
 @section('content')
+<script>
+    function mouseoverPass(obj) {
+  var obj = document.getElementById('myPassword');
+  obj.type = "text";
+}
+function mouseoutPass(obj) {
+  var obj = document.getElementById('myPassword');
+  obj.type = "password";
+}
+ function mouseoverPass1(obj) {
+  var obj = document.getElementById('myPassword1');
+  obj.type = "text";
+}
+function mouseoutPass1(obj) {
+  var obj = document.getElementById('myPassword1');
+  obj.type = "password";
+}
+ function mouseoverPass2(obj) {
+  var obj = document.getElementById('myPassword2');
+  obj.type = "text";
+}
+function mouseoutPass2(obj) {
+  var obj = document.getElementById('myPassword2');
+  obj.type = "password";
+}
+</script>
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -25,7 +51,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form action="/admin/{{$dataadmin->id}}/changepass" role="form" method="POST">
+                                    <form action="{{url('/admin/'.$dataadmin->id.'/changepass')}}" role="form" method="POST">
                                         
                                         <div class="form-group">
                                             <label>Konfirmasi Username</label>
@@ -43,41 +69,48 @@
                                          </div>
                                         @endif
 
-                                        
-                                        <div class="form-group">
-                                            <label>Konfirmasi Password</label>
-                                            <input type="hidden" name="password" value="{{$dataadmin->password}}">
-
-                                            <input type="password" class="form-control" name="konfirmasi_password" required>
-
-                                            <p class="help-block">*Masukan password lama user yang akan diganti passwordnya</p>
-                                            @if (session('errorpass1'))
+                                        <label>Konfirmasi Password</label>
+                                        <div class="form-group input-group">
+                                            
+                                            <input type="hidden" name="password" value="{{$dataadmin->password}}" required>
+                                       
+                                            <input type="password" class="form-control" name="konfirmasi_password" required id="myPassword">
+                                         <span class="input-group-addon" onmouseover="mouseoverPass();" onmouseout="mouseoutPass();"><i class="fa fa-eye"></i></span>
+                                          
+                                            
+                                        </div>
+                                          <p class="help-block">*Masukan password lama user yang akan diganti passwordnya</p>
+                                          @if (session('errorpass1'))
                     <div class="alert alert-danger alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                 {{ session('errorpass1') }}
                     </div>
                     @endif
-                                        </div>
                                         @if($errors->has('konfirmasi_password'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('konfirmasi_password')}}
                                          </div>
                                         @endif
                                         <hr>
-                                        <div class="form-group">
-                                            <label>Password Baru</label>
-                                            <input type="password" class="form-control" name="password_baru" required>
+                                         <label>Password Baru</label>
+                                        <div class="form-group input-group">
+                                           
+                                            <input type="password" class="form-control" name="password_baru" required id="myPassword1">
+                                              <span class="input-group-addon" onmouseover="mouseoverPass1();" onmouseout="mouseoutPass1();"><i class="fa fa-eye"></i></span>
                                         </div>
+                                        <p class="help-block">*Minimal 8 karakter</p>
                                        @if($errors->has('password_baru'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('password_baru')}}
                                          </div>
                                         @endif
-
-                                        <div class="form-group">
-                                            <label>Konfirmasi Password Baru</label>
-                                            <input type="password" name="konfirmasi_password_baru" class="form-control" required>
-                                            @if($errors->has('konfirmasi_password_baru'))
+                                        <label>Konfirmasi Password Baru</label>
+                                        <div class="form-group input-group">
+                                            
+                                            <input type="password" name="konfirmasi_password_baru" class="form-control" required id="myPassword2">
+                                            <span class="input-group-addon" onmouseover="mouseoverPass2();" onmouseout="mouseoutPass2();"><i class="fa fa-eye"></i></span>
+                                        </div>
+                                        @if($errors->has('konfirmasi_password_baru'))
                                             <div class="alert alert-danger">
                                                 {{$errors->first('konfirmasi_password_baru')}}
                                             </div>
@@ -88,7 +121,6 @@
                                 {{ session('errorpass2') }}
                     </div>
                     @endif
-                                        </div>
                                         {{csrf_field()}}
                                         <!--div class="form-group">
                                             <label>Selects</label>
