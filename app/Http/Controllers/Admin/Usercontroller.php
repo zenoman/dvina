@@ -37,7 +37,12 @@ class Usercontroller extends Controller
     public function cariuser(Request $request)
     {
         $websetting = DB::table('settings')->limit(1)->get();
-        $datauser = DB::table('tb_users')->where('nama','like','%'.$request->cari.'%')->get();
+        $datauser = DB::table('tb_users')
+        ->where('nama','like','%'.$request->cari.'%')
+        ->orwhere('username','like','%'.$request->cari.'%')
+        ->orwhere('email','like','%'.$request->cari.'%')
+        ->orwhere('kota','like','%'.$request->cari.'%')
+        ->get();
         
         return view('user/pencarian', ['datauser'=>$datauser, 'cari'=>$request->cari,'websettings'=>$websetting]);
     }
@@ -50,17 +55,17 @@ class Usercontroller extends Controller
 
     public function store(Request $request)
     {
-        $roles = [  'nama'      => 'required|min:5',
-                    'username'  => 'required|min:5|alpha_dash',
-                    'password'  => 'required|min:5',
-                    'konfirmasi_password'=>'required|min:5|same:password',
-                    'no_telfon' => 'required|min:5|numeric',
-                    'email'     => 'required|min:5|email',
-                    'alamat'    => 'required|min:5',
-                    'kota'      => 'required|min:5',
+        $roles = [  'nama'      => 'required',
+                    'username'  => 'required|min:8|alpha_dash',
+                    'password'  => 'required|min:8',
+                    'konfirmasi_password'=>'required|min:8|same:password',
+                    'no_telfon' => 'required|numeric',
+                    'email'     => 'required|email',
+                    'alamat'    => 'required|',
+                    'kota'      => 'required|',
                     'provinsi'  => 'required',
                     'kode_pos'  => 'required|numeric',
-                    'gambar_ktp'=> 'image|nullable|max:2000'];
+                    'gambar_ktp'=> 'image|nullable|max:3000'];
 
         $customMessages = [
         'required'  => 'Maaf, :attribute harus di isi',
@@ -73,8 +78,11 @@ class Usercontroller extends Controller
         'max'       => 'Maaf, file terlalu besar'];
 
     $this->validate($request,$roles,$customMessages);
-
-    if($request->hasFile('gambar_ktp')){ 
+    $jumlahusername = DB::table('tb_users')->where('username',$request->username)->count();
+    if($jumlahusername>0){
+    return back()->with('status','Maaf, username sudah dipakai');
+    }else{
+        if($request->hasFile('gambar_ktp')){ 
     $namaexs=$request->File('gambar_ktp')->getClientOriginalName();
     $lower_file_name=strtolower($namaexs);
     $replace_space=str_replace(' ','-',$lower_file_name);
@@ -84,7 +92,6 @@ class Usercontroller extends Controller
     }else{
         $namagambar='';
     }
-                
     Usermodel::create([
         'username' => $request->username,
         'password' => Hash::make($request->password),
@@ -98,27 +105,7 @@ class Usercontroller extends Controller
         'ktp_gmb'  => $namagambar
     ]);
     return redirect('user')->with('status','Input Data Sukses');
-
-  
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    }}
     public function edit($id)
     {
         $websetting = DB::table('settings')->limit(1)->get();
@@ -134,62 +121,45 @@ class Usercontroller extends Controller
 
     public function actchangepass(Request $request, $id)
     {
-        $roles = [
-                'username' => 'required|min:5|same:username_lama',
-                 ];
-
-        $customMessages = [
-        'required'  => 'Maaf, :attribute harus di isi',
-        'min'       => 'Maaf, data yang anda masukan terlalu sedikit',
-        'alpha_dash'=> 'Maaf, tidak menerima data lain kecuali alphabet',
-        'same'      => 'Maaf, Pastikan :attribute dan :other sama',
-        'numeric'   => 'Maaf, data harus angka',
-        'email'     => 'Maaf, data harus email',
-        'image'     => 'Maaf, file harus berupa gambar',
-        'max'       => 'Maaf, file terlalu besar'
+    $roles = [
+    'username' => 'required|same:username_lama',
+    'password_baru'=>'required|min:8',
+    'konfirmasi_password_baru'=>'required|min:8|same:password_baru'
+    ];
+    $customMessages = [
+    'required'  => 'Maaf, :attribute harus di isi',
+    'min'       => 'Maaf, data yang anda masukan terlalu sedikit',
+    'same'      => 'Maaf, Pastikan :attribute dan :other sama'
     ];
 
     $this->validate($request,$roles,$customMessages);
-
-    $newpass =md5($request->password_lama);
-        if($request->password==$newpass){
-            if($request->konfirmasi_password_baru==$request->password_baru){
-                 
-                 Usermodel::find($id)->update([
-        'password' => md5($request->konfirmasi_password_baru)
-    ]);
-        return redirect('user')->with('status','Edit Password Berhasil');
-            }else{
-             return redirect('user/'.$id.'/changepass')->with('errorpass2','Maaf, Konfimasi Password Baru Anda Salah');
-            }
+    if(Hash::check($request->password_lama, $request->password)){
+        
+        Usermodel::find($id)
+        ->update([
+        'password' => Hash::make($request->konfirmasi_password_baru)
+        ]);
+        
+        return redirect('user')
+        ->with('status','Edit Password Berhasil');
+            
         }else{
-        return redirect('user/'.$id.'/changepass')->with('errorpass1','Maaf, Konfimasi Password Anda Salah');
+        return back()
+        ->with('errorpass1','Maaf, Konfimasi Password Anda Salah');
         }}
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $roles = [
-                'username' => 'required|min:5|alpha_dash',
-                'email'    => 'required|min:5|email',
-                'kota'     => 'required|min:5',
+                'username' => 'required|min:8|alpha_dash',
+                'email'    => 'required|email',
+                'kota'     => 'required',
                 'provinsi' => 'required',
                 'kode_pos' => 'required|numeric',
-                'nama'     => 'required|min:5',
-                'gambar_ktp' => 'image|nullable|max:2000',
-                'no_telfon'=> 'required|min:5|numeric',
-                'alamat'   => 'required|min:5'
-                // 'password' => 'required|min:5',
-                // 'password_lama' => 'required|min:5|same:password',
-                // 'password_baru' => 'required|min:5',
-                // 'konfirmasi_password_baru' => 'required|min:5|same:password_baru',
-                
+                'nama'     => 'required',
+                'gambar_ktp' => 'image|nullable|max:3000',
+                'no_telfon'=> 'required|numeric',
+                'alamat'   => 'required|'
                 ];
 
         $customMessages = [
@@ -204,10 +174,13 @@ class Usercontroller extends Controller
     ];
 
     $this->validate($request,$roles,$customMessages);
-    //dd($request);
         $namagambar=Usermodel::find($id);
-
-        if($request->hasFile('gambar_ktp')){
+        if($request->username != $namagambar->username){
+            $jumlahusername = DB::table('tb_users')->where('username',$request->username)->count();
+            if($jumlahusername > 0){
+                return back()->with('status','Maaf, username sudah dipakai');
+            }else{
+                if($request->hasFile('gambar_ktp')){
             File::delete('img/user/'.$namagambar->ktp_gmb);
            $namaexs=$request->file('gambar_ktp')->getClientOriginalName();
             $lower_file_name=strtolower($namaexs);
@@ -242,6 +215,45 @@ class Usercontroller extends Controller
         }
         
         return redirect('user')->with('status','Edit Data Sukses');
+            }
+        }else{
+            if($request->hasFile('gambar_ktp')){
+            File::delete('img/user/'.$namagambar->ktp_gmb);
+           $namaexs=$request->file('gambar_ktp')->getClientOriginalName();
+            $lower_file_name=strtolower($namaexs);
+            $replace_space=str_replace(' ','-',$lower_file_name);
+            $namagambar=time().'-'.$replace_space;
+            $destination=public_path('img/user');
+            $request->file('gambar_ktp')->move($destination,$namagambar);
+        }
+        if($request->hasFile('gambar_ktp')){
+            Usermodel::find($id)->update([
+                'username' => $request->username,
+                'email'    => $request->email,
+                'telp'     => $request->no_telfon,
+                'nama'     => $request->nama,
+                'alamat'   => $request->alamat,
+                'kota'     => $request->kota,
+                'provinsi' => $request->provinsi,
+                'kodepos'  => $request->kode_pos,
+                'ktp_gmb'  => $namagambar
+        ]);
+        }else{
+           Usermodel::find($id)->update([
+                'username' => $request->username,
+                'email'    => $request->email,
+                'telp'     => $request->no_telfon,
+                'nama'     => $request->nama,
+                'alamat'   => $request->alamat,
+                'kota'     => $request->kota,
+                'provinsi' => $request->provinsi,
+                'kodepos'  => $request->kode_pos
+                ]);
+        }
+        
+        return redirect('user')->with('status','Edit Data Sukses');
+        }
+        
     }
 
     /**

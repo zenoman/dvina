@@ -33,7 +33,7 @@
                                 {{ session('status') }}
                     </div>
                     @endif
-                    <a href="user/create" class="btn btn-primary"><i class="fa fa-pencil"></i> Tambah Data</a>
+                    <a href="{{url('user/create')}}" class="btn btn-primary"><i class="fa fa-pencil"></i> Tambah Data</a>
                     <button class="btn btn-info" data-toggle="modal" data-target="#searchModal">
                                         <i class="fa fa-search"></i> Cari Data</button>
                                 <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -47,7 +47,7 @@
                                         <div class="modal-body">
                                            <form method="post" action="{{url('user/cari')}}">
                                             <div class="form-group">
-                                                <input type="text" name="cari" class="form-control" placeholder="cari berdasarkan nama user" required>
+                                                <input type="text" name="cari" class="form-control" placeholder="cari berdasarkan nama/usrname/email/kota user" required>
                                             </div>
                                            {{csrf_field()}}
                                             <input type="submit" class="btn btn-info" value="Cari Data">

@@ -8,16 +8,45 @@
 @endforeach
 
 @section('content')
+<script>
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+    return false;
+
+    return true;
+}
+function mouseoverPass(obj) {
+  var obj = document.getElementById('myPassword');
+  obj.type = "text";
+}
+function mouseoutPass(obj) {
+  var obj = document.getElementById('myPassword');
+  obj.type = "password";
+}
+ function mouseoverPass1(obj) {
+  var obj = document.getElementById('myPassword1');
+  obj.type = "text";
+}
+function mouseoutPass1(obj) {
+  var obj = document.getElementById('myPassword1');
+  obj.type = "password";
+}
+</script>
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Tambah Data User</h1>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
+                    @if (session('status'))
+                    <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{ session('status') }}
+                    </div>
+                    @endif
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Isi Data Dibawah Ini Sesuai Perintah !
@@ -25,13 +54,13 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form action="/user" role="form" enctype="multipart/form-data" method="POST">
+                                    <form action="{{url('/user')}}" role="form" enctype="multipart/form-data" method="POST">
                                         
                                         <div class="form-group">
                                             <label>Nama</label>
                                             <input type="text" class="form-control" placeholder="contoh : deva satrio" name="nama" value="{{ old('nama') }}" required>
                                         </div>
-
+            
                                         @if($errors->has('nama'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('nama')}}
@@ -43,6 +72,7 @@
                                             <label>Username</label>
                                             <input type="text" class="form-control" placeholder="contoh : devasatrio" name="username" value="{{ old('username') }}" required>
                                         </div>
+                                        <p class="help-block">*Minimal 8 karakter</p>
 
                                         @if($errors->has('username'))
                                         <div class="alert alert-danger">
@@ -50,21 +80,26 @@
                                          </div>
                                         @endif
 
-
-                                        <div class="form-group">
-                                            <label>Password</label>
-                                            <input type="password" class="form-control" name="password" required>
+                                    <label>Password</label>
+                                        <div class="form-group input-group">
+                                            <input type="password" class="form-control" name="password" required id="myPassword">
+                                            <span class="input-group-addon" onmouseover="mouseoverPass();" onmouseout="mouseoutPass();"><i class="fa fa-eye"></i></span>
                                         </div>
+                                        <p class="help-block">*Minimal 8 karakter</p>
+
                                         @if($errors->has('password'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('password')}}
                                          </div>
                                         @endif
-
-                                        <div class="form-group">
-                                            <label>Konfirmasi Password</label>
-                                            <input type="password" class="form-control" name="konfirmasi_password" required>
+                                    <label>Konfirmasi Password</label>
+                                        <div class="form-group input-group">
+                                            
+                                            <input type="password" class="form-control" name="konfirmasi_password" required id="myPassword1">
+                                            <span class="input-group-addon" onmouseover="mouseoverPass1();" onmouseout="mouseoutPass1();"><i class="fa fa-eye"></i></span>
                                         </div>
+                                        <p class="help-block">*Minimal 8 karakter</p>
+
                                         @if($errors->has('konfirmasi_password'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('konfirmasi_password')}}
@@ -74,7 +109,7 @@
 
                                         <div class="form-group">
                                             <label>No. Telfon</label>
-                                            <input type="text" class="form-control" placeholder="Contoh : 085222333XXX" name="no_telfon" value="{{ old('no_telfon') }}" required>
+                                            <input type="text" class="form-control" placeholder="Contoh : 085222333XXX" name="no_telfon" value="{{ old('no_telfon') }}" required onkeypress="return isNumberKey(event)">
                                         </div>
                                         @if($errors->has('no_telfon'))
                                         <div class="alert alert-danger">
@@ -154,7 +189,7 @@
 
                                         <div class="form-group">
                                             <label>Kode Pos</label>
-                                            <input type="text" class="form-control" placeholder="Contoh : 06" name="kode_pos" value="{{ old('kode_pos') }}" required>
+                                            <input type="text" class="form-control" name="kode_pos" value="{{ old('kode_pos') }}" required onkeypress="return isNumberKey(event)">
                                         </div>
                                           @if($errors->has('kode_pos'))
                                        <div class="alert alert-danger">

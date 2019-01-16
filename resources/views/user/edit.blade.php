@@ -8,6 +8,15 @@
 @endforeach
 
 @section('content')
+<script>
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+    return false;
+
+    return true;
+}
+</script>
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -18,6 +27,12 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
+                    @if (session('status'))
+                    <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{ session('status') }}
+                    </div>
+                    @endif
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Edit Data Dibawah Ini Sesuai Perintah !
@@ -30,7 +45,7 @@
                                         <!-- action="{{ url('user/').$datauser->id}}" -->
                                         <div class="form-group">
                                             <label>Nama</label>
-                                            <input type="text" class="form-control" name="nama" value="{{$datauser->nama}}">
+                                            <input type="text" class="form-control" name="nama" value="{{$datauser->nama}}" required>
                                         </div>
                                         @if($errors->has('nama'))
                                         <div class="alert alert-danger">
@@ -40,7 +55,7 @@
 
                                         <div class="form-group">
                                             <label>Username</label>
-                                            <input type="text" class="form-control" name="username" value="{{$datauser->username}}">
+                                            <input type="text" class="form-control" name="username" value="{{$datauser->username}}" required>
                                         </div>
                                         @if($errors->has('username'))
                                         <div class="alert alert-danger">
@@ -49,7 +64,7 @@
                                         @endif
                                          <div class="form-group">
                                             <label>No. Telfon</label>
-                                            <input type="text" class="form-control" value="{{$datauser->telp}}" name="no_telfon">
+                                            <input type="text" class="form-control" value="{{$datauser->telp}}" name="no_telfon" onkeypress="return isNumberKey(event)" required>
                                         </div>
                                         @if($errors->has('no_telfon'))
                                         <div class="alert alert-danger">
@@ -59,7 +74,7 @@
 
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" class="form-control" name="email" value="{{$datauser->email}}">
+                                            <input type="email" class="form-control" name="email" value="{{$datauser->email}}" required>
                                         </div>
                                        @if($errors->has('email'))
                                         <div class="alert alert-danger">
@@ -79,7 +94,7 @@
 
                                         <div class="form-group">
                                             <label>Kota</label>
-                                            <input type="text" class="form-control" placeholder="Contoh : Kediri" name="kota" value="{{$datauser->kota}}">
+                                            <input type="text" class="form-control" placeholder="Contoh : Kediri" name="kota" value="{{$datauser->kota}}" required>
                                         </div>
                                           @if($errors->has('kota'))
                                        <div class="alert alert-danger">
@@ -164,7 +179,7 @@
 
                                         <div class="form-group">
                                             <label>Kode Pos</label>
-                                            <input type="text" class="form-control" placeholder="Contoh : 06" name="kode_pos" value="{{$datauser->kodepos}}">
+                                            <input type="text" class="form-control" placeholder="Contoh : 06" name="kode_pos" value="{{$datauser->kodepos}}" required onkeypress="return isNumberKey(event)">
                                         </div>
                                           @if($errors->has('kode_pos'))
                                        <div class="alert alert-danger">
@@ -177,7 +192,7 @@
                                             <p>
                                             <img src="../img/user/{{$datauser->ktp_gmb}}" width="100" height="100" >
                                             <p>
-                                            <input type="file" name="gambar_ktp">
+                                            <input type="file" name="gambar_ktp" accept="image/*">
                                         </div>
                                           @if($errors->has('gambar_ktp'))
                                        <div class="alert alert-danger">

@@ -52,7 +52,8 @@
                                         <th>Email</th>
                                         <th>Kota</th>
                                         <th>No. Telfon</th>
-										<th class="text-center">Aksi</th>
+										<th class="text-center">Status</th>
+                                        <th class="text-center">Aksi</th>
                                         <!--th>Level</th-->
                                     </tr>
                                 </thead>
@@ -67,8 +68,23 @@
                                         <td>{{$row->email}}</td>
                                         <td>{{$row->kota}}</td>
                                         <td>{{$row->telp}}</td>
+                                         <td class="text-center">
+                                            @if($row->cancel < 3)
+                                            <span class="label label-success">Aktif</span>
+                                            @else
+                                            <span class="label label-danger">Banned</span>
+                                            @endif
+                                        </td>
                                         <td class="text-center tooltip-demo">
-                                           
+                                        @if($row->cancel < 3)
+                                            <a href="{{url('user/'.$row->id.'/banned')}}" class="btn btn-primary btn-sm" onclick="return confirm('Banned User ?')">
+                                           <i class="fa fa-lock"></i>
+                                            </a> 
+                                            @else
+                                            <a href="{{url('user/'.$row->id.'/unbanned')}}" class="btn btn-primary btn-sm" onclick="return confirm('Aktifkan User Kembali ?')">
+                                           <i class="fa fa-unlock"></i>
+                                            </a> 
+                                            @endif   
 
                                         <a href="{{url('user/'.$row->id.'/changepass')}}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ganti Password">
                                             <i class="fa fa-key"></i>

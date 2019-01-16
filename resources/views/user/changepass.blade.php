@@ -8,6 +8,32 @@
 @endforeach
 
 @section('content')
+<script>
+    function mouseoverPass(obj) {
+  var obj = document.getElementById('myPassword');
+  obj.type = "text";
+}
+function mouseoutPass(obj) {
+  var obj = document.getElementById('myPassword');
+  obj.type = "password";
+}
+ function mouseoverPass1(obj) {
+  var obj = document.getElementById('myPassword1');
+  obj.type = "text";
+}
+function mouseoutPass1(obj) {
+  var obj = document.getElementById('myPassword1');
+  obj.type = "password";
+}
+ function mouseoverPass2(obj) {
+  var obj = document.getElementById('myPassword2');
+  obj.type = "text";
+}
+function mouseoutPass2(obj) {
+  var obj = document.getElementById('myPassword2');
+  obj.type = "password";
+}
+</script>
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -35,19 +61,20 @@
                                             <input type="text" class="form-control" name="username" required>
                                             <p class="help-block">*Masukan Username user yang akan di ganti passwordnya</p>
                                         </div>
-                                        @if($errors->has('username'))
-                                        <div class="alert alert-danger">
-                                        {{ $errors->first('username')}}
-                                         </div>
-                                        @endif
-
-                                        <div class="form-group">
-                                            <input type="hidden" name="password" value="{{$datauser->password}}">
+                                    @if ($errors->has('username'))
+                    <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{$errors->first('username') }}
+                    </div>
+                                @endif
+                                        <input type="hidden" name="password" value="{{$datauser->password}}">
 
                                             <label>Password Lama</label>
-                                            <input type="password" name="password_lama" class="form-control" required>
-                                            <p class="help-block">*Masukan password lama user yang akan di ganti passwordnya</p>
+                                        <div class="form-group input-group">
+                                          <input type="password" name="password_lama" class="form-control" required id="myPassword">
+                                        <span class="input-group-addon" onmouseover="mouseoverPass();" onmouseout="mouseoutPass();"><i class="fa fa-eye"></i></span>
                                         </div>
+                                        <p class="help-block">*Masukan password lama user yang akan di ganti passwordnya</p>
                                         @if (session('errorpass1'))
                     <div class="alert alert-danger alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -55,26 +82,30 @@
                     </div>
                     @endif
                                         <hr>
-
-                                        <div class="form-group">
-                                            <label>Password Baru</label>
-                                            <input type="password" name="password_baru" class="form-control" required>
+                                         <label>Password Baru</label>
+                                        <div class="form-group input-group">
+                                           <input type="password" name="password_baru" class="form-control" required id="myPassword1">
+                                           <span class="input-group-addon" onmouseover="mouseoverPass1();" onmouseout="mouseoutPass1();"><i class="fa fa-eye"></i></span>
                                         </div>
+                                        <p class="help-block">*Minimal 8 karakter</p>
                                         @if($errors->has('password_baru'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('password_baru')}}
                                          </div>
                                         @endif
-                                        <div class="form-group">
-                                            <label>Konfirmasi Password Baru</label>
-                                            <input type="password" name="konfirmasi_password_baru" class="form-control">
+                                        <label>Konfirmasi Password Baru</label>
+                                        <div class="form-group input-group">
+                                            
+                                            <input type="password" name="konfirmasi_password_baru" class="form-control" required id="myPassword2"> 
+                                            <span class="input-group-addon" onmouseover="mouseoverPass2();" onmouseout="mouseoutPass2();"><i class="fa fa-eye"></i></span>
                                         </div>
-                                         @if (session('errorpass2'))
+                                        <p class="help-block">*Minimal 8 karakter</p>
+                                         @if ($errors->has('konfirmasi_password_baru'))
                     <div class="alert alert-danger alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{ session('errorpass2') }}
+                                {{$errors->first('konfirmasi_password_baru') }}
                     </div>
-                    @endif
+                                @endif
                                         {{csrf_field()}}
                                         
                                         <input type="hidden" name="_method" value="PUT">

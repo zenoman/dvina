@@ -5,22 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login User</title>
-    @foreach($websettings as $webset)
     
+    @foreach($websettings as $webset)
     <link rel="shortcut icon" type="image" href="{{asset('img/setting/'.$webset->ico)}}">
     @endforeach
-    <!-- Google Fonts -->
+    
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
-    
-    <!-- Bootstrap -->
     <link rel="stylesheet" href="{{asset('user_aset/css/bootstrap.min.css')}}">
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('user_aset/css/font-awesome.min.css')}}">
-    
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{asset('user_aset/css/owl.carousel.css')}}">
     <link rel="stylesheet" href="{{asset('user_aset/style.css')}}">
     <link rel="stylesheet" href="{{asset('user_aset/css/responsive.css')}}">
@@ -67,6 +61,7 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
+
                 <div class="col-md-4">
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Login </h2>
@@ -84,16 +79,20 @@
                   @endif
                         <form action="{{url('/loginUser')}}" method="post">
                             <input type="text" placeholder="Masukan Username" class="input-text" name="username" required>
+
                             <input style="width: 100%" type="password" placeholder="Masukan Password" id="loginpass" name="password" class="input-text" required>
+
                             <p class="form-row">
                              <label class="inline" for="rememberme">
                                 <input type="checkbox" onclick="tampilsandi()"> Tampilkan Sandi
                             </label>
                             </p>
+
                             <div class="captcha">
                             <span>{!! captcha_img() !!}</span>
                             <button type="button" class="btn btn-success" id="refresh"><i class="fa fa-refresh"></i></button>
                             </div>
+
                             <br>
                             <input type="text" placeholder="Masukan Kode Captcha" class="input-text" name="kodecap" required>
                           
@@ -112,7 +111,12 @@
                                 {{ session('status') }}
 
                     </div>
-                    
+                    @endif
+                     @if(session('errormultiuser'))
+                    <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{ session('errormultiuser') }}
+                    </div>
                     @endif
                     @if($errors->has('email')||$errors->has('nama')||$errors->has('username')||$errors->has('password')||$errors->has('konfirmasi_password')||$errors->has('no_telfon')||$errors->has('alamat')||$errors->has('kota')||$errors->first('provinsi')||$errors->first('kode_pos'))
                     <div class="alert alert-danger alert-dismissable">
@@ -131,7 +135,6 @@
                                     <label>Nama
                                     </label>
                                     <input type="text" name="nama" class="form-control" style="width: 100%" value="{{ old('nama') }}" required>
-                                    <p class="help-block text-left">Minimal 5 Karakter</p>
                                      @if($errors->has('nama'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('nama')}}
@@ -142,7 +145,7 @@
                                     <label>Username
                                     </label>
                                     <input type="text" name="username" class="form-control" style="width: 100%" value="{{ old('username') }}" required>
-                                    <p class="help-block text-left">Minimal 5 Karakter alphanumerik</p>
+                                    <p class="help-block text-left">Minimal 8 Karakter alphanumerik</p>
                                      @if($errors->has('username'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('username')}}
@@ -153,7 +156,7 @@
                                     <label>Password
                                     </label>
                                     <input type="password" name="password" class="form-control" style="width: 100%" value="{{ old('password') }}" required>
-                                    <p class="help-block text-left">Minimal 5 Karakter</p>
+                                    <p class="help-block text-left">Minimal 8 Karakter</p>
                                      @if($errors->has('password'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('password')}}

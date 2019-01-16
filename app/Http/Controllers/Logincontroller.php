@@ -66,79 +66,92 @@ class Logincontroller extends Controller
         return view('login/loginuser',['websettings'=>$websetting]);
     }
     public function masukuser(Request $request){
-        
-         $request->validate([
+        $request->validate([
             'kodecap' => 'required|captcha'
         ]);
-        $username = $request->username;
-        $password = md5($request->password);
-
-        $data = DB::table('tb_users')->where([['username',$username],['password',$password]])->count();
-        $datausers = DB::table('tb_users')
-        ->where([['username',$username],['password',$password]])
-        ->get();
-        foreach ($datausers as $du) {
-             $id = $du->id;
-             $jumlahcancel=$du->cancel;
-         }
-         if($jumlahcancel>=3){
-            return back()->with('errorlogin','Maaf, akun anda di banned tanyakan admin untuk info lebih lanjut');
-         }else{
-            if($data>0){
-                Session::put('user_name',$request->username);
-                Session::put('user_id',$id);
-                Session::put('login',TRUE);
-                return redirect('/');
-            }else{
-                return back()->with('errorlogin','username atau password salah');
-            }
-         }
         
-    }
+        $username = $request->username;
+        $password = $request->password;
+
+        $data = DB::table('tb_users')
+        ->where('username',$username)
+        ->count();
+        
+        if($data > 0){
+            $datausers = DB::table('tb_users')
+            ->where('username',$username)
+            ->get();
+            
+            foreach ($datausers as $du) {
+                $id = $du->id;
+                $jumlahcancel=$du->cancel;
+                $mypass = $du->password;
+            }
+
+            if(Hash::check($password,$mypass)){
+                 if($jumlahcancel>=3){
+                    return back()
+                    ->with('errorlogin','Maaf, akun anda di banned tanyakan admin untuk info lebih lanjut');
+                }else{
+                    Session::put('user_name',$request->username);
+                    Session::put('user_id',$id);
+                    Session::put('login',TRUE);
+                    return redirect('/');
+                }
+            }else{
+               return back()
+               ->with('errorlogin','Maaf,password salah'); 
+            }
+        }else{
+            return back()
+            ->with('errorlogin','Maaf,username salah atau tidak ada');
+        }}
     
     public function register(Request $request)
     {
         $roles = [
-                    'nama'      => 'required|min:5',
-                    'username'  => 'required|min:5|alpha_dash',
-                    'password'  => 'required|min:5',
-                    'konfirmasi_password'=>'required|min:5|same:password',
-                    'no_telfon' => 'required|numeric',
-                    'email'     => 'required|email',
-                    'alamat'    => 'required',
-                    'kota'      => 'required',
-                    'provinsi'  => 'required',
-                    'kode_pos'  => 'required|numeric',
-                    'gambar_ktp'=> 'image|nullable|max:2000'
-                    
-                    ];
+        'nama'      => 'required',
+        'username'  => 'required|min:8|alpha_dash',
+        'password'  => 'required|min:8',
+        'konfirmasi_password'=>'required|min:8|same:password',
+        'no_telfon' => 'required|numeric',
+        'email'     => 'required|email',
+        'alamat'    => 'required',
+        'kota'      => 'required',
+        'provinsi'  => 'required',
+        'kode_pos'  => 'required|numeric',
+        'gambar_ktp'=> 'image|nullable|max:3000'];
+
         $customMessages = [
         'required'  => 'Maaf, :attribute harus di isi',
-        'min'       => 'Maaf, data yang anda masukan    terlalu sedikit',
-        'alpha_dash'=> 'Maaf, tidak menerima data lain kecuali alphabet',
+        'min'=> 'Maaf, data yang anda masukan    terlalu sedikit',
+        'alpha_dash'=>'Maaf, tidak menerima data lain kecuali alphabet',
         'same'      => 'Maaf, Pastikan :attribute dan :other sama',
         'numeric'   => 'Maaf, data harus angka',
         'email'     => 'Maaf, data harus email',
         'image'     => 'Maaf, file harus berupa gambar',
         'max'       => 'Maaf, file terlalu besar'
-    ];
+        ];
 
     $this->validate($request,$roles,$customMessages);
+    $jumlahuser = DB::table('tb_users')
+    ->where('username',$request->username)->count();
+    if($jumlahuser > 0){
+    return back()
+    ->with('errormultiuser','Maaf, username telah digunakan, coba lainya');
+    }else{
     if($request->hasFile('gambar_ktp')){ 
-                     $namaexs=$request->File('gambar_ktp')->getClientOriginalName();
-                     $lower_file_name=strtolower($namaexs);
-                    $replace_space=str_replace(' ','-',$lower_file_name);
-                     $namagambar=time().'-'.$replace_space;
-                     $destination = public_path('img/user');
-                   $request->file('gambar_ktp')->move($destination,$namagambar);
-                }else{
-                    $namagambar='';
-                }
-                
-
+    $namaexs=$request->File('gambar_ktp')->getClientOriginalName();
+    $lower_file_name=strtolower($namaexs);
+    $replace_space=str_replace(' ','-',$lower_file_name);
+    $namagambar=time().'-'.$replace_space;
+    $destination = public_path('img/user');
+    $request->file('gambar_ktp')->move($destination,$namagambar);
+    }else{$namagambar='';}
+        
         Usermodel::create([
                 'username' => $request->username,
-                'password' => md5($request->password),
+                'password' => Hash::make($request->password),
                 'email'    => $request->email,
                 'telp'     => $request->no_telfon,
                 'nama'     => $request->nama,
@@ -147,58 +160,12 @@ class Logincontroller extends Controller
                 'provinsi' => $request->provinsi,
                 'kodepos'  => $request->kode_pos,
                 'ktp_gmb'  => $namagambar
-               
-               
-
         ]);
-                 return back()->with('status','Registrasi sukses, Silahkan Login');
+        return back()
+        ->with('status','Registrasi sukses, Silahkan Login');   
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     //-------------------- API ANDROID ----------------------
     function loginApi(Request $req){
         $username = $req->username;
