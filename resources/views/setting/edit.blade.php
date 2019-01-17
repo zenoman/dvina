@@ -106,8 +106,8 @@
                                         </div>
                                              <div class="form-group">
                                             <label>Ganti Icon</label><p>
-                                            <img src="../img/setting/{{$row->ico}}" width="100" height="100">
-                                            <input type="file" name="ico">
+                                            <img src="../img/setting/{{$row->ico}}" width="30%">
+                                            <input type="file" name="ico" accept="image/*">
                                         </div>
                                         @if($errors->has('ico'))
                                        <div class="alert alert-danger">
@@ -116,8 +116,8 @@
                                        @endif
                                              <div class="form-group">
                                             <label>Ganti Logo</label><p>
-                                            <img src="../img/setting/{{$row->logo}}" width="100" height="100">
-                                            <input type="file" name="logo">
+                                            <img src="../img/setting/{{$row->logo}}" width="30%">
+                                            <input type="file" name="logo" accept="image/*">
                                         </div>
                                           @if($errors->has('logo'))
                                        <div class="alert alert-danger">

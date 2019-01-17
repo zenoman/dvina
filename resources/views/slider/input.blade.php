@@ -36,7 +36,7 @@
                                         @endif
                                         <div class="form-group">
                                             <label>Gambar</label>
-                                            <input type="file" name="gambar" required>
+                                            <input type="file" name="gambar" required accept="image/*">
                                         </div>
                                           @if($errors->has('gambar'))
                                        <div class="alert alert-danger">

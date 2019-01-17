@@ -108,6 +108,7 @@
                                     $kode_barang = $barangterbaru->kode_barang;
                                     $foto = DB::table('gambar')
                                     ->where('kode_barang', $kode_barang)
+                                    ->orderby('id','asc')
                                     ->limit(1)
                                     ->get();
                                     @endphp
@@ -155,6 +156,7 @@
                                     $kode_barang = $suges->kode_barang;
                                     $foto = DB::table('gambar')
                                     ->where('kode_barang', $kode_barang)
+                                    ->orderby('id','asc')
                                     ->limit(1)
                                     ->get();
                                     @endphp
