@@ -51,7 +51,7 @@
                                         @endif
                                         <div class="form-group">
                                             <label>Username</label>
-                                            <input type="text" class="form-control" value="{{$dataadmin->username}}" name="username" required>
+                                            <input type="text" class="form-control" value="{{$dataadmin->username}}" name="username" required pattern=".{8,}">
                                             <input type="hidden" value="{{$dataadmin->username}}" name="oldusername">
                                             <p class="help-block">*Minimal 8 karakter</p>
                                         </div>

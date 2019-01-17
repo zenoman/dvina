@@ -95,7 +95,7 @@ function mouseoutPass2(obj) {
                                          <label>Password Baru</label>
                                         <div class="form-group input-group">
                                            
-                                            <input type="password" class="form-control" name="password_baru" required id="myPassword1">
+                                            <input type="password" class="form-control" name="password_baru" required id="myPassword1" pattern=".{8,}">
                                               <span class="input-group-addon" onmouseover="mouseoverPass1();" onmouseout="mouseoutPass1();"><i class="fa fa-eye"></i></span>
                                         </div>
                                         <p class="help-block">*Minimal 8 karakter</p>
@@ -107,9 +107,10 @@ function mouseoutPass2(obj) {
                                         <label>Konfirmasi Password Baru</label>
                                         <div class="form-group input-group">
                                             
-                                            <input type="password" name="konfirmasi_password_baru" class="form-control" required id="myPassword2">
+                                            <input type="password" name="konfirmasi_password_baru" class="form-control" required id="myPassword2" pattern=".{8,}">
                                             <span class="input-group-addon" onmouseover="mouseoverPass2();" onmouseout="mouseoutPass2();"><i class="fa fa-eye"></i></span>
                                         </div>
+                                        <p class="help-block">*Minimal 8 karakter</p>
                                         @if($errors->has('konfirmasi_password_baru'))
                                             <div class="alert alert-danger">
                                                 {{$errors->first('konfirmasi_password_baru')}}
@@ -122,16 +123,7 @@ function mouseoutPass2(obj) {
                     </div>
                     @endif
                                         {{csrf_field()}}
-                                        <!--div class="form-group">
-                                            <label>Selects</label>
-                                            <select class="form-control">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-                                        </div-->
+                                       
                                         <input type="hidden" name="_method" value="PUT">
                                         <input class="btn btn-primary" type="submit" name="submit" value="simpan">
                                         <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>

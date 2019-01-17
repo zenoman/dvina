@@ -48,7 +48,7 @@
 
                                         <div class="form-group">
                                         	<label>Gambar Kategori</label>
-                                            <input class="form-control" name="gambar_kategori" type="file" required>
+                                            <input class="form-control" name="gambar_kategori" type="file" required accept="image/*">
 
                                             <p class="help-block">*Gambar Kategori Tidak Boleh Kosong</p>
                                         </div>
@@ -114,7 +114,7 @@
                                          <br>
                                         <div class="form-group">
                                         	<label>Ganti Gambar</label>
-                                            <input class="form-control" name="gambar_kategori" type="file">
+                                            <input class="form-control" name="gambar_kategori" type="file" accept="image/*">
 
                                         </div>
                                         {{ csrf_field() }}

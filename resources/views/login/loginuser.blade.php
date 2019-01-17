@@ -21,7 +21,16 @@
 
   </head>
   <body>
-   
+   <script type="text/javascript">
+function isNumberKey(evt)
+      {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+         return true;
+      }
+  </script>
     
     <div class="site-branding-area">
         <div class="container">
@@ -144,7 +153,7 @@
                                 <p class="form-row form-row-first">
                                     <label>Username
                                     </label>
-                                    <input type="text" name="username" class="form-control" style="width: 100%" value="{{ old('username') }}" required>
+                                    <input type="text" name="username" class="form-control" style="width: 100%" value="{{ old('username') }}" required pattern=".{8,}">
                                     <p class="help-block text-left">Minimal 8 Karakter alphanumerik</p>
                                      @if($errors->has('username'))
                                         <div class="alert alert-danger">
@@ -155,7 +164,7 @@
                                 <p class="form-row form-row-first">
                                     <label>Password
                                     </label>
-                                    <input type="password" name="password" class="form-control" style="width: 100%" value="{{ old('password') }}" required>
+                                    <input type="password" name="password" class="form-control" style="width: 100%" value="{{ old('password') }}" required pattern=".{8,}">
                                     <p class="help-block text-left">Minimal 8 Karakter</p>
                                      @if($errors->has('password'))
                                         <div class="alert alert-danger">
@@ -166,7 +175,8 @@
                                 <p class="form-row form-row-first">
                                     <label>Konfirmasi Password
                                     </label>
-                                    <input type="password" name="konfirmasi_password" class="form-control" style="width: 100%" value="{{ old('konfirmasi_password') }}" required>
+                                    <input type="password" name="konfirmasi_password" class="form-control" style="width: 100%" value="{{ old('konfirmasi_password') }}" required pattern=".{8,}">
+                                     <p class="help-block text-left">Minimal 8 Karakter</p>
                                      @if($errors->has('konfirmasi_password'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('konfirmasi_password')}}
@@ -186,7 +196,7 @@
                                 <p class="form-row form-row-first">
                                     <label>No Telfon
                                     </label>
-                                    <input type="text" name="no_telfon" class="form-control" style="width: 100%" value="{{ old('no_telfon') }}" required>
+                                    <input type="text" name="no_telfon" class="form-control" style="width: 100%" value="{{ old('no_telfon') }}" required onkeypress="return isNumberKey(event)">
                                   @if($errors->has('no_telfon'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('no_telfon')}}
@@ -261,7 +271,7 @@
                                 <p class="form-row form-row-first">
                                     <label>Kode Pos
                                     </label>
-                                    <input type="text" name="kode_pos" class="form-control" style="width: 100%" value="{{ old('kode_pos') }}" required>
+                                    <input type="text" name="kode_pos" class="form-control" style="width: 100%" value="{{ old('kode_pos') }}" required onkeypress="return isNumberKey(event)">
                                       @if($errors->has('kode_pos'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('kode_pos')}}

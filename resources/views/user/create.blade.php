@@ -70,7 +70,7 @@ function mouseoutPass1(obj) {
 
                                         <div class="form-group">
                                             <label>Username</label>
-                                            <input type="text" class="form-control" placeholder="contoh : devasatrio" name="username" value="{{ old('username') }}" required>
+                                            <input type="text" class="form-control" placeholder="contoh : devasatrio" name="username" value="{{ old('username') }}" required pattern=".{8,}">
                                         </div>
                                         <p class="help-block">*Minimal 8 karakter</p>
 
@@ -82,7 +82,7 @@ function mouseoutPass1(obj) {
 
                                     <label>Password</label>
                                         <div class="form-group input-group">
-                                            <input type="password" class="form-control" name="password" required id="myPassword">
+                                            <input type="password" class="form-control" name="password" required id="myPassword" pattern=".{8,}">
                                             <span class="input-group-addon" onmouseover="mouseoverPass();" onmouseout="mouseoutPass();"><i class="fa fa-eye"></i></span>
                                         </div>
                                         <p class="help-block">*Minimal 8 karakter</p>
@@ -95,7 +95,7 @@ function mouseoutPass1(obj) {
                                     <label>Konfirmasi Password</label>
                                         <div class="form-group input-group">
                                             
-                                            <input type="password" class="form-control" name="konfirmasi_password" required id="myPassword1">
+                                            <input type="password" class="form-control" name="konfirmasi_password" required id="myPassword1" pattern=".{8,}">
                                             <span class="input-group-addon" onmouseover="mouseoverPass1();" onmouseout="mouseoutPass1();"><i class="fa fa-eye"></i></span>
                                         </div>
                                         <p class="help-block">*Minimal 8 karakter</p>
