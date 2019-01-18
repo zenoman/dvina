@@ -281,7 +281,7 @@ function isNumberKey(evt)
                                 <p class="form-row form-row-first">
                                     <label>Foto KTP
                                     </label>
-                                    <input type="file" name="gambar_ktp" required>
+                                    <input type="file" name="gambar_ktp" required accept="image/*">
                                     <p class="help-block text-left">Foto KTP wajib di isi</p>
                                      @if($errors->has('gambar_ktp'))
                                         <div class="alert alert-danger">

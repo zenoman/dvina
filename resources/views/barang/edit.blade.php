@@ -106,7 +106,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Deskripsi Barang</label>
-                                            <textarea class="form-control" name="deskripsi" rows="5">{{$row->deskripsi}}</textarea>
+                                            <textarea class="form-control" name="deskripsi" id="editor" rows="5">{!!$row->deskripsi!!}</textarea>
                                         </div>
                                           <label>Harga Jual Barang</label>
                                         <div class="form-group input-group">
@@ -265,8 +265,24 @@
        
         @endsection
 
-        @section('pluginjs')
-        
+        @section('js')
+        <script src="{{asset('assets/js/ckeditor.js')}}"></script>
+        <script>
+      ClassicEditor
+    .create( document.querySelector( '#editor' ), {
+        toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+        heading: {
+            options: [
+                { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+            ]
+        }
+    } )
+    .catch( error => {
+        console.log( error );
+    } );
+    </script>
         @endsection
 
 

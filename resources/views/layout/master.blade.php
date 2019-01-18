@@ -90,12 +90,6 @@
                         <li>
                             <a href="{{url('/admin')}}"><i class="fa fa-user fa-fw"></i> Admin</a>
                         </li>
-                        <!-- <li>
-                            <a href="{{url('/jual')}}"><i class="fa fa-cart-plus fa-fw"></i> Transaksi Barang</a>
-                        </li>
-                        <li>
-                            <a href="{{url('/pesan')}}"><i class="fa fa-tags fa-fw"></i> Pemesanan Barang</a>
-                        </li> -->
                         <li>
                             <a href="{{url('/user')}}"><i class="fa fa-users fa-fw"></i> User</a>
                         </li>
@@ -130,9 +124,10 @@
                         <li>
                             <a href="{{url('/backup')}}"><i class="fa fa-download fa-fw"></i> Backup Data</a>
                         </li>
-                        <li>
-                            <a><i class="fa fa-file fa-fw"></i> Laporan<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                        
+                       <li>
+                            <a href="#"><i class="fa fa-file fa-fw"></i> Laporan<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
                                 <li>
                                     <a href="{{url('/laporan/pengeluaran')}}">Laporan Pengeluaran</a>
                                 </li>
@@ -148,8 +143,7 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        
-                        </ul>
+                    </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>

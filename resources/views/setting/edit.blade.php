@@ -11,9 +11,7 @@
                 <div class="col-lg-12">
                     <h1 class="page-header">Edit Data Setting</h1>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
                      @if (session('status'))
@@ -70,12 +68,7 @@
                                        @endif
                                         </div>
                                        </div>
-                                        
-                                        
-
-
-                                         
-                                        <div class="form-group">
+                                         <div class="form-group">
                                             <label>Email</label>
                                             <input type="text" class="form-control" name="email" value="{{$row->email}}">
                                         </div>
@@ -100,13 +93,13 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Peraturan Belanja</label>
-                                            <textarea class="form-control" name="peraturan" rows="8" id="mytextarea">
+                                            <textarea class="form-control" name="peraturan" rows="8" id="editor">
                                                 {{$row->peraturan}}
                                             </textarea>
                                         </div>
                                              <div class="form-group">
                                             <label>Ganti Icon</label><p>
-                                            <img src="../img/setting/{{$row->ico}}" width="30%">
+                                            <img src="{{asset('img/setting/'.$row->ico)}}" width="10%">
                                             <input type="file" name="ico" accept="image/*">
                                         </div>
                                         @if($errors->has('ico'))
@@ -116,7 +109,7 @@
                                        @endif
                                              <div class="form-group">
                                             <label>Ganti Logo</label><p>
-                                            <img src="../img/setting/{{$row->logo}}" width="30%">
+                                            <img src="{{asset('img/setting/'.$row->logo)}}" width="30%">
                                             <input type="file" name="logo" accept="image/*">
                                         </div>
                                           @if($errors->has('logo'))
@@ -135,23 +128,28 @@
                                 </div>
                               
                             </div>
-                            <!-- /.row (nested) -->
                         </div>
-                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
         </div>
-        <!-- /#page-wrapper -->
         @endsection
         @section('js')
-        <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+        <script src="{{asset('assets/js/ckeditor.js')}}"></script>
   <script>
-  tinymce.init({
-    selector: '#mytextarea'
-  });
-  </script>
+    ClassicEditor
+    .create( document.querySelector('#editor'),{
+        toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+        heading: {
+            options: [
+                { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+            ]
+        }
+    })
+    .catch( error => {
+        console.log( error );
+    } );
+    </script>
         @endsection
