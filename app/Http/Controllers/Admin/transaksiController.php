@@ -70,7 +70,7 @@ class transaksiController extends Controller
         $id=$request->get('idwarna');
         $iduser=$request->get('iduser');        
         $tgl=date('dd-MM-yyyy');
-        //$tglExp=date('');
+        $tglExp="01-01-2019";
         $kode=$request->get('kode_barang');
         $barang=$request->get('barang');
         $harga=$request->get('harga');
@@ -79,13 +79,20 @@ class transaksiController extends Controller
         $diskon=$request->get('diskon');
         $total=$totala-($totala*$diskon/100);
         $metod="pesan";
+
+        //cek Stok
+        
 //simpan ke Query
         $data=DB::insert("insert into tb_details(idwarna,iduser,tgl,tgl_kadaluarsa,kode_barang,barang,harga,jumlah,total_a,diskon,total,metode) values(?,?,?,?,?,?,?,?,?,?,?,?)",[$id,$iduser,$tgl,$tglExp,$kode,$barang,$harga,$jumlah,$totala,$diskon,$total,$metod]);
         if ($data){
-            return response()->json(["status"=>"1","msg"=>"Berhasil Dipesan"]);
+            return response()->json(["status"=>"1","pesan"=>"Berhasil Dipesan"]);
         }else{
-            return response()->json(["status"=>"0","msg"=>"Gagal Dipesan"]);
+            return response()->json(["status"=>"0","pesan"=>"Gagal Dipesan"]);
         }
 
+    }
+    //tampil Transaksi
+    function vBelanja(){
+        
     }
 }

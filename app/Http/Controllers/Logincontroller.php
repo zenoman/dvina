@@ -167,18 +167,58 @@ class Logincontroller extends Controller
     
     }
     //-------------------- API ANDROID ----------------------
-    function loginApi(Request $req){
+    function loginApi(Request $req){    
         $username = $req->username;
-        $password = md5($req->password);
+        $mypassword = $req->password;
+        $data = DB::table('tb_users')
+        ->where('username',$username)
+        ->count();
+        
+        if($data > 0){
+            $datausers = DB::table('tb_users')
+            ->where('username',$username)
+            ->get();
+            
+            foreach ($datausers as $du) {
+                $id = $du->id;
+                $jumlahcancel=$du->cancel;
+                $mypass = $du->password;
+            }
 
-        $data = DB::table('tb_users')->where([['username',$username],['password',$password]])->count();
-        $datausers = DB::table('tb_users')
-        ->where([['username',$username],['password',$password]])
-        ->get();
-        if($data>0){
-        return response()->json(["status"=>"1","data"=>$datausers]);
+            if(Hash::check($mypassword,$mypass)){
+                 if($jumlahcancel>=3){
+                    return response()->json(['status'=>'0','msg'=>'Maaf Jumlah Cancel Anda Melebihi Batas, Silahkan Hubungi Admin','data'=>$datausers]);
+                }else{
+                    return response()->json(['status'=>'1','msg'=>'Berhasil Login','data'=>$datausers]);
+                }
+            }else{
+                return response()->json(['status'=>'0','msg'=>'Maaf Password anda Tidak Sesuai']);
+            }
         }else{
-            return response()->json(["status"=>"0","data"=>$datausers]);
+            return response()->json(['status'=>'0','msg'=>'Maaf Username Belum Terdaftar']);
         }
+        
+    }
+    function updateProfile(Request $rq){
+        $id=$rq->id;
+        $username=$rq->username;
+        $pass=Hash::make($rq->password);
+        $email=$rq->email;
+        $tlp=$rq->telp;
+        $nama=$rq->nama;
+        $lm=$rq->alamat;
+        $kt=$rq->kota;
+        $pr=$rq->provinsi;
+        $kp=$rq->kodepos;
+        
+        $upd=DB::update('update tb_users set username=?,password=?,email=?,telp=?,nama=?,alamat=?,kota=?,provinsi=?,kodepos=? where id=?',[$username,$pass,$email,$tlp,$nama,$lm,$kt,$pr,$kp,$id]);
+        if($upd>0){
+            return response()->json(['msg'=>' Akun Berhasil Di Update']);     
+        }else{
+            return response()->json(['msg'=>' Akun gagal Di Update']);     
+        }
+    }
+    function registerA(Request $req){
+
     }
 }

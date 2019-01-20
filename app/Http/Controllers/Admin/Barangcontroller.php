@@ -476,10 +476,11 @@ class Barangcontroller extends Controller
     }
     function listEtalase(){
         $barang = DB::table('tb_kodes')
-        ->join('gambar','tb_kodes.kode_barang','=','gambar.kode_barang')       
-        ->select(DB::raw('tb_kodes.*,gambar.nama'))
+        ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')       
+        ->join('gambar','tb_kodes.kode_barang','=','gambar.kode_barang')
+        ->select(DB::raw('tb_kodes.*,gambar.nama, tb_kategoris.kategori'))
         ->orderByRaw('RAND()')
-        ->limit(7)
+        ->limit(8)
         ->get();
         return response()->json(["data"=>$barang]);
     }
