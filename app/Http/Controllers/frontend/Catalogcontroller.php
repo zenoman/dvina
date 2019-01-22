@@ -231,14 +231,17 @@ class Catalogcontroller extends Controller
     }
 
     public function aksibeli(Request $request){
+        $tanggalsekarang = date('dmy');
         $iduser     = Session::get('user_id');
-        $kode = DB::table('tb_transaksis')->max('faktur');
+        $kode = DB::table('tb_transaksis')
+        ->where('faktur','like','%'.$tanggalsekarang.'%')
+        ->max('faktur');
         if($kode != NULL){
-            $numkode = substr($kode, 5);
+            $numkode = substr($kode, 11);
             $countkode = $numkode+1;
-            $newkode = "DVINA".sprintf("%05s", $countkode);
+            $newkode = "DVINA".$tanggalsekarang.sprintf("%05s", $countkode);
         }else{
-            $newkode = "DVINA00001";
+            $newkode = "DVINA".$tanggalsekarang."00001";
         }
         $tgl = date("Y-m-d");
         $total = $request->total;

@@ -64,7 +64,7 @@ class PembelianController extends Controller
             ->insert([
                 'faktur'=>$newkode,
                 'total_akhir'=>$row->total,
-                'tgl'=>date("d-m-Y"),
+                'tgl'=>date("Y-m-d"),
                 'bulan'=>date("m"),
                 'status'=>'ditolak',
                 'id_user'=>$row->iduser,

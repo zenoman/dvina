@@ -52,8 +52,8 @@
                                 <input type="hidden" name="kode_barang" value="{{$kode}}">
                                 <input type="hidden" name="jumlah_file" value="{{4-$jumlah_foto}}">
                                 <label>Foto</label>
-                                <input type="file" class="form-control" name="photo[]" multiple required>
-                                <p class="help-block">*Foto Tidak Boleh Lebih Dari {{4-$jumlah_foto}} File</p>
+                                <input type="file" class="form-control" name="photo[]" multiple required id="photo">
+                                <p class="help-block">*Foto Tidak Boleh Lebih Dari {{4-$jumlah_foto}} File dan ukuran tidak lebih dari 3mb</p>
                             </div>
                             @if (session('errorfoto'))
                             <div class="alert alert-danger alert-dismissable">
@@ -282,6 +282,25 @@
     .catch( error => {
         console.log( error );
     } );
+     $('#photo').change(function(e){
+    var imageSizeArr = 0;
+    var imageSize = document.getElementById('photo');
+    var imageCount = imageSize.files.length;
+    for (var i = 0; i < imageSize.files.length; i++)
+    {
+         var imageSiz = imageSize.files[i].size;
+         var imagename = imageSize.files[i].name;
+         if (imageSiz > 3000000) {
+             $('#test').text('3');
+             var imageSizeArr = 1;
+         }
+         if (imageSizeArr == 1)
+         {
+             alert('Maaf, gambar "'+imagename+'" terlalu besar / memiliki ukuran lebih dari 3MB');
+             $('#photo').val('');
+         }
+     }
+ }); 
     </script>
         @endsection
 

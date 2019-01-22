@@ -88,11 +88,25 @@
                             <a href="{{url('/dashboard')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
+                            <a href="#"><i class="fa fa-users fa-fw"></i> Pengguna<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li>
+                                    <a href="{{url('/admin')}}"> Admin
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{url('/user')}}">
+                                    User</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                       <!--  <li>
                             <a href="{{url('/admin')}}"><i class="fa fa-user fa-fw"></i> Admin</a>
                         </li>
                         <li>
                             <a href="{{url('/user')}}"><i class="fa fa-users fa-fw"></i> User</a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="{{url('/kategori')}}"><i class="fa fa-th-large fa-fw"></i> Kategori</a>
                         </li>
@@ -101,6 +115,27 @@
                             <a href="{{url('/barang')}}"><i class="fa fa-cube fa-fw"></i> Barang</a>
                         </li>
                         <li>
+                            <a href="#"><i class="fa fa-money fa-fw"></i> Transaksi<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li>
+                                     <a href="{{url('/pembelian')}}"> Pembelian</a>
+                                </li>
+                                <li>
+                                     <a href="{{url('/pembelianlain')}}"> Pembelian Lain</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('/pengeluaran')}}">Pengeluaran</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('/transaksilangsung')}}">Transaksi Langsung</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('/pembelian/gagal')}}">Transaksi Gagal</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <!-- <li>
                             <a href="{{url('/pembelian')}}"><i class="fa fa-money fa-fw"></i> Pembelian</a>
                         </li>
                         <li>
@@ -111,7 +146,7 @@
                         </li>
                         <li>
                             <a href="{{url('/pembelian/gagal')}}"><i class="fa fa-asl-interpreting fa-fw"></i> Transaksi Gagal</a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="{{url('/slider')}}"><i class="fa fa-image fa-fw"></i> Slider</a>
                         </li>

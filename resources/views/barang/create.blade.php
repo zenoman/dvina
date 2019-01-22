@@ -78,8 +78,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Foto</label>
-                                            <input type="file" class="form-control" name="photo[]" multiple required  accept="image/*">
-                                            <p class="help-block">*Foto Tidak Lebih Dari 4 File</p> 
+                                            <input type="file" class="form-control" name="photo[]" multiple required accept="image/*" id="photo">
+                                            <p class="help-block">*Foto Tidak Lebih Dari 4 File dan berukuran kurang dari 3Mb</p> 
                                         </div>
                                          @if (session('errorfoto'))
                             <div class="alert alert-danger alert-dismissable">
@@ -237,6 +237,25 @@ function add_feed()
     .catch( error => {
         console.log( error );
     } );
+    $('input[type="file"]').change(function(){
+    var imageSizeArr = 0;
+    var imageSize = document.getElementById('photo');
+    var imageCount = imageSize.files.length;
+    for (var i = 0; i < imageSize.files.length; i++)
+    {
+         var imageSiz = imageSize.files[i].size;
+         var imagename = imageSize.files[i].name;
+         if (imageSiz > 3000000) {
+             $('#test').text('3');
+             var imageSizeArr = 1;
+         }
+         if (imageSizeArr == 1)
+         {
+             alert('Maaf, gambar "'+imagename+'" terlalu besar / memiliki ukuran lebih dari 3MB');
+             $('#photo').val('');
+         }
+     }
+ }); 
     </script>
         @endsection
 

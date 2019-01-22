@@ -1,5 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Input;
+//transaksi langsung
+Route::get('/transaksilangsung','Admin\pembelianlangsung@tampil');
+Route::get('/carikode','Admin\pembelianlangsung@carikode');
 //captcha
 Route::get('refreshcaptcha', 'Logincontroller@refreshCaptcha');
 
