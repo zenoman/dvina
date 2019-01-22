@@ -9,6 +9,7 @@
 
 @section('css')
 <link href="{{asset('assets/js/select2.min.css')}}" rel="stylesheet">
+<link href="{{asset('assets/js/loading.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -36,12 +37,12 @@ function isNumberKey(evt)
                                 {{ session('status') }}
                     </div>
                     @endif
-                    <div class="panel panel-default">
+                    <div class="panel panel-default" >
                         <div class="panel-heading">
                             Isi Data Dibawah Ini Sesuai Perintah !
                         </div>
                         <div class="panel-body">
-                            <div class="row">
+                            <div class="row loading-div" id="panelnya">
                                 <div class="col-lg-12">
                                     <h3>Faktur : <span id="noresi"></span> </h3><hr>
                                     <form action="#" role="form" method="POST">
@@ -57,7 +58,9 @@ function isNumberKey(evt)
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                             <label>Cari Warna</label>
-                                            <input type="text" class="form-control" name="nama" required>
+                                    <select class="form-control" id="cariwarna">
+                                        <option value="ph" data-stok="">pilih warna</option>
+                                    </select>
                                         </div>
                                             </div>
                                             <div class="col-md-2">
@@ -99,6 +102,7 @@ function isNumberKey(evt)
                                                 <div class="form-group">
                                             <label>Diskon</label>
                                             <input type="text" class="form-control" readonly id="diskon">
+                                            <input type="hidden" id="kodebarangnya">
                                         </div>
                                             </div>
                                         </div>
@@ -150,6 +154,7 @@ function isNumberKey(evt)
         @endsection
         @section('js')
         <script src="{{asset('assets/js/select2.min.js')}}"></script>
+        <script src="{{asset('assets/js/loading.js')}}"></script>
         <script type="text/javascript">
         $("#caribarang").select2();
         </script>

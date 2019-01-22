@@ -30,4 +30,32 @@ class pembelianlangsung extends Controller
         }
         return response()->json($finalkode);
     }
+
+    public function caribarang(Request $request){
+        if($request->has('q')){
+        $cari = $request->q;
+        $data = DB::table('tb_kodes')
+                ->select('barang','kode_barang')
+                ->where('barang','like','%'.$cari.'%')
+                ->orwhere('kode_barang','like','%'.$cari.'%')
+                ->get();
+        return response()->json($data);
+        }
+    }
+    public function carihasilbarang($kode){
+         $data = DB::table('tb_kodes')
+                    ->where('kode_barang',$kode)
+                    ->get();
+            
+        return response()->json($data);
+    }
+    public function cariwarna($kode){
+        
+        $data = DB::table('tb_barangs')
+                ->select('idbarang','warna','stok')
+                ->where('kode','=',$kode)
+                ->get();
+        return response()->json($data);
+        
+    }
 }
