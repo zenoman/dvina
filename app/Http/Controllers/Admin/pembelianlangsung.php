@@ -17,8 +17,8 @@ class pembelianlangsung extends Controller
     	$tanggal    = date('dmy');
         $kodeuser = sprintf("%02s",session::get('iduser'));
         $lastuser = $tanggal."-".$kodeuser;
-        $kode = DB::table('tb_transaksis_langsung')
-        ->where('faktur','like','%'.$lastuser.'-%')
+        $kode = DB::table('tb_transaksis')
+        ->where([['faktur','like','%'.$lastuser.'-%'],['metode','=','langsung']])
         ->max('faktur');
 
         if(!$kode){
@@ -57,5 +57,48 @@ class pembelianlangsung extends Controller
                 ->get();
         return response()->json($data);
         
+    }
+    public function tambahdetail(Request $request){
+         $websetting = DB::table('settings')->limit(1)->get();
+        foreach ($websetting as $ws) {
+            $day = date("d")+$ws->max_tgl;
+        }
+         DB::table('tb_details')
+            ->insert([
+                'faktur'=>$request->faktur,
+                'idwarna'=>$request->idwarna,
+                'tgl'=>date("Y-m-d"),
+                'tgl_kadaluarsa'=>date("Y")."-".date("m")."-".$day,
+                'kode_barang'=>$request->kodebarang,
+                'barang'=>$request->barang,
+                'harga'=>$request->harga,
+                'jumlah'=>$request->jumlah,
+                'total_a'=>$request->totalawal,
+                'diskon'=>$request->diskon,
+                'total'=>$request->total,
+                'admin'=>session::get('iduser'),
+                'metode'=>"langsung"
+            ]);
+    }
+    public function caridetailbarang($kode){
+         $data = DB::table('tb_details')->where('faktur',$kode)->get();
+        return response()->json($data);
+    }
+
+    public function hapusdetailbarang($id){
+        $databarang = DB::table('tb_details')
+        ->where('id',$id)
+        ->get();
+
+        foreach ($databarang as $row) {
+        DB::table('keranjang_cancel')
+        ->insert([
+            'tgl'=>date('Y-m-d'),
+            'idbarang'=>$row->idwarna,
+            'jumlah'=>$row->jumlah
+        ]);
+        
+        DB::table('tb_details')->where('id',$id)->delete();
+        }
     }
 }

@@ -116,8 +116,6 @@ class Catalogcontroller extends Controller
                 'diskon'=>$diskon,
                 'total'=>$harga_total,
                 'metode'=>"pesan"
-
-
             ]);
             return back();
         }

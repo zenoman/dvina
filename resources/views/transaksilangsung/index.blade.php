@@ -45,13 +45,13 @@ function isNumberKey(evt)
                             <div class="row loading-div" id="panelnya">
                                 <div class="col-lg-12">
                                     <h3>Faktur : <span id="noresi"></span> </h3><hr>
-                                    <form action="#" role="form" method="POST">
+                                    
                                        
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                             <label>Cari Barang</label>
-                                    <select class="form-control" id="caribarang">
+                                    <select class="form-control" id="caribarang" autofocus>
                                     </select>
                                         </div>
                                             </div>
@@ -59,7 +59,7 @@ function isNumberKey(evt)
                                                 <div class="form-group">
                                             <label>Cari Warna</label>
                                     <select class="form-control" id="cariwarna">
-                                        <option value="ph" data-stok="">pilih warna</option>
+                                        <option value="ph" data-stok="" selected disabled hidden>pilih warna</option>
                                     </select>
                                         </div>
                                             </div>
@@ -67,15 +67,15 @@ function isNumberKey(evt)
                                                 <label>Jumlah</label>
                                                 <div class="form-group input-group">
                                             
-                                            <input type="text" class="form-control" name="nama" required>
+                                            <input type="text" class="form-control" id="jumlah" onkeypress="return isNumberKey(event)">
                                         </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <label>&nbsp;</label>
                                                 <div class="form-group input-group">
                                             
-                                            <button class="btn btn-primary btn-sm">Tambah</button>&nbsp;
-                                             <button class="btn btn-danger btn-sm">Hapus</button>
+                                            <button class="btn btn-primary btn-sm" id="tambahbarang">Tambah</button>&nbsp;
+                                             <button class="btn btn-danger btn-sm">Bersih</button>
                                         </div>
                                             </div>
                                         </div>
@@ -88,19 +88,19 @@ function isNumberKey(evt)
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                            <label>Harga</label>
+                                            <label>Harga(Rp)</label>
                                             <input type="text" class="form-control" readonly id="harga">
                                         </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                            <label>Stok</label>
+                                            <label>Stok(Pcs)</label>
                                             <input type="text" class="form-control" readonly id="stok">
                                         </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                            <label>Diskon</label>
+                                            <label>Diskon(%)</label>
                                             <input type="text" class="form-control" readonly id="diskon">
                                             <input type="hidden" id="kodebarangnya">
                                         </div>
@@ -108,33 +108,19 @@ function isNumberKey(evt)
                                         </div>
                                         <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nama Barang</th>
+                                        <th>Warna</th>
+                                        <th>Harga</th>
+                                        <th>Jumlah</th>
+                                        <th>Diskon</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                    <tbody id="tubuh">
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -142,7 +128,6 @@ function isNumberKey(evt)
                                        
                                         <input class="btn btn-primary" type="submit" name="submit" value="simpan">
                                         <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>
-                                    </form>
                                 </div>
                               
                             </div>
