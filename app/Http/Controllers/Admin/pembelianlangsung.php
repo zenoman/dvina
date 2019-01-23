@@ -24,9 +24,18 @@ class pembelianlangsung extends Controller
         if(!$kode){
             $finalkode = "DVN".$tanggal."-".$kodeuser."-000001";
         }else{
-            $newkode    = explode("-", $kode);
+            $caridata = DB::table('tb_transaksis')
+            ->where('faktur',$kode)->limit(1)->get();
+            foreach ($caridata as $row) {
+                if($row->total_akhir==''){
+                    $finalkode = $row->faktur;
+                }else{
+                    $newkode    = explode("-", $kode);
             $nomer      = sprintf("%06s",$newkode[2]+1);
             $finalkode  = "DVN".$tanggal."-".$kodeuser."-".$nomer;
+                }
+            }
+            
         }
         return response()->json($finalkode);
     }
@@ -59,6 +68,19 @@ class pembelianlangsung extends Controller
         
     }
     public function tambahdetail(Request $request){
+        $kode = $request->faktur;
+        $carikode = 
+        DB::table('tb_transaksis')->where('faktur',$kode)
+        ->count();
+        if($carikode > 0){
+        }else{
+            DB::table('tb_transaksis')
+            ->insert([
+                'faktur' => $kode,
+                'tgl'  => date('Y-m-d'),
+                'metode'=>'langsung'
+            ]);
+        }
          $websetting = DB::table('settings')->limit(1)->get();
         foreach ($websetting as $ws) {
             $day = date("d")+$ws->max_tgl;
@@ -81,7 +103,11 @@ class pembelianlangsung extends Controller
             ]);
     }
     public function caridetailbarang($kode){
-         $data = DB::table('tb_details')->where('faktur',$kode)->get();
+         $data = DB::table('tb_details')
+         ->select(DB::raw('tb_details.*,tb_barangs.warna'))
+         ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
+         ->where('tb_details.faktur',$kode)
+         ->get();
         return response()->json($data);
     }
 

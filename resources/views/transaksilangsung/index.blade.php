@@ -110,23 +110,39 @@ function isNumberKey(evt)
                                 <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Nama Barang</th>
-                                        <th>Warna</th>
-                                        <th>Harga</th>
-                                        <th>Jumlah</th>
-                                        <th>Diskon</th>
-                                        <th>Subtotal</th>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Nama Barang</th>
+                                        <th class="text-center">Warna</th>
+                                        <th class="text-right">Harga</th>
+                                        <th class="text-center">Jumlah</th>
+                                        <th class="text-center">Diskon</th>
+                                        <th class="text-right">Subtotal</th>
                                     </tr>
                                 </thead>
                                     <tbody id="tubuh">
                                         
                                     </tbody>
+                                    <tfoot>
+                                       <tr>
+                                        <th colspan="6" class="text-right">
+                                        <h4>
+                                            total
+                                        </h4>
+                                        </th>
+                                        <th class="text-right">
+                                            <h4>
+                                               <strong id="totalnya">
+                                            -
+                                        </strong> 
+                                            </h4>
+                                    </th>
+                                    </tr> 
+                                    </tfoot>
+                                    
                                 </table>
                             </div>
-                                        {{csrf_field()}}
-                                       
-                                        <input class="btn btn-primary" type="submit" name="submit" value="simpan">
+                            <button class="btn btn-success" id="btncetak">Cetak Nota</button>
+                                       <button class="btn btn-primary">Simpan</button>
                                         <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>
                                 </div>
                               
@@ -135,6 +151,159 @@ function isNumberKey(evt)
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="hidden_div" style="display: none;">
+            <table width="100%">
+                <tr>
+                    <td width="49%">
+                        <table width="100%">
+                            <tr>
+                                <td width="60%">
+                                    logo
+                                </td>
+                                <td style="border: 1px solid black;" width="40%">
+                                    <p style="font-size: 10;margin-left: 2%;margin-top: 2%;">Tgl :</p>
+                                    <p style="font-size: 10;margin-left: 2%;margin-bottom: 2%;">Tuan/Toko :</p>
+                                </td>   
+                            </tr>
+                        </table>
+                        <table width="100%" style="border-collapse:collapse;border: 1px solid black;margin-bottom: 5px;">
+                            <tr>
+                                <td align="center" bgcolor="#000000">
+                                    <p style="color:white;">halo</p>
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="border-collapse:collapse;border: 1px solid black;margin-bottom: 5px;">
+                            <thead>
+                                <td align="center" style="border: 1px solid black;">
+                                    No
+                                </td>
+                                <td align="center" style="border: 1px solid black;">
+                                    Banyak
+                                </td>
+                                <td align="center" style="border: 1px solid black;">
+                                    Nama Barang
+                                </td>
+                                <td align="center" style="border: 1px solid black;">
+                                    Harga
+                                </td>
+                                <td align="center" style="border: 1px solid black;">
+                                    Jumlah
+                                </td>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4">total</td>
+                                    <td align="center" style="border: 1px solid black;">20000</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="50%" align="center">
+                                    <p>Penerima</p>
+                                    <br>
+                                    <p>.....................</p>
+                                </td>
+                                <td width="50%" align="center">
+                                     <p>Hormat Kami</p>
+                                    <br>
+                                    <p>Yuni</p>
+                                </td>
+                                
+                            </tr>
+                        </table>
+                        <table width="100%" style="border-collapse:collapse;border: 1px solid black;margin-bottom: 5px;">
+                            <tr>
+                                <td align="center" bgcolor="#000000">
+                                    <p style="color: white; font-size: 10;">GROSIR|ECER|DROPSHIP|PUSAT HIJAB TERMURAH, TERBARU & BERKUALITAS DI KOTA KEDIRI</p>
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="2%">
+                    <hr width="1" size="100%">
+                    </td>
+                    <td width="49%" bgcolor="#ffff99">
+                        <table width="100%">
+                            <tr>
+                                <td width="60%">
+                                    logo
+                                </td>
+                                <td style="border: 1px solid black;" width="40%">
+                                    <p style="font-size: 10;margin-left: 2%;margin-top: 2%;">Tgl :</p>
+                                    <p style="font-size: 10;margin-left: 2%;margin-bottom: 2%;">Tuan/Toko :</p>
+                                </td>   
+                            </tr>
+                        </table>
+                        <table width="100%" style="border-collapse:collapse;border: 1px solid black;margin-bottom: 5px;">
+                            <tr>
+                                <td align="center" bgcolor="#000000">
+                                    <p style="color:white;">halo</p>
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="border-collapse:collapse;border: 1px solid black;margin-bottom: 5px;">
+                            <thead>
+                                <td align="center" style="border: 1px solid black;">
+                                    No
+                                </td>
+                                <td align="center" style="border: 1px solid black;">
+                                    Banyak
+                                </td>
+                                <td align="center" style="border: 1px solid black;">
+                                    Nama Barang
+                                </td>
+                                <td align="center" style="border: 1px solid black;">
+                                    Harga
+                                </td>
+                                <td align="center" style="border: 1px solid black;">
+                                    Jumlah
+                                </td>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4">total</td>
+                                    <td align="center" style="border: 1px solid black;">20000</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="50%" align="center">
+                                    <p>Penerima</p>
+                                    <br>
+                                    <p>.....................</p>
+                                </td>
+                                <td width="50%" align="center">
+                                     <p>Hormat Kami</p>
+                                    <br>
+                                    <p>Yuni</p>
+                                </td>
+                                
+                            </tr>
+                        </table>
+                        <table width="100%" style="border-collapse:collapse;border: 1px solid black;margin-bottom: 5px;">
+                            <tr>
+                                <td align="center" bgcolor="#000000">
+                                    <p style="color: white; font-size: 10;">GROSIR|ECER|DROPSHIP|PUSAT HIJAB TERMURAH, TERBARU & BERKUALITAS DI KOTA KEDIRI</p>
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
         </div>
         @endsection
         @section('js')

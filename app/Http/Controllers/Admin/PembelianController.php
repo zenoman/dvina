@@ -20,6 +20,7 @@ class PembelianController extends Controller
                     ->select(DB::raw('tb_transaksis.*,tb_users.username,tb_users.telp,tb_bank.nama_bank'))
                     ->leftjoin('tb_users','tb_transaksis.iduser','=','tb_users.id')
                     ->leftjoin('tb_bank','tb_transaksis.pembayaran','=','tb_bank.id')
+                    ->where('tb_transaksis.metode','pesan')
                     ->orderby('tb_transaksis.id','desc')
                     ->paginate(40);
         return view('pembelian/index',['pembelians'=>$pembelians,'websettings'=>$websetting]);

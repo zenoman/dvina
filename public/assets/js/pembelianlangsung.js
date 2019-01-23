@@ -1,14 +1,20 @@
 $(document).ready(function(){
 	carikode();
+
 	$('#caribarang').focus();
 	//===========================================cari kode
 	function carikode(){
+		$('#panelnya').loading('toggle');
 			$.ajax({
 			url:'/carikode',
 			dataType:'json',
 			success:function(data){
 				noresi = data;
 				$("#noresi").html(noresi);
+				getdata();
+			},complete:function(){
+				
+				$('#panelnya').loading('stop');
 			}
 		});
 		}
@@ -134,7 +140,6 @@ $(document).ready(function(){
     					'total': total,
                     	},
                     success: function () {
-                    	alert('Berhasil menambahkan barang');
                     	bersih();
                     	getdata();
                     },complete:function(){
@@ -161,18 +166,22 @@ $(document).ready(function(){
 	//=================================================
 	function managerow(data){
 		var rows ='';
+		var total=0;
 			$.each(data,function(key, value){
                 rows = rows + '<tr>';
-                rows = rows + '<td class="text-center"><button type="button" class="btn btn-warning" onclick="halo('+value.id+')"><i class="fa fa-trash"></i></button></td>';
+                rows = rows + '<td class="text-center"><button type="button" class="btn btn-warning btn-sm" onclick="halo('+value.id+')"><i class="fa fa-trash"></i></button></td>';
                 rows = rows + '<td class="text-center">' +value.barang+'</td>';
-                rows = rows + '<td class="text-center">'+value.idwarna+'</td>';
+                rows = rows + '<td class="text-center">'+value.warna+'</td>';
                 rows = rows + '<td class="text-right"> Rp. ' +rupiah(value.harga)+'</td>';
-                rows = rows + '<td class="text-center">' +value.jumlah+'</td>';
-                rows = rows + '<td class="text-center">' +value.diskon+'</td>';
+                rows = rows + '<td class="text-center">' +value.jumlah+' Pcs </td>';
+                rows = rows + '<td class="text-center">' +value.diskon+'% </td>';
                 rows = rows + '<td class="text-right"> Rp. ' +rupiah(value.total)+'</td>';
                 rows = rows + '</tr>';
+                total += value.total;
+
             });
             $("#tubuh").html(rows);
+			$('#totalnya').html('Rp. '+rupiah(total));
 	}
 
 	//==================================================================
@@ -187,10 +196,10 @@ $(document).ready(function(){
                     dataType:'json',
                     url: '/hapusdetailbarang/'+id,
                     success:function(){
-                        alert('Data dihapus')
+                        
                         getdata();
                     },error:function(){
-                       alert('Data dihapus');
+                       
                         getdata();
                     },complete:function(){
                     	$('#panelnya').loading('stop');
@@ -235,5 +244,17 @@ $(document).ready(function(){
 		}
 			return rupiah;
 		}
-	
+
+	//==================================================
+	$('#btncetak').click(function(){
+		if($('#totalnya').html()=='-'){
+			$.notify({message: 'Maaf, tambahkan barang terlebih dahulu'},{type: 'danger'});
+   		}else{
+		var divToPrint=document.getElementById('hidden_div');
+		var newWin=window.open('','Print-Window');
+		newWin.document.open();
+		newWin.document.write('<html><body onload="window.print();window.close()">'+divToPrint.innerHTML+'</body></html>');
+		newWin.document.close();
+		}
+	});
 });
