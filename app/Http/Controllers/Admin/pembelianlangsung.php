@@ -18,7 +18,7 @@ class pembelianlangsung extends Controller
         $kodeuser = sprintf("%02s",session::get('iduser'));
         $lastuser = $tanggal."-".$kodeuser;
         $kode = DB::table('tb_transaksis')
-        ->where([['faktur','like','%'.$lastuser.'-%'],['metode','=','langsung']])
+        ->where([['admin','=',$kodeuser],['metode','=','langsung']])
         ->max('faktur');
 
         if(!$kode){
@@ -78,7 +78,8 @@ class pembelianlangsung extends Controller
             ->insert([
                 'faktur' => $kode,
                 'tgl'  => date('Y-m-d'),
-                'metode'=>'langsung'
+                'metode'=>'langsung',
+                'admin'=>session::get('iduser')
             ]);
         }
          $websetting = DB::table('settings')->limit(1)->get();
@@ -125,6 +126,32 @@ class pembelianlangsung extends Controller
         ]);
         
         DB::table('tb_details')->where('id',$id)->delete();
+        }
+    }
+
+    public function simpan(Request $request){
+        $faktur = $request->faktur;
+        $total = $request->total;
+
+        $caridata = DB::table('tb_transaksis')
+        ->where('faktur',$faktur)
+        ->count();
+        if($caridata > 0){
+            DB::table('tb_transaksis')
+            ->where('faktur',$faktur)
+            ->update([
+                'total_akhir'=>$total,
+                'tgl'=>date('Y-m-d')
+            ]);
+        }else{
+            DB::table('tb_transaksis')
+            ->insert([
+                'faktur' => $faktur,
+                'tgl'  => date('Y-m-d'),
+                'metode'=>'langsung',
+                'admin'=>session::get('iduser'),
+                'total_akhir'=>$total
+            ]);
         }
     }
 }

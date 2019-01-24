@@ -9,6 +9,8 @@ Route::get('/cariwarna/{kode}','Admin\pembelianlangsung@cariwarna');
 Route::post('/tambahdetail','Admin\pembelianlangsung@tambahdetail');
 Route::get('/caridetailbarang/{kode}','Admin\pembelianlangsung@caridetailbarang');
 Route::get('/hapusdetailbarang/{id}','Admin\pembelianlangsung@hapusdetailbarang');
+Route::post('/simpantransaksi','Admin\pembelianlangsung@simpan');
+
 //captcha
 Route::get('refreshcaptcha', 'Logincontroller@refreshCaptcha');
 

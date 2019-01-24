@@ -104,7 +104,7 @@
                 <!-- /.col-lg-12 -->
             </div>
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bar-chart-o fa-fw"></i> Penjualan Minggu Ini
@@ -118,7 +118,7 @@
                     </div>
                 </div>
                 
-                <div class="col-lg-4">
+                <!-- <div class="col-lg-4">
                 <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bar-chart-o fa-fw"></i>Kategori Terlaris Minggu Ini
@@ -126,9 +126,8 @@
                         <div class="panel-body">
                             <div id="morris-donut-chart"></div>
                         </div>
-                        <!-- /.panel-body -->
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         @endsection
@@ -211,23 +210,7 @@
         resize: true
     });
 
-    Morris.Donut({
-        element: 'morris-donut-chart',
-        data: [{
-            label: "hijab mantab",
-            value: 12
-        }, {
-            label: "hijab terbaru",
-            value: 30
-        }, {
-            label: "hijab nissa sabyan",
-            value: 20
-        }, {
-            label: "hijab korea",
-            value: 50
-        }],
-        resize: true
-    });
+    
     
 });
     </script>

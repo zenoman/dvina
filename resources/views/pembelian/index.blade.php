@@ -263,7 +263,34 @@
                                 </div>
                             </div>
                                             @elseif($row->status=='diterima')
-                                            <a href="{{url('/pembelian/'.$row->id.'/sukses')}}" onclick="return confirm('Anda Yakin Pembelian Ini Telah Sukses?')" class="btn btn-success btn-sm">Transaksi Sukses</a>
+                                            <a href="{{url('/pembelian/'.$row->id.'/sukses')}}" onclick="return confirm('Anda Yakin Pembelian Ini Telah Sukses?')" class="btn btn-success btn-sm">Sukses</a>
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modaltolak{{$row->id}}">
+                            Tolak
+                            </button>
+                            <div class="modal fade" id="modaltolak{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Tolak Pembelian</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                           <form action="/pembelian/tolak" role="form" method="post">
+                                            <input type="hidden" value="{{$row->id}}" name="kode">
+                                            <input type="hidden" value="{{Session::get('iduser')}}" name="iduser">
+                                            <div class="form-group">
+                                            <label>Keterangan</label>
+                                            <textarea name="keterangan" class="form-control" rows="3" cols="75"></textarea>
+                                            {{csrf_field()}}    
+                                            </div><br><br>
+                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Tolak Pembelian Ini ?')">
+                                                Tolak
+                                            </button>
+                                            </form>       
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
                                             @elseif($row->status=='sukses')
                                             <a href="{{url('/pembelian/'.$row->faktur.'/hapus')}}" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
                                             @elseif($row->status=='ditolak')

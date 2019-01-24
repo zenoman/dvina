@@ -141,8 +141,9 @@ function isNumberKey(evt)
                                     
                                 </table>
                             </div>
+                            <input type="hidden" id="realtotal">
                             <button class="btn btn-success" id="btncetak">Cetak Nota</button>
-                                       <button class="btn btn-primary">Simpan</button>
+                                       <button class="btn btn-primary" id="btnsimpan">Simpan</button>
                                         <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>
                                 </div>
                               
@@ -156,23 +157,29 @@ function isNumberKey(evt)
             <table width="100%">
                 <tr>
                     <td width="49%">
-                        <table width="100%">
+                        <table width="100%" style="margin-bottom: 5px;">
                             <tr>
                                 <td width="60%">
-                                    logo
+                                @foreach($websettings as $webset)
+                                <img width="65%" src="{{asset('img/setting/'.$webset->logo)}}">
+                                @endforeach
                                 </td>
                                 <td style="border: 1px solid black;" width="40%">
-                                    <p style="font-size: 10;margin-left: 2%;margin-top: 2%;">Tgl :</p>
-                                    <p style="font-size: 10;margin-left: 2%;margin-bottom: 2%;">Tuan/Toko :</p>
+                                    <p style="font-size: 10;margin-left: 2%;margin-top: 2%;">Tgl :{{date('d/m/Y')}}</p>
+                                    <p style="font-size: 10;margin-left: 2%;margin-bottom: 2%;">Tuan/Toko : Dvina Collection</p>
                                 </td>   
                             </tr>
                         </table>
                         <table width="100%" style="border-collapse:collapse;border: 1px solid black;margin-bottom: 5px;">
                             <tr>
+                                @foreach($websettings as $webset)
                                 <td align="center" bgcolor="#000000">
-                                    <p style="color:white;">halo</p>
+                                    <p style="color:white; font-size: 10;">{{$webset->kontak1}} || {{$webset->kontak2}} ||
+                                    {{$webset->kontak3}}</p>
                                     
                                 </td>
+                                @endforeach
+                                
                             </tr>
                         </table>
                         <table width="100%" style="border-collapse:collapse;border: 1px solid black;margin-bottom: 5px;">
@@ -193,27 +200,27 @@ function isNumberKey(evt)
                                     Jumlah
                                 </td>
                             </thead>
-                            <tbody>
+                            <tbody id="datacetak">
                                 
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="4">total</td>
-                                    <td align="center" style="border: 1px solid black;">20000</td>
+                                    <td colspan="4" style="border: 1px solid black;" align="center">total</td>
+                                    <td align="right" style="border: 1px solid black;"><span id="datatotal"></span></td>
                                 </tr>
                             </tfoot>
                         </table>
                         <table width="100%">
                             <tr>
                                 <td width="50%" align="center">
-                                    <p>Penerima</p>
+                                    <p style="font-size: 10;">Penerima</p>
                                     <br>
-                                    <p>.....................</p>
+                                    <p style="font-size: 10;">.....................</p>
                                 </td>
                                 <td width="50%" align="center">
-                                     <p>Hormat Kami</p>
+                                     <p style="font-size: 10;">Hormat Kami</p>
                                     <br>
-                                    <p>Yuni</p>
+                                    <p style="font-size: 10;">Yuni</p>
                                 </td>
                                 
                             </tr>
@@ -221,7 +228,7 @@ function isNumberKey(evt)
                         <table width="100%" style="border-collapse:collapse;border: 1px solid black;margin-bottom: 5px;">
                             <tr>
                                 <td align="center" bgcolor="#000000">
-                                    <p style="color: white; font-size: 10;">GROSIR|ECER|DROPSHIP|PUSAT HIJAB TERMURAH, TERBARU & BERKUALITAS DI KOTA KEDIRI</p>
+                                    <p style="color: white; font-size: 8;">GROSIR|ECER|DROPSHIP|PUSAT HIJAB TERMURAH, TERBARU & BERKUALITAS DI KOTA KEDIRI</p>
                                     
                                 </td>
                             </tr>
@@ -231,23 +238,29 @@ function isNumberKey(evt)
                     <hr width="1" size="100%">
                     </td>
                     <td width="49%" bgcolor="#ffff99">
-                        <table width="100%">
+                         <table width="100%" style="margin-bottom: 5px;">
                             <tr>
                                 <td width="60%">
-                                    logo
+                                @foreach($websettings as $webset)
+                                <img width="65%" src="{{asset('img/setting/'.$webset->logo)}}">
+                                @endforeach
                                 </td>
                                 <td style="border: 1px solid black;" width="40%">
-                                    <p style="font-size: 10;margin-left: 2%;margin-top: 2%;">Tgl :</p>
-                                    <p style="font-size: 10;margin-left: 2%;margin-bottom: 2%;">Tuan/Toko :</p>
+                                    <p style="font-size: 10;margin-left: 2%;margin-top: 2%;">Tgl :{{date('d/m/Y')}}</p>
+                                    <p style="font-size: 10;margin-left: 2%;margin-bottom: 2%;">Tuan/Toko : Dvina Collection</p>
                                 </td>   
                             </tr>
                         </table>
                         <table width="100%" style="border-collapse:collapse;border: 1px solid black;margin-bottom: 5px;">
                             <tr>
+                                @foreach($websettings as $webset)
                                 <td align="center" bgcolor="#000000">
-                                    <p style="color:white;">halo</p>
+                                    <p style="color:white; font-size: 10;">{{$webset->kontak1}} || {{$webset->kontak2}} ||
+                                    {{$webset->kontak3}}</p>
                                     
                                 </td>
+                                @endforeach
+                                
                             </tr>
                         </table>
                         <table width="100%" style="border-collapse:collapse;border: 1px solid black;margin-bottom: 5px;">
@@ -268,27 +281,27 @@ function isNumberKey(evt)
                                     Jumlah
                                 </td>
                             </thead>
-                            <tbody>
+                            <tbody id="datacetak1">
                                 
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="4">total</td>
-                                    <td align="center" style="border: 1px solid black;">20000</td>
+                                    <td colspan="4" style="border: 1px solid black;" align="center">total</td>
+                                    <td align="right" style="border: 1px solid black;"><span id="datatotal1"></span></td>
                                 </tr>
                             </tfoot>
                         </table>
                         <table width="100%">
                             <tr>
                                 <td width="50%" align="center">
-                                    <p>Penerima</p>
+                                    <p style="font-size: 10;">Penerima</p>
                                     <br>
-                                    <p>.....................</p>
+                                    <p style="font-size: 10;">.....................</p>
                                 </td>
                                 <td width="50%" align="center">
-                                     <p>Hormat Kami</p>
+                                     <p style="font-size: 10;">Hormat Kami</p>
                                     <br>
-                                    <p>Yuni</p>
+                                    <p style="font-size: 10;">Yuni</p>
                                 </td>
                                 
                             </tr>
@@ -296,7 +309,7 @@ function isNumberKey(evt)
                         <table width="100%" style="border-collapse:collapse;border: 1px solid black;margin-bottom: 5px;">
                             <tr>
                                 <td align="center" bgcolor="#000000">
-                                    <p style="color: white; font-size: 10;">GROSIR|ECER|DROPSHIP|PUSAT HIJAB TERMURAH, TERBARU & BERKUALITAS DI KOTA KEDIRI</p>
+                                    <p style="color: white; font-size: 8;">GROSIR|ECER|DROPSHIP|PUSAT HIJAB TERMURAH, TERBARU & BERKUALITAS DI KOTA KEDIRI</p>
                                     
                                 </td>
                             </tr>

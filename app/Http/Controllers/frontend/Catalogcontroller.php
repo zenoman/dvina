@@ -15,8 +15,10 @@ class Catalogcontroller extends Controller
             ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')
             ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
             ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total'))
+
             ->groupBy('tb_kodes.kode_barang')
             ->orderby('tb_kodes.id','desc')
+            ->havingRaw('SUM(tb_barangs.stok) > ?', [0])
             ->paginate(15);
         $totalkeranjang = DB::table('tb_details')
         ->where([['iduser',Session::get('user_id')],['faktur',null]])
@@ -232,7 +234,7 @@ class Catalogcontroller extends Controller
         $tanggalsekarang = date('dmy');
         $iduser     = Session::get('user_id');
         $kode = DB::table('tb_transaksis')
-        ->where('faktur','like','%'.$tanggalsekarang.'%')
+        ->where([['faktur','like','%'.$tanggalsekarang.'%'],['metode','=','pesan']])
         ->max('faktur');
         if($kode != NULL){
             $numkode = substr($kode, 11);

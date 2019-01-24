@@ -166,8 +166,11 @@ $(document).ready(function(){
 	//=================================================
 	function managerow(data){
 		var rows ='';
+		var rows2 ='';
 		var total=0;
+		var no=0;
 			$.each(data,function(key, value){
+				no +=1;
                 rows = rows + '<tr>';
                 rows = rows + '<td class="text-center"><button type="button" class="btn btn-warning btn-sm" onclick="halo('+value.id+')"><i class="fa fa-trash"></i></button></td>';
                 rows = rows + '<td class="text-center">' +value.barang+'</td>';
@@ -177,10 +180,23 @@ $(document).ready(function(){
                 rows = rows + '<td class="text-center">' +value.diskon+'% </td>';
                 rows = rows + '<td class="text-right"> Rp. ' +rupiah(value.total)+'</td>';
                 rows = rows + '</tr>';
+
+                rows2 = rows2 + '<tr>';
+                rows2 = rows2 + '<td align="center" style="border: 1px solid black;">' +no+'</td>';
+                rows2 = rows2 + '<td align="center" style="border: 1px solid black;">' +value.jumlah+' Pcs </td>';
+                rows2 = rows2 + '<td align="center" style="border: 1px solid black;">' +value.barang+'</td>';
+                rows2 = rows2 + '<td align="right" style="border: 1px solid black;"> Rp. ' +rupiah(value.harga)+'</td>';
+                rows2 = rows2 + '<td align="right" style="border: 1px solid black;"> Rp. ' +rupiah(value.total)+'</td>';
+                rows2 = rows2 + '</tr>';
                 total += value.total;
 
             });
+            $('#datacetak').html(rows2);
+            $('#datatotal').html('Rp. '+rupiah(total));
+            $('#datacetak1').html(rows2);
+            $('#datatotal1').html('Rp. '+rupiah(total));
             $("#tubuh").html(rows);
+            $('#realtotal').val(total);
 			$('#totalnya').html('Rp. '+rupiah(total));
 	}
 
@@ -247,7 +263,7 @@ $(document).ready(function(){
 
 	//==================================================
 	$('#btncetak').click(function(){
-		if($('#totalnya').html()=='-'){
+		if($('#realtotal').val()==0 || $('#realtotal').val()==''){
 			$.notify({message: 'Maaf, tambahkan barang terlebih dahulu'},{type: 'danger'});
    		}else{
 		var divToPrint=document.getElementById('hidden_div');
@@ -255,6 +271,34 @@ $(document).ready(function(){
 		newWin.document.open();
 		newWin.document.write('<html><body onload="window.print();window.close()">'+divToPrint.innerHTML+'</body></html>');
 		newWin.document.close();
+		}
+	});
+
+	//====================================================
+	$('#btnsimpan').click(function(){
+		if($('#realtotal').val()==0 || $('#realtotal').val()==''){
+			$.notify({message: 'Maaf, tambahkan barang terlebih dahulu'},{type: 'danger'});
+   		}else{
+			$('#panelnya').loading('toggle');
+				$.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '/simpantransaksi',
+                    type: 'POST',
+                    data:{
+                    	'faktur': $('#noresi').html(),
+                    	'total': $('#realtotal').val(),
+                    	},
+                    success: function () {
+                    	bersih();
+                    	carikode();
+                    },complete:function(){
+                    	$('#panelnya').loading('stop');
+                    }
+                });
 		}
 	});
 });

@@ -96,7 +96,7 @@ class DashboardController extends Controller
         $transaksi = DB::table('tb_transaksis')
                     ->select(DB::raw('tb_transaksis.*,tb_users.username'))
                     ->join('tb_users','tb_transaksis.iduser','=','tb_users.id')
-                    ->where([['tb_transaksis.status','pesan','terkirim'],['tb_transaksis.metode','=','pesan']])
+                    ->where([['tb_transaksis.status','=','terkirim'],['tb_transaksis.metode','=','pesan']])
                     ->get();
         return response()->json($transaksi);
     }
