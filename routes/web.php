@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Input;
 //transaksi langsung
+Route::get('/listtransaksilangsung','Admin\pembelianlangsung@list');
 Route::get('/transaksilangsung','Admin\pembelianlangsung@tampil');
 Route::get('/carikode','Admin\pembelianlangsung@carikode');
 Route::get('/caribarang','Admin\pembelianlangsung@caribarang');

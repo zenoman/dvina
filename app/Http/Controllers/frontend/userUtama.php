@@ -19,6 +19,7 @@ class userUtama extends Controller
             ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total'))
             ->groupBy('tb_kodes.kode_barang')
             ->orderby('tb_kodes.id','desc')
+            ->havingRaw('SUM(tb_barangs.stok) > ?', [0])
             ->limit(8)
             ->get();
         
@@ -37,6 +38,7 @@ class userUtama extends Controller
             ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total'))
             ->groupBy('tb_kodes.kode_barang')
             ->inRandomOrder()
+            ->havingRaw('SUM(tb_barangs.stok) > ?', [0])
             ->limit(4)
             ->get();
         $slider = DB::table('sliders')->get();

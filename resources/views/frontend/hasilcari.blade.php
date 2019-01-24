@@ -74,7 +74,7 @@
                         <h2 class="sidebar-title">Kategori</h2>
                         <ul>
                            @foreach($kategoris as $kategori)
-                            <li><a href="">{{$kategori->kategori}}</a></li>
+                            <li><a href="{{url('/semuaproduk/'.$kategori->id.'/kategori')}}">{{$kategori->kategori}}</a></li>
                             @endforeach
                         </ul>
                     </div>

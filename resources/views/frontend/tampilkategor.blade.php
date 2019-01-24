@@ -58,14 +58,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
-                    <div class="single-sidebar">
+                   <!--  <div class="single-sidebar">
                         <h2 class="sidebar-title">Cari Produk</h2>
                         <form action="{{url('/cari')}}" method="post">
                             <input type="text" placeholder="Cari Berdasarkan Nama" name="cari" required>
                             <input type="submit" value="Cari">
                         </form>
                     </div>
-                    
+                     -->
                     
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Kategori</h2>

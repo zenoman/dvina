@@ -1,7 +1,4 @@
 @if(!Session::get('username'))
-<!-- <script type="text/javascript">
-    window.location.href = '{{url("/validatelogin")}}';
-</script> -->
 @endif
 <!DOCTYPE html>
 <html lang="en">
@@ -128,6 +125,9 @@
                                 </li>
                                 <li>
                                     <a href="{{url('/transaksilangsung')}}">Transaksi Langsung</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('/listtransaksilangsung')}}">List Transaksi Langsung</a>
                                 </li>
                                 <li>
                                     <a href="{{url('/pembelian/gagal')}}">Transaksi Gagal</a>

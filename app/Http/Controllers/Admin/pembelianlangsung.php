@@ -154,4 +154,14 @@ class pembelianlangsung extends Controller
             ]);
         }
     }
+
+    public function list(){
+        $webinfo = DB::table('settings')->limit(1)->get();
+        $data = DB::table('tb_transaksis')
+        ->select(DB::raw('tb_transaksis.*,admins.username'))
+        ->leftjoin('admins','admins.id','=','tb_transaksis.admin')
+        ->where('tb_transaksis.metode','langsung')
+        ->paginate(1);
+        return view('transaksilangsung/list',['websettings'=>$webinfo,'data'=>$data]);
+    }
 }
