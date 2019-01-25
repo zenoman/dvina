@@ -9,13 +9,15 @@ use App\Exports\detailpemasukan;
 use App\Exports\PengeluaranExport;
 use App\Exports\pemasukanExport;
 use App\Exports\pemasukanlain;
+use App\Exports\transaksilangsung;
+use App\Exports\detailtransaksilangsung;
 use Maatwebsite\Excel\Facades\Excel;
 
 class laporanController extends Controller
 {
     public function exportpemasukanlain($bulan , $tahun){
     $namafile = "laporan_pemasukan_lain_bulan_".$bulan."_tahun_".$tahun.".xlsx";
-     return Excel::download(new pemasukanlain($bulan,$tahun),$namafile);
+     return Excel::download(new pemasukanlain($bulan,$tahun),$namafile); 
     }
 
     public function cetakpemasukanlain($bulan,$tahun){
@@ -209,6 +211,102 @@ class laporanController extends Controller
         ->whereYear('tb_tambahstoks.tgl',$tahun)
         ->get();
         return view('laporan/cetakpengeluaran',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun,'total'=>$total]);
+    }
+    public function pilihtransaksilangsung(){
+        $webinfo = DB::table('settings')->limit(1)->get();
+        $data = DB::table('tb_transaksis')
+        ->select(DB::raw('MONTH(tgl) as bulan,YEAR(tgl) as tahun'))
+        ->where('metode','langsung')
+        ->groupby('bulan')
+        ->groupby('tahun')
+        ->orderby('tgl','desc')
+        ->get();
+        return view('laporan/pilihtransaksilangsung',['websettings'=>$webinfo,'data'=>$data]);
+    }
+
+    public function tampiltransaksilangsung(Request $request){
+        $webinfo = DB::table('settings')->limit(1)->get();
+        $tanggalnya = explode('-', $request->bulan);
+        $data = DB::table('tb_transaksis')
+        ->select(DB::raw('tb_transaksis.*,admins.username'))
+        ->leftjoin('admins','admins.id','=','tb_transaksis.admin')
+        ->whereMonth('tb_transaksis.tgl',$tanggalnya[0])
+        ->whereYear('tb_transaksis.tgl',$tanggalnya[1])
+        ->where('tb_transaksis.metode','langsung')
+        ->orderby('tb_transaksis.id','desc')
+        ->paginate(40);
+        
+        return view('laporan/transaksilangsung',['data'=>$data,'websettings'=>$webinfo,'bulan'=>$tanggalnya[0],'tahun'=>$tanggalnya[1],'data3'=>$data->appends(request()->input())]);
+    }
+
+    public function cetaktransaksilangsung($bulan,$tahun){
+        $data = DB::table('tb_transaksis')
+        ->select(DB::raw('tb_transaksis.*,admins.username'))
+        ->leftjoin('admins','admins.id','=','tb_transaksis.admin')
+        ->whereMonth('tb_transaksis.tgl',$bulan)
+        ->whereYear('tb_transaksis.tgl',$tahun)
+        ->where('tb_transaksis.metode','langsung')
+        ->orderby('tb_transaksis.id','desc')
+        ->get();
+        $totalnya = DB::table('tb_transaksis')
+        ->select(DB::raw('SUM(total_akhir) as totalnya'))
+        ->whereMonth('tb_transaksis.tgl',$bulan)
+        ->whereYear('tb_transaksis.tgl',$tahun)
+        ->where('tb_transaksis.metode','langsung')
+        ->get();
+        return view('laporan/cetaktransaksilangsung',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun,'total'=>$totalnya]);
+    }
+
+    public function exporttransaksilangsung($bulan,$tahun){
+        $namafile = "laporan_transaksi_langsung_bulan_".$bulan."_tahun_".$tahun.".xlsx";
+     return Excel::download(new transaksilangsung($bulan,$tahun),$namafile); 
+    }
+
+    public function pilihdetailtransaksi(){
+        $webinfo = DB::table('settings')->limit(1)->get();
+        $data = DB::table('tb_details')
+        ->select(DB::raw('MONTH(tgl) as bulan,YEAR(tgl) as tahun'))
+        ->where('metode','langsung')
+        ->groupby('bulan')
+        ->groupby('tahun')
+        ->orderby('tgl','desc')
+        ->get();
+        return view('laporan/pilihdetailtransaksi',['websettings'=>$webinfo,'data'=>$data]);
+    }
+    public function detailtransaksi(Request $request){
+        $webinfo = DB::table('settings')->limit(1)->get();
+        $tanggalnya = explode('-', $request->bulan);
+        $data = DB::table('tb_details')
+        ->select(DB::raw('tb_details.*,admins.username'))
+        ->leftjoin('admins','admins.id','=','tb_details.admin')
+        ->whereMonth('tb_details.tgl',$tanggalnya[0])
+        ->whereYear('tb_details.tgl',$tanggalnya[1])
+        ->where('tb_details.metode','langsung')
+        ->orderby('tb_details.id','desc')
+        ->paginate(40);
+        
+        return view('laporan/detailtransaksi',['data'=>$data,'websettings'=>$webinfo,'bulan'=>$tanggalnya[0],'tahun'=>$tanggalnya[1],'data3'=>$data->appends(request()->input())]);
+    }
+    public function cetakdetailtransaksi($bulan,$tahun){
+        $data = DB::table('tb_details')
+        ->select(DB::raw('tb_details.*,admins.username'))
+        ->leftjoin('admins','admins.id','=','tb_details.admin')
+        ->whereMonth('tb_details.tgl',$bulan)
+        ->whereYear('tb_details.tgl',$tahun)
+        ->where('tb_details.metode','langsung')
+        ->orderby('tb_details.id','desc')
+        ->get();
+        $totalnya = DB::table('tb_details')
+        ->select(DB::raw('SUM(total) as totalnya'))
+        ->whereMonth('tgl',$bulan)
+        ->whereYear('tgl',$tahun)
+        ->where('metode','langsung')
+        ->get();
+         return view('laporan/cetakdetailtransaksi',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun,'total'=>$totalnya]);
     } 
+    public function exportdetailtransaksi($bulan,$tahun){
+         $namafile = "laporan_detail_transaksi_langsung_bulan_".$bulan."_tahun_".$tahun.".xlsx";
+     return Excel::download(new detailtransaksilangsung($bulan,$tahun),$namafile); 
+    }
 
 }

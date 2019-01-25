@@ -23,6 +23,7 @@ Route::get('/pengeluaran','Admin\pengeluaranController@index');
 Route::get('/pembelianlain','Admin\pembelianlainController@index');
 
 //backup hapuspemasukanlain
+Route::get('/hapustransaksilangsung/{bulan}/{tahun}','Admin\backupController@hapustransaksilangsung');
 Route::get('/hapuspemasukanlain/{bulan}/{tahun}','Admin\backupController@hapuspemasukanlain');
 Route::get('/hapusdetailpemasukan/{bulan}/{tahun}','Admin\backupController@hapusdetailpemasukan');
 Route::get('/hapuspemasukan/{bulan}/{tahun}','Admin\backupController@hapuspemasukan');
@@ -31,6 +32,14 @@ Route::get('/tampilbackup','Admin\backupController@tampil');
 Route::get('/backup','Admin\backupController@index');
 
 //laporan
+Route::get('/exsportdetailtransaksi/{bulan}/{tahun}','Admin\laporanController@exportdetailtransaksi');
+Route::get('/cetakdetailtransaksilangsung/{bulan}/{tahun}','Admin\laporanController@cetakdetailtransaksi');
+Route::get('/tampildetailtransaksilangsung','Admin\laporanController@detailtransaksi');
+Route::get('/laporan/detailtransaksilangsung','Admin\laporanController@pilihdetailtransaksi');
+Route::get('/exsporttransaksilangsung/{bulan}/{tahun}','Admin\laporanController@exporttransaksilangsung');
+Route::get('/cetaktransaksilangsung/{bulan}/{tahun}','Admin\laporanController@cetaktransaksilangsung');
+Route::get('/tampiltransaksilangsung','Admin\laporanController@tampiltransaksilangsung');
+Route::get('/laporan/transaksilangsung','Admin\laporanController@pilihtransaksilangsung');
 Route::get('/exsportpemasukanlain/{bulan}/{tahun}','Admin\laporanController@exportpemasukanlain');
 Route::get('/cetakpemasukanlain/{bulan}/{tahun}','Admin\laporanController@cetakpemasukanlain');
 Route::get('/tampilpemasukanlain','Admin\laporanController@tampilpemasukanlain');

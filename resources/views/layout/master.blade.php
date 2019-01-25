@@ -175,8 +175,17 @@
                                 <li>
                                     <a href="{{url('/laporan/pemasukanlain')}}">Laporan Pemasukan Lain</a>
                                 </li>
+                                <li>
+                                    <a href="{{url('/laporan/transaksilangsung')}}">Laporan Transaksi Langsung</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('/laporan/detailtransaksilangsung')}} ">Laporan Detail Transaksi Langsung</a>
+                                </li>
                             </ul>
                             <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-download fa-fw"></i> Omset</a>
                         </li>
                     </ul>
                 </div>
