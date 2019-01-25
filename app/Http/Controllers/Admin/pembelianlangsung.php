@@ -161,7 +161,11 @@ class pembelianlangsung extends Controller
         ->select(DB::raw('tb_transaksis.*,admins.username'))
         ->leftjoin('admins','admins.id','=','tb_transaksis.admin')
         ->where('tb_transaksis.metode','langsung')
-        ->paginate(1);
+        ->paginate(30);
         return view('transaksilangsung/list',['websettings'=>$webinfo,'data'=>$data]);
+    }
+    public function caritransaksi($kode){
+        $data = DB::table('tb_details')->where('faktur',$kode)->get();
+        return response()->json($data);
     }
 }

@@ -120,9 +120,12 @@
 
 
                                          {{csrf_field()}}
+                                      <div class="text-left">
                                         <input type="hidden" name="_method" value="PUT">
                                         <input class="btn btn-primary" type="submit" name="submit" value="simpan">
-                                       
+                                      
+                          <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>  
+                        </div>
                                     </form>
                                     @endforeach
                                 </div>

@@ -74,6 +74,7 @@
                                 </tbody>
                             </table>
                             {{ $data->links() }}
+                            
                         </div>
                         <!-- /.panel-body -->
                     </div>

@@ -78,6 +78,9 @@
                                 </tbody>
                             </table>
                             {{$data->links()}}
+                            <div class="text-right">
+                          <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>  
+                        </div>
                         </div>
                         <!-- /.panel-body -->
                     </div>

@@ -46,6 +46,7 @@
                                         <th>Tanggal</th>
                                         <th>Pembuat</th>
                                         <th>Total</th>
+                                        <th class="text-center">#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -61,19 +62,79 @@
                                       <td align="right">
                                         {{"Rp ".number_format($row->total_akhir,0,',','.')}}
                                         </td>
+                                    <td class="text-center">
+                                    <button 
+                                    class="btn btn-primary btn-sm tampil" 
+                                    data-kode="{{$row->faktur}}"
+                                    data-tgl="{{$row->tgl}}"
+                                    data-user="{{$row->username}}"
+                                    data-total="{{'Rp '.number_format($row->total_akhir,0,',','.')}}"
+                                        >
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    
+                                    </td>
                                   </tr>
                                   @endforeach
                                 </tbody>
                             </table>
                             {{$data->links()}}
+                            <div class="text-right">
+                          <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>  
+                        </div>
                         </div>
                         <!-- /.panel-body -->
-                    </div>
+                        
+                     </div>
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
         </div>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title text-center" id="myModalLabel">Detail Transaksi Langsung</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-8"><h4 id="fakturnya"></h4></div>
+                                            <div class="col-md-4">
+                                                <p class="text-right" id="tglnya"></p>
+                                                <p class="text-right" id="usernya"></p>
+                                            </div>
+                                        </div>
+                                        <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">#</th>
+                                            <th class="text-center">Banyak</th>
+                                            <th class="text-center">Nama Barang</th>
+                                            <th class="text-right">Harga</th>
+                                            <th class="text-right">Jumlah</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tubuhnya">
+                                        
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="4" class="text-right"><strong>Total</strong></td>
+                                            <td class="text-right"><strong id="totalnya"></strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                        
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
         @endsection
         @section('js')
         <!-- DataTables JavaScript -->
@@ -86,6 +147,52 @@
             responsive: true,
             'paging':false
         });
+
     });
+    $('.tampil').on('click', function(){
+        var kode = $(this).data('kode');
+        var tgl = $(this).data('tgl');
+        var user = $(this).data('user');
+        var total = $(this).data('total');
+        $.ajax({
+                type:'GET',
+                dataType:'json',
+                url: 'listtransaksilangsung/'+kode,
+                success:function(data){
+                var rows ='';
+                var no=0;
+                    $.each(data,function(key, value){
+                        no +=1;
+                        rows = rows + '<tr>';
+                        rows = rows + '<td class="text-center">' +no+'</td>';
+                        rows = rows + '<td class="text-center">' +value.jumlah+' Pcs </td>';
+                        rows = rows + '<td class="text-center">'+value.barang+'</td>';
+                        rows = rows + '<td class="text-right"> Rp. ' +rupiah(value.harga)+'</td>';
+                        rows = rows + '<td class="text-right"> Rp. ' +rupiah(value.total)+'</td>';
+                        rows = rows + '</tr>';
+                });
+                     $('#tubuhnya').html(rows);
+                }
+            });
+       
+        $('#fakturnya').html(kode);
+        $('#tglnya').html('tanggal : '+tgl);
+        $('#usernya').html('Pembuat : '+user);
+        $('#totalnya').html(total);
+        $('#myModal').modal('toggle');
+    });
+    //==================================================
+        function rupiah(bilangan){
+            var number_string = bilangan.toString(),
+            sisa    = number_string.length % 3,
+            rupiah  = number_string.substr(0, sisa),
+            ribuan  = number_string.substr(sisa).match(/\d{3}/gi);
+            
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+            return rupiah;
+        }
     </script>
         @endsection
