@@ -185,7 +185,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-download fa-fw"></i> Omset</a>
+                            <a href="{{url('/omset')}}"><i class="fa fa-download fa-fw"></i> Omset</a>
                         </li>
                     </ul>
                 </div>

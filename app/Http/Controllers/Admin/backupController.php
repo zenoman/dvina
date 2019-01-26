@@ -105,4 +105,14 @@ class backupController extends Controller
 
         return back();
     }
+
+    public function hapusdetailtransaksilangsung($bulan,$tahun){
+        DB::table('tb_details')
+        ->whereMonth('tgl',$bulan)
+        ->whereYear('tgl',$tahun)
+        ->where('metode','langsung')
+        ->delete();
+
+        return back();
+    }
 }

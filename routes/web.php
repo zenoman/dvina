@@ -1,5 +1,9 @@
 <?php
 use Illuminate\Support\Facades\Input;
+//omset
+Route::get('/omset/export','Admin\omsetcontroller@exportomset');
+Route::get('/omset','Admin\omsetcontroller@index');
+
 //transaksi langsung
 Route::get('/listtransaksilangsung/{kode}','Admin\pembelianlangsung@caritransaksi');
 Route::get('/listtransaksilangsung','Admin\pembelianlangsung@list');
@@ -22,7 +26,8 @@ Route::get('/pengeluaran','Admin\pengeluaranController@index');
 //pembelian lain
 Route::get('/pembelianlain','Admin\pembelianlainController@index');
 
-//backup hapuspemasukanlain
+//backup
+Route::get('/hapusdetailtransaksilangsung/{bulan}/{tahun}','Admin\backupController@hapusdetailtransaksilangsung');
 Route::get('/hapustransaksilangsung/{bulan}/{tahun}','Admin\backupController@hapustransaksilangsung');
 Route::get('/hapuspemasukanlain/{bulan}/{tahun}','Admin\backupController@hapuspemasukanlain');
 Route::get('/hapusdetailpemasukan/{bulan}/{tahun}','Admin\backupController@hapusdetailpemasukan');

@@ -286,6 +286,18 @@
                                        <i class="fa fa-trash"></i> Hapus Data
                                     </a>
                                 </div>
+                                <div class="tab-pane fade" id="dtl">
+                                    <h4>Backup Data Detail Transaksi Langsung</h4>
+                                    <a href="{{url('/cetakdetailtransaksilangsung/'.$bulan.'/'.$tahun)}}" onclick="return confirm('Cetak data Detail Transaksi Langsung ?')" class="btn btn-warning" target="_blank()">
+                                       <i class="fa fa-print"></i> Print
+                                    </a>
+                                    <a href="{{url('/exsportdetailtransaksi/'.$bulan.'/'.$tahun)}}" class="btn btn-success" onclick="return confirm('Export data detail Transaksi Langsung ?')">
+                                       <i class="fa fa-file-excel-o"></i> Export Excel
+                                    </a>
+                                    <a href="{{url('/hapusdetailtransaksilangsung/'.$bulan.'/'.$tahun)}}" class="btn btn-danger" onclick="return confirm('Hapus data detail transaksi langsung ?')">
+                                       <i class="fa fa-trash"></i> Hapus Data
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <!-- /.panel-body -->
@@ -295,5 +307,4 @@
         </div>
         @endsection
         @section('js')
-       
         @endsection
