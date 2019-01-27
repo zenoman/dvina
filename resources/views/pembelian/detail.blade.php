@@ -150,7 +150,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Telfon Penerima</label>
-                                            <input class="form-control" id="telfonpenerima">
+                                            <input class="form-control" id="telfonpenerima" onkeypress="return isNumberKey(event)">
                                             <p class="help-block">Opsional, bila kosong data telfon penerima akan di isi oleh telfon akun pembeli.</p>
                                         </div>
                                         <div class="form-group">
@@ -162,6 +162,9 @@
                              <button class="btn btn-success" id="btncetakpengiriman">
                                  cetak lembar pengiriman
                              </button>
+                             <button class="btn btn-warning" id="btnbersih">
+                                bersih
+                             </button>
                              <a onclick="window.history.go(-1);" class="btn btn-danger pull-right">Kembali</a>
                         </div>
                     </div>
@@ -170,15 +173,16 @@
         </div>
         <div id="hidden_div_pengiriman" style="display: none;">
             <div style="border-style: solid;">
+                <br>
                 @foreach($kode as $kd)
                 <table width="100%">
                     <tr>
-                        <td>
+                        <td width="15%">
                             <b>
                                 Kepada
                             </b>
                         </td>
-                        <td>&nbsp;:&nbsp;</td>
+                        <td width="3%">&nbsp;:&nbsp;</td>
                         <td id="cetakpenerima">
                              @php
                                  $datauser = DB::table('tb_users')
@@ -191,51 +195,26 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><b>Alamat</b></td>
-                        <td>&nbsp;:&nbsp;</td>
+                        <td width="15%"><b>Alamat</b></td>
+                        <td width="3%">&nbsp;:&nbsp;</td>
                         <td id="cetakalamat">{{$kd->alamat_tujuan}}</td>
                     </tr>
                     <tr>
-                        <td>
+                        <td width="15%">
                         <b>No.Telpon</b>
                         </td>
-                        <td>&nbsp;:&nbsp;</td>
+                        <td width="3%">&nbsp;:&nbsp;</td>
                         <td id="cetaktelp">{{$kd->telp}}</td>
                     </tr>
                 </table>
                 @endforeach
                 <hr>
-                <table width="100%">
-                    <tr>
-                        <td colspan="4" align="center"><b>Dvina Collection</b></td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" align="center">
-                        <b>Pusat Hijab Terbaru, Termurah & Berkwalitas</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" align="center">
-                            <b>Pasar Bandar No 155 Mojoroto Kediri</b></td>
-                    </tr>
-                    <tr>
-                        <td width="20%">WA/Telp</td>
-                        <td width="5%">&nbsp;:&nbsp;</td>
-                        <td colspan="2" align="left">081333811979</td>
-                    </tr>
-                    <tr>
-                        <td width="20%">Facebook</td>
-                        <td width="5%">&nbsp;:&nbsp;</td>
-                        <td colspan="2" align="left">koleksi D'VINA</td>
-
-                    </tr>
-                    <tr>
-                        <td width="20%">Instagram</td>
-                        <td width="5%">&nbsp;:&nbsp;</td>
-                        <td colspan="2" align="left">@dvina_collection</td>
-                        
-                    </tr>
-                </table>
+                <p align="center">
+                  <b>Dvina Collection</b><br>
+                <b>Pusat Hijab Terbaru, Termurah & Berkwalitas</b><br>
+                <b>Pasar Bandar No 155 Mojoroto Kediri</b><br>
+                 WA/Telp&nbsp;:&nbsp;081333811979 || Fb&nbsp;:&nbsp;koleksi D'VINA || Instagram&nbsp;:&nbsp;@dvina_collection
+                </p>
             </div>
         </div>
         <div id="hidden_div" style="display: none;">
@@ -470,17 +449,26 @@
         if(foo=="bar"){
         var isgood = confirm('Apakah data lembar pengiriman benar ?');
         if(isgood){
-
+            if($('#penerima').val()!=''){
+                $('#cetakpenerima').html($('#penerima').val());
+            }
+            if($('#telfonpenerima').val()!=''){
+                $('#cetaktelp').html($('#telfonpenerima').val());
+            }
+            if($('#alamat').val()!=''){
+                $('#cetakalamat').html($('#alamat').val());
+            }
         var divToPrint=document.getElementById('hidden_div_pengiriman');
         var newWin=window.open('','Print-Window');
         newWin.document.open();
         newWin.document.write('<html><body onload="window.print();window.close()">'+divToPrint.innerHTML+'</body></html>');
         newWin.document.close();  
         }
-        }
-        
-        
+        }});
+        $('#btnbersih').click(function(){
+            $('#penerima').val('');
+            $('#telfonpenerima').val('');
+            $('#alamat').val('');
         });
-
         </script>
         @endsection

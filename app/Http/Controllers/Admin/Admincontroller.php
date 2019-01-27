@@ -14,21 +14,45 @@ class Admincontroller extends Controller
 {
     public function index()
     {
-        $websetting = DB::table('settings')->limit(1)->get();
-        $admins = Adminmodel::get();
-        return view('admin/index',['admin'=>$admins,'websettings'=>$websetting]);
+        if(Session::get('level') != 'admin'){
+            $websetting = DB::table('settings')->limit(1)->get();
+            $admins = Adminmodel::get();
+            return view('admin/index',['admin'=>$admins,'websettings'=>$websetting]);
+        }else{
+            return redirect('/dashboard')
+            ->with('statuslogin','Maaf, Anda tidak punya akses');
+        }
+        
     }
     public function create()
     {
-        $websetting = DB::table('settings')->limit(1)->get();
+        if(Session::get('level') != 'admin'){
+             $websetting = DB::table('settings')->limit(1)->get();
         return view('admin/create',['websettings'=>$websetting]);
+        }else{
+            return redirect('/dashboard')
+            ->with('statuslogin','Maaf, Anda tidak punya akses');
+        }
+       
     }
 
     public function changepass($id)
     {
+        if(Session::get('level') != 'admin'){
         $websetting = DB::table('settings')->limit(1)->get();
         $admin = Adminmodel::find($id);
         return view('admin/changepass',['dataadmin'=>$admin,'websettings'=>$websetting]);
+        }else{
+            if($id!=Session::get('iduser')){
+            return redirect('/dashboard')
+            ->with('statuslogin','Maaf, Anda tidak dapat mengubah data admin lain');
+            }else{
+               $websetting = DB::table('settings')->limit(1)->get();
+        $admin = Adminmodel::find($id);
+        return view('admin/changepass',['dataadmin'=>$admin,'websettings'=>$websetting]); 
+            }
+            
+        }
     }
 
     public function actionchangepass(Request $request, $id){
@@ -102,9 +126,19 @@ class Admincontroller extends Controller
     }
     public function edit($id)
     {
+        if(Session::get('level') != 'admin'){
         $websetting = DB::table('settings')->limit(1)->get();
         $admin = Adminmodel::find($id);
         return view('admin/edit',['dataadmin'=>$admin,'websettings'=>$websetting]);
+        }else{
+            if($id!=Session::get('iduser')){
+            return redirect('/dashboard')
+            ->with('statuslogin','Maaf, Anda tidak dapat mengubah data admin lain');
+            }else{
+               $websetting = DB::table('settings')->limit(1)->get();
+        $admin = Adminmodel::find($id);
+        return view('admin/edit',['dataadmin'=>$admin,'websettings'=>$websetting]); 
+            }}
     }
     public function update(Request $request, $id)
     {

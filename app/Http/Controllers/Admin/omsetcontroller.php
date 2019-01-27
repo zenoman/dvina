@@ -5,13 +5,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Exports\omset;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Session;
 
 class omsetcontroller extends Controller
 {
     public function index()
-    {	$webinfo = DB::table('settings')->limit(1)->get();
+    {	
+    	if(Session::get('level') != 'admin'){
+    	$webinfo = DB::table('settings')->limit(1)->get();
 	 	$data = DB::table('omset')->get();
-		return view('omset/index',['data'=>$data,'websettings'=>$webinfo]);}
+		return view('omset/index',['data'=>$data,'websettings'=>$webinfo]);
+		 }else{
+            return redirect('/dashboard')
+            ->with('statuslogin','Maaf, Anda tidak punya akses');
+        }
+	}
 
 	//===========================================================
 	public function exportomset(){

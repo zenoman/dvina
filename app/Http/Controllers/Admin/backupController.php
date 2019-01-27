@@ -5,12 +5,18 @@ ini_set('max_execution_time', 180);
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class backupController extends Controller
 {
     public function index(){
+        if(Session::get('level') != 'admin'){
     	$webinfo = DB::table('settings')->limit(1)->get();
     	return view('backup/index',['websettings'=>$webinfo]);
+        }else{
+            return redirect('/dashboard')
+            ->with('statuslogin','Maaf, Anda tidak punya akses');
+        }
     }
     public function tampil(Request $request){
     	$bulan = $request->bulan;
