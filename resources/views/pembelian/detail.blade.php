@@ -31,9 +31,7 @@
                     <h1 class="page-header">Detail Pembelian</h1>
 
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
             <div class="row">
                 
                 <div class="col-lg-12">
@@ -70,6 +68,10 @@
                                     {{$bank->nama_bank}}
                                  @endforeach
                                 </td>
+                            </tr>
+                            <tr>
+                                <td>No Telp</td>
+                                <td>&nbsp;:&nbsp;{{$kd->telp}}</td>
                             </tr>
                             <tr>
                                 <td>Alamat Tujuan</td>
@@ -131,10 +133,33 @@
                                 <h4>Ongkir : {{"Rp ". number_format($kd->ongkir,0,',','.')}}</h4>
                                 <h3>Total Akhir : {{"Rp ". number_format($kd->total_akhir,0,',','.')}}</h3>
                              </div>
-                             <button id="btncetak" class="btn btn-primary">
+                              <button id="btncetak" class="btn btn-primary">
                                 cetak nota
                              </button>
-                             <button class="btn btn-success">
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        Cetak nota & lembar pengiriman
+                        </div>
+                        <div class="panel-body">
+                                        <div class="form-group">
+                                            <label>Penerima</label>
+                                            <input class="form-control" id="penerima">
+                                            <p class="help-block">Opsional, bila kosong data penerima akan di isi oleh nama pembeli.</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Telfon Penerima</label>
+                                            <input class="form-control" id="telfonpenerima">
+                                            <p class="help-block">Opsional, bila kosong data telfon penerima akan di isi oleh telfon akun pembeli.</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Alamat Penerima</label>
+                                            <textarea class="form-control" rows="3" id="alamat"></textarea>
+                                             <p class="help-block">Opsional, bila kosong data alamat penerima akan di isi oleh alamat yang di isi pembeli saat melakukan pembelian.</p>
+                                        </div>
+                                             
+                             <button class="btn btn-success" id="btncetakpengiriman">
                                  cetak lembar pengiriman
                              </button>
                              <a onclick="window.history.go(-1);" class="btn btn-danger pull-right">Kembali</a>
@@ -143,20 +168,19 @@
                 </div>
             </div>
         </div>
-        <div id="hidden_div">
-                    @foreach($kode as $kd)
-                        <storng>Faktur : {{$kd->faktur}}</strong>
-                        <table width="100%">
-                            <tr>
-                                <td>Tanggal Beli</td>
-                                <td>&nbsp;:&nbsp;{{$kd->tgl}}</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                               <td>Pembeli</td>
-                                <td>&nbsp;:&nbsp;
-                                 @php
+        <div id="hidden_div_pengiriman" style="display: none;">
+            <div style="border-style: solid;">
+                @foreach($kode as $kd)
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <b>
+                                Kepada
+                            </b>
+                        </td>
+                        <td>&nbsp;:&nbsp;</td>
+                        <td id="cetakpenerima">
+                             @php
                                  $datauser = DB::table('tb_users')
                                  ->where('id',$kd->iduser)
                                  ->get();
@@ -164,12 +188,78 @@
                                  @foreach($datauser as $usr)
                                     {{$usr->username}}
                                  @endforeach
-                                </td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Alamat</b></td>
+                        <td>&nbsp;:&nbsp;</td>
+                        <td id="cetakalamat">{{$kd->alamat_tujuan}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <b>No.Telpon</b>
+                        </td>
+                        <td>&nbsp;:&nbsp;</td>
+                        <td id="cetaktelp">{{$kd->telp}}</td>
+                    </tr>
+                </table>
+                @endforeach
+                <hr>
+                <table width="100%">
+                    <tr>
+                        <td colspan="4" align="center"><b>Dvina Collection</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" align="center">
+                        <b>Pusat Hijab Terbaru, Termurah & Berkwalitas</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" align="center">
+                            <b>Pasar Bandar No 155 Mojoroto Kediri</b></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">WA/Telp</td>
+                        <td width="5%">&nbsp;:&nbsp;</td>
+                        <td colspan="2" align="left">081333811979</td>
+                    </tr>
+                    <tr>
+                        <td width="20%">Facebook</td>
+                        <td width="5%">&nbsp;:&nbsp;</td>
+                        <td colspan="2" align="left">koleksi D'VINA</td>
+
+                    </tr>
+                    <tr>
+                        <td width="20%">Instagram</td>
+                        <td width="5%">&nbsp;:&nbsp;</td>
+                        <td colspan="2" align="left">@dvina_collection</td>
+                        
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="hidden_div" style="display: none;">
+                    @foreach($kode as $kd)
+                        <table width="100%">
+                            <tr>
+                                <td><b>Faktur</b></td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td>{{$kd->faktur}}</td>
                                 <td align="right">
-                                    Metode Pembayaran
+                                    <b>Pencetak</b>
                                 </td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td align="right">{{Session::get('username')}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Tanggal Beli</b></td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td>{{$kd->tgl}}</td>
                                 <td align="right">
-                                    &nbsp;:&nbsp;
+                                    <b>Pembayaran</b>
+                                </td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td align="right">
                                     @php
                                  $databank = DB::table('tb_bank')
                                  ->where('id',$kd->pembayaran)
@@ -180,12 +270,34 @@
                                  @endforeach
                                 </td>
                             </tr>
+                            <tr>
+                               <td><b>Pembeli</b></td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td>
+                                 @php
+                                 $datauser = DB::table('tb_users')
+                                 ->where('id',$kd->iduser)
+                                 ->get();
+                                 @endphp
+                                 @foreach($datauser as $usr)
+                                    {{$usr->username}}
+                                 @endforeach
+                                </td>
+                                <td align="right"><b>No.telp</b></td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td align="right">{{$kd->telp}}</td>                            </tr>
                             
                             <tr>
-                                <td>Alamat Tujuan</td>
-                                <td>&nbsp;:&nbsp;{{$kd->alamat_tujuan}}</td>
-                                <td align="right">Keterangan</td>
-                                <td align="right">&nbsp;:&nbsp;{{$kd->keterangan}}</td>
+                                <td><b>Alamat Tujuan</b></td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td colspan="3">{{$kd->alamat_tujuan}}</td>
+                                
+                            </tr>
+                            <tr>
+                                <td><b>Keterangan</b></td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td colspan="3">{{$kd->keterangan}}</td>
+                                
                             </tr>
                         </table>
                     @endforeach
@@ -230,6 +342,111 @@
                                 <br>
                                 Total Akhir : {{"Rp ". number_format($kd->total_akhir,0,',','.')}}</b>
                              </div>
+                             <hr>
+                             @foreach($kode as $kd)
+                         <table width="100%">
+                            <tr>
+                                <td><b>Faktur</b></td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td>{{$kd->faktur}}</td>
+                                <td align="right">
+                                    <b>Pencetak</b>
+                                </td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td align="right">{{Session::get('username')}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Tanggal Beli</b></td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td>{{$kd->tgl}}</td>
+                                <td align="right">
+                                    <b>Pembayaran</b>
+                                </td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td align="right">
+                                    @php
+                                 $databank = DB::table('tb_bank')
+                                 ->where('id',$kd->pembayaran)
+                                 ->get();
+                                 @endphp
+                                 @foreach($databank as $bank)
+                                    {{$bank->nama_bank}}
+                                 @endforeach
+                                </td>
+                            </tr>
+                            <tr>
+                               <td><b>Pembeli</b></td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td>
+                                 @php
+                                 $datauser = DB::table('tb_users')
+                                 ->where('id',$kd->iduser)
+                                 ->get();
+                                 @endphp
+                                 @foreach($datauser as $usr)
+                                    {{$usr->username}}
+                                 @endforeach
+                                </td>
+                                <td align="right"><b>No.telp</b></td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td align="right">{{$kd->telp}}</td>                            </tr>
+                            
+                            <tr>
+                                <td><b>Alamat Tujuan</b></td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td colspan="3">{{$kd->alamat_tujuan}}</td>
+                                
+                            </tr>
+                            <tr>
+                                <td><b>Keterangan</b></td>
+                                <td>&nbsp;:&nbsp;</td>
+                                <td colspan="3">{{$kd->keterangan}}</td>
+                                
+                            </tr>
+                        </table>
+                    @endforeach
+                            <table width="100%" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Kode Barang</th>
+                                        <th>Nama Barang</th>
+                                        <th>Jumlah</th>
+                                        <th>harga</th>
+                                        <th>diskon</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                     $no =1;
+                                    @endphp
+                                    @foreach($data as $row)
+                                    <tr>
+                                        <td>{{$no++}}</td>
+                                        <td>{{$row->kode_barang}}</td>
+                                        <td>{{$row->barang}}</td>
+                                        <td>{{$row->jumlah}}</td>
+                                        <td class="text-right">{{"Rp ". number_format($row->harga,0,',','.')}}</td>
+                                        <td>{{$row->diskon}}%</td>
+                                        <td class="text-right">
+                                            {{"Rp ". number_format($row->total,0,',','.')}}
+                                        </td>
+                                    </tr>
+                                     @endforeach
+                                </tbody>
+                              </table>
+                            <div align="right">
+                            
+                                <b>
+                                <br>
+                                Subtotal : {{"Rp ". number_format($kd->total,0,',','.')}}
+                                <br>
+                                Ongkir : {{"Rp ". number_format($kd->ongkir,0,',','.')}}
+                                <br>
+                                Total Akhir : {{"Rp ". number_format($kd->total_akhir,0,',','.')}}</b>
+                             </div>
+                             <hr>
         </div>
         @endsection
         @section('js')
@@ -246,6 +463,22 @@
         newWin.document.open();
         newWin.document.write('<html><body onload="window.print();window.close()">'+divToPrint.innerHTML+'</body></html>');
         newWin.document.close();
+        
+        });
+        $('#btncetakpengiriman').click(function(){
+        var foo = "bar";
+        if(foo=="bar"){
+        var isgood = confirm('Apakah data lembar pengiriman benar ?');
+        if(isgood){
+
+        var divToPrint=document.getElementById('hidden_div_pengiriman');
+        var newWin=window.open('','Print-Window');
+        newWin.document.open();
+        newWin.document.write('<html><body onload="window.print();window.close()">'+divToPrint.innerHTML+'</body></html>');
+        newWin.document.close();  
+        }
+        }
+        
         
         });
 
