@@ -9,7 +9,7 @@ $(document).ready(function() {
     			cekbarnotivikasi();
     		},7000);
             
-            var notif = document.getElementById('notif');
+            var notif = new Audio('../files/notif.mp3');
 
     		function checktransaksi(){
     			 $.ajax({
@@ -30,6 +30,7 @@ $(document).ready(function() {
                     url: '/cekbar',
                     success:function(data){
                        tampilbar(data);
+                       // notif.play();
                     }
                 });
     		}

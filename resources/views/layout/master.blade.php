@@ -1,7 +1,7 @@
 @if(!Session::get('username'))
-<!-- <script type="text/javascript">
+<script type="text/javascript">
     window.location.href = '{{url("/validatelogin")}}';
-</script> -->
+</script>
 @endif
 <!DOCTYPE html>
 <html lang="en">
@@ -88,10 +88,20 @@
                             <a href="{{url('/dashboard')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="{{url('/admin')}}"><i class="fa fa-user fa-fw"></i> Admin</a>
-                        </li>
-                        <li>
-                            <a href="{{url('/user')}}"><i class="fa fa-users fa-fw"></i> User</a>
+                            <a href="#"><i class="fa fa-users fa-fw"></i> Pengguna<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                @if(Session::get('level') != 'admin')
+                                <li>
+                                    <a href="{{url('/admin')}}"> Admin
+                                    </a>
+                                </li>
+                                @endif
+                                <li>
+                                    <a href="{{url('/user')}}">
+                                    User</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
                         </li>
                         <li>
                             <a href="{{url('/kategori')}}"><i class="fa fa-th-large fa-fw"></i> Kategori</a>
@@ -101,16 +111,28 @@
                             <a href="{{url('/barang')}}"><i class="fa fa-cube fa-fw"></i> Barang</a>
                         </li>
                         <li>
-                            <a href="{{url('/pembelian')}}"><i class="fa fa-money fa-fw"></i> Pembelian</a>
-                        </li>
-                        <li>
-                            <a href="{{url('/pembelianlain')}}"><i class="fa fa-dollar fa-fw"></i> Pembelian Lain</a>
-                        </li>
-                        <li>
-                            <a href="{{url('/pengeluaran')}}"><i class="fa fa-reply fa-fw"></i> Pengeluaran</a>
-                        </li>
-                        <li>
-                            <a href="{{url('/pembelian/gagal')}}"><i class="fa fa-asl-interpreting fa-fw"></i> Transaksi Gagal</a>
+                            <a href="#"><i class="fa fa-money fa-fw"></i> Transaksi<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li>
+                                     <a href="{{url('/pembelian')}}"> Pembelian</a>
+                                </li>
+                                <li>
+                                     <a href="{{url('/pembelianlain')}}"> Pembelian Lain</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('/pengeluaran')}}">Pengeluaran</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('/transaksilangsung')}}">Transaksi Langsung</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('/listtransaksilangsung')}}">List Transaksi Langsung</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('/pembelian/gagal')}}">Transaksi Gagal</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
                         </li>
                         <li>
                             <a href="{{url('/slider')}}"><i class="fa fa-image fa-fw"></i> Slider</a>
@@ -121,10 +143,12 @@
                         <li>
                             <a href="{{url('/setting')}}"><i class="fa fa-gear fa-fw"></i> Setting</a>
                         </li>
+                        @if(Session::get('level') != 'admin')
+                                <li>
                         <li>
                             <a href="{{url('/backup')}}"><i class="fa fa-download fa-fw"></i> Backup Data</a>
                         </li>
-                        
+                        @endif
                        <li>
                             <a href="#"><i class="fa fa-file fa-fw"></i> Laporan<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
@@ -140,9 +164,20 @@
                                 <li>
                                     <a href="{{url('/laporan/pemasukanlain')}}">Laporan Pemasukan Lain</a>
                                 </li>
+                                <li>
+                                    <a href="{{url('/laporan/transaksilangsung')}}">Laporan Transaksi Langsung</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('/laporan/detailtransaksilangsung')}} ">Laporan Detail Transaksi Langsung</a>
+                                </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        @if(Session::get('level') != 'admin')
+                        <li>
+                            <a href="{{url('/omset')}}"><i class="fa fa-download fa-fw"></i> Omset</a>
+                        </li>
+                        @endif
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

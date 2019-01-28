@@ -1,5 +1,22 @@
 <?php
 use Illuminate\Support\Facades\Input;
+//omset
+Route::get('/omset/export','Admin\omsetcontroller@exportomset');
+Route::get('/omset','Admin\omsetcontroller@index');
+
+//transaksi langsung
+Route::get('/listtransaksilangsung/{kode}','Admin\pembelianlangsung@caritransaksi');
+Route::get('/listtransaksilangsung','Admin\pembelianlangsung@list');
+Route::get('/transaksilangsung','Admin\pembelianlangsung@tampil');
+Route::get('/carikode','Admin\pembelianlangsung@carikode');
+Route::get('/caribarang','Admin\pembelianlangsung@caribarang');
+Route::get('/carihasilbarang/{kode}','Admin\pembelianlangsung@carihasilbarang');
+Route::get('/cariwarna/{kode}','Admin\pembelianlangsung@cariwarna');
+Route::post('/tambahdetail','Admin\pembelianlangsung@tambahdetail');
+Route::get('/caridetailbarang/{kode}','Admin\pembelianlangsung@caridetailbarang');
+Route::get('/hapusdetailbarang/{id}','Admin\pembelianlangsung@hapusdetailbarang');
+Route::post('/simpantransaksi','Admin\pembelianlangsung@simpan');
+
 //captcha
 Route::get('refreshcaptcha', 'Logincontroller@refreshCaptcha');
 
@@ -9,7 +26,9 @@ Route::get('/pengeluaran','Admin\pengeluaranController@index');
 //pembelian lain
 Route::get('/pembelianlain','Admin\pembelianlainController@index');
 
-//backup hapuspemasukanlain
+//backup
+Route::get('/hapusdetailtransaksilangsung/{bulan}/{tahun}','Admin\backupController@hapusdetailtransaksilangsung');
+Route::get('/hapustransaksilangsung/{bulan}/{tahun}','Admin\backupController@hapustransaksilangsung');
 Route::get('/hapuspemasukanlain/{bulan}/{tahun}','Admin\backupController@hapuspemasukanlain');
 Route::get('/hapusdetailpemasukan/{bulan}/{tahun}','Admin\backupController@hapusdetailpemasukan');
 Route::get('/hapuspemasukan/{bulan}/{tahun}','Admin\backupController@hapuspemasukan');
@@ -18,6 +37,14 @@ Route::get('/tampilbackup','Admin\backupController@tampil');
 Route::get('/backup','Admin\backupController@index');
 
 //laporan
+Route::get('/exsportdetailtransaksi/{bulan}/{tahun}','Admin\laporanController@exportdetailtransaksi');
+Route::get('/cetakdetailtransaksilangsung/{bulan}/{tahun}','Admin\laporanController@cetakdetailtransaksi');
+Route::get('/tampildetailtransaksilangsung','Admin\laporanController@detailtransaksi');
+Route::get('/laporan/detailtransaksilangsung','Admin\laporanController@pilihdetailtransaksi');
+Route::get('/exsporttransaksilangsung/{bulan}/{tahun}','Admin\laporanController@exporttransaksilangsung');
+Route::get('/cetaktransaksilangsung/{bulan}/{tahun}','Admin\laporanController@cetaktransaksilangsung');
+Route::get('/tampiltransaksilangsung','Admin\laporanController@tampiltransaksilangsung');
+Route::get('/laporan/transaksilangsung','Admin\laporanController@pilihtransaksilangsung');
 Route::get('/exsportpemasukanlain/{bulan}/{tahun}','Admin\laporanController@exportpemasukanlain');
 Route::get('/cetakpemasukanlain/{bulan}/{tahun}','Admin\laporanController@cetakpemasukanlain');
 Route::get('/tampilpemasukanlain','Admin\laporanController@tampilpemasukanlain');
@@ -65,6 +92,7 @@ Route::get('/pembelian','Admin\PembelianController@index');
 Route::resource('bank','Admin\BankController');
 
 //dashboard admin
+Route::get('/dashboard','Admin\Dashboardcontroller@index');
 Route::get('/cektransaksi','Admin\Dashboardcontroller@cektransaksi');
 Route::get('/cekbar','Admin\Dashboardcontroller@cekbar');
 Route::get('/cektransaksi/{id}','Admin\Dashboardcontroller@updatetransaksi');
@@ -125,8 +153,7 @@ Route::get('/barang/importexcel','Admin\Barangcontroller@importexcel');
 Route::get('/barang/eksportkategori','Admin\Barangcontroller@exsportexcel');
 Route::post('/barang/aksiimportexcel','Admin\Barangcontroller@aksiimportexcel');
 Route::get('barang/download','Admin\Barangcontroller@downloadtemplate');
-//dashboard admin
-Route::get('/dashboard','Admin\Dashboardcontroller@index');
+
 //==============================================================
 Route::get('/login','Logincontroller@index');
 Route::get('/loginUser','Logincontroller@loginuser');

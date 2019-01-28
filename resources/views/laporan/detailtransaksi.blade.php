@@ -7,17 +7,14 @@
 @endforeach
 
 @section('css')
-<!-- DataTables CSS -->
     <link href="{{asset('assets/vendor/datatables-plugins/dataTables.bootstrap.css')}}" rel="stylesheet">
-
-    <!-- DataTables Responsive CSS -->
     <link href="{{asset('assets/vendor/datatables-responsive/dataTables.responsive.css')}}" rel="stylesheet">
 @endsection
 @section('content')
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Pengeluaran</h1>
+                    <h1 class="page-header">Laporan Detail Transaksi Langsung Bulan {{$bulan}} Tahun {{$tahun}} </h1>
 
                 </div>
             </div>
@@ -30,25 +27,29 @@
                                 {{ session('status') }}
                     </div>
                     @endif
+                    <a href="{{url('/cetakdetailtransaksilangsung/'.$bulan.'/'.$tahun)}}" class="btn btn-primary" target="_blank()"><i class="fa fa-print"></i> Print</a>
+
+                    <a href="{{url('/exsportdetailtransaksi/'.$bulan.'/'.$tahun)}}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Exsport Excel</a>
+                    <br><br>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            List Data Pengeluaran
+                            List Data Transaksi Langsung
                         </div>
-                        <!-- /.panel-heading -->
 
                         <div class="panel-body">
 
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                 <thead>
+                                <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>tanggal</th>
-                                        <th>Kode Barang</th>
-                                        <th>Nama Barang</th>
-                                        <th>Harga Barang</th>
-                                        <th>Total</th>
                                         <th>Pembuat</th>
-                                        <th>Keterangan</th>
+                                        <th>Faktur</th>
+                                        <th>Barang</th>
+                                        <th>Harga</th>
+                                        <th>Banyak</th>
+                                        <th>Diskon</th>
+                                        <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,28 +60,22 @@
                                   <tr>
                                       <td>{{$i++}}</td>
                                       <td>{{$row->tgl}}</td>
-                                      <td>{{$row->kode_barang}}</td>
-                                      <td>{{$row->barang_jenis}}</td>
-                                      <td align="right">
-                                        {{"Rp ".number_format($row->harga_beli,0,',','.')}} x {{$row->jumlah}} Pcs
-                                        </td>
-                                      <td align="right">
-                                           {{"Rp ".number_format($row->total,0,',','.')}}
+                                      <td>{{$row->username}}</td>
+                                      <td>{{$row->faktur}}</td>
+                                      <td>{{$row->barang}}</td>
+                                      <td class="text-right">
+                                          {{"Rp ".number_format($row->harga,0,',','.')}}
                                       </td>
-                                      <td align="center">
-                                        {{$row->username}}
-                                      </td>
-                                      <td>
-                                        {{$row->keterangan}}
+                                      <td>{{$row->jumlah}} Pcs</td>
+                                      <td>{{$row->diskon}}%</td>
+                                      <td class="text-right">
+                                          {{"Rp ".number_format($row->total,0,',','.')}}
                                       </td>
                                   </tr>
                                   @endforeach
                                 </tbody>
                             </table>
-                            {{$data->links()}}
-                            <div class="text-right">
-                          <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>  
-                        </div>
+                            {{ $data->links() }}
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -91,7 +86,6 @@
         </div>
         @endsection
         @section('js')
-        <!-- DataTables JavaScript -->
         <script src="{{asset('assets/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
         <script src="{{asset('assets/vendor/datatables-plugins/dataTables.bootstrap.min.js')}}"></script>
         <script src="{{asset('assets/vendor/datatables-responsive/dataTables.responsive.js')}}"></script>

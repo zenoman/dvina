@@ -8,7 +8,14 @@
 @section('content')
 <div id="page-wrapper">
            <div class="row">
+           
                 <br>
+                 @if (session('statuslogin'))
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ session('statuslogin') }}
+            </div>
+            @endif
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -22,13 +29,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">Lihat Detail</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
+                        
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -46,13 +47,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">Lihat Detail</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
+                        
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -70,13 +65,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">Lihat Detail</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
+                       
                     </div>
                 </div>
                  <div class="col-lg-3 col-md-6">
@@ -92,19 +81,12 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
+                     </div>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bar-chart-o fa-fw"></i> Penjualan Minggu Ini
@@ -118,7 +100,7 @@
                     </div>
                 </div>
                 
-                <div class="col-lg-4">
+                <!-- <div class="col-lg-4">
                 <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bar-chart-o fa-fw"></i>Kategori Terlaris Minggu Ini
@@ -126,9 +108,8 @@
                         <div class="panel-body">
                             <div id="morris-donut-chart"></div>
                         </div>
-                        <!-- /.panel-body -->
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         @endsection
@@ -211,23 +192,7 @@
         resize: true
     });
 
-    Morris.Donut({
-        element: 'morris-donut-chart',
-        data: [{
-            label: "hijab mantab",
-            value: 12
-        }, {
-            label: "hijab terbaru",
-            value: 30
-        }, {
-            label: "hijab nissa sabyan",
-            value: 20
-        }, {
-            label: "hijab korea",
-            value: 50
-        }],
-        resize: true
-    });
+    
     
 });
     </script>

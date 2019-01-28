@@ -15,8 +15,10 @@ class Catalogcontroller extends Controller
             ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')
             ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
             ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total'))
+
             ->groupBy('tb_kodes.kode_barang')
             ->orderby('tb_kodes.id','desc')
+            ->havingRaw('SUM(tb_barangs.stok) > ?', [0])
             ->paginate(15);
         $totalkeranjang = DB::table('tb_details')
         ->where([['iduser',Session::get('user_id')],['faktur',null]])
@@ -116,8 +118,6 @@ class Catalogcontroller extends Controller
                 'diskon'=>$diskon,
                 'total'=>$harga_total,
                 'metode'=>"pesan"
-
-
             ]);
             return back();
         }
@@ -231,14 +231,17 @@ class Catalogcontroller extends Controller
     }
 
     public function aksibeli(Request $request){
+        $tanggalsekarang = date('dmy');
         $iduser     = Session::get('user_id');
-        $kode = DB::table('tb_transaksis')->max('faktur');
+        $kode = DB::table('tb_transaksis')
+        ->where([['faktur','like','%'.$tanggalsekarang.'%'],['metode','=','pesan']])
+        ->max('faktur');
         if($kode != NULL){
-            $numkode = substr($kode, 5);
+            $numkode = substr($kode, 11);
             $countkode = $numkode+1;
-            $newkode = "DVINA".sprintf("%05s", $countkode);
+            $newkode = "DVINA".$tanggalsekarang.sprintf("%05s", $countkode);
         }else{
-            $newkode = "DVINA00001";
+            $newkode = "DVINA".$tanggalsekarang."00001";
         }
         $tgl = date("Y-m-d");
         $total = $request->total;
@@ -274,6 +277,7 @@ class Catalogcontroller extends Controller
             ->where('tb_kodes.barang','like','%'.$request->cari.'%')
             ->groupBy('tb_kodes.kode_barang')
             ->orderby('tb_kodes.id','desc')
+            ->havingRaw('SUM(tb_barangs.stok) > ?', [0])
             ->get();
         $totalkeranjang = DB::table('tb_details')
         ->where([['iduser',Session::get('user_id')],['faktur',null]])
@@ -308,6 +312,7 @@ class Catalogcontroller extends Controller
             ->where('tb_kodes.id_kategori',$id)
             ->groupBy('tb_kodes.kode_barang')
             ->orderby('tb_kodes.id','desc')
+            ->havingRaw('SUM(tb_barangs.stok) > ?', [0])
             ->get();
         $totalkeranjang = DB::table('tb_details')
         ->where([['iduser',Session::get('user_id')],['faktur',null]])

@@ -187,7 +187,7 @@ class Barangcontroller extends Controller
         $rules = [
             'kode_barang' => 'required|min:3',
             'nama_barang' => 'required',
-            "photo.*"  => "required|image|max:2048"
+            "photo.*"  => "required|image|max:3048"
         ];
         $customMessages = [
         'required'  => 'Maaf, :attribute harus di isi',
@@ -283,7 +283,7 @@ class Barangcontroller extends Controller
 
         $rules = [
             'kode_barang' => 'required|min:3',
-            "photo.*"  => "required|image|max:2048"
+            "photo.*"  => "required|image|max:3048"
         ];
         
 

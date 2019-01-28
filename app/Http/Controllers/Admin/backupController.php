@@ -5,12 +5,18 @@ ini_set('max_execution_time', 180);
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class backupController extends Controller
 {
     public function index(){
+        if(Session::get('level') != 'admin'){
     	$webinfo = DB::table('settings')->limit(1)->get();
     	return view('backup/index',['websettings'=>$webinfo]);
+        }else{
+            return redirect('/dashboard')
+            ->with('statuslogin','Maaf, Anda tidak punya akses');
+        }
     }
     public function tampil(Request $request){
     	$bulan = $request->bulan;
@@ -37,6 +43,16 @@ class backupController extends Controller
         ->whereMonth('tgl',$bulan)
         ->whereYear('tgl',$tahun)
         ->count();
+        $totaltransaksilangsung = DB::table('tb_transaksis')
+        ->whereMonth('tgl',$bulan)
+        ->whereYear('tgl',$tahun)
+        ->where('metode','langsung')
+        ->count();
+        $totaldetailtransaksi = DB::table('tb_details')
+        ->whereMonth('tgl',$bulan)
+        ->whereYear('tgl',$tahun)
+        ->where('metode','langsung')
+        ->count();
     	$webinfo = DB::table('settings')->limit(1)->get();
 
     	return view('backup/tampil',[
@@ -46,7 +62,9 @@ class backupController extends Controller
             'totalpemasukan'=>$totalpemasukan,
             'totalpengeluaran'=>$totalpengeluaran,
             'totalpemasukanlain'=>$totalpemasukanlain,
-            'totaldetailpemasukan'=>$totaldetailpemasukan
+            'totaldetailpemasukan'=>$totaldetailpemasukan,
+            'totaltransaksi'=>$totaltransaksilangsung,
+            'totaldetailtransaksi'=>$totaldetailtransaksi
         ]);
     }
     public function hapuspengeluaran($bulan,$tahun){
@@ -82,6 +100,25 @@ class backupController extends Controller
         ->whereMonth('tb_tambahstoks.tgl',$bulan)
         ->whereYear('tb_tambahstoks.tgl',$tahun)
         ->delete();
+        return back();
+    }
+    public function hapustransaksilangsung($bulan,$tahun){
+         DB::table('tb_transaksis')
+        ->whereMonth('tgl',$bulan)
+        ->whereYear('tgl',$tahun)
+        ->where('metode','langsung')
+        ->delete();
+
+        return back();
+    }
+
+    public function hapusdetailtransaksilangsung($bulan,$tahun){
+        DB::table('tb_details')
+        ->whereMonth('tgl',$bulan)
+        ->whereYear('tgl',$tahun)
+        ->where('metode','langsung')
+        ->delete();
+
         return back();
     }
 }

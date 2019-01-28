@@ -33,7 +33,8 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                         	<div class="row">
-                <div class="col-lg-3 col-md-6">
+                @if($totalpengeluaran>0)
+                <div class="col-lg-4 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
@@ -43,10 +44,24 @@
                                 </div>
                             </div>
                         </div>
-                     
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                @else
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <div class="row">
+                               <div class="col-xs-12 text-center">
+                                    <div class="huge">{{$totalpengeluaran}}</div>
+                                    <div>Total Pengeluaran</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                @if($totalpemasukan>0)
+                <div class="col-lg-4 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
@@ -60,7 +75,24 @@
                      
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                @else
+                 <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <div class="row">
+                               
+                                <div class="col-xs-12 text-center">
+                                    <div class="huge">{{$totalpemasukan}}</div>
+                                    <div>Total Pemasukan</div>
+                                </div>
+                            </div>
+                        </div>
+                     
+                    </div>
+                </div>
+                @endif
+                @if($totaldetailpemasukan>0)
+                <div class="col-lg-4 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
@@ -74,7 +106,24 @@
                      
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                @else
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <div class="row">
+                               
+                                <div class="col-xs-12 text-center">
+                                    <div class="huge">{{$totaldetailpemasukan}}</div>
+                                    <div>Total Detail Pemasukan</div>
+                                </div>
+                            </div>
+                        </div>
+                     
+                    </div>
+                </div>
+                @endif
+                @if($totalpemasukanlain>0)
+                <div class="col-lg-4 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
@@ -85,9 +134,79 @@
                                 </div>
                             </div>
                         </div>
-                     
-                    </div>
+                     </div>
                 </div>
+                @else
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <div class="row">
+                               
+                                <div class="col-xs-12 text-center">
+                                    <div class="huge">{{$totalpemasukanlain}}</div>
+                                    <div>Total Pemasukan Lain</div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+                @endif
+                 @if($totaltransaksi>0)
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                               
+                                <div class="col-xs-12 text-center">
+                                    <div class="huge">{{$totaltransaksi}}</div>
+                                    <div>Total Transaksi Langsung</div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+                @else
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <div class="row">
+                               
+                                <div class="col-xs-12 text-center">
+                                    <div class="huge">{{$totaltransaksi}}</div>
+                                    <div>Total Transaksi Langsung</div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+                @endif
+                 @if($totaldetailtransaksi>0)
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                               <div class="col-xs-12 text-center">
+                                    <div class="huge">{{$totaldetailtransaksi}}</div>
+                                    <div>Total Detail Transaksi Langsung</div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+                @else
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <div class="row">
+                               <div class="col-xs-12 text-center">
+                                    <div class="huge">{{$totaldetailtransaksi}}</div>
+                                    <div>Total Detail Transaksi Langsung</div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+                @endif
             </div>
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs">
@@ -98,6 +217,10 @@
                                 <li class=""><a href="#messages" data-toggle="tab" aria-expanded="false">Detail Pemasukan</a>
                                 </li>
                                 <li class=""><a href="#settings" data-toggle="tab" aria-expanded="true">Pemasukan Lain</a>
+                                </li>
+                                <li class=""><a href="#tl" data-toggle="tab" aria-expanded="true">Transaksi Langsung</a>
+                                </li>
+                                <li class=""><a href="#dtl" data-toggle="tab" aria-expanded="true">Detail Transaksi Langsung</a>
                                 </li>
                             </ul>
 
@@ -151,6 +274,30 @@
                                        <i class="fa fa-trash"></i> Hapus Data
                                     </a>
                                 </div>
+                                <div class="tab-pane fade" id="tl">
+                                    <h4>Backup Data Transaksi Langsung</h4>
+                                    <a href="{{url('/cetaktransaksilangsung/'.$bulan.'/'.$tahun)}}" onclick="return confirm('Cetak data Transaksi Langsung ?')" class="btn btn-warning" target="_blank()">
+                                       <i class="fa fa-print"></i> Print
+                                    </a>
+                                    <a href="{{url('/exsporttransaksilangsung/'.$bulan.'/'.$tahun)}}" class="btn btn-success" onclick="return confirm('Export data Transaksi Langsung ?')">
+                                       <i class="fa fa-file-excel-o"></i> Export Excel
+                                    </a>
+                                    <a href="{{url('/hapustransaksilangsung/'.$bulan.'/'.$tahun)}}" class="btn btn-danger" onclick="return confirm('Hapus data transaksi langsung ?')">
+                                       <i class="fa fa-trash"></i> Hapus Data
+                                    </a>
+                                </div>
+                                <div class="tab-pane fade" id="dtl">
+                                    <h4>Backup Data Detail Transaksi Langsung</h4>
+                                    <a href="{{url('/cetakdetailtransaksilangsung/'.$bulan.'/'.$tahun)}}" onclick="return confirm('Cetak data Detail Transaksi Langsung ?')" class="btn btn-warning" target="_blank()">
+                                       <i class="fa fa-print"></i> Print
+                                    </a>
+                                    <a href="{{url('/exsportdetailtransaksi/'.$bulan.'/'.$tahun)}}" class="btn btn-success" onclick="return confirm('Export data detail Transaksi Langsung ?')">
+                                       <i class="fa fa-file-excel-o"></i> Export Excel
+                                    </a>
+                                    <a href="{{url('/hapusdetailtransaksilangsung/'.$bulan.'/'.$tahun)}}" class="btn btn-danger" onclick="return confirm('Hapus data detail transaksi langsung ?')">
+                                       <i class="fa fa-trash"></i> Hapus Data
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <!-- /.panel-body -->
@@ -160,5 +307,4 @@
         </div>
         @endsection
         @section('js')
-       
         @endsection

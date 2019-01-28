@@ -6,6 +6,16 @@
 @endsection
 @endforeach
 @section('content')
+<script type="text/javascript">
+     function isNumberKey(evt)
+      {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+         return true;
+      }
+</script>
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -41,7 +51,7 @@
                                        <div class="row">
                                            <div class="col-md-4 form-group">
                                             <label>Kontak1</label>
-                                            <input type="text" class="form-control" name="kontak1" value="{{$row->kontak1}}">
+                                            <input type="text" class="form-control" name="kontak1" value="{{$row->kontak1}}" onkeypress="return isNumberKey(event)">
                                          @if($errors->has('kontak1'))
                                        <div class="alert alert-danger">
                                         {{ $errors->first('kontak1')}}
@@ -51,7 +61,7 @@
 
                                         <div class="col-md-4 form-group">
                                             <label>Kontak2</label>
-                                            <input type="text" class="form-control" name="kontak2" value="{{$row->kontak2}}">
+                                            <input type="text" class="form-control" name="kontak2" value="{{$row->kontak2}}" onkeypress="return isNumberKey(event)">
                                              @if($errors->has('kontak2'))
                                        <div class="alert alert-danger">
                                         {{ $errors->first('kontak2')}}
@@ -60,7 +70,7 @@
                                         </div>
                                         <div class="col-md-4 form-group">
                                             <label>Kontak3</label>
-                                            <input type="text" class="form-control" name="kontak3" value="{{$row->kontak3}}">
+                                            <input type="text" class="form-control" name="kontak3" value="{{$row->kontak3}}" onkeypress="return isNumberKey(event)">
                                             @if($errors->has('kontak3'))
                                        <div class="alert alert-danger">
                                         {{ $errors->first('kontak3')}}
@@ -89,7 +99,7 @@
 
                                        <div class="form-group">
                                             <label>Batas hari Pemesana</label>
-                                            <input type="text" class="form-control" name="kadaluarsa" value="{{$row->max_tgl}}">
+                                            <input type="text" class="form-control" name="kadaluarsa" value="{{$row->max_tgl}}" onkeypress="return isNumberKey(event)">
                                         </div>
                                         <div class="form-group">
                                             <label>Peraturan Belanja</label>
@@ -120,9 +130,12 @@
 
 
                                          {{csrf_field()}}
+                                      <div class="text-left">
                                         <input type="hidden" name="_method" value="PUT">
                                         <input class="btn btn-primary" type="submit" name="submit" value="simpan">
-                                       
+                                      
+                          <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>  
+                        </div>
                                     </form>
                                     @endforeach
                                 </div>

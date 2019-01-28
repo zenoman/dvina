@@ -11,7 +11,7 @@
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Pilih Pengeluaran</h1>
+                    <h1 class="page-header">Pilih Transaksi Langsung</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -25,7 +25,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form action="/tampilpengeluaran" role="form" method="GET">
+                                    <form action="/tampiltransaksilangsung" role="form" method="GET">
                                         
                                         <div class="form-group">
                                         	<label>Bulan </label>

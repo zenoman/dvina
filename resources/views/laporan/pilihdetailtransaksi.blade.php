@@ -6,16 +6,13 @@
 <link rel="shortcut icon" type="image" href="{{asset('img/setting/'.$webset->ico)}}">
 @endsection
 @endforeach
-
 @section('content')
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Pilih Pengeluaran</h1>
+                    <h1 class="page-header">Pilih Detail Transaksi Langsung</h1>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
@@ -25,15 +22,14 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form action="/tampilpengeluaran" role="form" method="GET">
-                                        
+                                    <form action="/tampildetailtransaksilangsung" role="form" method="GET">
                                         <div class="form-group">
-                                        	<label>Bulan </label>
-                                        	<select name="bulan" class="form-control">
-                                        		@foreach($data as $row)
+                                            <label>Bulan </label>
+                                            <select name="bulan" class="form-control">
+                                                @foreach($data as $row)
                                                 <option value="{{$row->bulan}}-{{$row->tahun}}">{{$row->bulan}}-{{$row->tahun}}</option>
-                                        		@endforeach
-                                        	</select>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         {{csrf_field()}}
                                         <input class="btn btn-primary" type="submit" name="submit" value="lanjut">

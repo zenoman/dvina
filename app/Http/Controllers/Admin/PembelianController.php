@@ -8,11 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class PembelianController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $websetting = DB::table('settings')->limit(1)->get();
@@ -20,6 +16,7 @@ class PembelianController extends Controller
                     ->select(DB::raw('tb_transaksis.*,tb_users.username,tb_users.telp,tb_bank.nama_bank'))
                     ->leftjoin('tb_users','tb_transaksis.iduser','=','tb_users.id')
                     ->leftjoin('tb_bank','tb_transaksis.pembayaran','=','tb_bank.id')
+                    ->where('tb_transaksis.metode','pesan')
                     ->orderby('tb_transaksis.id','desc')
                     ->paginate(40);
         return view('pembelian/index',['pembelians'=>$pembelians,'websettings'=>$websetting]);
@@ -64,7 +61,7 @@ class PembelianController extends Controller
             ->insert([
                 'faktur'=>$newkode,
                 'total_akhir'=>$row->total,
-                'tgl'=>date("d-m-Y"),
+                'tgl'=>date("Y-m-d"),
                 'bulan'=>date("m"),
                 'status'=>'ditolak',
                 'id_user'=>$row->iduser,
@@ -111,73 +108,18 @@ class PembelianController extends Controller
         
        return back()->with('status','Pembelian Sukses');
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function hapus($id)
     {
         DB::table('tb_details')->where('faktur',$id)->delete();
         DB::table('tb_transaksis')->where('faktur',$id)->delete();
         return back()->with('status','Data Berhasil Dihapus');
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function detail($id)
     {
         $kode = DB::table('tb_transaksis')
-        ->where('id',$id)
+        ->select(DB::raw('tb_transaksis.*,tb_users.telp'))
+        ->leftjoin('tb_users','tb_users.id','=','tb_transaksis.iduser')
+        ->where('tb_transaksis.id',$id)
         ->limit(1)
         ->get();
         foreach ($kode as $row) {

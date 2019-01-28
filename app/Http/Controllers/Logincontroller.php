@@ -32,7 +32,7 @@ class Logincontroller extends Controller
                 $level = $row->level;
             }
             if(Hash::check($mypassword, $password)){
-                 Session::put('username',$request->username);
+                Session::put('username',$request->username);
                 Session::put('iduser',$id);
                 Session::put('level',$level);
                 Session::put('login',TRUE);
