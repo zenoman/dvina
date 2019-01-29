@@ -76,6 +76,7 @@ class Settingcontroller extends Controller
             'logo'=>$namelogo,
             'meta'=>$request->meta,
             'max_tgl'=>$request->kadaluarsa,
+            'peraturan'=>$request->peraturan,
             'alamat'=>$request->alamat,
             'keterangan'=>$request->keterangan
             ]);
@@ -103,6 +104,7 @@ class Settingcontroller extends Controller
             'ico'=>$nameicon,
             'meta'=>$request->meta,
             'max_tgl'=>$request->kadaluarsa,
+            'peraturan'=>$request->peraturan,
             'alamat'=>$request->alamat,
             'keterangan'=>$request->keterangan
             ]);
