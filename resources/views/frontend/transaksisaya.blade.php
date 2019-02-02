@@ -229,7 +229,7 @@
                                             @foreach($metodebayar as $mtd)
                                                 @if($transaksi->pembayaran>1)
                                                 <ol>
-                                                    <li>Transfer ke bank <b>{{$mtd->nama_bank}}</b> dengan nomer rekening <b>{{$mtd->rekening}}</b></li>
+                                                    <li>Transfer ke bank <b>{{$mtd->nama_bank}}</b> dengan nomer rekening <b>{{$mtd->rekening}}</b> juga dengan atas nama <b>{{$mtd->atasnama}}</b></li>
                                                     <li>Tulis Faktur di berita transfer, yaitu <b>{{$transaksi->faktur}}</b>.</li>
                                                     <li>Konfirmasi pembayaran dengan salah satu admin cp kami di tab hubungi kami.</li>
                                                     <li>Setelah di cek tranferan anda, barang akan di kirim oleh admin kami.</li>

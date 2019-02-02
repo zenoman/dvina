@@ -50,7 +50,7 @@ class Logincontroller extends Controller
     }
     public function logoutuser(){
         Session::flush();
-        return back();   
+        return redirect('/');   
     }
     public function validatelogin(){
         Session::flush();

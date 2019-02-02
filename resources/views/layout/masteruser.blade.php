@@ -100,7 +100,7 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <div class="copyright">
-                        <p>&copy; 2018 <a class="llink" onclick="login()">Devina</a>. All Rights Reserved. <a href="#" target="_blank">Joyoboyo Intermedia</a></p>
+                        <p>&copy; 2018 <a class="llink">Devina</a>. All Rights Reserved. <a href="#" target="_blank">Joyoboyo Intermedia</a></p>
                     </div>
                 </div>
                 

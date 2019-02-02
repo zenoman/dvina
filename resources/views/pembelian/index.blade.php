@@ -292,11 +292,16 @@
                                 </div>
                             </div>
                                             @elseif($row->status=='sukses')
+                                            @if(Session::get('level')!='admin')
                                             <a href="{{url('/pembelian/'.$row->faktur.'/hapus')}}" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
+                                            @endif
                                             @elseif($row->status=='ditolak')
+                                            @if(Session::get('level')!='admin')
                                             <a href="{{url('/pembelian/'.$row->faktur.'/hapus')}}" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
-                                            @else                                 
-                                            <a href="#" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
+                                            @endif
+                                            @else                 
+                                            @if(Session::get('level')!='admin')         <a href="{{url('/pembelian/'.$row->faktur.'/hapus')}}" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
+                                            @endif
                                             @endif                              
                                         </td>
                                     </tr>

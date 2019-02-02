@@ -75,7 +75,10 @@ class Settingcontroller extends Controller
             'ico'=>$nameicon,
             'logo'=>$namelogo,
             'meta'=>$request->meta,
-            'max_tgl'=>$request->kadaluarsa
+            'max_tgl'=>$request->kadaluarsa,
+            'peraturan'=>$request->peraturan,
+            'alamat'=>$request->alamat,
+            'keterangan'=>$request->keterangan
             ]);
 
             }elseif($request->hasFile('ico')){
@@ -100,7 +103,10 @@ class Settingcontroller extends Controller
             'email'=>$request->email,
             'ico'=>$nameicon,
             'meta'=>$request->meta,
-            'max_tgl'=>$request->kadaluarsa
+            'max_tgl'=>$request->kadaluarsa,
+            'peraturan'=>$request->peraturan,
+            'alamat'=>$request->alamat,
+            'keterangan'=>$request->keterangan
             ]);
             }elseif ($request->hasFile('logo')) {
 
@@ -126,7 +132,9 @@ class Settingcontroller extends Controller
             'logo'=>$namelogo,
             'meta'=>$request->meta,
             'max_tgl'=>$request->kadaluarsa,
-            'peraturan'=>$request->peraturan
+            'peraturan'=>$request->peraturan,
+            'alamat'=>$request->alamat,
+            'keterangan'=>$request->keterangan
             ]);
             }else{
             DB::table('settings')
@@ -139,7 +147,9 @@ class Settingcontroller extends Controller
             'email'=>$request->email,
             'meta'=>$request->meta,
             'max_tgl'=>$request->kadaluarsa,
-            'peraturan'=>$request->peraturan
+            'peraturan'=>$request->peraturan,
+            'alamat'=>$request->alamat,
+            'keterangan'=>$request->keterangan
         ]);
             }
 

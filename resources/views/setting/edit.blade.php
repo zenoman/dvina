@@ -102,6 +102,16 @@
                                             <input type="text" class="form-control" name="kadaluarsa" value="{{$row->max_tgl}}" onkeypress="return isNumberKey(event)">
                                         </div>
                                         <div class="form-group">
+                                            <label>Alamat</label>
+                                            <input type="text" class="form-control" name="alamat" value="{{$row->alamat}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Deskripsi</label>
+                                            <textarea class="form-control" name="keterangan" rows="4">
+                                                {{$row->keterangan}}
+                                            </textarea>
+                                        </div>
+                                        <div class="form-group">
                                             <label>Peraturan Belanja</label>
                                             <textarea class="form-control" name="peraturan" rows="8" id="editor">
                                                 {{$row->peraturan}}
