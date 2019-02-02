@@ -208,14 +208,14 @@
                                         <input type="hidden" name="kode_barang" value="{{$barang->kode_barang}}">
                                         {{ csrf_field() }}
                                         
-                                        <div class="pull-right">
+                                    <div class="text-center">
 
                                         @if(Session::get('user_name'))
                                         <button type="submit">Masukan Keranjang</button>
                                         @else
                                         <button type="button" class="tombol" data-toggle="modal" data-target="#myModal">Masukan Keranjang</button>
 
-                                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -226,9 +226,7 @@
                                         Maaf, Anda Belum Login
                                     </div>
                                     </div>
-                                    <!-- /.modal-content -->
                                 </div>
-                                <!-- /.modal-dialog -->
                             </div>
                                         @endif
                                         <button type="button" onclick="window.history.go(-1);" class="tombol-merah">Kembali</button>    
