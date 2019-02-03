@@ -37,7 +37,7 @@
                                         <img src="{{asset('img/slider/'.$slider->foto)}}" style="width:100%;height: 100%">
                                         <div class="form-group">
                                             <label>Ganti Gambar</label>
-                                            <input type="file" name="gambar">
+                                            <input type="file" name="gambar" accept="image/*">
                                         </div>
                                           @if($errors->has('gambar'))
                                        <div class="alert alert-danger">

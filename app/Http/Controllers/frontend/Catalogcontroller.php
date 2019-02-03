@@ -209,7 +209,7 @@ class Catalogcontroller extends Controller
                         ->count();
         $rekening = DB::table('tb_bank')->get();
         $websetting = DB::table('settings')->limit(1)->get();
-        return view('frontend\transaksi',['websettings'=>$websetting,'barangs'=>$barangs,'subtotal'=>$subtotal,'datauser'=>$datauser,'rekening'=>$rekening,'jumlah'=>$jumlahbarang]);
+        return view('frontend/transaksi',['websettings'=>$websetting,'barangs'=>$barangs,'subtotal'=>$subtotal,'datauser'=>$datauser,'rekening'=>$rekening,'jumlah'=>$jumlahbarang]);
     }
 
     public function hapuskeranjang($id){

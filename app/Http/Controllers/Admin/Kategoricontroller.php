@@ -57,7 +57,7 @@ class Kategoricontroller extends Controller
             //merubah nama file yg ada spasi menjadi -
             $replace_space=str_replace(' ', '-', $lower_file_name);
             $namagambar = time().'-'.$replace_space;
-            $destination = public_path('img/kategori');
+            $destination = base_path('../public_html/img/kategori');
             $request->file('gambar_kategori')->move($destination,$namagambar);
         }else{
             $namagambar = 'noimage.jpg';
@@ -112,7 +112,7 @@ class Kategoricontroller extends Controller
             //merubah nama file yg ada spasi menjadi -
             $replace_space=str_replace(' ', '-', $lower_file_name);
             $namagambar = time().'-'.$replace_space;
-            $destination = public_path('img/kategori');
+            $destination = base_path('../public_html/img/kategori');
             $request->file('gambar_kategori')->move($destination,$namagambar);
         }
         

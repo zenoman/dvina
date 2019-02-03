@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Illuminate\support\Facades\File;
+use Illuminate\Support\Facades\File;
 
 class userUtama extends Controller
 {
@@ -95,7 +95,7 @@ class userUtama extends Controller
                      $lower_file_name=strtolower($namaexs);
                     $replace_space=str_replace(' ','-',$lower_file_name);
                      $namagambar=time().'-'.$replace_space;
-                     $destination = public_path('img/user');
+                     $destination = base_path('../public_html/img/user');
                    $request->file('gambar_ktp')->move($destination,$namagambar);
 
                 DB::table('tb_users')

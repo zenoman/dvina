@@ -110,7 +110,7 @@
 
                                         <br>
 
-                                        <img src="img/kategori/{{$row->gambar}}" style="width: 20%;">
+                                        <img src="{{asset('img/kategori/'.$row->gambar)}}" style="width: 20%;">
                                          <br>
                                         <div class="form-group">
                                         	<label>Ganti Gambar</label>
