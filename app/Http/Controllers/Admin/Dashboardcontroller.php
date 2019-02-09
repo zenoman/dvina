@@ -56,6 +56,15 @@ class DashboardController extends Controller
                 $pemasukanlain =
                 $this->caripemasukanlain($bulanapps,date('Y'),"y");
                 $pengeluaran = $this->caripengeluaran($bulanapps,date('Y'),"y");
+                if($transaksionline==''){
+                    $transaksionline = 0;
+                }else if($transaksioffline==''){
+                    $transaksioffline=0;
+                }else if($pemasukanlain==''){
+                    $pemasukanlain=0;
+                }else if($pengeluaran==''){
+                    $pengeluaran=0;
+                }
                 $omset = $transaksionline + $transaksioffline + $pemasukanlain - $pengeluaran;
                 DB::table('omset')
                 ->insert([
@@ -68,11 +77,12 @@ class DashboardController extends Controller
                     'tahun'=>date('Y')
                 ]);
             }
-        }
-        DB::table('settings')
+            DB::table('settings')
             ->update([
                 'bulansistem'=>date('m')
             ]);
+        }
+        
     }
     //=========================================================
 
