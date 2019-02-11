@@ -142,10 +142,6 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End main content area -->
-        
-    <div class="single-product-area">
-        <div class="zigzag-bottom"></div>
         <div class="container">
             <h2 class="section-title">Anda Mungkin Suka</h2>
             <div class="row">
@@ -182,8 +178,7 @@
                         </div>  
                         
                         <div class="product-option-shop">
-                            <!--a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Tambah Ke Keranjang</a-->
-                             <a href="{{url('/detailbarang/'.$suges->id)}}" class="add_to_cart_button">Detail Produk</a>
+                           <a href="{{url('/detailbarang/'.$suges->id)}}" class="add_to_cart_button">Detail Produk</a>
                         </div>                       
                     </div>
                 </div>
@@ -191,8 +186,7 @@
                 
             </div>
         </div>
-    </div>  
-    <!-- Button trigger modal -->
+    </div>
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -213,6 +207,25 @@
     </div>
   </div>
 </div>
+<div class="footer-top-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="footer-about-us text-center">
+                        <h2>Temukan <span>Kami</span></h2>
+                        <p>Dapatkan versi android <a href="">disini</a>, atau kunjungi sosial media kami</p>
+                        <div class="footer-social">
+                            <a href="https://web.facebook.com/100012307066867" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="https://www.instagram.com/dvinacollection/" target="_blank"><i class="fa fa-instagram"></i></a>
+                            <a href="https://shopee.co.id/dvina79" target="_blank"><i class="fa fa-shopping-cart"></i></a>
+                            <a href="https://web.facebook.com/koleksi.dvina.501" target="_blank"><i class="fa fa-facebook"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div> <!-- End footer top area -->
    @endsection
     
     

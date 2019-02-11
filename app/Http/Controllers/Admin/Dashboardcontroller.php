@@ -28,6 +28,15 @@ class DashboardController extends Controller
                 $pemasukanlain =
                 $this->caripemasukanlain($bulanapps,date('Y'),"ny");
                 $pengeluaran = $this->caripengeluaran($bulanapps,date('Y'),"ny");
+                if($transaksionline==''){
+                    $transaksionline = 0;
+                }else if($transaksioffline==''){
+                    $transaksioffline=0;
+                }else if($pemasukanlain==''){
+                    $pemasukanlain=0;
+                }else if($pengeluaran==''){
+                    $pengeluaran=0;
+                }
                 $omset = ($transaksionline + $transaksioffline + $pemasukanlain) - $pengeluaran;
                 DB::table('omset')
                 ->insert([
@@ -36,8 +45,8 @@ class DashboardController extends Controller
                     'pemasukan_lain'=>$pemasukanlain,
                     'pengeluaran'=>$pengeluaran,
                     'omset'=>$omset,
-                    'bulan'=>date('m'),
-                    'tahun'=>date('Y')
+                    'bulan'=>12,
+                    'tahun'=>date('Y')-1
                 ]);
             }else{
                 $transaksionline = 
@@ -47,7 +56,16 @@ class DashboardController extends Controller
                 $pemasukanlain =
                 $this->caripemasukanlain($bulanapps,date('Y'),"y");
                 $pengeluaran = $this->caripengeluaran($bulanapps,date('Y'),"y");
-                $omset = ($transaksionline + $transaksioffline + $pemasukanlain) - $pengeluaran;
+                if($transaksionline==''){
+                    $transaksionline = 0;
+                }else if($transaksioffline==''){
+                    $transaksioffline=0;
+                }else if($pemasukanlain==''){
+                    $pemasukanlain=0;
+                }else if($pengeluaran==''){
+                    $pengeluaran=0;
+                }
+                $omset = $transaksionline + $transaksioffline + $pemasukanlain - $pengeluaran;
                 DB::table('omset')
                 ->insert([
                     'pemasukan_online'=>$transaksionline,
@@ -55,11 +73,16 @@ class DashboardController extends Controller
                     'pemasukan_lain'=>$pemasukanlain,
                     'pengeluaran'=>$pengeluaran,
                     'omset'=>$omset,
-                    'bulan'=>date('m'),
+                    'bulan'=>date('m')-1,
                     'tahun'=>date('Y')
                 ]);
             }
+            DB::table('settings')
+            ->update([
+                'bulansistem'=>date('m')
+            ]);
         }
+        
     }
     //=========================================================
 
@@ -67,25 +90,7 @@ class DashboardController extends Controller
     {
         $this->cekomset();
         $tgl = date('d-m-Y');
-        // $check = DB::table('tb_stokawals')->where('tgl',$tgl)->count();
-        //    if($check <= 0 ){
-        //        $databarang = DB::table('tb_kodes')
-        //        ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
-        //        ->select('tb_kodes.*','tb_barangs.warna','tb_barangs.stok','tb_barangs.idbarang')
-        //        ->get();
-        //        //dd($barang);
-    	// 	foreach ($databarang as $row) {
-    	// 		DB::table('tb_stokawals')
-    	// 			->insert([
-    	// 				'idbarang'=>$row->id,
-        //                    'idwarna'=>$row->idbarang,
-    	// 				'kode_barang'=>$row->kode_barang,
-    	// 				'barang'=>$row->barang,
-        //              'jumlah'=>$row->stok,
-    	// 				'tgl'=>$tgl
-    	// 			]);
-    	// 	}
-        //  }
+        
         $hapuslogcancel = DB::table('log_cancel')
         ->whereMonth('tgl','!=',date("m"))
         ->delete();

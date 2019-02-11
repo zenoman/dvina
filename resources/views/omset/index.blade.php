@@ -48,8 +48,8 @@
                                         <th>Pemasukan Offline</th>
                                         <th>Pemasukan Lain</th>
                                         <th>Pengeluaran</th>
-                                        <th>Omset</th>
-                                        <th>Tanggal</th>
+                                        <th>Laba</th>
+                                        <th>bulan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,14 +57,14 @@
                                     @foreach($data as $row)
                                     <?php $no = $i++;?>
                                     <tr>
-                                        <td>{{$no}}</td>
-                                        <td>{{$row->pemasukan_online}}</td>
-                                        <td>{{$row->pemasukan_offline}}</td>
-                                        <td>{{$row->pemasukan_lain}}</td>
-                                        <td>{{$row->pengeluaran}}</td>
-                                        <td>{{$row->omset}}</td>
-                                        <td>{{$row->bulan}}-{{$row->tahun}}</td>
-                                    </tr>
+                        <td>{{$no}}</td>
+                        <td>{{"Rp ". number_format($row->pemasukan_online,0,',','.')}}</td>
+                        <td>{{"Rp ". number_format($row->pemasukan_offline,0,',','.')}}</td>
+                        <td>{{"Rp ". number_format($row->pemasukan_lain,0,',','.')}}</td>
+                        <td class="text-danger">{{"Rp ". number_format($row->pengeluaran,0,',','.')}}</td>
+                        <td>{{"Rp ". number_format($row->omset,0,',','.')}}</td>
+                        <td>{{$row->bulan}}-{{$row->tahun}}</td>
+                    </tr>
                                    @endforeach
                                 </tbody>
                             </table>
@@ -85,8 +85,8 @@
                         <th>Pemasukan Offline</th>
                         <th>Pemasukan Lain</th>
                         <th>Pengeluaran</th>
-                        <th>Omset</th>
-                        <th>Tanggal</th>
+                        <th>Laba</th>
+                        <th>Bulan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,11 +95,11 @@
                     <?php $no = $i++;?>
                     <tr>
                         <td>{{$no}}</td>
-                        <td>{{$row->pemasukan_online}}</td>
-                        <td>{{$row->pemasukan_offline}}</td>
-                        <td>{{$row->pemasukan_lain}}</td>
-                        <td>{{$row->pengeluaran}}</td>
-                        <td>{{$row->omset}}</td>
+                        <td>{{"Rp ". number_format($row->pemasukan_online,0,',','.')}}</td>
+                        <td>{{"Rp ". number_format($row->pemasukan_offline,0,',','.')}}</td>
+                        <td>{{"Rp ". number_format($row->pemasukan_lain,0,',','.')}}</td>
+                        <td>{{"Rp ". number_format($row->pengeluaran,0,',','.')}}</td>
+                        <td>{{"Rp ". number_format($row->omset,0,',','.')}}</td>
                         <td>{{$row->bulan}}-{{$row->tahun}}</td>
                     </tr>
                     @endforeach

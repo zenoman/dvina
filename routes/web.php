@@ -70,7 +70,7 @@ Route::get('/pembelian/gagal','Admin\PembelianController@listtolak');
 Route::get('transaksigagal','frontend\Catalogcontroller@transaksigagal');
 Route::post('/transaksi/tolak','frontend\Catalogcontroller@tolak');
 Route::get('/semuaproduk/{id}/kategori','frontend\Catalogcontroller@kategori');
-Route::post('/cari','frontend\Catalogcontroller@caribarang');
+Route::get('/cari','frontend\Catalogcontroller@caribarang');
 Route::get('/transaksisaya','frontend\Catalogcontroller@transaksisaya');
 Route::post('/aksibeli','frontend\Catalogcontroller@aksibeli');
 Route::get('/belisekarang','frontend\Catalogcontroller@transaksi');

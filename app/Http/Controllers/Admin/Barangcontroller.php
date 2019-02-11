@@ -212,7 +212,7 @@ class Barangcontroller extends Controller
             //merubah nama file yg ada spasi menjadi -
             $replace_space=str_replace(' ', '-', $lower_file_name);
             $namagambar = time().'-'.$replace_space;
-            $destination = public_path('img/barang');
+            $destination = base_path('../public_html/img/barang');
             $photos->move($destination,$namagambar);
             DB::table('gambar')->insert([
                 'kode_barang' => $request->kode_barang,
@@ -305,7 +305,7 @@ class Barangcontroller extends Controller
             //merubah nama file yg ada spasi menjadi -
             $replace_space=str_replace(' ', '-', $lower_file_name);
             $namagambar = time().'-'.$replace_space;
-            $destination = public_path('img/barang');
+            $destination = base_path('../public_html/img/barang');
             $photos->move($destination,$namagambar);
             DB::table('gambar')->insert([
                 'kode_barang' => $request->kode_barang,

@@ -47,7 +47,7 @@
                 <div class="col-md-12">
                     <div class="product-bit-title text-center">
                         @if($status=='nama')
-                        <h2>Hasil Cari</h2>
+                        <h2>Hasil Cari "{{$keynya}}"</h2>
                         @endif
                     </div>
                 </div>
@@ -63,8 +63,9 @@
                 <div class="col-md-3">
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Cari Produk</h2>
-                        <form action="{{url('/cari')}}" method="post">
+                        <form action="{{url('/cari')}}" method="get">
                             <input type="text" placeholder="Cari Berdasarkan Nama" name="cari" required>
+                            {{csrf_field()}}
                             <input type="submit" value="Cari">
                         </form>
                     </div>
@@ -145,4 +146,23 @@
     </div>
   </div>
 </div>
+<div class="footer-top-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="footer-about-us text-center">
+                        <h2>Temukan <span>Kami</span></h2>
+                        <p>Dapatkan versi android <a href="">disini</a>, atau kunjungi sosial media kami</p>
+                        <div class="footer-social">
+                            <a href="https://web.facebook.com/100012307066867" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="https://www.instagram.com/dvinacollection/" target="_blank"><i class="fa fa-instagram"></i></a>
+                            <a href="https://shopee.co.id/dvina79" target="_blank"><i class="fa fa-shopping-cart"></i></a>
+                            <a href="https://web.facebook.com/koleksi.dvina.501" target="_blank"><i class="fa fa-facebook"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div> <!-- End footer top area -->
     @endsection

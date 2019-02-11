@@ -18,7 +18,7 @@ class pembelianlangsung extends Controller
         $kodeuser = sprintf("%02s",session::get('iduser'));
         $lastuser = $tanggal."-".$kodeuser;
         $kode = DB::table('tb_transaksis')
-        ->where([['admin','=',$kodeuser],['metode','=','langsung']])
+        ->where([['admin','=',$kodeuser],['metode','=','langsung'],['total_akhir','=',null]])
         ->max('faktur');
 
         if(!$kode){

@@ -66,7 +66,7 @@
                                         <td>{{$row->level}}</td>
                                         <td class="text-center">
                                        @if(Session::get('level') == 'super_admin')
-                                            @if($row->level=='programer')
+                                        @if($row->level=='programer')
                                             -
                                         @else
                                         <a href="{{url('admin/'.$row->id.'/changepass')}} " class="btn btn-warning btn-sm">
@@ -76,7 +76,17 @@
                                         <i class="fa fa-wrench"></i> Edit</a>
 
                                         <a onclick="return confirm('Hapus Data ?')" href="{{url('admin/'.$row->id.'/delete')}}" class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash-o"></i> Hapus</a>                  @endif                      @endif
+                                        <i class="fa fa-trash-o"></i> Hapus</a>                  @endif
+                                        @else
+                                        <a href="{{url('admin/'.$row->id.'/changepass')}} " class="btn btn-warning btn-sm">
+                                        <i class="fa fa-key"></i> Ganti Password</a>
+
+                                        <a href="{{url('admin/'.$row->id)}}" class="btn btn-success btn-sm">
+                                        <i class="fa fa-wrench"></i> Edit</a>
+
+                                        <a onclick="return confirm('Hapus Data ?')" href="{{url('admin/'.$row->id.'/delete')}}" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-o"></i> Hapus</a>
+                                                     @endif
                                         </td>
                                     </tr>
                                    @endforeach

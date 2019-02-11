@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 ini_set('max_execution_time', 180);
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\support\Facades\File;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -87,7 +87,7 @@ class Usercontroller extends Controller
     $lower_file_name=strtolower($namaexs);
     $replace_space=str_replace(' ','-',$lower_file_name);
     $namagambar=time().'-'.$replace_space;
-    $destination = public_path('img/user');
+    $destination = base_path('../public_html/img/user');
     $request->file('gambar_ktp')->move($destination,$namagambar);
     }else{
         $namagambar='';
@@ -186,7 +186,7 @@ class Usercontroller extends Controller
             $lower_file_name=strtolower($namaexs);
             $replace_space=str_replace(' ','-',$lower_file_name);
             $namagambar=time().'-'.$replace_space;
-            $destination=public_path('img/user');
+            $destination=base_path('../public_html/img/user');
             $request->file('gambar_ktp')->move($destination,$namagambar);
         }
         if($request->hasFile('gambar_ktp')){
@@ -223,7 +223,7 @@ class Usercontroller extends Controller
             $lower_file_name=strtolower($namaexs);
             $replace_space=str_replace(' ','-',$lower_file_name);
             $namagambar=time().'-'.$replace_space;
-            $destination=public_path('img/user');
+            $destination=base_path('../public_html/img/user');
             $request->file('gambar_ktp')->move($destination,$namagambar);
         }
         if($request->hasFile('gambar_ktp')){

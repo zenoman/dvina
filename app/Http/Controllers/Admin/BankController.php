@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 ini_set('max_execution_time', 180);
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\models\bankmodel;
+use App\models\BankModel;
 use Illuminate\Support\Facades\DB;
 
 class BankController extends Controller
@@ -12,13 +12,13 @@ class BankController extends Controller
     public function index()
     {
         $websetting = DB::table('settings')->limit(1)->get();
-        $databank = bankmodel::where('id','>',1)->get();
+        $databank = BankModel::where('id','>',1)->get();
         return view('bank/index',['databank'=>$databank,'websettings'=>$websetting]);
     }
     
     public function store(Request $request)
     {
-        bankmodel::create([
+        BankModel::create([
             'nama_bank'=>$request->bank,
             'rekening'=>$request->rekening,
             'atasnama'=>$request->atasnama
@@ -27,7 +27,7 @@ class BankController extends Controller
     }
     public function update(Request $request, $id)
     {
-        bankmodel::find($id)
+        BankModel::find($id)
                     ->update([
                         'nama_bank'=>$request->bank,
                         'rekening'=>$request->rekening,
@@ -37,7 +37,7 @@ class BankController extends Controller
     }
     public function destroy($id)
     {
-        bankmodel::destroy($id);
+        BankModel::destroy($id);
         return redirect('bank')->with('status','Hapus Data berhasil');
     }
 }
