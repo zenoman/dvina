@@ -175,7 +175,7 @@
                         </li>
                         @if(Session::get('level') != 'admin')
                         <li>
-                            <a href="{{url('/omset')}}"><i class="fa fa-download fa-fw"></i> Omset</a>
+                            <a href="{{url('/omset')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Omset</a>
                         </li>
                         @endif
                     </ul>
