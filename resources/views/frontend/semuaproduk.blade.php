@@ -62,7 +62,7 @@
                 <div class="col-md-3">
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Cari Produk</h2>
-                        <form action="{{url('/cari')}}" method="post">
+                        <form action="{{url('/cari')}}" method="get">
                             <input type="text" placeholder="Cari Berdasarkan Nama" name="cari" required>
                             {{csrf_field()}}
                             <input type="submit" value="Cari">

@@ -288,7 +288,7 @@ class Catalogcontroller extends Controller
                         ->where([['iduser',Session::get('user_id')],['faktur',null]])
                         ->get();
          $kategori = DB::table('tb_kategoris')->get();
-        return view('frontend/hasilcari',['websettings'=>$websetting,'barangs'=>$barangs,'kategoris'=>$kategori,'websettings'=>$websetting,'totalkeranjang'=>$totalkeranjang,'totalbayar'=>$totalbayar,'status'=>'nama']);
+        return view('frontend/hasilcari',['websettings'=>$websetting,'barangs'=>$barangs,'kategoris'=>$kategori,'websettings'=>$websetting,'totalkeranjang'=>$totalkeranjang,'totalbayar'=>$totalbayar,'status'=>'nama','keynya'=>$request->cari]);
     }
     public function transaksisaya(){
         $transaksi = DB::table('tb_transaksis')->where('iduser',Session::get('user_id'))->paginate(15);

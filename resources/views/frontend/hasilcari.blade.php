@@ -47,7 +47,7 @@
                 <div class="col-md-12">
                     <div class="product-bit-title text-center">
                         @if($status=='nama')
-                        <h2>Hasil Cari</h2>
+                        <h2>Hasil Cari "{{$keynya}}"</h2>
                         @endif
                     </div>
                 </div>
@@ -63,8 +63,9 @@
                 <div class="col-md-3">
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Cari Produk</h2>
-                        <form action="{{url('/cari')}}" method="post">
+                        <form action="{{url('/cari')}}" method="get">
                             <input type="text" placeholder="Cari Berdasarkan Nama" name="cari" required>
+                            {{csrf_field()}}
                             <input type="submit" value="Cari">
                         </form>
                     </div>
