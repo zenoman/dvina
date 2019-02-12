@@ -216,10 +216,8 @@ class Barangcontroller extends Controller
         $replace_space=str_replace(' ', '-', $lower_file_name);
         $namagambar = time().'-'.$replace_space;
         $thumbnailImage = Image::make($photos);
-        $thumbnailPath = base_path('../public_html/img/barang')
-        $thumbnailImage
-        ->resize(400, null, function ($constraint) {
-    $constraint->aspectRatio();});
+        $thumbnailPath = base_path('../public_html/img/barang/');
+        $thumbnailImage->resize(400, null, function ($constraint){$constraint->aspectRatio();});
         $thumbnailImage->save($thumbnailPath.$namagambar); 
         // $destination = base_path('../public_html/img/barang');
         // $photos->move($destination,$namagambar);
@@ -315,7 +313,7 @@ class Barangcontroller extends Controller
             $replace_space=str_replace(' ', '-', $lower_file_name);
             $namagambar = time().'-'.$replace_space;
             $thumbnailImage = Image::make($photos);
-            $thumbnailPath = base_path('../public_html/img/barang')
+            $thumbnailPath = base_path('../public_html/img/barang/');
             $thumbnailImage
             ->resize(400, null, function ($constraint) {
             $constraint->aspectRatio();});
