@@ -75,7 +75,7 @@ function isNumberKey(evt)
                                                 <div class="form-group input-group">
                                             
                                             <button class="btn btn-primary btn-sm" id="tambahbarang">Tambah</button>&nbsp;
-                                             <button class="btn btn-danger btn-sm">Bersih</button>
+                                             <button class="btn btn-danger btn-sm" type="button" id="bersihbtn">Bersih</button>
                                         </div>
                                             </div>
                                         </div>
