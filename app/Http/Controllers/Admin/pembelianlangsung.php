@@ -14,25 +14,42 @@ class pembelianlangsung extends Controller
     	return view('transaksilangsung/index',['websettings'=>$webinfo]);
     }
     public function carikode(){
-    	$tanggal    = date('dmy');
+    	$tanggal  = date('dmy');
         $kodeuser = sprintf("%02s",session::get('iduser'));
         $lastuser = $tanggal."-".$kodeuser;
+        //---------------------------------------------------
         $kode = DB::table('tb_transaksis')
-        ->where([['admin','=',$kodeuser],['metode','=','langsung'],['total_akhir','=',null]])
+        ->where([
+            ['admin','=',$kodeuser],
+            ['metode','=','langsung'],
+            ['total_akhir','=',null]])
         ->max('faktur');
-
+        //--------------------------------------------------
         if(!$kode){
-            $finalkode = "DVN".$tanggal."-".$kodeuser."-000001";
+            $caridata = DB::table('tb_transaksis')
+            ->where('faktur','like','%'.$tanggal."-".$kodeuser.'%')
+            ->max('faktur');
+           
+                if(!$caridata){
+                    $finalkode = "DVN".$tanggal."-".$kodeuser."-000001";
+                }else{
+                    $newkode    = explode("-", $caridata);
+                    $nomer      = sprintf("%06s",$newkode[2]+1);
+                    $finalkode  = "DVN".$tanggal."-".$kodeuser."-".$nomer;
+                }
         }else{
             $caridata = DB::table('tb_transaksis')
-            ->where('faktur',$kode)->limit(1)->get();
+            ->where('faktur',$kode)
+            ->limit(1)
+            ->get();
+            //-----------------------------------------------
             foreach ($caridata as $row) {
                 if($row->total_akhir==''){
                     $finalkode = $row->faktur;
                 }else{
                     $newkode    = explode("-", $kode);
-            $nomer      = sprintf("%06s",$newkode[2]+1);
-            $finalkode  = "DVN".$tanggal."-".$kodeuser."-".$nomer;
+                    $nomer      = sprintf("%06s",$newkode[2]+1);
+                    $finalkode  = "DVN".$tanggal."-".$kodeuser."-".$nomer;
                 }
             }
             
