@@ -10,6 +10,7 @@ use App\Exports\KategoriExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
+use Image;
 
 class Barangcontroller extends Controller
 {
@@ -34,10 +35,9 @@ class Barangcontroller extends Controller
 
     public function exsportexcel()
     {
-    return Excel::download(new KategoriExport, 'Kategori.xlsx');
-    return redirect('barang/importexcel');
-
+        return Excel::download(new KategoriExport, 'Kategori.xlsx');
     }
+
     public function updatewarna(Request $request, $id){
         $hargaoptional = $request->harga_lain;
         if ($request->oldstok < $request->stok) {
@@ -89,10 +89,12 @@ class Barangcontroller extends Controller
         ]);
                 return back();
     }
+
     public function hapuswarna($id){
         DB::table('tb_barangs')->where('idbarang',$id)->delete();
         return back();
     }
+
     public function tambahwarna(Request $request){
         if($request->hrg_lain!=''){
             $total = $request->hrg_lain;
@@ -107,6 +109,7 @@ class Barangcontroller extends Controller
             'stok' =>0,
             'barang_jenis'=>$request->nama_brg." ".$request->warna
         ]);
+
         $id = DB::getPdo()->lastInsertId();
         DB::table('tb_tambahstoks')
             ->insert([
@@ -121,6 +124,7 @@ class Barangcontroller extends Controller
         ]);
         return back();
     }
+
     public function downloadtemplate(){
          $file= public_path(). "/files/template.xlsx";
 
@@ -183,7 +187,6 @@ class Barangcontroller extends Controller
    
     public function store(Request $request)
     {
-        // dd($request);
         $rules = [
             'kode_barang' => 'required|min:3',
             'nama_barang' => 'required',
@@ -206,14 +209,20 @@ class Barangcontroller extends Controller
         return redirect('barang/create')->with('errorfoto','Maaf, Foto tidak boleh lebih dari 4');
     }
     foreach ($request->file('photo') as $photos) {
-             $namaexs = $photos->getClientOriginalName();
-            //membuat nama  file menjadi lower case / kecil semua
-            $lower_file_name=strtolower($namaexs);
-            //merubah nama file yg ada spasi menjadi -
-            $replace_space=str_replace(' ', '-', $lower_file_name);
-            $namagambar = time().'-'.$replace_space;
-            $destination = base_path('../public_html/img/barang');
-            $photos->move($destination,$namagambar);
+        $namaexs = $photos->getClientOriginalName();
+        //membuat nama  file menjadi lower case / kecil semua
+        $lower_file_name=strtolower($namaexs);
+        //merubah nama file yg ada spasi menjadi -
+        $replace_space=str_replace(' ', '-', $lower_file_name);
+        $namagambar = time().'-'.$replace_space;
+        $thumbnailImage = Image::make($photos);
+        $thumbnailPath = base_path('../public_html/img/barang')
+        $thumbnailImage
+        ->resize(400, null, function ($constraint) {
+    $constraint->aspectRatio();});
+        $thumbnailImage->save($thumbnailPath.$namagambar); 
+        // $destination = base_path('../public_html/img/barang');
+        // $photos->move($destination,$namagambar);
             DB::table('gambar')->insert([
                 'kode_barang' => $request->kode_barang,
                 'nama' => $namagambar
@@ -299,14 +308,20 @@ class Barangcontroller extends Controller
          return redirect('barang/'.$id.'/edit')->with('errorfoto','Maaf, Foto Yang Anda Inputkan Terlalu Banyak');
     }
         foreach ($request->file('photo') as $photos) {
-             $namaexs = $photos->getClientOriginalName();
+            $namaexs = $photos->getClientOriginalName();
             //membuat nama  file menjadi lower case / kecil semua
             $lower_file_name=strtolower($namaexs);
             //merubah nama file yg ada spasi menjadi -
             $replace_space=str_replace(' ', '-', $lower_file_name);
             $namagambar = time().'-'.$replace_space;
-            $destination = base_path('../public_html/img/barang');
-            $photos->move($destination,$namagambar);
+            $thumbnailImage = Image::make($photos);
+            $thumbnailPath = base_path('../public_html/img/barang')
+            $thumbnailImage
+            ->resize(400, null, function ($constraint) {
+            $constraint->aspectRatio();});
+            $thumbnailImage->save($thumbnailPath.$namagambar); 
+            //$destination = base_path('../public_html/img/barang');
+            //$photos->move($destination,$namagambar);
             DB::table('gambar')->insert([
                 'kode_barang' => $request->kode_barang,
                 'nama' => $namagambar
