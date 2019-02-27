@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
@@ -10,9 +11,56 @@ class DashboardController extends Controller
     public function editprofil(){
         return view('home/editprofile');
     }
-    
     //========================================================
-
+    function cekbelumbayar(){
+        $maxkode = DB::table('log_cancel')->max('faktur');
+        if($maxkode != NULL){
+            $numkode = substr($maxkode, 6);
+            $countkode = $numkode+1;
+            $newkode = "Cancel".sprintf("%05s", $countkode);
+        }else{
+            $newkode = "Cancel00001";
+        }
+        $datatransaksi = DB::table('tb_transaksis')
+        ->where('status','diterima')
+        ->get();
+        foreach ($datatransaksi as $row) {
+            if ($row->tgl != date('Y-m-d')) {
+                DB::table('log_cancel')
+            ->insert([
+                'faktur'=>$newkode,
+                'total_akhir'=>$row->total,
+                'tgl'=>date("Y-m-d"),
+                'bulan'=>date("m"),
+                'status'=>'ditolak',
+                'id_user'=>$row->iduser,
+                'id_admin'=>session::get('iduser'),
+                'keterangan'=>'tidak membayar lebih dari 1 hari'
+            ]);
+            $caridetail = DB::table('tb_details')
+            ->where('faktur',$row->faktur)
+            ->get();
+            foreach ($caridetail as $cdl) {
+                DB::table('detail_cancel')
+                ->insert([
+                'idwarna'=>$cdl->idwarna,
+                'iduser'=>$cdl->iduser,
+                'kode'=>$newkode,
+                'tgl'=>$cdl->tgl,
+                'jumlah'=>$cdl->jumlah,
+                'harga'=>$cdl->harga,
+                'barang'=>$cdl->barang,
+                'total'=>$cdl->total,
+                'diskon'=>$cdl->diskon
+                ]);
+            }
+            DB::table('tb_details')->where('faktur',$row->faktur)->delete();
+            DB::table('tb_transaksis')->where('id',$row->faktur)->delete();
+            }
+            
+        }
+    }
+    //========================================================
     function cekomset(){
         $datasetting = DB::table('settings')->limit(1)->get();
         
@@ -89,6 +137,7 @@ class DashboardController extends Controller
     public function index()
     {
         $this->cekomset();
+        $this->cekbelumbayar();
         $tgl = date('d-m-Y');
         
         $hapuslogcancel = DB::table('log_cancel')
@@ -117,6 +166,7 @@ class DashboardController extends Controller
                 DB::table('tb_details')->where('id',$row->id)->delete();
             }
         }
+        
         $websetting = DB::table('settings')->limit(1)->get();
         return view('home/index',[
             'jumlahuser'=>$this->jumlahuser(),
