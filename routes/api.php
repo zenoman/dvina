@@ -30,4 +30,18 @@ Route::get('kategoriPage/{id}?page={page}','Admin\Barangcontroller@perPageKatego
 Route::post('order/','Admin\transaksiController@orderBarang');
 //Update Profile
 Route::post('updateProfile/','Logincontroller@updateProfile');
+//Register
+Route::post('register/','Logincontroller@registerUser');
+//update Pass
+Route::post('updatePas/','Logincontroller@UpdatePass');
+//updateProfile
+Route::post('updateLeng/','Logincontroller@UpdateLengkap');
+//view kEranjang
+Route::get('keranjang/{id}','Admin\transaksiController@vBelanja');
+//hapus Keranjang
+Route::post("hapusKeranjang",'Admin\transaksiController@hapusk');
+//total keranjang
+Route::get("totalk/{id}",'Admin\transaksiController@totalk');
+//ambil Settting
+Route::get("setting",'Admin\Barangcontroller@settingA');
 

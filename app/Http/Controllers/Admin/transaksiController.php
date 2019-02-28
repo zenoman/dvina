@@ -69,8 +69,8 @@ class transaksiController extends Controller
     function orderBarang(Request $request){
         $id=$request->get('idwarna');
         $iduser=$request->get('iduser');        
-        $tgl=date('dd-MM-yyyy');
-        $tglExp="01-01-2019";
+        $tgl=date('y-m-d');
+       
         $kode=$request->get('kode_barang');
         $barang=$request->get('barang');
         $harga=$request->get('harga');
@@ -79,20 +79,54 @@ class transaksiController extends Controller
         $diskon=$request->get('diskon');
         $total=$totala-($totala*$diskon/100);
         $metod="pesan";
-
+        //cek tgl
+        $maxtgl=DB::table("settings")->first();
+        $keep=$maxtgl->max_tgl;
+        $tglExp=Date('y-m-d',strtotime("+".$keep." days"));
         //cek Stok
-        
-//simpan ke Query
-        $data=DB::insert("insert into tb_details(idwarna,iduser,tgl,tgl_kadaluarsa,kode_barang,barang,harga,jumlah,total_a,diskon,total,metode) values(?,?,?,?,?,?,?,?,?,?,?,?)",[$id,$iduser,$tgl,$tglExp,$kode,$barang,$harga,$jumlah,$totala,$diskon,$total,$metod]);
-        if ($data){
-            return response()->json(["status"=>"1","pesan"=>"Berhasil Dipesan"]);
+        $sisa=DB::table("tb_barangs")
+                ->where('idbarang',$id)->first();
+        $stk=$sisa->stok;
+        if($stk<$jumlah){
+            return response()->json(["status"=>"0","pesan"=>"Stok Barang Tersisa ".$stk]);
         }else{
-            return response()->json(["status"=>"0","pesan"=>"Gagal Dipesan"]);
-        }
+           
+             //simpan ke Query
+             $data=DB::insert("insert into tb_details(idwarna,iduser,tgl,tgl_kadaluarsa,kode_barang,barang,harga,jumlah,total_a,diskon,total,metode) values(?,?,?,?,?,?,?,?,?,?,?,?)",[$id,$iduser,$tgl,$tglExp,$kode,$barang,$harga,$jumlah,$totala,$diskon,$total,$metod]);
+             if ($data){
+                 return response()->json(["status"=>"1","pesan"=>"Berhasil Dipesan,Lihat Keranjang"]);
+             }else{
+                 return response()->json(["status"=>"0","pesan"=>"Gagal Dipesan"]);
+             }            
+        }        
 
     }
-    //tampil Transaksi
-    function vBelanja(){
-        
+    //tampil Keranjang
+    function vBelanja($id){
+        $data=DB::table("tb_details")
+                ->where("iduser",$id)
+                ->where("faktur","1")
+                ->join("tb_barangs","idbarang","=","idwarna")
+                ->join("gambar","tb_details.kode_barang","=","gambar.kode_barang")
+                ->groupBy("tb_details.id")
+                ->select(DB::raw("tb_details.*,tb_barangs.warna,gambar.nama"))
+                ->get();        
+        return response()->json(["data"=>$data]);                               
+    }
+    function hapusk(Request $req){
+        $id=$req->get("id");
+        $data=DB::delete("delete from tb_details where id=?",[$id]);
+        if($data){
+            return response()->json(["pesan"=>"Berhasil Dihapus"]);
+        }else{
+            return response()->json(["pesan"=>"Gagal Dihapus"]);
+        }
+    }
+    function totalK($id){
+        $data=DB::table("tb_details")
+                ->select(DB::raw("SUM(total) as total"))
+                ->where("iduser",$id)
+                ->first();
+        return response()->json($data);        
     }
 }

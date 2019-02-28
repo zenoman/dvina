@@ -172,11 +172,13 @@ class Logincontroller extends Controller
         $mypassword = $req->password;
         $data = DB::table('tb_users')
         ->where('username',$username)
+        ->orWhere('telp',$username)
         ->count();
         
         if($data > 0){
             $datausers = DB::table('tb_users')
             ->where('username',$username)
+            ->orWhere('telp',$username)
             ->get();
             
             foreach ($datausers as $du) {
@@ -195,7 +197,7 @@ class Logincontroller extends Controller
                 return response()->json(['status'=>'0','msg'=>'Maaf Password anda Tidak Sesuai']);
             }
         }else{
-            return response()->json(['status'=>'0','msg'=>'Maaf Username Belum Terdaftar']);
+            return response()->json(['status'=>'0','msg'=>'Maaf, Pengguna Belum Terdaftar']);
         }
         
     }
@@ -218,7 +220,76 @@ class Logincontroller extends Controller
             return response()->json(['msg'=>' Akun gagal Di Update']);     
         }
     }
-    function registerA(Request $req){
-
+    function registerUser(Request $rq){
+        $username=$rq->username;
+        $pass=Hash::make($rq->password);
+        $email=$rq->email;
+        $tlp=$rq->telp;
+        //cek username dan email dand telepon
+        $dtUser=DB::table('tb_users')->where('username',$username)->count();        
+        
+        if($dtUser>0){
+            return response()->json(['msg'=>' Username Sudah Digunakan']); 
+        }else{
+            $dtEmail=DB::table('tb_users')->where('email',$email)->count();
+            if($dtEmail>0){
+                return response()->json(['msg'=>' Email Sudah Digunakan']); 
+            }else{
+                $dtTlp=DB::table('tb_users')->where('telp',$tlp)->count();
+                if ($dtTlp>0) {
+                    return response()->json(['msg'=>' Telepon Sudah Digunakan']); 
+                }else{
+                    $data=Usermodel::create([
+                        'username'=>$username,
+                        'password'=>$pass,
+                        'email'=>$email,
+                        'telp'=>$tlp,
+                    ]);
+                    if($data){
+                        return response()->json(['msg'=>' Berhasil Terdaftar,Silahkan Login ']); 
+                    }else{
+                        return response()->json(['msg'=>' Gagal Terdaftar,Silahkan Coba Lagi ']); 
+                    }
+                }
+            }
+        } 
+    }
+    function UpdatePass(Request $rq){
+        $id=$rq->id;
+        $username=$rq->username;
+        $pass=Hash::make($rq->password);
+        $ps=$rq->password;
+        $email=$rq->email;
+        $tlp=$rq->telp;
+        
+        if(empty($ps)){
+            $data=DB::update('update tb_users set username=?,email=?,telp=? where id=?',[$username,$email,$tlp,$id]);
+            if($data){
+                return response()->json(['msg'=>' Data Berhasil Diperbaharui ']); 
+            }else{
+                return response()->json(['msg'=>' Data Gagal Diperbaharui ']); 
+            }
+        }else{
+            $data=DB::update('update tb_users set username=?,password=?,email=?,telp=? where id=?',[$username,$pass,$email,$tlp,$id]);
+            if($data){
+                return response()->json(['msg'=>' Data Berhasil Diperbaharui ']); 
+            }else{
+                return response()->json(['msg'=>' Data Gagal Diperbaharui ']); 
+            }
+         }        
+    }
+    function updateLengkap(Request $rq){
+        $id=$rq->id;
+        $nama=$rq->nama;
+        $lm=$rq->alamat;
+        $kt=$rq->kota;
+        $pr=$rq->provinsi;
+        $kp=$rq->kodepos;
+        $data=DB::update('update tb_users set nama=?,alamat=?,kota=?,provinsi=?,kodepos=? where id=?',[$nama,$lm,$kt,$pr,$kp,$id]);
+                    if($data){
+                        return response()->json(['msg'=>' Data Berhasil Diperbaharui ']); 
+                    }else{
+                        return response()->json(['msg'=>' Data Gagal Diperbaharui ']); 
+                    }
     }
 }

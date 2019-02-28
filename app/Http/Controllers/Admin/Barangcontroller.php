@@ -482,20 +482,26 @@ class Barangcontroller extends Controller
         $barang = DB::table('tb_kodes')
         ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')       
         ->join('gambar','tb_kodes.kode_barang','=','gambar.kode_barang')
+        ->join("tb_barangs",'tb_kodes.kode_barang','=',"tb_barangs.kode")
         ->select(DB::raw('tb_kodes.*,gambar.nama, tb_kategoris.kategori'))
         ->groupBy('tb_kodes.kode_barang')
-        ->paginate(10);
+        ->orderBy('tb_kodes.id','desc')
+        ->havingRaw('SUM(tb_barangs.stok) > ?', [0])
+        ->paginate(25);
         return response()->json($barang);
     }
+   
     function listEtalase(){
         $barang = DB::table('tb_kodes')
         ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')       
         ->join('gambar','tb_kodes.kode_barang','=','gambar.kode_barang')
+        ->join("tb_barangs",'tb_kodes.kode_barang','=',"tb_barangs.kode")
         ->select(DB::raw('tb_kodes.*,gambar.nama, tb_kategoris.kategori'))
+        ->groupBy('tb_kodes.kode_barang')
         ->orderByRaw('RAND()')
-        ->limit(8)
-        ->get();
-        return response()->json(["data"=>$barang]);
+        ->havingRaw('SUM(tb_barangs.stok) > ?', [0])
+        ->paginate(20);
+        return response()->json($barang);
     }
     function gmbItem($id){
         $gmb=DB::table('gambar')
@@ -516,9 +522,14 @@ class Barangcontroller extends Controller
             ->join('gambar',"gambar.kode_barang","=","tb_kodes.kode_barang")
             ->select(DB::raw("tb_kodes.*,gambar.nama"))
             ->where('id_kategori',$id)
-            ->paginate(5);
-        return response()->json($data);
-        
+            ->groupBy('tb_kodes.kode_barang')
+            ->orderByRaw('RAND()')
+            ->paginate(15);
+        return response()->json($data);        
+    }
+    function settingA(){
+        $data=DB::table("settings")->first();
+        return response()->json(["data"=>$data]);
     }
     
 }
