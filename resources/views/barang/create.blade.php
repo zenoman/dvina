@@ -241,8 +241,10 @@ function add_feed()
     var imageSizeArr = 0;
     var imageSize = document.getElementById('photo');
     var imageCount = imageSize.files.length;
+    var jumlah = 0;
     for (var i = 0; i < imageSize.files.length; i++)
     {
+        jumlah +=1;
          var imageSiz = imageSize.files[i].size;
          var imagename = imageSize.files[i].name;
          if (imageSiz > 3000000) {
@@ -254,6 +256,10 @@ function add_feed()
              alert('Maaf, gambar "'+imagename+'" terlalu besar / memiliki ukuran lebih dari 3MB');
              $('#photo').val('');
          }
+     }
+      if (jumlah > 4){
+        alert('Maaf, gambar lebih dari 4 file');
+             $('#photo').val('');
      }
  }); 
     </script>
