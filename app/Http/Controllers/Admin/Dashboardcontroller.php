@@ -13,6 +13,11 @@ class DashboardController extends Controller
     }
     //========================================================
     function cekbelumbayar(){
+        
+        $datatransaksi = DB::table('tb_transaksis')
+        ->where('status','diterima')
+        ->get();
+        foreach ($datatransaksi as $row) {
         $maxkode = DB::table('log_cancel')->max('faktur');
         if($maxkode != NULL){
             $numkode = substr($maxkode, 6);
@@ -21,18 +26,15 @@ class DashboardController extends Controller
         }else{
             $newkode = "Cancel00001";
         }
-        $datatransaksi = DB::table('tb_transaksis')
-        ->where('status','diterima')
-        ->get();
-        foreach ($datatransaksi as $row) {
+
             if ($row->tgl != date('Y-m-d')) {
-                DB::table('log_cancel')
+            DB::table('log_cancel')
             ->insert([
                 'faktur'=>$newkode,
                 'total_akhir'=>$row->total,
                 'tgl'=>date("Y-m-d"),
                 'bulan'=>date("m"),
-                'status'=>'ditolak',
+                'status'=>'dicancel',
                 'id_user'=>$row->iduser,
                 'id_admin'=>session::get('iduser'),
                 'keterangan'=>'tidak membayar lebih dari 1 hari'
@@ -55,7 +57,7 @@ class DashboardController extends Controller
                 ]);
             }
             DB::table('tb_details')->where('faktur',$row->faktur)->delete();
-            DB::table('tb_transaksis')->where('id',$row->faktur)->delete();
+            DB::table('tb_transaksis')->where('faktur',$row->faktur)->delete();
             }
             
         }

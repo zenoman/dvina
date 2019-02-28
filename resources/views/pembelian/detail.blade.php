@@ -437,11 +437,13 @@
         //==================================================
         $('#btncetak').click(function(){
         
-        var divToPrint=document.getElementById('hidden_div');
-        var newWin=window.open('','Print-Window');
-        newWin.document.open();
-        newWin.document.write('<html><body onload="window.print();window.close()">'+divToPrint.innerHTML+'</body></html>');
-        newWin.document.close();
+         var print_div = document.getElementById("hidden_div");
+var print_area = window.open();
+print_area.document.write(print_div.innerHTML);
+print_area.document.close();
+print_area.focus();
+print_area.print();
+print_area.close();
         
         });
         $('#btncetakpengiriman').click(function(){
@@ -458,11 +460,15 @@
             if($('#alamat').val()!=''){
                 $('#cetakalamat').html($('#alamat').val());
             }
-        var divToPrint=document.getElementById('hidden_div_pengiriman');
-        var newWin=window.open('','Print-Window');
-        newWin.document.open();
-        newWin.document.write('<html><body onload="window.print();window.close()">'+divToPrint.innerHTML+'</body></html>');
-        newWin.document.close();  
+
+      var print_div = document.getElementById("hidden_div_pengiriman");
+var print_area = window.open();
+print_area.document.write(print_div.innerHTML);
+print_area.document.close();
+print_area.focus();
+print_area.print();
+print_area.close();
+ 
         }
         }});
         $('#btnbersih').click(function(){
