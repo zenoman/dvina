@@ -64,7 +64,7 @@
                                       <td>{{$row->barang_jenis}}</td>
                                       <td>{{$row->jumlah}} Pcs</td>
                                       <td align="right">
-                                        {{"Rp ".number_format($row->harga_beli,0,',','.')}}
+                                        {{"Rp ".number_format($row->harga_barang,0,',','.')}}
                                         </td>
                                       <td align="right">
                                            {{"Rp ".number_format($row->total,0,',','.')}}

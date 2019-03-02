@@ -210,6 +210,7 @@
                                         </div>
                                         <input type="hidden" name="kode" value="{{$kode}}">
                                          <input type="hidden" name="harga_beli" value="{{$row->harga_beli}}">
+                                         <input type="hidden" name="harga_jual" value="{{$row->harga_barang}}">
                                         <div class="form-group">
                                             <label>Stok</label>
                                             <input class="form-control" onkeypress="return isNumberKey(event)" name="stok" type="text" value="{{$war->stok}}" required>

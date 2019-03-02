@@ -64,7 +64,7 @@ class Barangcontroller extends Controller
             if($hargaoptional != 0){
                 $total = $hargaoptional;
             }else{
-                $total = $request->harga_beli*$stok;
+                $total = $request->harga_jual*$stok;
             }
             DB::table('tb_tambahstoks')
             ->insert([

@@ -11,7 +11,7 @@ class pembelianlainController extends Controller
 	public function index(){
 	$webinfo = DB::table('settings')->limit(1)->get();
 	$data = DB::table('tb_tambahstoks')
-        ->select(DB::raw('tb_tambahstoks.*,admins.username,tb_barangs.barang_jenis,tb_kodes.harga_beli'))
+        ->select(DB::raw('tb_tambahstoks.*,admins.username,tb_barangs.barang_jenis,tb_kodes.harga_beli,tb_kodes.harga_barang'))
         ->leftjoin('admins','admins.id','=','tb_tambahstoks.idadmin')
         ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_tambahstoks.idwarna')
         ->leftjoin('tb_kodes','tb_kodes.kode_barang','=','tb_tambahstoks.kode_barang')
