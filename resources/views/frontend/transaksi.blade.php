@@ -21,6 +21,15 @@
     @endforeach
     @endsection
 @section('content')
+<style>
+    .woocommerce-merah {
+    background: none repeat scroll 0 0 #d9534f;
+    font-size: 18px;
+    color: white;
+    margin-bottom: 20px;
+    padding: 15px;
+}
+</style>
   <div class="product-big-title-area">
         <div class="container">
             <div class="row">
@@ -36,7 +45,19 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
+                 @if (session('error'))
+                 <div class="col-md-12">
+                            <div class="woocommerce-merah text-center">
+                                <i class="fa fa-warning"></i> Maaf, Stok Barang  : 
+                                <b>
+                                {{session('error')}}
+                                </b>
+                            Telah berubah, silahkan hapus, ganti barang tersebut dari keranjang.
+                            </div>
+                        </div>
+                            @endif
                 <div class="col-md-8">
+
                     <h3 id="order_review_heading">Daftar Belanja</h3>
                         <table class="shop_table">
                                         <thead>
@@ -87,6 +108,8 @@
                                     </table>
                             <div class="woocommerce-info">NB: Estimasi ongkir akan di inputkan oleh admin setelah pengajuan pembelian diterima
                             </div>
+                            
+                           
 
                 </div>
                 
@@ -113,6 +136,7 @@
                                                     <label class="" for="shipping_first_name">Alamat Tujuan
                                                     </label>
                                                    <textarea cols="5" rows="2" id="order_comments" class="input-text " name="alamat">{{$user->alamat}}</textarea>
+
                                                 </p>
                                                 <p id="shipping_country_field" class="form-row form-row-wide address-field update_totals_on_change validate-required woocommerce-validated">
                                                     <label class="" for="shipping_country">Metode Pembayaran
@@ -133,7 +157,8 @@
                                             {{@csrf_field()}}
                                                 <p id="order_comments_field" class="form-row notes">
                                                 <label class="" for="order_comments">Keterangan</label>
-                                                <textarea cols="5" rows="2" id="order_comments" class="input-text " name="keterangan" required="required" onfocus="this.value='';"></textarea>
+                                                <textarea cols="5" rows="2" id="order_comments" class="input-text " name="keterangan" required="required" onfocus="this.value='';" placeholder="wajib di isi"></textarea>
+
                                             </p>
                                         </div>
 

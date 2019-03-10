@@ -231,8 +231,26 @@ class Catalogcontroller extends Controller
     }
 
     public function aksibeli(Request $request){
+        $simpan_data = 0;
+        $erronya = '';
         $tanggalsekarang = date('dmy');
         $iduser     = Session::get('user_id');
+        
+        $datakeranjang = DB::table('tb_details')
+        ->where([['iduser',Session::get('user_id')],['faktur',null]])
+        ->get();
+        foreach ($datakeranjang as $row) {
+            $datawarna = DB::table('tb_barangs')->where('idbarang',$row->idwarna)->get();
+            foreach ($datawarna as $rw) {
+                if ($rw->stok < $row->jumlah) {
+                    $simpan_data += 1;
+                    $erronya = $erronya."".$row->barang.",";
+                }
+            }
+        }
+        if ($simpan_data !=0) {
+        return back()->with('error',$erronya);
+        }else{
         $kode = DB::table('tb_transaksis')
         ->where([['faktur','like','%'.$tanggalsekarang.'%'],['metode','=','pesan']])
         ->max('faktur');
@@ -265,8 +283,9 @@ class Catalogcontroller extends Controller
         ->update([
             'faktur'=>$newkode
         ]);
-
          return redirect('transaksisaya');
+        }
+        
     }
     public function caribarang(Request $request){
         $websetting = DB::table('settings')->limit(1)->get();
