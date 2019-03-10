@@ -21,6 +21,14 @@
     @endforeach
     @endsection
     @section('content')
+    <style>
+        .tombol-merah{
+            padding: 6px 10px;
+        }
+        .tombol{
+            padding: 6px 10px;
+        }
+    </style>
     <div class="product-big-title-area">
         <div class="container">
             <div class="row">
@@ -35,11 +43,12 @@
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
+
             <div class="row">
                <div class="col-md-12">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                                <table cellspacing="0" class="shop_table cart">
+                                <table cellspacing="0" class="shop_table cart" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th class="product-name">Faktur</th>
@@ -255,6 +264,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 {{ $transaksis->links() }}
                                 <div class="woocommerce-info">NB: Pastikan Menyertakan Faktur Pada Berita Transfer. Jika Ada yang Keluhan Atau Kurang Jelas, Hubungi CP Kami Di Tab Hubungi Kami 
                             	</div>

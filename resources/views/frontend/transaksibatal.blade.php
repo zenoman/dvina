@@ -73,29 +73,22 @@
                                             ->where('detail_cancel.kode',$transaksi->faktur)
                                             ->get();
                                             @endphp
-                                    <table class="table table-striped table-bordered table-hover">
-                                    <thead>
+                                    <table class="table table-striped table-bordered table-hover" style="max-width: 100%;">
                                         <tr>
                                             <th class="text-center">
-                                            Nama Barang</th>
+                                            Barang</th>
+                                            
                                             <th class="text-center">
-                                            Warna</th>
-                                            <th class="text-center">
-                                            Jumlah</th>
+                                            Jmlah</th>
                                             <th class="text-center">Harga</th>
                                             <th class="text-center">Diskon</th>
                                             <th class="text-center">Total</th>
 
                                         </tr>
-                                    </thead>
-                                    <tbody>
                                     @foreach($detailnya as $brg)
                                         <tr>
                                             <td>
                                                 {{$brg->barang}}
-                                            </td>
-                                            <td>
-                                                {{$brg->warna}}
                                             </td>
                                             <td>
                                                 {{$brg->jumlah}} Pcs
@@ -117,7 +110,7 @@
                                     @endforeach
                                        
                                         <tr>
-                                            <td colspan="5">Total</td>
+                                            <td colspan="4">Total</td>
                                             <td><b>
                                                 {{"Rp ". number_format($transaksi->total_akhir,0,',','.')}}
                                             </b></td>
@@ -126,7 +119,6 @@
                                         
                                        
                                         
-                                    </tbody>
                                         </table>
                                         
                                         </div>
