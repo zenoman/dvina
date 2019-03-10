@@ -29,7 +29,7 @@ class pembelianlangsung extends Controller
             $caridata = DB::table('tb_transaksis')
             ->where('faktur','like','%'.$tanggal."-".$kodeuser.'%')
             ->max('faktur');
-           
+        
                 if(!$caridata){
                     $finalkode = "DVN".$tanggal."-".$kodeuser."-000001";
                 }else{

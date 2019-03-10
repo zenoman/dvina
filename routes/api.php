@@ -44,4 +44,11 @@ Route::post("hapusKeranjang",'Admin\transaksiController@hapusk');
 Route::get("totalk/{id}",'Admin\transaksiController@totalk');
 //ambil Settting
 Route::get("setting",'Admin\Barangcontroller@settingA');
-
+//ambil Bank
+Route::get("bank",'Admin\transaksiController@vBank');
+//transaksi
+Route::post("transaksi",'Admin\transaksiController@transaksibeli');
+//kode
+Route::get("kodes",'Admin\transaksiController@carikode');
+//view transaksi
+Route::get("vtrans/{id}",'Admin\transaksiController@vTrans');

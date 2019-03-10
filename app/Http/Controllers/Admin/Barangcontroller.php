@@ -450,8 +450,7 @@ class Barangcontroller extends Controller
 
         foreach ($request->kodebarang as $id){
             $barang = DB::table('tb_kodes')
-        ->where('id',$id)->get();
-        
+        ->where('id',$id)->get();        
         foreach ($barang as $brg) {
         $kodenya = $brg->kode_barang;
         }
@@ -528,7 +527,9 @@ class Barangcontroller extends Controller
         return response()->json($data);        
     }
     function settingA(){
-        $data=DB::table("settings")->first();
+        $data=DB::table("admins")
+                ->where("level","admin")
+                ->get();
         return response()->json(["data"=>$data]);
     }
     
