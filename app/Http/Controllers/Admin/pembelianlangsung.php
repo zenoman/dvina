@@ -134,7 +134,7 @@ class pembelianlangsung extends Controller
         ->where('id',$id)
         ->get();
 
-        foreach ($databarang as $row) {
+        foreach ($databarang as $row){
         DB::table('keranjang_cancel')
         ->insert([
             'tgl'=>date('Y-m-d'),
@@ -147,9 +147,28 @@ class pembelianlangsung extends Controller
     }
 
     public function simpan(Request $request){
+        $simpan_data = 0;
+        $erronya = '';
+
         $faktur = $request->faktur;
         $total = $request->total;
 
+        $datakeranjang = DB::table('tb_details')
+        ->where('faktur',$faktur)
+        ->get();
+
+        foreach ($datakeranjang as $row) {
+            $datawarna = DB::table('tb_barangs')->where('idbarang',$row->idwarna)->get();
+            foreach ($datawarna as $rw) {
+                if ($rw->stok < $row->jumlah) {
+                    $simpan_data += 1;
+                    $erronya = $erronya."".$row->barang.",";
+                }
+            }
+        }
+        if ($simpan_data !=0) {
+        return response()->json($erronya);
+        }else{
         $caridata = DB::table('tb_transaksis')
         ->where('faktur',$faktur)
         ->count();
@@ -169,7 +188,16 @@ class pembelianlangsung extends Controller
                 'admin'=>session::get('iduser'),
                 'total_akhir'=>$total
             ]);
+        } 
+        DB::table('tb_details')
+        ->where('faktur',$faktur)
+        ->update([
+            'sb'=>1
+        ]);
+        $data = 'hore';
+        return response()->json($data);
         }
+        
     }
 
     public function list(){

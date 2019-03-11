@@ -314,9 +314,14 @@ $(document).ready(function(){
                     	'faktur': $('#noresi').html(),
                     	'total': $('#realtotal').val(),
                     	},
-                    success: function () {
+                    success: function (data) {
+                    	if(data=='hore'){
                     	bersih();
-                    	carikode();
+                    	carikode();	
+                    }else{
+                    	$.notify({message: 'Maaf, Stok Barang : '+data+' Berubah'},{type: 'danger'});
+                    }
+                    	
                     },complete:function(){
                     	$('#panelnya').loading('stop');
                     }
