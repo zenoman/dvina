@@ -187,8 +187,8 @@
                                                         ->get();
                                                 @endphp
                                                     @foreach($warnas as $warna)
-                                                    <option value="{{$warna->idbarang.'-'.$warna->stok}}">{{$warna->warna}}</option>
-                                                    @endforeach
+                                                    <option value="{{$warna->idbarang.'-'.$warna->stok.'-'.$warna->warna}}">{{$warna->warna}}</option>
+                                                @endforeach
                                                 
                                             </select></div>
                                             

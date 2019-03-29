@@ -110,7 +110,7 @@ class pembelianlangsung extends Controller
                 'tgl'=>date("Y-m-d"),
                 'tgl_kadaluarsa'=>date("Y")."-".date("m")."-".$day,
                 'kode_barang'=>$request->kodebarang,
-                'barang'=>$request->barang,
+                'barang'=>$request->barang.' '.$request->warnanya,
                 'harga'=>$request->harga,
                 'jumlah'=>$request->jumlah,
                 'total_a'=>$request->totalawal,

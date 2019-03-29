@@ -112,7 +112,6 @@ function isNumberKey(evt)
                                     <tr>
                                         <th class="text-center">#</th>
                                         <th class="text-center">Nama Barang</th>
-                                        <th class="text-center">Warna</th>
                                         <th class="text-right">Harga</th>
                                         <th class="text-center">Jumlah</th>
                                         <th class="text-center">Diskon</th>
@@ -124,7 +123,7 @@ function isNumberKey(evt)
                                     </tbody>
                                     <tfoot>
                                        <tr>
-                                        <th colspan="6" class="text-right">
+                                        <th colspan="5" class="text-right">
                                         <h4>
                                             total
                                         </h4>

@@ -77,8 +77,6 @@
                                         <div class="modal-body">
                                             @php
                                             $detailnya = DB::table('tb_details')
-                                            ->select(DB::raw('tb_details.*,tb_barangs.warna'))
-                                            ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
                                             ->where('faktur',$transaksi->faktur)
                                             ->get();
                                             @endphp
@@ -87,8 +85,6 @@
                                         <tr>
                                             <th class="text-center">
                                             Nama Barang</th>
-                                            <th class="text-center">
-                                            Warna</th>
                                             <th class="text-center">
                                             Jumlah</th>
                                             <th class="text-center">Harga</th>
@@ -102,9 +98,6 @@
                                         <tr>
                                             <td>
                                                 {{$brg->barang}}
-                                            </td>
-                                            <td>
-                                                {{$brg->warna}}
                                             </td>
                                             <td>
                                                 {{$brg->jumlah}} Pcs
@@ -126,22 +119,22 @@
                                     @endforeach
                                         @if($transaksi->total_akhir=='')
                                         <tr>
-                                            <td colspan="5">Subtotal</td>
+                                            <td colspan="4">Subtotal</td>
                                             <td><b>
                                                 {{"Rp ". number_format($transaksi->total,0,',','.')}}
                                             </b></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5">Ongkir</td>
+                                            <td colspan="4">Ongkir</td>
                                             <td> - </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5">Total</td>
+                                            <td colspan="4">Total</td>
                                             <td> - </td>
                                         </tr>
                                         @else
                                         <tr>
-                                            <td colspan="5">Subtotal</td>
+                                            <td colspan="4">Subtotal</td>
                                             <td>
                                                 <b>
                                                 {{"Rp ". number_format($transaksi->total,0,',','.')}}
@@ -149,13 +142,13 @@
                                         </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5">Ongkir</td>
+                                            <td colspan="4">Ongkir</td>
                                             <td><b>
                                                 {{"Rp ". number_format($transaksi->ongkir,0,',','.')}}
                                             </b></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5">Total</td>
+                                            <td colspan="4">Total</td>
                                             <td><b>
                                                 {{"Rp ". number_format($transaksi->total_akhir,0,',','.')}}
                                             </b></td>

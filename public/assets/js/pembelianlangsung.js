@@ -133,6 +133,7 @@ $(document).ready(function(){
                     	'faktur': $('#noresi').html(),
     					'kodebarang': kode_barang,
     					'barang': $('#nama_barang').val(),
+    					'warnanya': $('#cariwarna option:selected').text(),
     					'harga': hargabarang,
     					'jumlah': $('#jumlah').val(),
     					'totalawal': totalawal,
@@ -174,7 +175,6 @@ $(document).ready(function(){
                 rows = rows + '<tr>';
                 rows = rows + '<td class="text-center"><button type="button" class="btn btn-warning btn-sm" onclick="halo('+value.id+')"><i class="fa fa-trash"></i></button></td>';
                 rows = rows + '<td class="text-center">' +value.barang+'</td>';
-                rows = rows + '<td class="text-center">'+value.warna+'</td>';
                 rows = rows + '<td class="text-right"> Rp. ' +rupiah(value.harga)+'</td>';
                 rows = rows + '<td class="text-center">' +value.jumlah+' Pcs </td>';
                 rows = rows + '<td class="text-center">' +value.diskon+'% </td>';

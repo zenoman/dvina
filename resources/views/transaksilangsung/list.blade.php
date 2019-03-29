@@ -116,7 +116,9 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tubuhnya">
-                                        
+                                        <tr>
+                                            <td colspan="5" align="center"><span class="text-muted">Loading...</span></td>
+                                        </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -150,6 +152,8 @@
 
     });
     $('.tampil').on('click', function(){
+        $('#tubuhnya').html('<tr><td colspan="5" align="center"><span class="text-muted">Loading...</span></td></tr>');
+        
         var kode = $(this).data('kode');
         var tgl = $(this).data('tgl');
         var user = $(this).data('user');

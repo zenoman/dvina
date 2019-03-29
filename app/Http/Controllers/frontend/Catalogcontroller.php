@@ -111,7 +111,7 @@ class Catalogcontroller extends Controller
                 'tgl'=>date("Y-m-d"),
                 'tgl_kadaluarsa'=>$day,
                 'kode_barang'=>$request->kode_barang,
-                'barang'=>$nama,
+                'barang'=>$nama.' '.$datawarna[2],
                 'harga'=>$harga,
                 'jumlah'=>$request->jumlah,
                 'total_a'=>($request->jumlah*$harga),
