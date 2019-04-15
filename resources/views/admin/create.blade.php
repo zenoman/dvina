@@ -107,8 +107,8 @@ function mouseoutPass1(obj) {
 
                                         <div class="form-group">
                                             <label>No. Telfon</label>
-                                            <input type="text" class="form-control" placeholder="Contoh : 085222333XXX" name="no_telfon" value="{{ old('no_telfon') }}" onkeypress="return isNumberKey(event)">
-                                        </div required>
+                                            <input type="text" class="form-control" placeholder="Contoh : 085222333XXX" name="no_telfon" value="{{ old('no_telfon') }}" required>
+                                        </div>
                                         @if($errors->has('no_telfon'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('no_telfon')}}

@@ -10,10 +10,14 @@
      function isNumberKey(evt)
       {
          var charCode = (evt.which) ? evt.which : event.keyCode
-         if (charCode > 31 && (charCode < 48 || charCode > 57))
+         if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode==43 )){
             return false;
+        }else{
 
-         return true;
+            return true;
+        }
+
+         
       }
 </script>
 <div id="page-wrapper">
@@ -51,7 +55,18 @@
                                        <div class="row">
                                            <div class="col-md-4 form-group">
                                             <label>Kontak1</label>
-                                            <input type="text" class="form-control" name="kontak1" value="{{$row->kontak1}}" onkeypress="return isNumberKey(event)">
+                                            <div class="form-group input-group">
+                                            <span class="input-group-addon">+62</span>
+                                            <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="kontak1" 
+                                            value="{{substr($row->kontak1,3)}}" 
+                                            onkeypress="return isNumberKey(event)" 
+                                            required>
+
+                                            </div>
+                                            
                                          @if($errors->has('kontak1'))
                                        <div class="alert alert-danger">
                                         {{ $errors->first('kontak1')}}
@@ -61,7 +76,17 @@
 
                                         <div class="col-md-4 form-group">
                                             <label>Kontak2</label>
-                                            <input type="text" class="form-control" name="kontak2" value="{{$row->kontak2}}" onkeypress="return isNumberKey(event)">
+                                            <div class="form-group input-group">
+                                            <span class="input-group-addon">+62</span>
+                                            <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="kontak2" 
+                                            value="{{substr($row->kontak2,3)}}" 
+                                            onkeypress="return isNumberKey(event)" 
+                                            required>
+
+                                            </div>
                                              @if($errors->has('kontak2'))
                                        <div class="alert alert-danger">
                                         {{ $errors->first('kontak2')}}
@@ -70,7 +95,16 @@
                                         </div>
                                         <div class="col-md-4 form-group">
                                             <label>Kontak3</label>
-                                            <input type="text" class="form-control" name="kontak3" value="{{$row->kontak3}}" onkeypress="return isNumberKey(event)">
+                                            <div class="form-group input-group">
+                                            <span class="input-group-addon">+62</span>
+                                            <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            name="kontak3" 
+                                            value="{{substr($row->kontak3,3)}}" 
+                                            onkeypress="return isNumberKey(event)" 
+                                            required>
+                                            </div>
                                             @if($errors->has('kontak3'))
                                        <div class="alert alert-danger">
                                         {{ $errors->first('kontak3')}}

@@ -64,7 +64,7 @@
                                         
                                         <div class="form-group">
                                             <label>No. Telfon</label>
-                                            <input type="text" class="form-control" value="{{$dataadmin->telp}}" name="no_telfon" onkeypress="return isNumberKey(event)" required>
+                                            <input type="text" class="form-control" value="{{$dataadmin->telp}}" name="no_telfon" required>
                                         </div>
                                         @if($errors->has('no_telfon'))
                                         <div class="alert alert-danger">

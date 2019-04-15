@@ -68,9 +68,9 @@ class Settingcontroller extends Controller
             ->where('idsettings',$id)
             ->update([
             'webName'=>$request->webname,
-            'kontak1'=>$request->kontak1,
-            'kontak2'=>$request->kontak2,
-            'kontak3'=>$request->kontak3,
+            'kontak1'=>'+62'.$request->kontak1,
+            'kontak2'=>'+62'.$request->kontak2,
+            'kontak3'=>'+62'.$request->kontak3,
             'email'=>$request->email,
             'ico'=>$nameicon,
             'logo'=>$namelogo,
@@ -97,9 +97,9 @@ class Settingcontroller extends Controller
             ->where('idsettings',$id)
             ->update([
             'webName'=>$request->webname,
-            'kontak1'=>$request->kontak1,
-            'kontak2'=>$request->kontak2,
-            'kontak3'=>$request->kontak3,
+            'kontak1'=>'+62'.$request->kontak1,
+            'kontak2'=>'+62'.$request->kontak2,
+            'kontak3'=>'+62'.$request->kontak3,
             'email'=>$request->email,
             'ico'=>$nameicon,
             'meta'=>$request->meta,
@@ -125,9 +125,9 @@ class Settingcontroller extends Controller
             ->where('idsettings',$id)
             ->update([
             'webName'=>$request->webname,
-            'kontak1'=>$request->kontak1,
-            'kontak2'=>$request->kontak2,
-            'kontak3'=>$request->kontak3,
+            'kontak1'=>'+62'.$request->kontak1,
+            'kontak2'=>'+62'.$request->kontak2,
+            'kontak3'=>'+62'.$request->kontak3,
             'email'=>$request->email,
             'logo'=>$namelogo,
             'meta'=>$request->meta,
@@ -141,9 +141,9 @@ class Settingcontroller extends Controller
             ->where('idsettings',$id)
             ->update([
             'webName'=>$request->webname,
-            'kontak1'=>$request->kontak1,
-            'kontak2'=>$request->kontak2,
-            'kontak3'=>$request->kontak3,
+            'kontak1'=>'+62'.$request->kontak1,
+            'kontak2'=>'+62'.$request->kontak2,
+            'kontak3'=>'+62'.$request->kontak3,
             'email'=>$request->email,
             'meta'=>$request->meta,
             'max_tgl'=>$request->kadaluarsa,
