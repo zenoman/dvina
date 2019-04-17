@@ -13,11 +13,11 @@ class DashboardController extends Controller
     }
     //========================================================
     function cekbelumbayar(){
-        
+
         $datatransaksi = DB::table('tb_transaksis')
         ->where('status','diterima')
         ->get();
-        foreach ($datatransaksi as $row) {
+        foreach ($datatransaksi as $row){
         $maxkode = DB::table('log_cancel')->max('faktur');
         if($maxkode != NULL){
             $numkode = substr($maxkode, 6);
@@ -27,7 +27,8 @@ class DashboardController extends Controller
             $newkode = "Cancel00001";
         }
 
-            if ($row->tgl != date('Y-m-d')) {
+            if (date('Y-m-d', strtotime($row->tgl.' + 3 days')) <= date('Y-m-d')){
+        
             DB::table('log_cancel')
             ->insert([
                 'faktur'=>$newkode,
@@ -37,7 +38,7 @@ class DashboardController extends Controller
                 'status'=>'dicancel',
                 'id_user'=>$row->iduser,
                 'id_admin'=>session::get('iduser'),
-                'keterangan'=>'tidak membayar lebih dari 1 hari'
+                'keterangan'=>'tidak membayar lebih dari 3 hari'
             ]);
             $caridetail = DB::table('tb_details')
             ->where('faktur',$row->faktur)
