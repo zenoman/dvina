@@ -116,7 +116,7 @@
                                     <tr>
                                         <td>{{$no++}}</td>
                                         <td>{{$row->kode_barang}}</td>
-                                        <td>{{$row->barang}}</td>
+                                        <td>{{$row->barang_jenis}}</td>
                                         <td>{{$row->jumlah}}</td>
                                         <td class="text-right">{{"Rp ". number_format($row->harga,0,',','.')}}</td>
                                         <td>{{$row->diskon}}%</td>

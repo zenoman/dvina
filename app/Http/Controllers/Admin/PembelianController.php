@@ -125,8 +125,13 @@ class PembelianController extends Controller
         foreach ($kode as $row) {
             $kodenya = $row->faktur;
         }
+        // $data = DB::table('tb_details')
+        // ->where('faktur',$kodenya)
+        // ->get();
         $data = DB::table('tb_details')
-        ->where('faktur',$kodenya)
+        ->select(DB::raw('tb_details.*,tb_barangs.barang_jenis'))
+        ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
+        ->where('tb_details.faktur',$kodenya)
         ->get();
          $websetting = DB::table('settings')->limit(1)->get();
          return view('pembelian/detail',['kode'=>$kode,'data'=>$data,'websettings'=>$websetting]);
