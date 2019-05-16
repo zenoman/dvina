@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 class PembelianController extends Controller
 {
 
+
     public function index()
     {
         $websetting = DB::table('settings')->limit(1)->get();
@@ -22,6 +23,7 @@ class PembelianController extends Controller
         return view('pembelian/index',['pembelians'=>$pembelians,'websettings'=>$websetting]);
     }
 
+    //==================================================================
     public function terima(Request $request){
         $id         = $request->kode;
         $idadmin    = $request->admin;
@@ -114,6 +116,9 @@ class PembelianController extends Controller
         DB::table('tb_transaksis')->where('faktur',$id)->delete();
         return back()->with('status','Data Berhasil Dihapus');
     }
+
+
+    //===============================================================
     public function detail($id)
     {
         $kode = DB::table('tb_transaksis')
@@ -135,5 +140,39 @@ class PembelianController extends Controller
         ->get();
          $websetting = DB::table('settings')->limit(1)->get();
          return view('pembelian/detail',['kode'=>$kode,'data'=>$data,'websettings'=>$websetting]);
+    }
+
+    //========================================================
+    public function cari(Request $request){
+        $cari = $request->cari;
+        $websetting = DB::table('settings')->limit(1)->get();
+        $pembelians = DB::table('tb_transaksis')
+                    ->select(DB::raw('tb_transaksis.*,tb_users.username,tb_users.telp,tb_bank.nama_bank'))
+                    ->leftjoin('tb_users','tb_transaksis.iduser','=','tb_users.id')
+                    ->leftjoin('tb_bank','tb_transaksis.pembayaran','=','tb_bank.id')
+                    ->where([
+                        ['tb_transaksis.metode','=','pesan'],
+                        ['tb_transaksis.faktur','like','%'.$request->cari.'%']
+                    ])
+                    ->orwhere([
+                        ['tb_transaksis.metode','=','pesan'],
+                        ['tb_users.username','like','%'.$request->cari.'%']
+                    ])
+                    ->orwhere([
+                        ['tb_transaksis.metode','=','pesan'],
+                        ['tb_transaksis.tgl','like','%'.$request->cari.'%']
+                    ])
+                    ->orwhere([
+                        ['tb_transaksis.metode','=','pesan'],
+                        ['tb_bank.nama_bank','like','%'.$request->cari.'%']
+                    ])
+                    ->orderby('tb_transaksis.id','desc')
+                    ->get();
+        return view('pembelian/hasilcari',['pembelians'=>$pembelians,'websettings'=>$websetting,'cari'=>$cari]);
+    }
+
+    //===========================================================================
+    public function gantistatusmassal(Request $request){
+        dd('halo halo');
     }
 }

@@ -20,6 +20,7 @@ class laporanController extends Controller
      return Excel::download(new pemasukanlain($bulan,$tahun),$namafile); 
     }
 
+    //=============================================================================
     public function cetakpemasukanlain($bulan,$tahun){
         $data = DB::table('tb_tambahstoks')
         ->select(DB::raw('tb_tambahstoks.*,admins.username,tb_barangs.barang_jenis,tb_kodes.harga_beli'))
@@ -39,6 +40,8 @@ class laporanController extends Controller
         ->get();
         return view('laporan/cetakpemasukanlain',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun,'totalnya'=>$total]);
     }
+
+    //=============================================================================
     public function tampilpemasukanlain(Request $request){
         $webinfo = DB::table('settings')->limit(1)->get();
         $tanggalnya = explode('-', $request->bulan);
@@ -54,6 +57,8 @@ class laporanController extends Controller
         ->paginate(40);
         return view('laporan/pemasukanlain',['data'=>$data,'websettings'=>$webinfo,'bulan'=>$tanggalnya[0],'tahun'=>$tanggalnya[1],'data3'=>$data->appends(request()->input())]);
     }
+
+    //=============================================================================
     public function pilihpemasukanlain(){
         $data = DB::table('tb_tambahstoks')
         ->select(DB::raw('MONTH(tgl) as bulan, YEAR(tgl) as tahun'))
@@ -65,17 +70,21 @@ class laporanController extends Controller
         $websetting = DB::table('settings')->limit(1)->get();
         return view('laporan/pilihpemasukanlain',['data'=>$data,'websettings'=>$websetting]);
     }
+
+    //=============================================================================
     public function exsportdetailpemasukan($bulan,$tahun){
         $namafile = "laporan_detail_pemasukan_bulan_".$bulan."_tahun_".$tahun.".xlsx";
      return Excel::download(new detailpemasukan($bulan,$tahun),$namafile);
     }
 
+    //=============================================================================
     public function cetakdetailpemasukan($bulan,$tahun){
          $data = DB::table('tb_details')
-        ->select(DB::raw('tb_details.*,tb_users.username,tb_barangs.barang_jenis'))
+        ->select(DB::raw('tb_details.*,tb_users.username,tb_barangs.barang_jenis,tb_kodes.harga_beli'))
         ->leftjoin('tb_users','tb_users.id','=','tb_details.iduser')
         ->leftjoin('tb_transaksis','tb_transaksis.faktur','=','tb_details.faktur')
         ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
+        ->leftjoin('tb_kodes','tb_kodes.kode_barang','=','tb_details.kode_barang')
         ->whereMonth('tb_details.tgl',$bulan)
         ->whereYear('tb_details.tgl',$tahun)
         ->where('tb_transaksis.status','=','sukses')
@@ -83,14 +92,17 @@ class laporanController extends Controller
         ->get();
         return view('laporan/cetakdetailpemasukan',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun]);
     }
+
+    //=============================================================================
     public function tampildetailpemasukan(Request $request){
         $webinfo = DB::table('settings')->limit(1)->get();
         $tanggalnya = explode('-', $request->bulan);
         $data = DB::table('tb_details')
-        ->select(DB::raw('tb_details.*,tb_users.username,tb_barangs.barang_jenis'))
+        ->select(DB::raw('tb_details.*,tb_users.username,tb_barangs.barang_jenis,tb_kodes.harga_beli'))
         ->leftjoin('tb_users','tb_users.id','=','tb_details.iduser')
         ->leftjoin('tb_transaksis','tb_transaksis.faktur','=','tb_details.faktur')
         ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
+        ->leftjoin('tb_kodes','tb_kodes.kode_barang','=','tb_details.kode_barang')
         ->whereMonth('tb_details.tgl',$tanggalnya[0])
         ->whereYear('tb_details.tgl',$tanggalnya[1])
         ->where('tb_transaksis.status','=','sukses')

@@ -14,7 +14,7 @@
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Laporan Detail Pemasukan Bulan {{$bulan}} Tahun {{$tahun}} </h1>
+                    <h1 class="page-header">Laporn Detail Pemasukan Bulan {{$bulan}} Tahun {{$tahun}} </h1>
 
                 </div>
             </div>
@@ -42,14 +42,15 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>tanggal</th>
+                                        <th>Tgl</th>
                                         <th>Faktur</th>
-                                        <th>Kode Barang</th>
+                                        <th>Kode Brg</th>
                                         <th>Pembeli</th>
-                                        <th>Nama Barang</th>
+                                        <th>Nama Brg</th>
                                         <th>Harga</th>
+                                        <th>Harga Beli</th>
                                         <th>Diskon</th>
-                                        <th>Total</th>
+                                        <th>Hasil</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,9 +68,15 @@
                                       <td>
                                           {{"Rp ".number_format($row->harga,0,',','.')}} x {{$row->jumlah}} Pcs
                                       </td>
+                                      <td>
+                                          {{"Rp ".number_format($row->harga_beli,0,',','.')}} x {{$row->jumlah}} Pcs
+                                      </td>
                                       <td>{{$row->diskon}} %</td>
                                       <td>
-                                        {{"Rp ".number_format($row->total,0,',','.')}}
+                                        @php
+                                            $hsil = $row->total - $row->harga_beli*$row->jumlah;
+                                        @endphp
+                                        {{"Rp ".number_format( $hsil,0,',','.')}}
                                         </td>
                                   </tr>
                                   @endforeach

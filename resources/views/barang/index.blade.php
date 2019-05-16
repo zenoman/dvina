@@ -53,16 +53,15 @@
                                             <input type="" name="cari" class="form-control" placeholder="cari berdasarkan nama barang" required>
                                         </div>
                                         {{csrf_field()}}
-                                </div>
-                                    <div class="modal-footer">
                                         <button type="submit" class="btn btn-info">
                                         <i class="fa fa-search"></i> Cari Data
                                         </button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">
                                         Close
                                         </button>
-                                            </form>
-                                        </div>
+                                    </form>
+
+                                </div>
                                     </div>
                                 </div>
                             </div>

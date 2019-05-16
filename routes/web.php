@@ -62,9 +62,7 @@ Route::get('/cetakpengeluaran/{bulan}/{tahun}','Admin\laporanController@cetakpen
 Route::get('/tampilpengeluaran','Admin\laporanController@tampilpengeluaran');
 Route::get('/laporan/pengeluaran','Admin\laporanController@pilihpengeluaran');
 
-//pembelian
-Route::get('pembelian/{id}/detail','Admin\PembelianController@detail');
-Route::get('/pembelian/gagal','Admin\PembelianController@listtolak');
+
 
 //catalog
 Route::get('transaksigagal','frontend\Catalogcontroller@transaksigagal');
@@ -79,14 +77,19 @@ Route::get('/keranjang','frontend\Catalogcontroller@keranjang');
 Route::get('/semuaproduk','frontend\Catalogcontroller@index');
 Route::get('/detailbarang/{id}','frontend\Catalogcontroller@show');
 Route::post('/tambahkeranjang','frontend\Catalogcontroller@masukkeranjang');
+
 //pembelian
 Route::get('/pembelian/{id}/hapus','Admin\PembelianController@hapus');
-Route::post('/pembelian','Admin\PembelianController@terima');
+Route::post('/pembelian/trma','Admin\PembelianController@terima');
 Route::post('/pembelian/tolak','Admin\PembelianController@tolak');
 Route::get('/pembelian/{id}/sukses','Admin\PembelianController@sukses');
 Route::get('/pembelian/{id}/tolak','Admin\PembelianController@tolak');
 Route::get('/pembelian/{id}/terima','Admin\PembelianController@terima');
 Route::get('/pembelian','Admin\PembelianController@index');
+Route::get('pembelian/cari','Admin\PembelianController@cari');
+Route::get('pembelian/{id}/detail','Admin\PembelianController@detail');
+Route::get('/pembelian/gagal','Admin\PembelianController@listtolak');
+Route::get('/pembelian/gantistatusmassal','Admin\PembelianController@gantistatusmassal');
 
 //bank
 Route::resource('bank','Admin\BankController');

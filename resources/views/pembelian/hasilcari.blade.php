@@ -29,9 +29,11 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">List Pembelian</h1>
-
+                    <p>Hasil Pencarian "{{$cari}}"</p>
                 </div>
+                <!-- /.col-lg-12 -->
             </div>
+            <!-- /.row -->
             <div class="row">
 
                 <div class="col-lg-12">
@@ -41,35 +43,7 @@
                                 {{ session('status') }}
                     </div>
                     @endif
-                    <button class="btn btn-info" data-toggle="modal" data-target="#searchModal">
-                        <i class="fa fa-search"></i> Cari Data
-                    </button>
-                    <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title" id="myModalLabel">Cari Data Spesifik Dari Semua Data</h4>
-                                </div>
-                                
-                                <div class="modal-body">
-                                    <form method="get" action="{{url('pembelian/cari')}}">
-                                        <div class="form-group">
-                                            <input type="" name="cari" class="form-control" placeholder="cari berdasarkan faktur / pembeli / tanggal / metode pembayaran" required>
-                                        </div>
-                                        {{csrf_field()}}
-                                        <button type="submit" class="btn btn-info">
-                                        <i class="fa fa-search"></i> Cari Data
-                                        </button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">
-                                        Close
-                                        </button>
-                                    </form>
-
-                                </div>
-                                    </div>
-                                </div>
-                            </div>
-                    <br><br>  
+                   
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             List Data Pembelian
@@ -77,7 +51,7 @@
                         <!-- /.panel-heading -->
 
                         <div class="panel-body">
-                   
+
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
@@ -132,7 +106,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                        @if($row->status=='terkirim' || $row->status=='dibaca')
+                                            @if($row->status=='terkirim' || $row->status=='dibaca')
                                            
                                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal{{$row->id}}">
                                             Terima
@@ -231,116 +205,114 @@
                                          <p class="help-block text-left">NB: Total sudah termasuk diskon</p>
                                     </div>
                                     <div class="col-md-6 col-sm-6 text-right">
-                                        <form action="/pembelian/trma" role="form" method="post" id="formterima">
-                                            <input type="hidden" name="total" value="{{$row->total}}">
-                                            <input type="hidden" name="admin" value="{{Session::get('iduser')}}">
-                                            <input type="hidden" name="kode" value="{{$row->id}}">
+                                        <form action="pembelian" method="post" role="form">
                                             <div class="form-group">
                                             <label>Masukan Ongkir</label>
                                             <input type="text" name="ongkir" class="form-control" required value="0" onkeypress="return isNumberKey(event)">
                                              <p class="help-block text-right">Ongkir Harus Di isi / Masukan angka 0 </p>
+                                            <input type="hidden" name="total" value="{{$row->total}}">
+                                            <input type="hidden" name="admin" value="{{Session::get('iduser')}}">
+                                            <input type="hidden" name="kode" value="{{$row->id}}">
                                             {{csrf_field()}}
                                             </div>
-                                            <br>
-                                                <button type="submit" onclick="return confirm('Terima Transaksi ?')" class="btn btn-primary" name="simpan">Terima</button>
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                            </form>
-                                            
+                                       
                                     </div>
                                 </div> 
                                                 
                                                 
                                         </div>
+                                        <div class="modal-footer">
+
+                                            <button type="submit" onclick="return confirm('Terima Transaksi ?')" class="btn btn-primary">Terima</button>
+                                             </form>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                            
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+
+                                            <!-- <a href="{{url('/pembelian/'.$row->id.'/tolak')}}" onclick="return confirm('Tolak Pembelian Ini ?')" class="btn btn-danger btn-sm">Tolak</a> -->
+                            
+                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modaltolak{{$row->id}}">
+                            Tolak
+                            </button>
+                            <div class="modal fade" id="modaltolak{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Tolak Pembelian</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                           <form action="/pembelian/tolak" role="form" method="post">
+                                            <input type="hidden" value="{{$row->id}}" name="kode">
+                                            <input type="hidden" value="{{Session::get('iduser')}}" name="iduser">
+                                            <div class="form-group">
+                                            <label>Keterangan</label>
+                                            <textarea name="keterangan" class="form-control" rows="3" cols="75"></textarea>
+                                            {{csrf_field()}}    
+                                            </div><br><br>
+                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Tolak Pembelian Ini ?')">
+                                                Tolak
+                                            </button>
+                                            </form>       
+                                      </div>
                                     </div>
                                 </div>
                             </div>
-
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modaltolak{{$row->id}}">
-                                Tolak
-                                </button>
-                                <div class="modal fade" id="modaltolak{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="modal-title" id="myModalLabel">Tolak Pembelian</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="/pembelian/tolak" role="form" method="post">
-                                                <input type="hidden" value="{{$row->id}}" name="kode">
-                                                <input type="hidden" value="{{Session::get('iduser')}}" name="iduser">
-                                                <div class="form-group">
-                                                <label>Keterangan</label>
-                                                <textarea name="keterangan" class="form-control" rows="3" cols="75"></textarea>
-                                                {{csrf_field()}}    
-                                                </div><br><br>
-                                                <button type="submit" class="btn btn-primary" onclick="return confirm('Tolak Pembelian Ini ?')">
-                                                Tolak
-                                                </button>
-                                                </form>       
-                                            </div>
+                                            @elseif($row->status=='diterima')
+                                            <a href="{{url('/pembelian/'.$row->id.'/sukses')}}" onclick="return confirm('Anda Yakin Pembelian Ini Telah Sukses?')" class="btn btn-success btn-sm">Sukses</a>
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modaltolak{{$row->id}}">
+                            Tolak
+                            </button>
+                            <div class="modal fade" id="modaltolak{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Tolak Pembelian</h4>
                                         </div>
+                                        <div class="modal-body">
+                                           <form action="/pembelian/tolak" role="form" method="post">
+                                            <input type="hidden" value="{{$row->id}}" name="kode">
+                                            <input type="hidden" value="{{Session::get('iduser')}}" name="iduser">
+                                            <div class="form-group">
+                                            <label>Keterangan</label>
+                                            <textarea name="keterangan" class="form-control" rows="3" cols="75"></textarea>
+                                            {{csrf_field()}}    
+                                            </div><br><br>
+                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Tolak Pembelian Ini ?')">
+                                                Tolak
+                                            </button>
+                                            </form>       
+                                      </div>
                                     </div>
                                 </div>
-                            @elseif($row->status=='diterima')
-                                <a href="{{url('/pembelian/'.$row->id.'/sukses')}}" onclick="return confirm('Anda Yakin Pembelian Ini Telah Sukses?')" class="btn btn-success btn-sm">Sukses</a>
-
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modaltolak{{$row->id}}">
-                                Tolak
-                                </button>
-                            
-                                <div class="modal fade" id="modaltolak{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="modal-title" id="myModalLabel">Tolak Pembelian</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="/pembelian/tolak" role="form" method="post">
-                                                <input type="hidden" value="{{$row->id}}" name="kode">
-                                                <input type="hidden" value="{{Session::get('iduser')}}" name="iduser">
-                                                <div class="form-group">
-                                                <label>Keterangan</label>
-                                                <textarea name="keterangan" class="form-control" rows="3" cols="75"></textarea>
-                                                {{csrf_field()}}    
-                                                </div><br><br>
-                                                <button type="submit" class="btn btn-primary" onclick="return confirm('Tolak Pembelian Ini ?')" name="halo">
-                                                Tolak
-                                                </button>
-                                                </form>       
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @elseif($row->status=='sukses')
-                                @if(Session::get('level')!='admin')
-                                    <a href="{{url('/pembelian/'.$row->faktur.'/hapus')}}" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
-                                @endif
-                            @elseif($row->status=='ditolak')
-                                @if(Session::get('level')!='admin')
-                                    <a href="{{url('/pembelian/'.$row->faktur.'/hapus')}}" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
-                                @endif
-                            @else                 
-                                @if(Session::get('level')!='admin')         
-                                    <a href="{{url('/pembelian/'.$row->faktur.'/hapus')}}" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
-                                @endif
-                            @endif                              
+                            </div>
+                                            @elseif($row->status=='sukses')
+                                            @if(Session::get('level')!='admin')
+                                            <a href="{{url('/pembelian/'.$row->faktur.'/hapus')}}" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
+                                            @endif
+                                            @elseif($row->status=='ditolak')
+                                            @if(Session::get('level')!='admin')
+                                            <a href="{{url('/pembelian/'.$row->faktur.'/hapus')}}" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
+                                            @endif
+                                            @else                 
+                                            @if(Session::get('level')!='admin')         <a href="{{url('/pembelian/'.$row->faktur.'/hapus')}}" onclick="return confirm('Anda Yakin Menghapus Transaksi Ini?')" class="btn btn-danger btn-sm">Hapus</a>
+                                            @endif
+                                            @endif                              
                                         </td>
-                                    </tr>
                                     </tr>
                                    @endforeach
                                 </tbody>
                             </table>
-                            
-                            
-                            {{$pembelians->links()}}
+                           
                             <div class="text-right">
-                              
                           <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>  
                         </div>
-
-                        </form>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -359,7 +331,7 @@
     $(document).ready(function() {
         $('#dataTables-example').DataTable({
             responsive: true,
-            "paging":false
+            "paging":true
         });
     });
     </script>
