@@ -14,7 +14,7 @@
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Laporan Pemasukan Bulan {{$bulan}} Tahun {{$tahun}} </h1>
+                    <h1 class="page-header">Laporan Pemasukan Tanggal {{$tgl1}} sampai {{$tgl2}} </h1>
 
                 </div>
             </div>
@@ -27,13 +27,11 @@
                                 {{ session('status') }}
                     </div>
                     @endif
-                    <a href="{{url('/cetakpemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-primary" target="_blank()"><i class="fa fa-print"></i> Print</a>
-
-                    <a href="{{url('/exsportpemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Exsport Excel</a>
+                    
                     <br><br>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            List Data Pengeluaran
+                            List Data Pemasukan
                         </div>
 
                         <div class="panel-body">
@@ -73,6 +71,13 @@
                                   @endforeach
                                 </tbody>
                             </table>
+                            <div class="pull-right">
+                               <a href="{{url('/cetakpemasukan/'.$tgl1.'/'.$tgl2)}}" class="btn btn-primary" target="_blank()"><i class="fa fa-print"></i> Print</a>
+
+                                <a href="{{url('/exsportpemasukan/'.$tgl1.'/'.$tgl2)}}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Exsport Excel
+                                </a> 
+                            </div>
+                            
                             {{ $data->links() }}
                         </div>
                         <!-- /.panel-body -->

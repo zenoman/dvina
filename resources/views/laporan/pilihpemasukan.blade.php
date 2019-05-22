@@ -20,26 +20,29 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Pilih bulan laporan yang akan di tampilkan
+                            Pilih Tanggal laporan yang akan di tampilkan
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <form action="/tampilpemasukan" role="form" method="GET">
-                                        
-                                        <div class="form-group">
-                                        	<label>Bulan </label>
-                                        	<select name="bulan" class="form-control">
-                                        		@foreach($data as $row)
-                                                <option value="{{$row->bulan}}-{{$row->tahun}}">{{$row->bulan}}-{{$row->tahun}}</option>
-                                        		@endforeach
-                                        	</select>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                <label>Tanggal </label>
+                                                <input type="date" name="tgl1" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                <label>Sampai Tanggal </label>
+                                                <input type="date" name="tgl2" class="form-control" required>
+                                                </div>
+                                               
+                                            </div>
+                                            
                                         </div>
-                                       @if($errors->has('email'))
-                                       <div class="alert alert-danger">
-                                        {{ $errors->first('email')}}
-                                         </div>
-                                       @endif
+                                        
                                         {{csrf_field()}}
                                         <input class="btn btn-primary" type="submit" name="submit" value="lanjut">
                                         <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>

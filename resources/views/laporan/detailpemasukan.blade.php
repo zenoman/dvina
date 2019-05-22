@@ -14,30 +14,19 @@
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Laporn Detail Pemasukan Bulan {{$bulan}} Tahun {{$tahun}} </h1>
+                    <h2 class="page-header">Laporn Detail Pemasukan Tanggal {{$tgl1}} Sampai {{$tgl2}} </h2>
 
                 </div>
             </div>
             <div class="row">
 
                 <div class="col-lg-12">
-                    @if (session('status'))
-                    <div class="alert alert-success alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{ session('status') }}
-                    </div>
-                    @endif
-                    <a href="{{url('/cetakdetailpemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-primary" target="_blank()"><i class="fa fa-print"></i> Print</a>
-
-                    <a href="{{url('/exsportdetailpemasukan/'.$bulan.'/'.$tahun)}}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Exsport Excel</a>
-                    <br><br>
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             List Data Detail Pengeluaran
                         </div>
 
                         <div class="panel-body">
-
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
@@ -83,6 +72,10 @@
                                 </tbody>
                             </table>
                             <div class="text-right">
+                                <a href="{{url('/cetakdetailpemasukan/'.$tgl1.'/'.$tgl2)}}" class="btn btn-primary" target="_blank()"><i class="fa fa-print"></i> Print</a>
+
+                                <a href="{{url('/exsportdetailpemasukan/'.$tgl1.'/'.$tgl2)}}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Exsport Excel</a>
+
                                 <a onclick="window.history.go(-1);" class="btn btn-danger">Kembali</a>
                             </div>
                             

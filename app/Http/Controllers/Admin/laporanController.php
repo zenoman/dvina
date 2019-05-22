@@ -72,44 +72,44 @@ class laporanController extends Controller
     }
 
     //=============================================================================
-    public function exsportdetailpemasukan($bulan,$tahun){
-        $namafile = "laporan_detail_pemasukan_bulan_".$bulan."_tahun_".$tahun.".xlsx";
-     return Excel::download(new detailpemasukan($bulan,$tahun),$namafile);
+    public function exsportdetailpemasukan($tgl1,$tgl2){
+        $namafile = "laporan_detail_pemasukan_tanggal_".$tgl1."_sampai_".$tgl2.".xlsx";
+     return Excel::download(new detailpemasukan($tgl1,$tgl2),$namafile);
     }
 
     //=============================================================================
-    public function cetakdetailpemasukan($bulan,$tahun){
+    public function cetakdetailpemasukan($tgl1,$tgl2){
          $data = DB::table('tb_details')
         ->select(DB::raw('tb_details.*,tb_users.username,tb_barangs.barang_jenis,tb_kodes.harga_beli'))
         ->leftjoin('tb_users','tb_users.id','=','tb_details.iduser')
         ->leftjoin('tb_transaksis','tb_transaksis.faktur','=','tb_details.faktur')
         ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
         ->leftjoin('tb_kodes','tb_kodes.kode_barang','=','tb_details.kode_barang')
-        ->whereMonth('tb_details.tgl',$bulan)
-        ->whereYear('tb_details.tgl',$tahun)
+        ->whereBetween('tb_details.tgl',[$tgl1,$tgl2])
         ->where('tb_transaksis.status','=','sukses')
         ->orwhere('tb_transaksis.status','=','diterima')
         ->get();
-        return view('laporan/cetakdetailpemasukan',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun]);
+        return view('laporan/cetakdetailpemasukan',['data'=>$data,'tgl1'=>$tgl1,'tgl2'=>$tgl2]);
     }
 
     //=============================================================================
     public function tampildetailpemasukan(Request $request){
         $webinfo = DB::table('settings')->limit(1)->get();
-        $tanggalnya = explode('-', $request->bulan);
+        $tgl1= $request->tgl1;
+        $tgl2= $request->tgl2;
         $data = DB::table('tb_details')
         ->select(DB::raw('tb_details.*,tb_users.username,tb_barangs.barang_jenis,tb_kodes.harga_beli'))
         ->leftjoin('tb_users','tb_users.id','=','tb_details.iduser')
         ->leftjoin('tb_transaksis','tb_transaksis.faktur','=','tb_details.faktur')
         ->leftjoin('tb_barangs','tb_barangs.idbarang','=','tb_details.idwarna')
         ->leftjoin('tb_kodes','tb_kodes.kode_barang','=','tb_details.kode_barang')
-        ->whereMonth('tb_details.tgl',$tanggalnya[0])
-        ->whereYear('tb_details.tgl',$tanggalnya[1])
+        ->whereBetween('tb_details.tgl',[$tgl1, $tgl2])
         ->where('tb_transaksis.status','=','sukses')
         ->orwhere('tb_transaksis.status','=','diterima')
         ->paginate(40);
-        return view('laporan/detailpemasukan',['data'=>$data,'websettings'=>$webinfo,'bulan'=>$tanggalnya[0],'tahun'=>$tanggalnya[1],'data3'=>$data->appends(request()->input())]);
+        return view('laporan/detailpemasukan',['data'=>$data,'websettings'=>$webinfo,'tgl1'=>$tgl1,'tgl2'=>$tgl2,'data3'=>$data->appends(request()->input())]);
     }
+      //=====================================================================
     public function pilihdetailpemasukan(){
         $data = DB::table('tb_details')
         ->select(DB::raw('MONTH(tgl) as bulan, YEAR(tgl) as tahun'))
@@ -121,46 +121,50 @@ class laporanController extends Controller
         $webinfo = DB::table('settings')->limit(1)->get();
         return view('laporan/pilihdetailpemasukan',['data'=>$data,'websettings'=>$webinfo]);
     }
-    public function exsportpemasukan($bulan, $tahun){
-    $namafile = "laporan_pemasukan_bulan_".$bulan."_tahun_".$tahun.".xlsx";
-     return Excel::download(new PemasukanExport($bulan,$tahun),$namafile);
+    //=====================================================================
+    public function exsportpemasukan($tgl1, $tgl2){
+    $namafile = "laporan_pemasukan_tgl_".$tgl1."_sampai_".$tgl2.".xlsx";
+     return Excel::download(new PemasukanExport($tgl1, $tgl2),$namafile);
     }
-    public function cetakpemasukan($bulan, $tahun){
+    //=====================================================================
+    public function cetakpemasukan($tgl1, $tgl2){
        
         $data = DB::table('tb_transaksis')
         ->select(DB::raw('tb_transaksis.*,tb_users.username,tb_bank.nama_bank'))
         ->leftjoin('tb_users','tb_users.id','=','tb_transaksis.iduser')
         ->leftjoin('tb_bank','tb_bank.id','=','tb_transaksis.pembayaran')
-        ->whereMonth('tb_transaksis.tgl',$bulan)
-        ->whereYear('tb_transaksis.tgl',$tahun)
+         ->whereBetween('tb_transaksis.tgl',[$tgl1,$tgl2])
         ->where('tb_transaksis.status','sukses')
         ->orwhere('tb_transaksis.status','diterima')
         ->orderby('tb_transaksis.faktur','desc')
         ->get();
         $totalnya = DB::table('tb_transaksis')
         ->select(DB::raw('SUM(total_akhir) as totalnya'))
-        ->whereMonth('tb_transaksis.tgl',$bulan)
-        ->whereYear('tb_transaksis.tgl',$tahun)
+         ->whereBetween('tb_transaksis.tgl',[$tgl1,$tgl2])
         ->where('tb_transaksis.status','sukses')
         ->orwhere('tb_transaksis.status','diterima')
         ->get();
-        return view('laporan/cetakpemasukan',['data'=>$data,'bulan'=>$bulan,'tahun'=>$tahun,'total'=>$totalnya]);
+        return view('laporan/cetakpemasukan',['data'=>$data,'tgl1'=>$tgl1,'tgl2'=>$tgl2,'total'=>$totalnya]);
     }
+
+    //==============================================================
     public function tampilpemasukan(Request $request){
         $webinfo = DB::table('settings')->limit(1)->get();
-        $tanggalnya = explode('-', $request->bulan);
+        $tgl1 = $request->tgl1;
+        $tgl2 = $request->tgl2;
         $data = DB::table('tb_transaksis')
         ->select(DB::raw('tb_transaksis.*,tb_users.username,tb_bank.nama_bank'))
         ->leftjoin('tb_users','tb_users.id','=','tb_transaksis.iduser')
         ->leftjoin('tb_bank','tb_bank.id','=','tb_transaksis.pembayaran')
-        ->whereMonth('tb_transaksis.tgl',$tanggalnya[0])
-        ->whereYear('tb_transaksis.tgl',$tanggalnya[1])
+        ->whereBetween('tb_transaksis.tgl',[$tgl1,$tgl2])
         ->where('tb_transaksis.status','sukses')
         ->orwhere('tb_transaksis.status','diterima')
         ->orderby('tb_transaksis.faktur','desc')
         ->paginate(40);
-        return view('laporan/pemasukan',['data'=>$data,'websettings'=>$webinfo,'bulan'=>$tanggalnya[0],'tahun'=>$tanggalnya[1],'data3'=>$data->appends(request()->input())]);
+        return view('laporan/pemasukan',['data'=>$data,'websettings'=>$webinfo,'tgl1'=>$tgl1,'tgl2'=>$tgl2,'data3'=>$data->appends(request()->input())]);
     }
+
+    //==============================================================
     public function pilihpemasukan(){
         $data = DB::table('tb_transaksis')
         ->select(DB::raw('MONTH(tgl) as bulan, YEAR(tgl) as tahun'))
@@ -173,6 +177,8 @@ class laporanController extends Controller
         $webinfo = DB::table('settings')->limit(1)->get();
         return view('laporan/pilihpemasukan',['data'=>$data,'websettings'=>$webinfo]);
     }
+
+    //==============================================================
     public function pilihpengeluaran(){
     	$data = DB::table('tb_tambahstoks')
         ->select(DB::raw('MONTH(tgl) as bulan, YEAR(tgl) as tahun'))
@@ -185,11 +191,13 @@ class laporanController extends Controller
     	return view('laporan/pilihpengeluaran',['data'=>$data,'websettings'=>$websetting]);
     }
 
+    //==============================================================
     public function exsportpengeluaran($bulan, $tahun){
      $namafile = "laporan_pengeluaran_bulan_".$bulan."_tahun_".$tahun.".xlsx";
      return Excel::download(new PengeluaranExport($bulan,$tahun),$namafile);
     }
 
+    //==============================================================
     public function tampilpengeluaran(Request $request){
         $webinfo = DB::table('settings')->limit(1)->get();
         $tanggalnya = explode('-', $request->bulan);

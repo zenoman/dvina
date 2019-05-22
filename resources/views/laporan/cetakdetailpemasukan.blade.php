@@ -5,7 +5,7 @@
 </head>
 <body onload="window.print()">
 	<h4 align="center">
-	Cetak Laporan Detail Pemasukan Bulan {{$bulan}} Tahun {{$tahun}}
+	Cetak Laporan Detail Pemasukan Tanggal {{$tgl1}} Sampai {{$tgl2}}
 	</h4>
 	<table width="100%">
 		<tr>
