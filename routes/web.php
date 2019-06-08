@@ -61,6 +61,7 @@ Route::get('/exsportpengeluaran/{bulan}/{tahun}','Admin\laporanController@exspor
 Route::get('/cetakpengeluaran/{bulan}/{tahun}','Admin\laporanController@cetakpengeluaran');
 Route::get('/tampilpengeluaran','Admin\laporanController@tampilpengeluaran');
 Route::get('/laporan/pengeluaran','Admin\laporanController@pilihpengeluaran');
+Route::get('/totalaset','Admin\laporanController@totalaset');
 
 
 

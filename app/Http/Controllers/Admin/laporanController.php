@@ -15,6 +15,26 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class laporanController extends Controller
 {
+    public function totalaset(){
+        $webinfo = DB::table('settings')->limit(1)->get();
+        $barang = DB::table('tb_kodes')
+            ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')
+            ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
+            ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total, SUM(tb_barangs.stok) * tb_kodes.harga_beli as tot'))
+            ->groupBy('tb_kodes.kode_barang')
+            ->orderby('tb_kodes.id','desc')
+            ->paginate(50);
+        $barangg = DB::table('tb_kodes')
+            ->join('tb_kategoris', 'tb_kodes.id_kategori', '=', 'tb_kategoris.id')
+            ->join('tb_barangs', 'tb_barangs.kode', '=', 'tb_kodes.kode_barang')
+            ->select(DB::raw('tb_kodes.*, tb_kategoris.kategori,SUM(tb_barangs.stok) as total, SUM(tb_barangs.stok) * tb_kodes.harga_beli as tot'))
+            ->groupBy('tb_kodes.kode_barang')
+            ->orderby('tb_kodes.id','desc')
+            ->get();
+        return view('laporan/totalaset',['barangg'=>$barangg,'barang'=>$barang,'websettings'=>$webinfo]);
+    }
+    //============================================================================
+
     public function exportpemasukanlain($bulan , $tahun){
     $namafile = "laporan_pemasukan_lain_bulan_".$bulan."_tahun_".$tahun.".xlsx";
      return Excel::download(new pemasukanlain($bulan,$tahun),$namafile); 

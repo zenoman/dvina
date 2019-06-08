@@ -170,6 +170,11 @@
                                 <li>
                                     <a href="{{url('/laporan/detailtransaksilangsung')}} ">Laporan Detail Transaksi Langsung</a>
                                 </li>
+                                @if(Session::get('level') != 'admin')
+                                <li>
+                                    <a href="{{url('/totalaset')}} ">Total Aset</a>
+                                </li>
+                                @endif
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
