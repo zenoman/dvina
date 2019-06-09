@@ -60,26 +60,7 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
-                    <div class="single-sidebar">
-                        <h2 class="sidebar-title">Cari Produk</h2>
-                        <form action="{{url('/cari')}}" method="get">
-                            <input type="text" placeholder="Cari Berdasarkan Nama" name="cari" required>
-                            {{csrf_field()}}
-                            <input type="submit" value="Cari">
-                        </form>
-                    </div>
-                    
-                    
-                    <div class="single-sidebar">
-                        <h2 class="sidebar-title">Kategori</h2>
-                        <ul>
-                           @foreach($kategoris as $kategori)
-                            <li><a href="{{url('/semuaproduk/'.$kategori->id.'/kategori')}}">{{$kategori->kategori}}</a></li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
+                
                 
                 <div class="col-md-9">
                 
@@ -121,9 +102,29 @@
                @endforeach
             </div>
             <div class="text-center">
-            <br><button type="button" onclick="window.history.go(-1);" class="tombol-merah">Kembali</button>
+            <br><button type="button" onclick="window.history.go(-1);" class="tombol-merah">Kembali</button><br><hr>
                 </div>
 
+                </div>
+                <div class="col-md-3">
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Cari Produk</h2>
+                        <form action="{{url('/cari')}}" method="get">
+                            <input type="text" placeholder="Cari Berdasarkan Nama" name="cari" required>
+                            {{csrf_field()}}
+                            <input type="submit" value="Cari">
+                        </form>
+                    </div>
+                    
+                    
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Kategori</h2>
+                        <ul>
+                           @foreach($kategoris as $kategori)
+                            <li><a href="{{url('/semuaproduk/'.$kategori->id.'/kategori')}}">{{$kategori->kategori}}</a></li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
