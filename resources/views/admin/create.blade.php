@@ -60,7 +60,7 @@ function mouseoutPass1(obj) {
                                             <label>Nama</label>
                                             <input type="text" class="form-control" placeholder="contoh : deva satrio" name="nama" value="{{ old('nama') }}" required>
                                         </div>
-
+                                        
                                         @if($errors->has('nama'))
                                         <div class="alert alert-danger">
                                         {{ $errors->first('nama')}}
